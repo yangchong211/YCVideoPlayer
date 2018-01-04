@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <cn.jzvd.JZVideoPlayerStandard
+                android:id="@+id/jz_video"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <Button
+                android:id="@+id/tiny_window"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="left|center_vertical"
+                android:text="1.开启小窗口" />
+
+            <Button
+                android:id="@+id/auto_tiny_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="left|center_vertical"
+                android:text="2.list页面正常的小窗口" />
+
+            <Button
+                android:id="@+id/auto_tiny_list_view_multi_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="left|center_vertical"
+                android:text="3.list页面多种类型数据，显示小窗口" />
+
+            <Button
+                android:id="@+id/auto_tiny_list_view_recycleview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="left|center_vertical"
+                android:text="4.在RecyclerView中的小窗口" />
+
+            <Button
+                android:id="@+id/auto_tiny_list_view_recycleview_multiholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="left|center_vertical"
+                android:text="5.在RecyclerView中多种数据类型，显示小窗口" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

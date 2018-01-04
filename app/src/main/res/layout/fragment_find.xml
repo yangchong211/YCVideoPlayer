@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grayLine"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:text="1. jiaozi视频播放测试，封装是基于IJKplayer库"/>
+
+    <TextView
+        android:id="@+id/tv_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grayLine"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:text="2. 自己封装的视频播放库，封装基于ijkPlayer库"/>
+
+</LinearLayout>

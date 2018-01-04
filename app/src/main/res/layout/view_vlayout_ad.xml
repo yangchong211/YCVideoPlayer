@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/iv_image_ad"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:scaleType="fitXY"
+        android:background="@drawable/bg_small_magnolia_trees_min"/>
+
+</LinearLayout>

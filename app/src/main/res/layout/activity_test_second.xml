@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:gravity="start|center_vertical"
+        android:text="1.ListView普通列表" />
+
+    <Button
+        android:id="@+id/listview_fragment_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="start|center_vertical"
+        android:text="2.Fragment + ViewPager + ListView的列表播放" />
+
+    <Button
+        android:id="@+id/multiholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="start|center_vertical"
+        android:text="3.MultiHolder + ListView的列表播放" />
+
+    <Button
+        android:id="@+id/recyleview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="start|center_vertical"
+        android:text="4.Recyleview普通列表" />
+
+    <Button
+        android:id="@+id/recyleview_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="start|center_vertical"
+        android:text="5.Recyleview普通列表不同类型" />
+
+
+</LinearLayout>

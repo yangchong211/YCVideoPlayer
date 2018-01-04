@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="0dp"
+          android:background="@drawable/select_change_clarity"
+          android:gravity="center"
+          android:text="标清 270P"
+          android:textColor="@color/select_change_clarity_color"
+          android:textSize="15sp"/>

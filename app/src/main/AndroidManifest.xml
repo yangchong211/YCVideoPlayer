@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.yczbj.ycvideoplayer">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:name=".base.BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ui.main.view.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+
+        <!--下面这些均是测试视频播放器-->
+        <activity android:name=".ui.test.TestActivity"/>
+        <activity android:name=".ui.test.view.first.TestFirstActivity"/>
+        <activity android:name=".ui.test.view.first.TestApiFirstActivity"/>
+        <activity android:name=".ui.test.view.first.TestApiSecondActivity"/>
+        <activity android:name=".ui.test.view.first.TestApiThreeActivity"/>
+        <activity android:name=".ui.test.view.first.TestApiFourActivity"/>
+        <activity android:name=".ui.test.view.first.TestApiFiveActivity"/>
+        <activity android:name=".ui.test.view.first.TestApiSixActivity"/>
+        <activity android:name=".ui.test.view.second.TestSecondActivity"/>
+        <activity android:name=".ui.test.view.second.TestListFirstActivity"/>
+        <activity android:name=".ui.test.view.second.TestListSecondActivity"/>
+        <activity android:name=".ui.test.view.second.TestListThirdActivity"/>
+        <activity android:name=".ui.test.view.second.TestListFourActivity"/>
+        <activity android:name=".ui.test.view.second.TestListFiveActivity"/>
+        <activity android:name=".ui.test.view.three.TestThreeActivity"/>
+        <activity android:name=".ui.test.view.three.TestTinyFirstActivity"/>
+        <activity android:name=".ui.test.view.three.TestTinyThirdActivity"/>
+        <activity android:name=".ui.test.view.three.TestTinyFourActivity"/>
+        <activity android:name=".ui.test.view.three.TestTinyFiveActivity"/>
+        <activity android:name=".ui.test.view.four.TestFourActivity"/>
+        <activity android:name=".ui.test.view.five.TestFiveActivity"/>
+        <activity android:name=".ui.test.view.six.TestSixActivity"/>
+
+        <activity android:name=".ui.test2.TestMyActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test2.view.TestMyFirstActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test2.view.TestMySecondActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test2.view.TestMyThirdActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test2.view.TestMyFourActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test2.view.TestMyFiveActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test2.view.TestMySixActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+    </application>
+
+</manifest>

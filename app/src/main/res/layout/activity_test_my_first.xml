@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <org.yczbj.ycvideoplayerlib.VideoPlayer
+        android:id="@+id/nice_video_player"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/btn_tiny_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="1.直接开启小窗口播放"/>
+
+    <Button
+        android:id="@+id/btn_tiny_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="2.在list页面滑动小窗口播放【注意是滑出界面再显示小窗口】"/>
+
+</LinearLayout>

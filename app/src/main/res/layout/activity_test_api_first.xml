@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="18dp"
+                android:text="标准ui与共享按钮，在全屏后可见" />
+
+            <cn.jzvd.CustomView.JZVideoPlayerStandardShowShareButtonAfterFullscreen
+                android:id="@+id/standard_with_share"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="18dp"
+                    android:text="标准ui 16:9" />
+            </cn.jzvd.CustomView.JZVideoPlayerStandardShowShareButtonAfterFullscreen>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="18dp"
+                android:text="标准的用户界面显示标题后全屏" />
+
+            <cn.jzvd.CustomView.JZVideoPlayerStandardShowTitleAfterFullscreen
+                android:id="@+id/standard_show_title_after_fullscreen"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="18dp"
+                android:text="标准ui在自动完成后显示在view" />
+
+            <cn.jzvd.CustomView.JZVideoPlayerStandardShowTextureViewAfterAutoComplete
+                android:id="@+id/standard_show_auto_complete"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="18dp"
+                android:text="标准ui自动完成后全屏" />
+
+            <cn.jzvd.CustomView.JZVideoPlayerStandardAutoCompleteAfterFullscreen
+                android:id="@+id/standard_auto_complete"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="18dp"
+                android:text="标准ui 1:1" />
+
+            <cn.jzvd.CustomView.JZVideoPlayerStandardAutoCompleteAfterFullscreen
+                android:id="@+id/video_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <cn.jzvd.CustomView.JZVideoPlayerStandardAutoCompleteAfterFullscreen
+                android:id="@+id/video_16_9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
