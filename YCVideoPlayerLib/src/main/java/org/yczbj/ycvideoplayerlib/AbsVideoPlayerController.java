@@ -34,7 +34,6 @@ import java.util.TimerTask;
  *
  * 控制器抽象类
  */
-
 public abstract class AbsVideoPlayerController extends FrameLayout implements View.OnTouchListener {
 
     private Context mContext;
