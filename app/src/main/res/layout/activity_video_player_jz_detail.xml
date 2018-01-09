@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--视频播放器-->
+        <cn.jzvd.CustomView.MyJZVideoPlayerStandard
+            android:id="@+id/jz_video"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+        <!--视频播放器下面内容-->
+        <org.yczbj.ycrefreshviewlib.YCRefreshView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="@color/colorWhite"
+        app:fabSize="mini"
+        android:src="@drawable/selector_video_player_detail"
+        tools:ignore="UnusedAttribute" />
+
+</RelativeLayout>

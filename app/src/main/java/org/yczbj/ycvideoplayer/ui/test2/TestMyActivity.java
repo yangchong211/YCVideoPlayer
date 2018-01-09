@@ -85,7 +85,8 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void initView() {
         //设置播放类型
-        niceVideoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE); // IjkPlayer or MediaPlayer
+        // IjkPlayer or MediaPlayer
+        niceVideoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
         //网络视频地址
         String videoUrl = DataUtil.getVideoListData().get(0).getVideoUrl();
         //设置视频地址和请求头部

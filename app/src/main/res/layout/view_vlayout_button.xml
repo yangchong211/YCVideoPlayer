@@ -29,13 +29,13 @@
             style="@style/WeightAttr"
             android:drawablePadding="8dp"
             android:drawableTop="@drawable/ic_home_third"
-            android:text="天行热点" />
+            android:text="仿优酷[Vp]" />
         <TextView
             android:id="@+id/tv_home_four"
             style="@style/WeightAttr"
             android:drawablePadding="8dp"
             android:drawableTop="@drawable/ic_home_four"
-            android:text="干货定制" />
+            android:text="仿优酷[Jz]" />
         <TextView
             android:id="@+id/tv_home_five"
             style="@style/WeightAttr"

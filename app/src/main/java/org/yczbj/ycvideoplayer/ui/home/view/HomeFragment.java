@@ -2,13 +2,9 @@ package org.yczbj.ycvideoplayer.ui.home.view;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -25,6 +21,8 @@ import org.yczbj.ycvideoplayer.base.BaseDelegateAdapter;
 import org.yczbj.ycvideoplayer.base.BaseFragment;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.BannerPagerAdapter;
 import org.yczbj.ycvideoplayer.ui.main.view.MainActivity;
+import org.yczbj.ycvideoplayer.ui.main.view.activity.VideoPlayerJzActivity;
+import org.yczbj.ycvideoplayer.ui.main.view.activity.VideoPlayerMeActivity;
 import org.yczbj.ycvideoplayer.ui.test.TestActivity;
 import org.yczbj.ycvideoplayer.ui.test2.TestMyActivity;
 
@@ -33,7 +31,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 
 /**
@@ -218,10 +215,10 @@ public class HomeFragment extends BaseFragment {
                                 startActivity(TestMyActivity.class);
                                 break;
                             case R.id.tv_home_third:
-
+                                startActivity(VideoPlayerMeActivity.class);
                                 break;
                             case R.id.tv_home_four:
-
+                                startActivity(VideoPlayerJzActivity.class);
                                 break;
                             case R.id.tv_home_five:
 
@@ -246,8 +243,10 @@ public class HomeFragment extends BaseFragment {
         initTitleView(1);
         GridLayoutHelper gridLayoutHelper = new GridLayoutHelper(2);
         gridLayoutHelper.setPadding(0, 16, 0, 16);
-        gridLayoutHelper.setVGap(16);   // 控制子元素之间的垂直间距
-        gridLayoutHelper.setHGap(0);    // 控制子元素之间的水平间距
+        // 控制子元素之间的垂直间距
+        gridLayoutHelper.setVGap(16);
+        // 控制子元素之间的水平间距
+        gridLayoutHelper.setHGap(0);
         gridLayoutHelper.setBgColor(Color.WHITE);
         BaseDelegateAdapter adapter = new BaseDelegateAdapter(activity, gridLayoutHelper, R.layout.view_vlayout_grid, 4, Constant.viewType.typeGv) {
             @Override

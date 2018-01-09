@@ -22,6 +22,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.main.view.activity.VideoPlayerMeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.main.view.activity.VideoPlayerJzActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
 
 
         <!--下面这些均是测试视频播放器-->
