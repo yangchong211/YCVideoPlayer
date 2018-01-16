@@ -41,7 +41,7 @@
             style="@style/WeightAttr"
             android:drawablePadding="8dp"
             android:drawableTop="@drawable/ic_home_third"
-            android:text="全部课程" />
+            android:text="图片裁剪" />
     </LinearLayout>
 
 

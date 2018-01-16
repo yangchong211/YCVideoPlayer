@@ -7,17 +7,27 @@ import android.util.Log;
  */
 public class VideoLogUtil {
 
-    private static final String TAG = "NiceVideoPlayer";
+    private static final String TAG = "YCVideoPlayer";
+    public static boolean isLog = true;
 
     static void d(String message) {
-        Log.d(TAG, message);
+        if(isLog){
+            Log.d(TAG, message);
+        }
+
     }
 
     static void i(String message) {
-        Log.i(TAG, message);
+        if(isLog){
+            Log.i(TAG, message);
+        }
+
     }
 
     static void e(String message, Throwable throwable) {
-        Log.e(TAG, message, throwable);
+        if(isLog){
+            Log.e(TAG, message, throwable);
+        }
     }
+
 }

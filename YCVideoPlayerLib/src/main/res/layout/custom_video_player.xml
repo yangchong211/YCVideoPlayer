@@ -4,298 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--底图-->
+    <!--https://github.com/yangchong211-->
+    <!--如果你觉得好，请给个star，让更多人使用，避免重复造轮子-->
+    <!--底图，主要是显示视频缩略图-->
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:visibility="visible"/>
-
     <!--加载动画view-->
-    <LinearLayout
-        android:id="@+id/loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-        <ProgressBar
-            android:layout_width="27dp"
-            android:layout_height="10dp"
-            android:indeterminateDrawable="@drawable/loading"/>
-        <TextView
-            android:id="@+id/load_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="正在缓冲..."
-            android:textColor="@android:color/white"
-            android:textSize="12sp"/>
-    </LinearLayout>
-
-
+    <include layout="@layout/custom_video_player_loading"/>
     <!--改变播放位置-->
-    <LinearLayout
-        android:id="@+id/change_position"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/bg_radius_4"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="8dp"
-        android:visibility="gone">
-        <TextView
-            android:id="@+id/change_position_current"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00:00"
-            android:textColor="@android:color/white"
-            android:textSize="28sp"/>
-        <ProgressBar
-            android:id="@+id/change_position_progress"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="100dp"
-            android:layout_height="2dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="8dp"
-            android:max="100"
-            android:progressDrawable="@drawable/pb_change"/>
-    </LinearLayout>
-
-
+    <include layout="@layout/custom_video_player_change_position"/>
     <!--改变亮度-->
-    <LinearLayout
-        android:id="@+id/change_brightness"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/bg_radius_4"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="8dp"
-        android:visibility="gone">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_palyer_brightness"/>
-        <ProgressBar
-            android:id="@+id/change_brightness_progress"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="100dp"
-            android:layout_height="2dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="8dp"
-            android:max="100"
-            android:progressDrawable="@drawable/pb_change"/>
-    </LinearLayout>
-
-
+    <include layout="@layout/custom_video_player_change_brightness"/>
     <!--改变声音-->
-    <LinearLayout
-        android:id="@+id/change_volume"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/bg_radius_4"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="8dp"
-        android:visibility="gone">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_palyer_volume"/>
-        <ProgressBar
-            android:id="@+id/change_volume_progress"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="100dp"
-            android:layout_height="2dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="8dp"
-            android:max="100"
-            android:progressDrawable="@drawable/pb_change"/>
-    </LinearLayout>
-
-    <!--播放完成-->
-    <LinearLayout
-        android:id="@+id/completed"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#6c0b0b0b"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone">
-        <TextView
-            android:id="@+id/replay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_player_replay"
-            android:drawablePadding="4dp"
-            android:padding="8dp"
-            android:text="重新播放"
-            android:textColor="@android:color/white"
-            android:textSize="13sp"/>
-        <TextView
-            android:id="@+id/share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="64dp"
-            android:drawableLeft="@drawable/ic_palyer_share"
-            android:drawablePadding="4dp"
-            android:padding="8dp"
-            android:text="分享"
-            android:textColor="@android:color/white"
-            android:textSize="13sp"/>
-    </LinearLayout>
-
-
+    <include layout="@layout/custom_video_player_change_volume"/>
+    <!--播放完成，你也可以自定义-->
+    <include layout="@layout/custom_video_player_completed"/>
     <!--播放错误-->
-    <LinearLayout
-        android:id="@+id/error"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/black"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="播放错误，请重试。"
-            android:textColor="@android:color/white"
-            android:textSize="13sp"/>
-        <TextView
-            android:id="@+id/retry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_retry"
-            android:paddingBottom="5dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="4dp"
-            android:text="点击重试"
-            android:textColor="@android:color/white"
-            android:textSize="13sp"/>
-    </LinearLayout>
-
-
+    <include layout="@layout/custom_video_player_error"/>
     <!--顶部控制区-->
-    <LinearLayout
-        android:id="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:background="@drawable/player_mask_top"
-        android:gravity="center_vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_player_back"
-            android:visibility="visible"/>
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="真实死亡游戏“蓝鲸”疑似进入国内，家长们要注意了"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"/>
-        <LinearLayout
-            android:id="@+id/battery_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            android:orientation="vertical"
-            android:visibility="gone">
-            <ImageView
-                android:id="@+id/battery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/battery_100"/>
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00:00"
-                android:textColor="@android:color/white"
-                android:textSize="10sp"/>
-        </LinearLayout>
-    </LinearLayout>
-
-
+    <include layout="@layout/custom_video_player_top"/>
     <!--底部控制区-->
-    <LinearLayout
-        android:id="@+id/bottom"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/player_mask_bottom"
-        android:gravity="center_vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
-        <ImageView
-            android:id="@+id/restart_or_pause"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_player_start"/>
-        <TextView
-            android:id="@+id/position"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="00:00"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="/"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"/>
-        <TextView
-            android:id="@+id/duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00:00"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"/>
-        <SeekBar
-            android:id="@+id/seek"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:background="@null"
-            android:max="100"
-            android:maxHeight="1.5dp"
-            android:minHeight="1.5dp"
-            android:progressDrawable="@drawable/seek_progress"
-            android:thumb="@drawable/seek_thumb"/>
-        <TextView
-            android:id="@+id/clarity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="4dp"
-            android:paddingLeft="8dp"
-            android:text="超清"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:visibility="gone"/>
-        <ImageView
-            android:id="@+id/full_screen"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_player_enlarge"/>
-    </LinearLayout>
-
-
+    <include layout="@layout/custom_video_player_bottom"/>
     <!--右下角初始显示的总时长-->
     <TextView
         android:id="@+id/length"
@@ -306,6 +39,7 @@
         android:layout_marginBottom="12dp"
         android:layout_marginEnd="8dp"
         android:padding="4dp"
+        android:visibility="visible"
         android:text="00:00"
         android:textColor="@android:color/white"
         android:textSize="12sp"/>
@@ -317,5 +51,15 @@
         android:layout_centerInParent="true"
         android:src="@drawable/ic_player_center_start"
         android:visibility="visible"/>
+    <!--试看按钮-->
+    <ImageView
+        android:id="@+id/iv_try_see"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/selector_try_see"
+        android:visibility="gone"/>
+    <!--试看布局，非会员显示该布局-->
+    <include layout="@layout/custom_video_player_try_see"/>
 
 </RelativeLayout>

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import com.yc.cn.ycbannerlib.first.adapter.StaticPagerAdapter;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.util.ImageUtils;
+import org.yczbj.ycvideoplayer.util.ImageUtil;
 
 import java.util.List;
 
@@ -38,9 +38,9 @@ public class BannerPagerAdapter extends StaticPagerAdapter {
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         //加载图片
         if(list!=null){
-            ImageUtils.loadImgByPicasso(ctx,list.get(position), R.drawable.image_default,imageView);
+            ImageUtil.loadImgByPicasso(ctx,list.get(position), R.drawable.image_default,imageView);
         }else {
-            ImageUtils.loadImgByPicasso(ctx, R.drawable.image_default,imageView);
+            ImageUtil.loadImgByPicasso(ctx, R.drawable.image_default,imageView);
         }
         return imageView;
     }

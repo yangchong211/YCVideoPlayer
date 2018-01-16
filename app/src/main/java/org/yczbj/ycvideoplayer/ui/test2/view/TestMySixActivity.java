@@ -9,7 +9,7 @@ public class TestMySixActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (VideoPlayerManager.instance().onBackPressd()) return;
+        if (VideoPlayerManager.instance().onBackPressed()) return;
         super.onBackPressed();
     }
 

@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * 切换清晰度对话框（仿腾讯视频切换清晰度的对话框）.
  */
+
 public class ChangeClarityDialog extends Dialog {
 
     private LinearLayout mLinearLayout;
@@ -50,6 +51,7 @@ public class ChangeClarityDialog extends Dialog {
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.MATCH_PARENT);
         setContentView(mLinearLayout, params);
+        //注意，这里一定要判空
         if(getWindow()!=null){
             WindowManager.LayoutParams windowParams = getWindow().getAttributes();
             windowParams.width = VideoPlayerUtils.getScreenHeight(context);
@@ -96,24 +98,10 @@ public class ChangeClarityDialog extends Dialog {
         }
     }
 
-    public interface OnClarityChangedListener {
-        /**
-         * 切换清晰度后回调
-         *
-         * @param clarityIndex 切换到的清晰度的索引值
-         */
-        void onClarityChanged(int clarityIndex);
-
-        /**
-         * 清晰度没有切换，比如点击了空白位置，或者点击的是之前的清晰度
-         */
-        void onClarityNotChanged();
-    }
 
     private OnClarityChangedListener mListener;
     void setOnClarityCheckedListener(OnClarityChangedListener listener) {
         mListener = listener;
     }
-
 
 }

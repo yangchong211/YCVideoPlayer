@@ -1,15 +1,10 @@
 package org.yczbj.ycvideoplayer.ui.home.contract;
 
 
-import android.app.Activity;
-
 import com.flyco.tablayout.listener.CustomTabEntity;
 
 import org.yczbj.ycvideoplayer.base.BasePresenter;
 import org.yczbj.ycvideoplayer.base.BaseView;
-import org.yczbj.ycvideoplayer.ui.main.view.MainActivity;
-
-import java.util.ArrayList;
 
 /**
  * ================================================

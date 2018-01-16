@@ -10,9 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.ui.test2.model.DataUtil;
+import org.yczbj.ycvideoplayer.api.ConstantVideo;
+import org.yczbj.ycvideoplayer.ui.test2.model.Video;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -37,14 +41,19 @@ public class TestMyFourFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
-        VideoAdapter adapter = new VideoAdapter(getActivity(), DataUtil.getVideoListData());
+        List<Video> list = new ArrayList<>();
+        for (int a = 0; a< ConstantVideo.VideoPlayerList.length ; a++){
+            Video video = new Video(ConstantVideo.VideoPlayerTitle[a],10,"",ConstantVideo.VideoPlayerList[a]);
+            list.add(video);
+        }
+        VideoAdapter adapter = new VideoAdapter(getActivity(), list);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setRecyclerListener(new RecyclerView.RecyclerListener() {
             @Override
             public void onViewRecycled(RecyclerView.ViewHolder holder) {
-                VideoPlayer niceVideoPlayer = ((VideoAdapter.VideoViewHolder) holder).mVideoPlayer;
-                if (niceVideoPlayer == VideoPlayerManager.instance().getCurrentNiceVideoPlayer()) {
-                    VideoPlayerManager.instance().releaseNiceVideoPlayer();
+                VideoPlayer VideoPlayer = ((VideoAdapter.VideoViewHolder) holder).mVideoPlayer;
+                if (VideoPlayer == VideoPlayerManager.instance().getCurrentVideoPlayer()) {
+                    VideoPlayerManager.instance().releaseVideoPlayer();
                 }
             }
         });
@@ -53,6 +62,6 @@ public class TestMyFourFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        VideoPlayerManager.instance().releaseNiceVideoPlayer();
+        VideoPlayerManager.instance().releaseVideoPlayer();
     }
 }

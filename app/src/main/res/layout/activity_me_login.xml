@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:textSize="20sp"
+        android:text="我的登录页面"/>
+
+
+    <TextView
+        android:id="@+id/tv_fail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:textSize="20sp"
+        android:text="假设注册失败，调试视频VIP播放器"/>
+
+
+    <TextView
+        android:id="@+id/tv_success"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:textSize="20sp"
+        android:text="假设注册成功，调试视频VIP播放器"/>
+
+</LinearLayout>

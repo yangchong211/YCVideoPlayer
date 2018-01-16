@@ -8,15 +8,15 @@
 
     <ImageView
         android:id="@+id/iv_user_logo"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:scaleType="fitCenter"
         android:background="@drawable/bg_small_solda_min"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp">
+        android:layout_marginStart="15dp">
         <TextView
             android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_user_name"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="18dp"
             android:textSize="14sp"
             android:textColor="@color/blackText3"
             android:text="这个视频播放器做的十分不错，很好，不过还是有些地方需要改进。持续更新中"/>

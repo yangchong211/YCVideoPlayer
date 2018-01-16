@@ -9,7 +9,7 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.bean.TabEntity;
 import org.yczbj.ycvideoplayer.ui.main.contract.MainContract;
-import org.yczbj.ycvideoplayer.ui.main.view.MainActivity;
+import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
 
 import java.util.ArrayList;
 

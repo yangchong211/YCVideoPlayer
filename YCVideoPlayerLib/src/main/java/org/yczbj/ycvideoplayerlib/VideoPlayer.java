@@ -163,6 +163,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
      * @param url               视频地址，可以是本地，也可以是网络视频
      * @param headers           请求header.
      */
+    @Override
     public void setUp(String url, Map<String, String> headers) {
         mUrl = url;
         mHeaders = headers;
@@ -173,10 +174,11 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
      * @param controller        AbsVideoPlayerController子类对象，可用VideoPlayerController，也可自定义
      */
     public void setController(AbsVideoPlayerController controller) {
+        //这里必须先移除
         mContainer.removeView(mController);
         mController = controller;
         mController.reset();
-        mController.setNiceVideoPlayer(this);
+        mController.setVideoPlayer(this);
         LayoutParams params = new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
@@ -220,13 +222,13 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     @Override
     public void start() {
         if (mCurrentState == STATE_IDLE) {
-            VideoPlayerManager.instance().setCurrentNiceVideoPlayer(this);
+            VideoPlayerManager.instance().setCurrentVideoPlayer(this);
             initAudioManager();
             initMediaPlayer();
             initTextureView();
             addTextureView();
         } else {
-            VideoLogUtil.d("NiceVideoPlayer只有在mCurrentState == STATE_IDLE时才能调用start方法.");
+            VideoLogUtil.d("VideoPlayer只有在mCurrentState == STATE_IDLE时才能调用start方法.");
         }
     }
 
@@ -259,7 +261,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
             mMediaPlayer.reset();
             openMediaPlayer();
         } else {
-            VideoLogUtil.d("NiceVideoPlayer在mCurrentState == " + mCurrentState + "时不能调用restart()方法.");
+            VideoLogUtil.d("VideoPlayer在mCurrentState == " + mCurrentState + "时不能调用restart()方法.");
         }
     }
 
@@ -323,7 +325,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     }
 
     /**
-     * 判断视频是否
+     * 判断视频是否准备就绪
      * @return                      true表示播放准备就绪
      */
     @Override
@@ -340,41 +342,73 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         return mCurrentState == STATE_BUFFERING_PLAYING;
     }
 
+    /**
+     * 判断是否是否缓冲暂停
+     * @return                      true表示缓冲暂停
+     */
     @Override
     public boolean isBufferingPaused() {
         return mCurrentState == STATE_BUFFERING_PAUSED;
     }
 
+    /**
+     * 判断视频是否正在播放
+     * @return                      true表示正在播放
+     */
     @Override
     public boolean isPlaying() {
         return mCurrentState == STATE_PLAYING;
     }
 
+    /**
+     * 判断视频是否暂停播放
+     * @return                      true表示暂停播放
+     */
     @Override
     public boolean isPaused() {
         return mCurrentState == STATE_PAUSED;
     }
 
+    /**
+     * 判断视频是否播放错误
+     * @return                      true表示播放错误
+     */
     @Override
     public boolean isError() {
         return mCurrentState == STATE_ERROR;
     }
 
+    /**
+     * 判断视频是否播放完成
+     * @return                      true表示播放完成
+     */
     @Override
     public boolean isCompleted() {
         return mCurrentState == STATE_COMPLETED;
     }
 
+    /**
+     * 判断视频是否播放全屏
+     * @return                      true表示播放全屏
+     */
     @Override
     public boolean isFullScreen() {
         return mCurrentMode == MODE_FULL_SCREEN;
     }
 
+    /**
+     * 判断视频是否播放小窗口
+     * @return                      true表示播放小窗口
+     */
     @Override
     public boolean isTinyWindow() {
         return mCurrentMode == MODE_TINY_WINDOW;
     }
 
+    /**
+     * 判断视频是否正常播放
+     * @return                      true表示正常播放
+     */
     @Override
     public boolean isNormal() {
         return mCurrentMode == MODE_NORMAL;
@@ -445,7 +479,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     }
 
     /**
-     *
+     * 获取播放速度
      * @return
      */
     @Override
@@ -579,6 +613,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         }
     }
 
+
     /**
      * 设置准备视频播放监听事件
      */
@@ -711,6 +746,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         }
     };
 
+
     /**
      * 设置时间文本监听器
      */
@@ -720,6 +756,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
 
         }
     };
+
 
     /**
      * 全屏，将mContainer(内部包含mTextureView和mController)从当前容器中移除，并添加到android.R.content中.
@@ -733,6 +770,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         }
         // 隐藏ActionBar、状态栏，并横屏
         VideoPlayerUtils.hideActionBar(mContext);
+        //
         VideoPlayerUtils.scanForActivity(mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         ViewGroup contentView = (ViewGroup) VideoPlayerUtils.scanForActivity(mContext).findViewById(android.R.id.content);
         if (mCurrentMode == MODE_TINY_WINDOW) {
@@ -740,14 +778,14 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         } else {
             this.removeView(mContainer);
         }
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         contentView.addView(mContainer, params);
 
         mCurrentMode = MODE_FULL_SCREEN;
         mController.onPlayModeChanged(mCurrentMode);
         VideoLogUtil.d("MODE_FULL_SCREEN");
     }
+
 
     /**
      * 退出全屏，移除mTextureView和mController，并添加到非全屏的容器中。
@@ -762,7 +800,9 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
             VideoPlayerUtils.showActionBar(mContext);
             VideoPlayerUtils.scanForActivity(mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             ViewGroup contentView = (ViewGroup) VideoPlayerUtils.scanForActivity(mContext).findViewById(android.R.id.content);
+            //将视图移除
             contentView.removeView(mContainer);
+            //重新添加到当前视图
             LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             this.addView(mContainer, params);
             mCurrentMode = MODE_NORMAL;
@@ -772,6 +812,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         }
         return false;
     }
+
 
     /**
      * 进入小窗口播放，小窗口播放的实现原理与全屏播放类似。

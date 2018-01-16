@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorWhiteBg">
+
+    <com.yc.cn.ycbannerlib.first.BannerView
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp">
+        <TextView
+            android:id="@+id/tv_special_first"
+            style="@style/WeightAttr"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_home_first"
+            android:text="单任务下载" />
+        <TextView
+            android:id="@+id/tv_special_second"
+            style="@style/WeightAttr"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_home_second"
+            android:text="多任务下载" />
+        <TextView
+            android:id="@+id/tv_special_third"
+            style="@style/WeightAttr"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_home_third"
+            android:text="混合下载" />
+        <TextView
+            android:id="@+id/tv_special_four"
+            style="@style/WeightAttr"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_home_four"
+            android:text="下载通知" />
+        <TextView
+            android:id="@+id/tv_special_five"
+            style="@style/WeightAttr"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_home_third"
+            android:text="我的下载" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

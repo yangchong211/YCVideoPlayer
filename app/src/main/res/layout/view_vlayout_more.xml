@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="44dp"
+    android:layout_height="wrap_content"
     android:gravity="center">
 
-
+    <View style="@style/DeepUnderLine"/>
     <TextView
         android:id="@+id/tv_more"
         android:layout_width="wrap_content"
@@ -18,5 +18,6 @@
         android:textColor="@color/blackText1"
         android:drawableEnd="@drawable/ic_back_right"
         android:text="查看更多"/>
+    <View style="@style/DeepUnderLine"/>
 
 </LinearLayout>

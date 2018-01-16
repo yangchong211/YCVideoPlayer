@@ -20,7 +20,7 @@ public class TestMyFirstActivity extends BaseActivity implements View.OnClickLis
 
 
     @Bind(R.id.nice_video_player)
-    VideoPlayer niceVideoPlayer;
+    VideoPlayer videoPlayer;
     @Bind(R.id.btn_tiny_1)
     Button btnTiny1;
     @Bind(R.id.btn_tiny_2)
@@ -29,12 +29,12 @@ public class TestMyFirstActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onStop() {
         super.onStop();
-        VideoPlayerManager.instance().releaseNiceVideoPlayer();
+        VideoPlayerManager.instance().releaseVideoPlayer();
     }
 
     @Override
     public void onBackPressed() {
-        if (VideoPlayerManager.instance().onBackPressd()) return;
+        if (VideoPlayerManager.instance().onBackPressed()) return;
         super.onBackPressed();
     }
 
@@ -46,9 +46,9 @@ public class TestMyFirstActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void initView() {
-        niceVideoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE); // IjkPlayer or MediaPlayer
+        videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE); // IjkPlayer or MediaPlayer
         String videoUrl = Environment.getExternalStorageDirectory().getPath().concat("/办公室小野.mp4");
-        niceVideoPlayer.setUp(videoUrl, null);
+        videoPlayer.setUp(videoUrl, null);
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle("办公室小野开番外了，居然在办公室开澡堂！老板还点赞？");
         controller.setLength(98000);
@@ -57,7 +57,7 @@ public class TestMyFirstActivity extends BaseActivity implements View.OnClickLis
                 .placeholder(R.drawable.image_default)
                 .crossFade()
                 .into(controller.imageView());
-        niceVideoPlayer.setController(controller);
+        videoPlayer.setController(controller);
     }
 
     @Override
@@ -75,10 +75,10 @@ public class TestMyFirstActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_tiny_1:
-                if (niceVideoPlayer.isIdle()) {
+                if (videoPlayer.isIdle()) {
                     Toast.makeText(this, "要点击播放后才能进入小窗口", Toast.LENGTH_SHORT).show();
                 } else {
-                    niceVideoPlayer.enterTinyWindow();
+                    videoPlayer.enterTinyWindow();
                 }
                 break;
             case R.id.btn_tiny_2:

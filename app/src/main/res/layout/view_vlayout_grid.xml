@@ -11,9 +11,8 @@
     <ImageView
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:scaleType="fitCenter"
-        android:background="@drawable/bg_small_autumn_tree_min"/>
+        android:layout_height="105dp"
+        android:scaleType="fitXY"/>
 
     <TextView
         android:id="@+id/tv_title"

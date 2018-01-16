@@ -17,7 +17,9 @@ import java.util.Stack;
  */
 public class AppManager {
 
-    //栈：也就是stack
+    /**
+     * 栈：也就是stack
+     */
     private static Stack<Activity> activityStack;
     private volatile static AppManager instance;
 
@@ -42,7 +44,7 @@ public class AppManager {
     /**
      * 添加Activity到堆栈
      */
-    public void addActivity(Activity activity) {
+    void addActivity(Activity activity) {
         if(activityStack == null){
             activityStack = new Stack<>();
         }
@@ -73,7 +75,7 @@ public class AppManager {
     /**
      * 结束指定的Activity
      */
-    public void finishActivity(Activity activity) {
+    void finishActivity(Activity activity) {
         if (activity != null && !activity.isFinishing()) {
             activityStack.remove(activity);
             activity.finish();
@@ -85,7 +87,7 @@ public class AppManager {
      * 移除指定的Activity
      * @param activity
      */
-    public void removeActivity(Activity activity) {
+    void removeActivity(Activity activity) {
         if (activity != null) {
             activityStack.remove(activity);
         }
@@ -105,7 +107,7 @@ public class AppManager {
     /**
      * 结束所有Activity
      */
-    private void finishAllActivity() {
+    public void finishAllActivity() {
         for (int i = 0, size = activityStack.size(); i < size; i++) {
             if (null != activityStack.get(i)) {
                 activityStack.get(i).finish();
@@ -117,7 +119,7 @@ public class AppManager {
     /**
      * 退出应用程序
      */
-    public void AppExit() {
+    public void AppExit(Boolean isBackground) {
         try {
             finishAllActivity();
             android.os.Process.killProcess(android.os.Process.myPid());
@@ -125,7 +127,10 @@ public class AppManager {
         } catch (Exception e) {
             //
         } finally {
-            //
+            // 注意，如果您有后台程序运行，请不要支持此句子
+            if (!isBackground) {
+                System.exit(0);
+            }
         }
     }
 

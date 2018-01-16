@@ -36,8 +36,7 @@ public class VideoPlayerUtils {
 
     /**
      * Get AppCompatActivity from context
-     *
-     * @param context
+     * @param context           上下文
      * @return AppCompatActivity if it's not null
      */
     private static AppCompatActivity getAppCompActivity(Context context) {
@@ -67,8 +66,7 @@ public class VideoPlayerUtils {
             ab.setShowHideAnimationEnabled(false);
             ab.hide();
         }
-        scanForActivity(context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        scanForActivity(context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     /**
@@ -121,18 +119,25 @@ public class VideoPlayerUtils {
      * @param url               视频链接url
      */
     static void savePlayPosition(Context context, String url, long position) {
-        context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION",
-                Context.MODE_PRIVATE).edit().putLong(url, position).apply();
+        context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION", Context.MODE_PRIVATE).edit().putLong(url, position).apply();
     }
 
     /**
      * 取出上次保存的播放位置
-     * @param context
-     * @param url     视频链接url
+     * @param context           上下文
+     * @param url               视频链接url
      * @return 上次保存的播放位置
      */
     static long getSavedPlayPosition(Context context, String url) {
-        return context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION",
-                Context.MODE_PRIVATE).getLong(url, 0);
+        return context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION", Context.MODE_PRIVATE).getLong(url, 0);
     }
+
+    /**
+     * 清楚播放位置的痕迹
+     * @param context           上下文
+     */
+    public static void clearPlayPosition(Context context){
+        context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION", Context.MODE_PRIVATE).getAll().clear();
+    }
+
 }

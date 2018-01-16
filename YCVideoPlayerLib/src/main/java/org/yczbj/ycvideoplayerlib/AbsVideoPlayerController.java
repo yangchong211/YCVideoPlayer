@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -37,7 +38,7 @@ import java.util.TimerTask;
 public abstract class AbsVideoPlayerController extends FrameLayout implements View.OnTouchListener {
 
     private Context mContext;
-    protected InterVideoPlayer mNiceVideoPlayer;
+    protected InterVideoPlayer mVideoPlayer;
     private Timer mUpdateProgressTimer;
     private TimerTask mUpdateProgressTimerTask;
     private float mDownX;
@@ -58,9 +59,41 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         this.setOnTouchListener(this);
     }
 
-    public void setNiceVideoPlayer(InterVideoPlayer niceVideoPlayer) {
-        mNiceVideoPlayer = niceVideoPlayer;
+    public void setVideoPlayer(InterVideoPlayer videoPlayer) {
+        mVideoPlayer = videoPlayer;
     }
+
+    /**
+     * 设置不操作后，多久自动隐藏头部和底部布局
+     * @param time                  时间
+     */
+    public abstract void setHideTime(long time);
+
+    /**
+     * 设置会员权限话术内容
+     * @param memberContent         集合
+     */
+    public abstract void setMemberContent(ArrayList<String> memberContent);
+
+
+    /**
+     * 设置会员权限类型
+     * @param isLogin   是否登录
+     * @param isSee     是否有权限看[及时登录，如果没有成为会员也需区分权限的]
+     * @param type      视频类型
+     * @param isSaveProgress        是否保存观看位置
+     */
+    public abstract void setMemberType(boolean isLogin , boolean isSee , int type , boolean isSaveProgress);
+
+
+    /**
+     * 设置加载loading类型
+     *
+     * @param type 加载loading的类型
+     *             目前1，是仿腾讯加载loading
+     *             2，是转圈加载loading
+     */
+    public abstract void setLoadingType(int type);
 
     /**
      * 设置播放的视频的标题
@@ -84,7 +117,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
     public abstract ImageView imageView();
 
     /**
-     * 设置总时长.
+     * 设置总时长
      */
     public abstract void setLength(long length);
 
@@ -169,12 +202,12 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         // 只有全屏的时候才能拖动位置、亮度、声音
-        if (!mNiceVideoPlayer.isFullScreen()) {
+        if (!mVideoPlayer.isFullScreen()) {
             return false;
         }
         // 只有在播放、暂停、缓冲的时候能够拖动改变位置、亮度和声音
-        if (mNiceVideoPlayer.isIdle() || mNiceVideoPlayer.isError() || mNiceVideoPlayer.isPreparing()
-                || mNiceVideoPlayer.isPrepared() || mNiceVideoPlayer.isCompleted()) {
+        if (mVideoPlayer.isIdle() || mVideoPlayer.isError() || mVideoPlayer.isPreparing()
+                || mVideoPlayer.isPrepared() || mVideoPlayer.isCompleted()) {
             hideChangePosition();
             hideChangeBrightness();
             hideChangeVolume();
@@ -200,7 +233,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
                     if (absDeltaX >= THRESHOLD) {
                         cancelUpdateProgressTimer();
                         mNeedChangePosition = true;
-                        mGestureDownPosition = mNiceVideoPlayer.getCurrentPosition();
+                        mGestureDownPosition = mVideoPlayer.getCurrentPosition();
                     } else if (absDeltaY >= THRESHOLD) {
                         if (mDownX < getWidth() * 0.5f) {
                             // 左侧改变亮度
@@ -210,12 +243,12 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
                         } else {
                             // 右侧改变声音
                             mNeedChangeVolume = true;
-                            mGestureDownVolume = mNiceVideoPlayer.getVolume();
+                            mGestureDownVolume = mVideoPlayer.getVolume();
                         }
                     }
                 }
                 if (mNeedChangePosition) {
-                    long duration = mNiceVideoPlayer.getDuration();
+                    long duration = mVideoPlayer.getDuration();
                     long toPosition = (long) (mGestureDownPosition + duration * deltaX / getWidth());
                     mNewPosition = Math.max(0, Math.min(duration, toPosition));
                     int newPositionProgress = (int) (100f * mNewPosition / duration);
@@ -236,11 +269,11 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
                 }
                 if (mNeedChangeVolume) {
                     deltaY = -deltaY;
-                    int maxVolume = mNiceVideoPlayer.getMaxVolume();
+                    int maxVolume = mVideoPlayer.getMaxVolume();
                     int deltaVolume = (int) (maxVolume * deltaY * 3 / getHeight());
                     int newVolume = mGestureDownVolume + deltaVolume;
                     newVolume = Math.max(0, Math.min(maxVolume, newVolume));
-                    mNiceVideoPlayer.setVolume(newVolume);
+                    mVideoPlayer.setVolume(newVolume);
                     int newVolumeProgress = (int) (100f * newVolume / maxVolume);
                     showChangeVolume(newVolumeProgress);
                 }
@@ -248,7 +281,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 if (mNeedChangePosition) {
-                    mNiceVideoPlayer.seekTo(mNewPosition);
+                    mVideoPlayer.seekTo(mNewPosition);
                     hideChangePosition();
                     startUpdateProgressTimer();
                     return true;
@@ -261,6 +294,8 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
                     hideChangeVolume();
                     return true;
                 }
+                break;
+            default:
                 break;
         }
         return false;

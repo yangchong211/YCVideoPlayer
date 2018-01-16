@@ -31,12 +31,12 @@ public class TestMySecondActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onStop() {
         super.onStop();
-        VideoPlayerManager.instance().releaseNiceVideoPlayer();
+        VideoPlayerManager.instance().releaseVideoPlayer();
     }
 
     @Override
     public void onBackPressed() {
-        if (VideoPlayerManager.instance().onBackPressd()) return;
+        if (VideoPlayerManager.instance().onBackPressed()) return;
         super.onBackPressed();
     }
 

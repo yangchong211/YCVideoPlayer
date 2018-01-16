@@ -5,9 +5,18 @@ package org.yczbj.ycvideoplayerlib;
  */
 public class VideoClarity {
 
-    private String grade;           // 清晰度等级
-    private String p;               // 270P、480P、720P、1080P、4K ...
-    private String videoUrl;        // 视频链接地址
+    /**
+     * 清晰度等级
+     */
+    private String grade;
+    /**
+     * 270P、480P、720P、1080P、4K ...
+     */
+    private String p;
+    /**
+     * 视频链接地址
+     */
+    private String videoUrl;
 
     public VideoClarity(String grade, String p, String videoUrl) {
         this.grade = grade;

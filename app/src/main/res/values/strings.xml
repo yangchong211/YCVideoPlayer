@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">YCVideoPlayer</string>
+
+    <string name="start">开始</string>
+    <string name="pause">暂停</string>
+    <string name="delete">删除</string>
+
 </resources>
