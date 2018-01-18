@@ -8,6 +8,7 @@
 - 2.3 最简单的视频播放器参数设定
 - 2.4 注意的问题
 - 2.5 关于开源库中的类说明
+- 2.6 暴露接口让用户实现返回键和登录和购买会员点击事件逻辑
 - **3.关于播放类型说明**
 - 3.1 普通视频播放
 - 3.2 list页面视频播放
@@ -37,6 +38,7 @@
 - 9.1 V1.0.0 更新于2017年9月4日
 - 9.2 V1.0.1 更新于2017年11月18日
 - 9.3 v1.1.0 更新于2018年1月15日
+- 9.4 v1.1.1 更新于2018年1月18日
 - **10.关于参考文档说明**
 - 10.1 参考的项目
 - 10.2 参考的博客
@@ -335,6 +337,34 @@ compile 'cn.yc:YCVideoPlayerLib:2.2'
 
 #### 2.5 关于开源库中的类说明
 - ![image](http://p2mqszpjf.bkt.clouddn.com/ycVideoPlayer1.png)
+
+#### 2.6 暴露接口让用户实现返回键和登录和购买会员点击事件逻辑
+```
+	controller.setOnMemberClickListener(new OnMemberClickListener() {
+		@Override
+		public void onClick(int type) {
+			switch (type){
+				case ConstantKeys.Gender.LOGIN:
+					//调到用户登录也米娜
+					startActivity(MeLoginActivity.class);
+					break;
+				case ConstantKeys.Gender.MEMBER:
+					//调到用户充值会员页面
+					startActivity(MeMemberActivity.class);
+					break;
+				default:
+					break;
+			}
+		}
+	});
+	controller.setOnVideoBackListener(new OnVideoBackListener() {
+		@Override
+		public void onBackClick() {
+			onBackPressed();
+		}
+	});
+```
+
 
 
 ### 3.关于播放类型说明
@@ -1105,8 +1135,44 @@ public class VideoPlayerManager {
 
 ### 9.关于版本更新说明
 - **9.1 V1.0.0 更新于2017年10月4日**
+> 初期最简单功能
+- 9.1.1 支持最简单视频播放，暂停，缓冲，全屏播放等基础功能。
+- 9.1.2 支持滑动改变音量，改变声音大小的功能
+- 9.1.3 还有其他基本功能
+
+- 
+
 - **9.2 V1.0.1 更新于2017年11月18日**
+- 最简单的封装，并且阅读相关视频案例，借鉴了相关思路和复用了部分代码
+- 测试环节
+
 - **9.3 v1.1.0 更新于2018年1月15日**
+
+> 添加部分功能
+> 
+- 9.3.1 添加了设置视频播放权限的功能，用户可以自由设置权限，不过目前只是设置了用户是否登录，和登录用户是否有观看权限，因为公司需求是这样的，所以只有这两个。后期遇到其他需求再添加。逻辑已经在库中写好了，用户自己实现就可以呢。
+- 9.3.2 关于权限肯定有话术内容，那么用户可以通过调用接口直接设置展示在播放器试看结束后的内容。十分方便，这块参考了优酷和爱奇艺视频
+- 9.3.3 添加了用户多久不操作视频界面后，自动隐藏底部和头部布局视图。如果不设置，默认时间为5秒
+- 9.3.4 添加了多种视频加载时候的加载效果，目前有两种，一种是转圈效果，一种是帧动画效果。当然你可以自己添加动画加载效果
+
+
+- **9.4 v1.1.1 更新于2018年1月18日**
+
+> 修改了部分bug
+>
+- 9.4.1 修改了视频横向播放时，点击手机物理返回键，画面展示状态栏问题
+- 9.4.2 修改了在list页面(recyclerView)的视频，当上拉加载更多时，加载十几次会导致崩溃问题
+- 9.4.3 精简了布局文件，方便修改定制和阅读
+- 9.4.4 修改了在网络不好或者飞行模式下，用户播放视频，应该是播放错误而不是一直转圈加载问题
+- 9.4.5 完善了代码的注释，现在几乎所有的方法都有相关注释，方便阅读和理解。去掉了无用的代码
+
+-
+
+> 添加了部分功能
+>
+- 9.4.6 添加了暴露接口之用户登录和用户购买会员的接口，用户可以自己实现监听之后的操作或者跳转页面
+- 9.4.7 添加了视频左上方的返回键监听，用户可以自己实现返回逻辑
+- 9.4.8 添加了锁定屏幕方向的功能，还在测试中，有点问题
 
 
 ### 10.关于参考文档说明
@@ -1223,23 +1289,5 @@ http://blog.csdn.net/candicelijx/article/details/39495271
 - 泡在网上的日子：[http://www.jcodecraeer.com/member/content_list.php?channelid=1](http://www.jcodecraeer.com/member/content_list.php?channelid=1)
 - 邮箱：yangchong211@163.com
 - 阿里云博客：[https://yq.aliyun.com/users/article?spm=5176.100239.headeruserinfo.3.dT4bcV](https://yq.aliyun.com/users/article?spm=5176.100239.headeruserinfo.3.dT4bcV)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
