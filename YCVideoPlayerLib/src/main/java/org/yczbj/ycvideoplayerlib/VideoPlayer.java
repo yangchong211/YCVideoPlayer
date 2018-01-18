@@ -871,7 +871,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
      */
     @Override
     public void release() {
-        // 保存播放位置
+        // 保存播放位置，当正在播放时，缓冲时，缓冲暂停时，暂停时
         if (isPlaying() || isBufferingPlaying() || isBufferingPaused() || isPaused()) {
             VideoPlayerUtils.savePlayPosition(mContext, mUrl, getCurrentPosition());
         } else if (isCompleted()) {

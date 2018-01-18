@@ -64,6 +64,12 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
     }
 
     /**
+     * 设置试看视频时间，让使用者自己定制
+     * @param time                  时间
+     */
+    public abstract void setTrySeeTime(long time);
+
+    /**
      * 设置不操作后，多久自动隐藏头部和底部布局
      * @param time                  时间
      */

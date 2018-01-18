@@ -8,8 +8,8 @@ android {
         applicationId "org.yczbj.ycvideoplayer"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 11
+        versionName "1.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -75,11 +75,11 @@ dependencies {
     compile 'cn.yc:YCUtilsLib:1.5'                                  //公共类
     compile 'cn.yc:YCStateLib:1.1'                                  //状态管理
     compile 'cn.yc:YCBannerLib:1.2'                                 //轮播图
-    compile 'org.yczbj:YCRefreshViewLib:1.4'                        //RecyclerView封装
+    compile 'org.yczbj:YCRefreshViewLib:2.1'                        //RecyclerView封装
     compile 'cn.yc:YCBaseAdapterLib:1.2'                            //adapter封装
-    compile 'cn.yc:YCDialogLib:3.2'                                 //弹窗
+    compile 'cn.yc:YCDialogLib:3.3'                                 //弹窗
     compile 'cn.yc:YCProgressLib:1.2'                               //进度条
-    compile 'cn.yc:YCVideoPlayerLib:2.2'                            //播放器
-//    compile project(':YCVideoPlayerLib')
+    compile 'cn.yc:YCVideoPlayerLib:2.3'                            //播放器
+    //compile project(':YCVideoPlayerLib')
 
 }

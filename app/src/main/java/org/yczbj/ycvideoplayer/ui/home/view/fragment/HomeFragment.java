@@ -11,8 +11,6 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
-import com.blankj.utilcode.util.ImageUtils;
-import com.blankj.utilcode.util.SizeUtils;
 import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
 import com.yc.cn.ycbannerlib.first.BannerView;
 import com.yc.cn.ycbannerlib.first.util.SizeUtil;
@@ -20,7 +18,6 @@ import com.yc.cn.ycbaseadapterlib.first.BaseViewHolder;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.Constant;
-import org.yczbj.ycvideoplayer.api.ConstantImage;
 import org.yczbj.ycvideoplayer.base.BaseDelegateAdapter;
 import org.yczbj.ycvideoplayer.base.BaseFragment;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerJzActivity;
@@ -29,8 +26,7 @@ import org.yczbj.ycvideoplayer.ui.home.view.adapter.BannerPagerAdapter;
 import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
 import org.yczbj.ycvideoplayer.ui.test.TestActivity;
 import org.yczbj.ycvideoplayer.ui.test2.TestMyActivity;
-import org.yczbj.ycvideoplayer.ui.test3.GlideCropActivity;
-import org.yczbj.ycvideoplayer.util.ImageUtil;
+import org.yczbj.ycvideoplayer.ui.test3.ui.activity.GlideCropActivity;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

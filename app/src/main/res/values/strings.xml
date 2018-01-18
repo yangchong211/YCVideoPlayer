@@ -5,4 +5,40 @@
     <string name="pause">暂停</string>
     <string name="delete">删除</string>
 
+
+    <string name="del_file_error_empty">已经为空文件夹</string>
+    <string name="del_cache_files">删除所有已下载文件</string>
+
+    <string name="tasks_manager_demo_name" formatted="false">任务: %d</string>
+    <string name="tasks_manager_demo_status_loading">状态: 加载中...</string>
+    <string name="tasks_manager_demo_status_pending">状态: 队列中</string>
+    <string name="tasks_manager_demo_status_started">状态: 开始下载</string>
+    <string name="tasks_manager_demo_status_connected">状态: 已连接上</string>
+    <string name="tasks_manager_demo_status_progress">状态: 下载中...</string>
+    <string name="tasks_manager_demo_status_downloading" formatted="false">状态: 正在下载 %d</string>
+    <string name="tasks_manager_demo_status_error">状态: 出错</string>
+    <string name="tasks_manager_demo_status_warn">状态: 警告</string>
+    <string name="tasks_manager_demo_status_paused">状态: 暂停</string>
+    <string name="tasks_manager_demo_status_completed">状态: 下载完成</string>
+    <string name="tasks_manager_demo_status_not_downloaded">状态: 未下载</string>
+
+    <string name="hybrid_test_title">混合测试</string>
+    <string name="hybrid_test_deleted_file" formatted="false">已删除: %s</string>
+    <string name="hybrid_test_start_single_task" formatted="false">启动单任务下载: %s</string>
+    <string name="hybrid_test_start_multiple_tasks_parallel" formatted="false">启动%d个任务并行下载</string>
+    <string name="hybrid_test_start_multiple_tasks_serial" formatted="false">启动%d个任务串行下载</string>
+    <string name="hybrid_test_multiple_tasks_parallel_title">多任务队列并行下载</string>
+    <string name="hybrid_test_multiple_tasks_serial_title">多任务队列串行下载</string>
+    <string name="hybrid_test_single_task_title">单任务下载测试</string>
+    <string name="avoid_missing_screen_frames">避免掉帧</string>
+
+
+    <string name="notification_demo_title">下载通知案例</string>
+    <string name="notification_sample_title">下载通知简单案例</string>
+    <string name="notification_sample_show">显示通知</string>
+    <string name="notification_min_set_title">下载通知最简单案例</string>
+    <string name="notification_min_set_desc">这是一个最少代码的Notification案例,在这里我们使用尽量少的代码将下载任务与通知绑定在一起。</string>
+    <string name="notification_sample_desc">这是一个简单的Notification案例,在这里我们显示下载信息在通知面板的同时,还获取下载信息显示在Activity上,并且在下载任务结束或者暂停之后,我们依然保留任务的Notification在Notification面板上。</string>
+
+
 </resources>

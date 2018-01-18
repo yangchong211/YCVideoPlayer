@@ -18,6 +18,7 @@ import org.yczbj.ycvideoplayer.util.ImageUtil;
 import org.yczbj.ycvideoplayer.util.LogUtils;
 import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.OnMemberClickListener;
+import org.yczbj.ycvideoplayerlib.OnVideoBackListener;
 import org.yczbj.ycvideoplayerlib.VideoLogUtil;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerController;
@@ -105,7 +106,6 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
     public void initView() {
         //原始封装视频播放，没有设置登录状态和权限
         initVideo();
-
         //设置登录和权限
         initVideo7();
     }
@@ -237,7 +237,6 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
 
     /**
      * 没有登录没有权限，一键设置
-     *
      */
     private void initVideo7() {
         videoPlayer.release();
@@ -300,6 +299,12 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
                 }
             }
         });
+        controller.setOnVideoBackListener(new OnVideoBackListener() {
+            @Override
+            public void onBackClick() {
+                onBackPressed();
+            }
+        });
         //设置视频清晰度
         //videoPlayer.setClarity(list,720);
         //设置视频控制器
@@ -309,6 +314,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
 
     /**
      * 登录了，但不是会员没有权限，一键设置
+     * 并且设置试看时间为1分钟
      */
     private void initVideo8() {
         videoPlayer.release();
@@ -326,6 +332,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         controller.setTitle("高仿优酷视频播放页面");
         //controller.setLength(98000);
         controller.setLoadingType(1);
+        controller.setTrySeeTime(60000);
         controller.setMemberType(true,false,0,true);
         controller.imageView().setBackgroundResource(R.color.blackText);
         //ImageUtil.loadImgByPicasso(this, R.color.blackText, R.drawable.image_default, controller.imageView());

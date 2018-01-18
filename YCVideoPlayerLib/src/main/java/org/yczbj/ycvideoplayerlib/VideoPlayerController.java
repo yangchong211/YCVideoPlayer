@@ -119,7 +119,14 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private boolean mSeeEnd = true;
     //会员权限话术内容
     private ArrayList<String> mMemberContent;
+    /**
+     * 这个是time时间不操作界面，则自动隐藏顶部和底部视图布局
+     */
     private long time;
+    /**
+     * 这个是设置试看时间，当然前提是设置试看权限后才能生效，如果不设置，默认为30秒
+     */
+    private long mTrySeeTime;
 
 
     public VideoPlayerController(Context context) {
@@ -234,6 +241,15 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             pbLoadingRing.setVisibility(VISIBLE);
             pbLoadingQq.setVisibility(GONE);
         }
+    }
+
+    /**
+     * 设置试看视频时间，让使用者自己定制
+     * @param time                  时间
+     */
+    @Override
+    public void setTrySeeTime(long time) {
+        this.mTrySeeTime = time;
     }
 
 
@@ -383,7 +399,8 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         switch (playState) {
             case VideoPlayer.STATE_IDLE:
                 break;
-            case VideoPlayer.STATE_PREPARING:                           //播放准备中
+            //播放准备中
+            case VideoPlayer.STATE_PREPARING:
                 mImage.setVisibility(View.GONE);
                 mLoading.setVisibility(View.VISIBLE);
                 mLoadText.setText("正在准备...");
@@ -394,38 +411,45 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mCenterStart.setVisibility(View.GONE);
                 mLength.setVisibility(View.GONE);
                 break;
-            case VideoPlayer.STATE_PREPARED:                            //播放准备就绪
+            //播放准备就绪
+            case VideoPlayer.STATE_PREPARED:
                 startUpdateProgressTimer();
                 break;
-            case VideoPlayer.STATE_PLAYING:                             //正在播放
+            //正在播放
+            case VideoPlayer.STATE_PLAYING:
                 mLoading.setVisibility(View.GONE);
                 mRestartPause.setImageResource(R.drawable.ic_player_pause);
                 startDismissTopBottomTimer();
                 break;
-            case VideoPlayer.STATE_PAUSED:                              //暂停播放
+            //暂停播放
+            case VideoPlayer.STATE_PAUSED:
                 mLoading.setVisibility(View.GONE);
                 mRestartPause.setImageResource(R.drawable.ic_player_start);
                 cancelDismissTopBottomTimer();
                 break;
-            case VideoPlayer.STATE_BUFFERING_PLAYING:                   //正在缓冲(播放器正在播放时，缓冲区数据不足，进行缓冲，缓冲区数据足够后恢复播放)
+            //正在缓冲(播放器正在播放时，缓冲区数据不足，进行缓冲，缓冲区数据足够后恢复播放)
+            case VideoPlayer.STATE_BUFFERING_PLAYING:
                 mLoading.setVisibility(View.VISIBLE);
                 mRestartPause.setImageResource(R.drawable.ic_player_pause);
                 mLoadText.setText("正在缓冲...");
                 startDismissTopBottomTimer();
                 break;
-            case VideoPlayer.STATE_BUFFERING_PAUSED:                    //正在缓冲
+            //正在缓冲
+            case VideoPlayer.STATE_BUFFERING_PAUSED:
                 mLoading.setVisibility(View.VISIBLE);
                 mRestartPause.setImageResource(R.drawable.ic_player_start);
                 mLoadText.setText("正在缓冲...");
                 cancelDismissTopBottomTimer();
                 break;
-            case VideoPlayer.STATE_ERROR:                               //播放错误
+            //播放错误
+            case VideoPlayer.STATE_ERROR:
                 cancelUpdateProgressTimer();
                 setTopBottomVisible(false);
                 mTop.setVisibility(View.VISIBLE);
                 mError.setVisibility(View.VISIBLE);
                 break;
-            case VideoPlayer.STATE_COMPLETED:                           //播放完成
+            //播放完成
+            case VideoPlayer.STATE_COMPLETED:
                 cancelUpdateProgressTimer();
                 setTopBottomVisible(false);
                 mImage.setVisibility(View.VISIBLE);
@@ -567,15 +591,18 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             }
         } else if (v == mBack) {
             //退出，执行返回逻辑
+            //如果是全屏，则先退出全屏
             if (mVideoPlayer.isFullScreen()) {
                 mVideoPlayer.exitFullScreen();
             } else if (mVideoPlayer.isTinyWindow()) {
+                //如果是小窗口，则退出小窗口
                 mVideoPlayer.exitTinyWindow();
+            }else {
+                //如果两种情况都不是，执行逻辑交给使用者自己实现
+                if(mBackListener!=null){
+                    mBackListener.onBackClick();
+                }
             }
-            //思考，如何退出界面呢？？？
-            /*else {
-                mVideoPlayer.releasePlayer();
-            }*/
         } else if (v == mRestartPause) {
             //重新播放或者暂停
             if (mVideoPlayer.isPlaying() || mVideoPlayer.isBufferingPlaying()) {
@@ -627,7 +654,11 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         } else if (v == this) {
             if (mVideoPlayer.isPlaying() || mVideoPlayer.isPaused()
                     || mVideoPlayer.isBufferingPlaying() || mVideoPlayer.isBufferingPaused()) {
-                if(mVideoPlayer.getCurrentPosition()>30000){
+                if(mTrySeeTime==0){
+                    mTrySeeTime = 30000;
+                }
+
+                if(mVideoPlayer.getCurrentPosition()>mTrySeeTime){
                     //在试看3分钟外
                     //如果没有登录或者没有观看权限，则隐藏底部和顶部视图
                     if(mIsLogin || mIsSee){
@@ -723,8 +754,11 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
 
         //添加，如果没有播放权限或者没有登录，并且播放时间大于3分钟，则试看结束
         if (!mIsSee || !mIsLogin) {
+            if(mTrySeeTime==0){
+                mTrySeeTime = 30000;
+            }
             //避免更新中多次走这个方法
-            if(position >= 30000 && mSeeEnd){
+            if(position >= mTrySeeTime && mSeeEnd){
                 // 试看结束
                 setVideoTrySeeEnd();
                 mSeeEnd = false;
@@ -864,6 +898,17 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private OnMemberClickListener mClickListener;
     public void setOnMemberClickListener(OnMemberClickListener listener) {
         this.mClickListener = listener;
+    }
+
+    /**
+     * 当视频退出全屏或者退出小窗口后，再次点击返回键
+     * 让用户自己处理返回键事件的逻辑
+     * 欢迎同行交流：https://github.com/yangchong211
+     * 如果你觉得项目可以，欢迎star
+     */
+    private OnVideoBackListener mBackListener;
+    public void setOnVideoBackListener(OnVideoBackListener listener) {
+        this.mBackListener = listener;
     }
 
 

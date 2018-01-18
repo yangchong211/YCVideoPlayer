@@ -61,13 +61,28 @@
             android:textColor="@color/colorPrimary"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/speed_tv_1"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textColor="#000000"
-            android:textSize="14sp" />
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/speed_tv_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下载速度"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/state_tv_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="下载状态"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+        </LinearLayout>
+
 
         <ProgressBar
             android:id="@+id/progressBar_1"
@@ -119,13 +134,28 @@
             android:textColor="@color/colorPrimary"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/speed_tv_2"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textColor="#000000"
-            android:textSize="14sp" />
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/speed_tv_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下载速度"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/state_tv_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="下载状态"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+        </LinearLayout>
+
 
         <ProgressBar
             android:id="@+id/progressBar_2"
@@ -176,14 +206,29 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/speed_tv_3"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textColor="#000000"
-            android:textSize="14sp" />
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/speed_tv_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下载速度"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/state_tv_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="下载状态"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+
 
         <ProgressBar
             android:id="@+id/progressBar_3"
@@ -245,13 +290,28 @@
             android:textSize="14sp" />
 
 
-        <TextView
-            android:id="@+id/speed_tv_4"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textColor="#000000"
-            android:textSize="14sp" />
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/speed_tv_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下载速度"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/state_tv_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="下载状态"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+        </LinearLayout>
+
 
         <ProgressBar
             android:id="@+id/progressBar_4"

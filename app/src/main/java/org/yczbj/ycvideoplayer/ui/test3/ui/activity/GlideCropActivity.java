@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayer.ui.test3;
+package org.yczbj.ycvideoplayer.ui.test3.ui.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;

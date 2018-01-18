@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="left|center_vertical"
-                android:text="7.没有登录没有权限，一键设置"/>
+                android:text="7.没有登录没有权限，默认试看时间30秒，一键设置"/>
 
             <Button
                 android:id="@+id/btn_my_8"
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="left|center_vertical"
-                android:text="8.登录了，但不是会员没有权限，一键设置"/>
+                android:text="8.登录了，但会员没有权限，试看一分钟，一键设置"/>
 
             <Button
                 android:id="@+id/btn_my_9"

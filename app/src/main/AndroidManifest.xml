@@ -28,32 +28,80 @@
         <activity android:name=".ui.home.view.activity.VideoPlayerJzActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.test3.GlideCropActivity"/>
+        <activity android:name=".ui.me.view.MeLoginActivity" />
+        <activity android:name=".ui.me.view.MeMemberActivity"/>
+
+
 
 
         <!--下面这些均是测试视频播放器-->
-        <activity android:name=".ui.test.TestActivity"/>
-        <activity android:name=".ui.test.view.first.TestFirstActivity"/>
-        <activity android:name=".ui.test.view.first.TestApiFirstActivity"/>
-        <activity android:name=".ui.test.view.first.TestApiSecondActivity"/>
-        <activity android:name=".ui.test.view.first.TestApiThreeActivity"/>
-        <activity android:name=".ui.test.view.first.TestApiFourActivity"/>
-        <activity android:name=".ui.test.view.first.TestApiFiveActivity"/>
-        <activity android:name=".ui.test.view.first.TestApiSixActivity"/>
-        <activity android:name=".ui.test.view.second.TestSecondActivity"/>
-        <activity android:name=".ui.test.view.second.TestListFirstActivity"/>
-        <activity android:name=".ui.test.view.second.TestListSecondActivity"/>
-        <activity android:name=".ui.test.view.second.TestListThirdActivity"/>
-        <activity android:name=".ui.test.view.second.TestListFourActivity"/>
-        <activity android:name=".ui.test.view.second.TestListFiveActivity"/>
-        <activity android:name=".ui.test.view.three.TestThreeActivity"/>
-        <activity android:name=".ui.test.view.three.TestTinyFirstActivity"/>
-        <activity android:name=".ui.test.view.three.TestTinyThirdActivity"/>
-        <activity android:name=".ui.test.view.three.TestTinyFourActivity"/>
-        <activity android:name=".ui.test.view.three.TestTinyFiveActivity"/>
-        <activity android:name=".ui.test.view.four.TestFourActivity"/>
-        <activity android:name=".ui.test.view.five.TestFiveActivity"/>
-        <activity android:name=".ui.test.view.six.TestSixActivity"/>
+        <activity android:name=".ui.test3.ui.activity.GlideCropActivity"/>
+        <activity android:name=".ui.test.TestActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.first.TestFirstActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.first.TestApiFirstActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.first.TestApiSecondActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.first.TestApiThreeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.first.TestApiFourActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.first.TestApiFiveActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.first.TestApiSixActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.second.TestSecondActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.second.TestListFirstActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.second.TestListSecondActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.second.TestListThirdActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.second.TestListFourActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.second.TestListFiveActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.three.TestThreeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.three.TestTinyFirstActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.three.TestTinyThirdActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.three.TestTinyFourActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.three.TestTinyFiveActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.four.TestFourActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.five.TestFiveActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.view.six.TestSixActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".ui.test2.TestMyActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -77,13 +125,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.test3.DLSingleTestActivity"/>
-        <activity android:name=".ui.test3.DLHybridTestActivity"/>
-        <activity android:name=".ui.test3.DLManyTestActivity"/>
-        <activity android:name=".ui.test3.DLMyFileTestActivity"/>
-        <activity android:name=".ui.test3.DLNotificationTestActivity"/>
-        <activity android:name=".ui.me.view.MeLoginActivity" />
-        <activity android:name=".ui.me.view.MeMemberActivity"/>
+        <activity android:name=".ui.test3.ui.activity.DLSingleTestActivity"/>
+        <activity android:name=".ui.test3.ui.activity.DLHybridTestActivity"/>
+        <activity android:name=".ui.test3.ui.activity.DLManyTestActivity"/>
+        <activity android:name=".ui.test3.ui.activity.DLMyFileTestActivity"/>
+        <activity android:name=".ui.test3.ui.activity.DLNotificationTestActivity"/>
+
     </application>
 
 </manifest>

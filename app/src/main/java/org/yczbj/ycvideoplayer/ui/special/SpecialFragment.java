@@ -30,8 +30,6 @@ import org.yczbj.ycrefreshviewlib.item.SpaceViewItemLine;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.BaseFragment;
 import org.yczbj.ycvideoplayer.ui.home.model.VideoPlayerFavorite;
-import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerJzActivity;
-import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerMeActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.BannerPagerAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.NarrowImageAdapter;
 import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
@@ -39,13 +37,11 @@ import org.yczbj.ycvideoplayer.ui.special.contract.SpecialContract;
 import org.yczbj.ycvideoplayer.ui.special.model.SpecialBean;
 import org.yczbj.ycvideoplayer.ui.special.presenter.SpecialPresenter;
 import org.yczbj.ycvideoplayer.ui.special.view.SpecialAdapter;
-import org.yczbj.ycvideoplayer.ui.test2.TestMyActivity;
-import org.yczbj.ycvideoplayer.ui.test3.DLHybridTestActivity;
-import org.yczbj.ycvideoplayer.ui.test3.DLManyTestActivity;
-import org.yczbj.ycvideoplayer.ui.test3.DLMyFileTestActivity;
-import org.yczbj.ycvideoplayer.ui.test3.DLNotificationTestActivity;
-import org.yczbj.ycvideoplayer.ui.test3.GlideCropActivity;
-import org.yczbj.ycvideoplayer.ui.test3.DLSingleTestActivity;
+import org.yczbj.ycvideoplayer.ui.test3.ui.activity.DLHybridTestActivity;
+import org.yczbj.ycvideoplayer.ui.test3.ui.activity.DLManyTestActivity;
+import org.yczbj.ycvideoplayer.ui.test3.ui.activity.DLMyFileTestActivity;
+import org.yczbj.ycvideoplayer.ui.test3.ui.activity.DLNotificationTestActivity;
+import org.yczbj.ycvideoplayer.ui.test3.ui.activity.DLSingleTestActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,6 +137,7 @@ public class SpecialFragment extends BaseFragment implements SpecialContract.Vie
         });
     }
 
+
     private void addHeader() {
         adapter.removeAllHeader();
         initTopHeaderView();
@@ -171,9 +168,11 @@ public class SpecialFragment extends BaseFragment implements SpecialContract.Vie
                     @Override
                     public void onClick(View v) {
                         switch (v.getId()){
+                            //启动单任务下载
                             case R.id.tv_special_first:
                                 startActivity(DLSingleTestActivity.class);
                                 break;
+                            //多任务下载
                             case R.id.tv_special_second:
                                 startActivity(DLManyTestActivity.class);
                                 break;
@@ -318,6 +317,7 @@ public class SpecialFragment extends BaseFragment implements SpecialContract.Vie
     }
 
 
+    @SuppressWarnings("AlibabaAvoidManuallyCreateThread")
     @Override
     public void setAdapterView(List<SpecialBean> list) {
         adapter.addAll(list);
