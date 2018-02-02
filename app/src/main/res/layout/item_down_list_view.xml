@@ -36,6 +36,18 @@
             android:layout_weight="1.0" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_start_or_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:layout_marginTop="3dp"
+        android:background="@color/gray3"
+        android:padding="10dp"
+        android:textSize="14sp"
+        android:textColor="@color/blackText3"
+        android:text="暂停"/>
 
     <LinearLayout
         android:id="@+id/ll_download"
@@ -54,8 +66,8 @@
                 android:background="@drawable/icon_cache_download"/>
             <com.ns.yc.ycprogresslib.CircleProgressbar
                 android:id="@+id/circle_pb"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:text="" />
         </FrameLayout>
         <TextView

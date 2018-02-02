@@ -94,7 +94,7 @@ public class TasksManager {
         task.setTag(holder);
     }
 
-    public void releaseTask() {
+    private void releaseTask() {
         taskSparseArray.clear();
     }
 
@@ -202,7 +202,6 @@ public class TasksManager {
         if (TextUtils.isEmpty(url) || TextUtils.isEmpty(path)) {
             return null;
         }
-
         final int id = FileDownloadUtils.generateId(url, path);
         TasksManagerModel model = getById(id);
         if (model != null) {
@@ -212,7 +211,6 @@ public class TasksManager {
         if (newModel != null) {
             modelList.add(newModel);
         }
-
         return newModel;
     }
 

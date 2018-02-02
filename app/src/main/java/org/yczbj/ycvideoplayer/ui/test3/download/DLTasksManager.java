@@ -40,7 +40,6 @@ public class DLTasksManager {
     private DLTasksManager() {
         dbController = new DLTasksManagerDBController();
         modelList = dbController.getAllTasks();
-        //initDemo();
     }
 
     private void initDemo() {
@@ -124,7 +123,10 @@ public class DLTasksManager {
     }
 
     public DLTasksManagerModel get(final int position) {
-        return modelList.get(position);
+        if(modelList!=null && modelList.size()>=position){
+            return modelList.get(position);
+        }
+        return null;
     }
 
     public DLTasksManagerModel getById(final int id) {

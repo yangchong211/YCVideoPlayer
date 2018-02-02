@@ -46,15 +46,6 @@ public class DLManyTestActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        TasksManager.getImpl().onDestroy();
-        adapter = null;
-        FileDownloader.getImpl().pauseAll();
-        super.onDestroy();
-    }
-
-
-    @Override
     public int getContentView() {
         return R.layout.base_recycler_view;
     }

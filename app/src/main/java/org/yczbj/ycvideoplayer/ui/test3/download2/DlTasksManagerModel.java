@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayer.ui.test3.download;
+package org.yczbj.ycvideoplayer.ui.test3.download2;
 
 import android.content.ContentValues;
 
@@ -6,28 +6,36 @@ import android.content.ContentValues;
  * Created by yc on 2018/1/17.
  */
 
-public class DLTasksManagerModel {
+public class DlTasksManagerModel {
 
     public final static String ID = "id";
     public final static String LOGO = "logo";
     public final static String NAME = "name";
     public final static String URL = "url";
     public final static String PATH = "path";
+    public final static String TYPE = "type";
 
     private int id;
     private String logo;
     private String name;
     private String url;
     private String path;
+    /**
+     * type表示类型：1是正在下载中数据；2是已经完成下载数据，其他则是默认为1类型
+     */
+    private int type;
 
-    DLTasksManagerModel() {}
+    public DlTasksManagerModel() {
 
-    public DLTasksManagerModel(int id, String logo, String name, String url, String path) {
+    }
+
+    public DlTasksManagerModel(int id, String logo, String name, String url, String path , int type) {
         this.id = id;
         this.logo = logo;
         this.name = name;
         this.url = url;
         this.path = path;
+        this.type = type;
     }
 
     public String getLogo() {
@@ -70,6 +78,15 @@ public class DLTasksManagerModel {
         this.path = path;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+
     public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
         cv.put(ID, id);
@@ -77,6 +94,7 @@ public class DLTasksManagerModel {
         cv.put(NAME, name);
         cv.put(URL, url);
         cv.put(PATH, path);
+        cv.put(TYPE, type);
         return cv;
     }
 

@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
-import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialog;
+import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
 import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
@@ -368,14 +368,13 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
                     "name","title",ConstantVideo.VideoPlayerList[a]);
             list.add(dialogListBean);
         }
-        BottomDialog.create(getSupportFragmentManager())
-            .setViewListener(new BottomDialog.ViewListener() {
+        BottomDialogFragment.create(getSupportFragmentManager())
+            .setViewListener(new BottomDialogFragment.ViewListener() {
                 @Override
                 public void bindView(View v) {
                     RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
                     ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
                     ImageView ivDownload = (ImageView) v.findViewById(R.id.iv_download);
-                    ivCancel.setVisibility(View.GONE);
 
                     recyclerView.setLayoutManager(new LinearLayoutManager(VideoPlayerMeActivity.this));
                     DialogListAdapter mAdapter = new DialogListAdapter(VideoPlayerMeActivity.this, list);

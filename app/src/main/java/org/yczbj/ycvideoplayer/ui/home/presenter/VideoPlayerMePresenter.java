@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.flyco.tablayout.listener.CustomTabEntity;
-import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialog;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.ui.home.contract.VideoPlayerMeContract;

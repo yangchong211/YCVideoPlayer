@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.yczbj.ycrefreshviewlib.swipeMenu.YCSwipeMenu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+    <!--item内容-->
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center_vertical"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@android:color/white">
+        <FrameLayout
+            android:id="@+id/fl_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp">
+            <ImageView
+                android:id="@+id/iv_image"
+                android:layout_width="100dp"
+                android:layout_height="75dp"
+                android:background="@drawable/image_default" />
+            <ImageView
+                android:id="@+id/iv_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_player_start"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_toRightOf="@+id/fl_image"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="这个是音视频的标题"
+                android:textColor="@color/blackText"
+                android:gravity="center_vertical" />
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/blackText2"
+                android:text="下载状态"
+                android:textSize="12sp"/>
+            <ProgressBar
+                android:id="@+id/pb"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- 侧滑菜单 -->
+    <Button
+        android:id="@+id/btn_del"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:text="删除"
+        android:textColor="@android:color/white"/>
+    <Button
+        android:id="@+id/btn_top"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
+        android:text="置顶"
+        android:textColor="@android:color/white"/>
+
+</org.yczbj.ycrefreshviewlib.swipeMenu.YCSwipeMenu>

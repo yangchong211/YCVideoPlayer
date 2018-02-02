@@ -60,7 +60,7 @@ public class DLManyAdapter extends RecyclerView.Adapter<DLManyAdapter.MyViewHold
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_dialog_list_view, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_down_list_view, parent, false);
         return new MyViewHolder(view, mItemClickListener);
     }
 
@@ -309,11 +309,20 @@ public class DLManyAdapter extends RecyclerView.Adapter<DLManyAdapter.MyViewHold
                 // to start
                 // to start
                 String path = TasksManager.getImpl().createPath(downManyBean.getPath());
-                final DLTasksManagerModel model = DLTasksManager.getImpl().get(holder.position);
-                final BaseDownloadTask task = FileDownloader.getImpl().create(model.getUrl())
+                final BaseDownloadTask task = FileDownloader.getImpl().create(downManyBean.getPath())
                         .setPath(path)
                         .setCallbackProgressTimes(100)
                         .setListener(taskDownloadListener);
+
+                /*final DLTasksManagerModel model = DLTasksManager.getImpl().get(holder.position);
+                if(model==null){
+                    ToastUtil.showToast(context,"值不能为空");
+                    return;
+                }
+                final BaseDownloadTask task = FileDownloader.getImpl().create(model.getUrl())
+                        .setPath(path)
+                        .setCallbackProgressTimes(100)
+                        .setListener(taskDownloadListener);*/
 
                 DLTasksManager.getImpl().addTaskForViewHolder(task);
                 DLTasksManager.getImpl().updateViewHolder(holder.id, holder);

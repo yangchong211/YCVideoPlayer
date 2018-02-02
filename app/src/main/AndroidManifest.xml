@@ -30,6 +30,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.me.view.MeLoginActivity" />
         <activity android:name=".ui.me.view.MeMemberActivity"/>
+        <activity android:name=".ui.me.view.MeCacheActivity"/>
 
 
 
