@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayer.api;
+package org.yczbj.ycvideoplayer.api.constant;
 
 
 

@@ -10,7 +10,7 @@ import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
-import org.yczbj.ycvideoplayer.api.ConstantVideo;
+import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.ui.test3.ui.activity.DLManyTestActivity;
 import org.yczbj.ycvideoplayer.ui.test3.ui.adapter.DLManyAdapter;
 

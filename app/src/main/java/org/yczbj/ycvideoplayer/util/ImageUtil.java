@@ -96,6 +96,7 @@ public class ImageUtil {
         }
     }
 
+
     /**
      * 加载图片
      * @param resId
@@ -119,6 +120,7 @@ public class ImageUtil {
                     .into(target);
         }
     }
+
 
     /**
      * 加载图片
@@ -168,6 +170,7 @@ public class ImageUtil {
                     .into(target);
         }
     }
+
 
     /**------------------------------Glide加载图片--------------------------------------------------**/
 

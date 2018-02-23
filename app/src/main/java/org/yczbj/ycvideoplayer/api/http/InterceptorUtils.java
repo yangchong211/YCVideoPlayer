@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayer.util;
+package org.yczbj.ycvideoplayer.api.http;
 
 import android.util.Log;
 
@@ -69,7 +69,6 @@ public class InterceptorUtils {
         return headerInterceptor;
     }
 
-
     /**
      * 统一请求拦截器
      * 统一的请求参数
@@ -93,7 +92,6 @@ public class InterceptorUtils {
         return commonParams;
     }
 
-
     /**
      * 在无网络的情况下读取缓存，有网络的情况下根据缓存的过期时间重新请求
      * @return
@@ -111,7 +109,7 @@ public class InterceptorUtils {
                 }
                 Response response = chain.proceed(request);
                 if (NetworkUtils.isConnected()) {
-                    // 有网络情况下，根据请求接口的设置，配置缓存。
+                    //有网络情况下，根据请求接口的设置，配置缓存。
                     // 这样在下次请求时，根据缓存决定是否真正发出请求。
                     String cacheControl = request.cacheControl().toString();
                     //当然如果你想在有网络的情况下都直接走网络，那么只需要
@@ -135,7 +133,6 @@ public class InterceptorUtils {
         return commonParams;
     }
 
-
     /**
      * 自定义CookieJar
      * @param builder
@@ -157,6 +154,5 @@ public class InterceptorUtils {
             }
         });
     }
-
 
 }

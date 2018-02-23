@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.api.ConstantVideo;
+import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.ui.test2.model.Video;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerManager;

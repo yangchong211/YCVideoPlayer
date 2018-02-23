@@ -186,6 +186,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         mUpdateProgressTimer.schedule(mUpdateProgressTimerTask, 0, 1000);
     }
 
+
     /**
      * 取消更新进度的计时器。
      */
@@ -199,6 +200,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
             mUpdateProgressTimerTask = null;
         }
     }
+
 
     /**
      * 更新进度，包括进度条进度，展示的当前播放位置时长，总时长等。
@@ -307,6 +309,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         return false;
     }
 
+
     /**
      * 手势左右滑动改变播放位置时，显示控制器中间的播放位置变化视图，
      * 在手势滑动ACTION_MOVE的过程中，会不断调用此方法。
@@ -316,11 +319,13 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      */
     protected abstract void showChangePosition(long duration, int newPositionProgress);
 
+
     /**
      * 手势左右滑动改变播放位置后，手势up或者cancel时，隐藏控制器中间的播放位置变化视图，
      * 在手势ACTION_UP或ACTION_CANCEL时调用。
      */
     protected abstract void hideChangePosition();
+
 
     /**
      * 手势在右侧上下滑动改变音量时，显示控制器中间的音量变化视图，

@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.Button;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.api.ConstantVideo;
+import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.BaseActivity;
 import org.yczbj.ycvideoplayer.ui.me.view.MeLoginActivity;
 import org.yczbj.ycvideoplayer.ui.me.view.MeMemberActivity;

@@ -30,7 +30,7 @@ import java.util.Locale;
 
 /**
  * @author yc
- * @date 2017/12/4
+ * @date 2017/9/4
  * 参考项目：
  * https://github.com/CarGuo/GSYVideoPlayer
  * https://github.com/danylovolokh/VideoPlayerManager
@@ -170,6 +170,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mChangeBrightnessProgress = (ProgressBar) findViewById(R.id.change_brightness_progress);
         mChangeVolume = (LinearLayout) findViewById(R.id.change_volume);
         mChangeVolumeProgress = (ProgressBar) findViewById(R.id.change_volume_progress);
+
         mError = (LinearLayout) findViewById(R.id.error);
         mRetry = (TextView) findViewById(R.id.retry);
         mCompleted = (LinearLayout) findViewById(R.id.completed);

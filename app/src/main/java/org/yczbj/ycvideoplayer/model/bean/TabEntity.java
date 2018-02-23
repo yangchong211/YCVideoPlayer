@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayer.bean;
+package org.yczbj.ycvideoplayer.model.bean;
 
 import com.flyco.tablayout.listener.CustomTabEntity;
 

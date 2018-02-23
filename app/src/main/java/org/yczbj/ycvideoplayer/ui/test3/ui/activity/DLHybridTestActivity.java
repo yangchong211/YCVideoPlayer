@@ -1,7 +1,6 @@
 package org.yczbj.ycvideoplayer.ui.test3.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,7 @@ import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.api.ConstantVideo;
+import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.BaseActivity;
 
 import java.io.File;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 
 public class DLHybridTestActivity extends BaseActivity implements View.OnClickListener {

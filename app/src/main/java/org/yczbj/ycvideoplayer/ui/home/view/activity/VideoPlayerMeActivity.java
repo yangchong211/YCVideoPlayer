@@ -29,7 +29,7 @@ import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 import org.yczbj.ycrefreshviewlib.item.SpaceViewItemLine;
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.api.ConstantVideo;
+import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.BaseActivity;
 import org.yczbj.ycvideoplayer.ui.home.contract.VideoPlayerMeContract;
 import org.yczbj.ycvideoplayer.ui.home.model.DialogListBean;

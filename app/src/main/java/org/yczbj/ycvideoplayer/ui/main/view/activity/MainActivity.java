@@ -18,6 +18,7 @@ import com.ns.yc.ycutilslib.viewPager.NoSlidingViewPager;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.AppManager;
 import org.yczbj.ycvideoplayer.base.BaseActivity;
+import org.yczbj.ycvideoplayer.base.BaseFragmentFactory;
 import org.yczbj.ycvideoplayer.base.BasePagerAdapter;
 import org.yczbj.ycvideoplayer.download.TasksManager;
 import org.yczbj.ycvideoplayer.ui.find.view.FindFragment;
@@ -133,15 +134,10 @@ public class MainActivity extends BaseActivity implements MainContract.View{
      */
     private void initViewPager() {
         List<Fragment> fragments = new ArrayList<>();
-        HomeFragment homeFragment = new HomeFragment();
-        SpecialFragment specialFragment = new SpecialFragment();
-        FindFragment findFragment = new FindFragment();
-        MeFragment meFragment = new MeFragment();
-        fragments.add(homeFragment);
-        fragments.add(specialFragment);
-        fragments.add(findFragment);
-        fragments.add(meFragment);
-
+        fragments.add(BaseFragmentFactory.getInstance().getHomeFragment());
+        fragments.add(BaseFragmentFactory.getInstance().getSpecialFragment());
+        fragments.add(BaseFragmentFactory.getInstance().getFindFragment());
+        fragments.add(BaseFragmentFactory.getInstance().getMeFragment());
         BasePagerAdapter adapter = new BasePagerAdapter(getSupportFragmentManager(), fragments);
         vpHome.setAdapter(adapter);
         vpHome.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

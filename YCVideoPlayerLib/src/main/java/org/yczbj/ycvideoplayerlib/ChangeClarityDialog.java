@@ -26,6 +26,7 @@ public class ChangeClarityDialog extends Dialog {
         init(context);
     }
 
+
     @Override
     public void onBackPressed() {
         // 按返回键时回调清晰度没有变化
@@ -34,6 +35,7 @@ public class ChangeClarityDialog extends Dialog {
         }
         super.onBackPressed();
     }
+
 
     private void init(Context context) {
         mLinearLayout = new LinearLayout(context);
@@ -60,12 +62,13 @@ public class ChangeClarityDialog extends Dialog {
         }
     }
 
+
     /**
      * 设置清晰度等级
      * @param items          清晰度等级items
      * @param defaultChecked 默认选中的清晰度索引
      */
-    public void setClarityGrade(List<String> items, int defaultChecked) {
+    void setClarityGrade(List<String> items, int defaultChecked) {
         mCurrentCheckedIndex = defaultChecked;
         for (int i = 0; i < items.size(); i++) {
             TextView itemView = (TextView) LayoutInflater.from(getContext())

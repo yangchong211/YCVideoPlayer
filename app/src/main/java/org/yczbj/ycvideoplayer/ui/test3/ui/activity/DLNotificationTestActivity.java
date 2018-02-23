@@ -2,7 +2,6 @@ package org.yczbj.ycvideoplayer.ui.test3.ui.activity;
 
 import android.app.NotificationManager;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,7 +16,7 @@ import com.liulishuo.filedownloader.notification.FileDownloadNotificationListene
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.api.ConstantVideo;
+import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.BaseActivity;
 import org.yczbj.ycvideoplayer.ui.test3.ui.NotificationItem;
 
@@ -25,7 +24,6 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by yc on 2018/1/12.

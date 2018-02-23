@@ -17,7 +17,7 @@ import com.yc.cn.ycbannerlib.first.util.SizeUtil;
 import com.yc.cn.ycbaseadapterlib.first.BaseViewHolder;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.api.Constant;
+import org.yczbj.ycvideoplayer.api.constant.Constant;
 import org.yczbj.ycvideoplayer.base.BaseDelegateAdapter;
 import org.yczbj.ycvideoplayer.base.BaseFragment;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerJzActivity;

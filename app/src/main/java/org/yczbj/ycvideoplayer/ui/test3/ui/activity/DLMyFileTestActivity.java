@@ -13,13 +13,10 @@ import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
 
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.api.ConstantVideo;
+import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.BaseActivity;
 import org.yczbj.ycvideoplayer.listener.OnListItemClickListener;
-import org.yczbj.ycvideoplayer.ui.home.model.DialogListBean;
 import org.yczbj.ycvideoplayer.ui.me.view.MeCacheActivity;
-import org.yczbj.ycvideoplayer.ui.me.view.MeMemberActivity;
-import org.yczbj.ycvideoplayer.ui.test3.download.DLTasksManagerModel;
 import org.yczbj.ycvideoplayer.ui.test3.download2.DlTasksManagerModel;
 import org.yczbj.ycvideoplayer.ui.test3.ui.adapter.DlMyFileAdapter;
 import org.yczbj.ycvideoplayer.util.AppUtil;

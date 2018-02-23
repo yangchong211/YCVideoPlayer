@@ -204,6 +204,7 @@ public class AppUtil {
         }
     }
 
+
     /**
      * 设置页面的昏暗度
      * 主要作用于：弹窗时设置宿主Activity的背景色
@@ -222,6 +223,7 @@ public class AppUtil {
             window.setAttributes(lp);
         }
     }
+
 
     /**
      * 背景模糊
@@ -258,6 +260,7 @@ public class AppUtil {
         return true;
     }
 
+
     /**
      * 判断某Activity是否挂掉，主要是用于弹窗
      */
@@ -274,6 +277,7 @@ public class AppUtil {
         }
         return false;
     }
+
 
     /**
      * 格式化毫秒值，如果这个毫秒值包含小时，则格式为时分秒，如:01:30:58，如果不包含小时，则格式化为分秒，如：30:58

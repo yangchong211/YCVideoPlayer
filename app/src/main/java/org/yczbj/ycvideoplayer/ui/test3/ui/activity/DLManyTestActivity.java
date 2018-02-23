@@ -9,13 +9,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.SizeUtils;
-import com.liulishuo.filedownloader.FileDownloader;
 
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.api.ConstantVideo;
+import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.BaseActivity;
-import org.yczbj.ycvideoplayer.download.TasksManager;
 import org.yczbj.ycvideoplayer.listener.OnItemLongClickListener;
 import org.yczbj.ycvideoplayer.listener.OnListItemClickListener;
 import org.yczbj.ycvideoplayer.ui.test3.download.DLTasksManager;

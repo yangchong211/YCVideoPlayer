@@ -13,7 +13,7 @@ import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.api.ConstantVideo;
+import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.BaseActivity;
 import org.yczbj.ycvideoplayer.util.LogUtils;
 

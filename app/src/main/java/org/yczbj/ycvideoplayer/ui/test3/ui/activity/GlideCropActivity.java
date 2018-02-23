@@ -2,7 +2,6 @@ package org.yczbj.ycvideoplayer.ui.test3.ui.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,13 +15,12 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.api.ConstantImage;
+import org.yczbj.ycvideoplayer.api.constant.ConstantImage;
 import org.yczbj.ycvideoplayer.base.BaseActivity;
 import org.yczbj.ycvideoplayer.util.ImageCropUtils;
 import org.yczbj.ycvideoplayer.weight.HeightTransformation;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by yc on 2018/1/10.
