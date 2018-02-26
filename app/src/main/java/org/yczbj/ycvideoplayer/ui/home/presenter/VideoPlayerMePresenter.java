@@ -14,7 +14,7 @@ import org.yczbj.ycvideoplayer.ui.home.model.VideoPlayerComment;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
 
 
 /**
@@ -29,12 +29,12 @@ import rx.subscriptions.CompositeSubscription;
 public class VideoPlayerMePresenter implements VideoPlayerMeContract.Presenter {
 
     private VideoPlayerMeContract.View mView;
-    private CompositeSubscription mSubscriptions;
+    private CompositeDisposable mSubscriptions;
     private Activity activity;
 
     public VideoPlayerMePresenter(VideoPlayerMeContract.View androidView) {
         this.mView = androidView;
-        mSubscriptions = new CompositeSubscription();
+        mSubscriptions = new CompositeDisposable();
     }
 
     @Override

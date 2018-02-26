@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author yc
@@ -51,6 +54,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
     private float mGestureDownBrightness;
     private int mGestureDownVolume;
     private long mNewPosition;
+    private ScheduledExecutorService pool;
 
 
     public AbsVideoPlayerController(Context context) {
@@ -167,6 +171,27 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      */
     protected void startUpdateProgressTimer() {
         cancelUpdateProgressTimer();
+        // Java并发，Timer的缺陷，用ScheduledExecutorService替代
+        /*if(pool==null){
+            pool = Executors.newScheduledThreadPool(1);
+            //pool = Executors.newSingleThreadScheduledExecutor();
+        }
+        if (mUpdateProgressTimerTask == null) {
+            mUpdateProgressTimerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    AbsVideoPlayerController.this.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateProgress();
+                        }
+                    });
+                }
+            };
+        }
+        pool.scheduleWithFixedDelay(mUpdateProgressTimerTask,0,1000, TimeUnit.MILLISECONDS);*/
+
+
         if (mUpdateProgressTimer == null) {
             mUpdateProgressTimer = new Timer();
         }

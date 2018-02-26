@@ -13,7 +13,7 @@ import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
 
 import java.util.ArrayList;
 
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
 
 
 /**
@@ -28,12 +28,12 @@ import rx.subscriptions.CompositeSubscription;
 public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View mView;
-    private CompositeSubscription mSubscriptions;
+    private CompositeDisposable mSubscriptions;
     private Activity activity;
 
     public MainPresenter(MainContract.View androidView) {
         this.mView = androidView;
-        mSubscriptions = new CompositeSubscription();
+        mSubscriptions = new CompositeDisposable();
     }
 
     @Override

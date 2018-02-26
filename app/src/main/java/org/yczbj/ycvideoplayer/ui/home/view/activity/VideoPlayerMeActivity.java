@@ -30,7 +30,7 @@ import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 import org.yczbj.ycrefreshviewlib.item.SpaceViewItemLine;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
-import org.yczbj.ycvideoplayer.base.BaseActivity;
+import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayer.ui.home.contract.VideoPlayerMeContract;
 import org.yczbj.ycvideoplayer.ui.home.model.DialogListBean;
 import org.yczbj.ycvideoplayer.ui.home.model.VideoPlayerComment;
@@ -39,8 +39,8 @@ import org.yczbj.ycvideoplayer.ui.home.presenter.VideoPlayerMePresenter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.DialogListAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.NarrowImageAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.VideoPlayerMeAdapter;
-import org.yczbj.ycvideoplayer.ui.me.view.MeLoginActivity;
-import org.yczbj.ycvideoplayer.ui.test.view.second.TestSecondActivity;
+import org.yczbj.ycvideoplayer.ui.person.MeLoginActivity;
+import org.yczbj.ycvideoplayer.test.test1.view.second.TestSecondActivity;
 import org.yczbj.ycvideoplayer.util.AppUtil;
 import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.OnMemberClickListener;
@@ -208,7 +208,7 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
             @Override
             public View onCreateView(ViewGroup parent) {
                 return LayoutInflater.from(VideoPlayerMeActivity.this).inflate(
-                        R.layout.head_video_player, parent, false);
+                        R.layout.head_video_player_top, parent, false);
             }
 
 

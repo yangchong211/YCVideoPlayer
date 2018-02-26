@@ -9,7 +9,7 @@ import org.yczbj.ycvideoplayer.ui.special.model.SpecialBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
 
 
 /**
@@ -22,12 +22,12 @@ import rx.subscriptions.CompositeSubscription;
 public class SpecialPresenter implements SpecialContract.Presenter {
 
     private SpecialContract.View mView;
-    private CompositeSubscription mSubscriptions;
+    private CompositeDisposable mSubscriptions;
     private Activity activity;
 
     public SpecialPresenter(SpecialContract.View androidView) {
         this.mView = androidView;
-        mSubscriptions = new CompositeSubscription();
+        mSubscriptions = new CompositeDisposable();
     }
 
     @Override

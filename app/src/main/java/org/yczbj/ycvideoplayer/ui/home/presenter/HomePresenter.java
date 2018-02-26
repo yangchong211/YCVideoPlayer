@@ -7,7 +7,9 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.ui.home.contract.HomeContract;
 
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableOnSubscribe;
+import io.reactivex.disposables.CompositeDisposable;
 
 
 /**
@@ -22,12 +24,11 @@ import rx.subscriptions.CompositeSubscription;
 public class HomePresenter implements HomeContract.Presenter {
 
     private HomeContract.View mView;
-    private CompositeSubscription mSubscriptions;
+    private CompositeDisposable mSubscriptions;
     private Activity activity;
 
     public HomePresenter(HomeContract.View androidView) {
         this.mView = androidView;
-        mSubscriptions = new CompositeSubscription();
     }
 
     @Override
@@ -38,7 +39,6 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void unSubscribe() {
-        mSubscriptions.clear();
         if(activity!=null){
             activity = null;
         }

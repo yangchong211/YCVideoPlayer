@@ -19,14 +19,14 @@ import com.yc.cn.ycbaseadapterlib.first.BaseViewHolder;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.Constant;
 import org.yczbj.ycvideoplayer.base.BaseDelegateAdapter;
-import org.yczbj.ycvideoplayer.base.BaseFragment;
+import org.yczbj.ycvideoplayer.base.mvp1.BaseFragment;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerJzActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerMeActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.BannerPagerAdapter;
 import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
-import org.yczbj.ycvideoplayer.ui.test.TestActivity;
-import org.yczbj.ycvideoplayer.ui.test2.TestMyActivity;
-import org.yczbj.ycvideoplayer.ui.test3.ui.activity.GlideCropActivity;
+import org.yczbj.ycvideoplayer.test.test1.TestActivity;
+import org.yczbj.ycvideoplayer.test.test2.TestMyActivity;
+import org.yczbj.ycvideoplayer.test.test3.ui.activity.GlideCropActivity;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

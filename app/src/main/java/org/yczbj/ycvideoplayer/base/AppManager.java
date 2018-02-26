@@ -44,7 +44,7 @@ public class AppManager {
     /**
      * 添加Activity到堆栈
      */
-    void addActivity(Activity activity) {
+    public void addActivity(Activity activity) {
         if(activityStack == null){
             activityStack = new Stack<>();
         }
@@ -87,7 +87,7 @@ public class AppManager {
      * 移除指定的Activity
      * @param activity
      */
-    void removeActivity(Activity activity) {
+    public void removeActivity(Activity activity) {
         if (activity != null) {
             activityStack.remove(activity);
         }

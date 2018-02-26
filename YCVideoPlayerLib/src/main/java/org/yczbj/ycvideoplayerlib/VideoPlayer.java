@@ -248,16 +248,19 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     @Override
     public void restart() {
         if (mCurrentState == STATE_PAUSED) {
+            //如果是暂停状态，那么则继续播放
             mMediaPlayer.start();
             mCurrentState = STATE_PLAYING;
             mController.onPlayStateChanged(mCurrentState);
             VideoLogUtil.d("STATE_PLAYING");
         } else if (mCurrentState == STATE_BUFFERING_PAUSED) {
+            //如果是缓存暂停状态，那么则继续播放
             mMediaPlayer.start();
             mCurrentState = STATE_BUFFERING_PLAYING;
             mController.onPlayStateChanged(mCurrentState);
             VideoLogUtil.d("STATE_BUFFERING_PLAYING");
         } else if (mCurrentState == STATE_COMPLETED || mCurrentState == STATE_ERROR) {
+            //如果是完成播放或者播放错误，则重新播放
             mMediaPlayer.reset();
             openMediaPlayer();
         } else {

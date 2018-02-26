@@ -626,6 +626,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             mClarityDialog.show();
         } else if (v == mRetry) {
             //点击重试
+            //不论是否记录播放位置，都是从零开始播放
             mVideoPlayer.restart();
         } else if (v == mReplay) {
             //重新播放

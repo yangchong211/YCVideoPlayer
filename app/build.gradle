@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    compileSdkVersion 26
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "org.yczbj.ycvideoplayer"
         minSdkVersion 17
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 11
         versionName "1.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -27,28 +27,37 @@ android {
             abortOnError false
         }
     }
+
+    //为了解决第三方库重复打包了META_INF问题，替换为有冲突的依赖
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //官方库
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:cardview-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:support-v4:26.1.0'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:cardview-v7:26.1.0'
     compile 'com.android.support:support-annotations:25.3.1'
     compile 'com.android.support:multidex:1.0.1'
 
     //网络请求retrofit2+Rx
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxjava:1.1.0'
-
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    //compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    //compile 'io.reactivex:rxandroid:1.2.1'
+    //compile 'io.reactivex:rxjava:1.2.3'
+    // RxJava 2
+    compile 'io.reactivex.rxjava2:rxjava:2.1.3'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     //注解
     compile 'com.jakewharton:butterknife:7.0.1'                     //黄牛刀
@@ -67,7 +76,10 @@ dependencies {
         transitive = true
     }
     compile 'com.liulishuo.filedownloader:library:1.6.9'            //下载框架
-
+    compile 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'             //RxLifecycle
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+    compile 'me.drakeet.multitype:multitype:3.4.0'                  //简化版 Adapter
+    compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
 
     //自己封装的库，都有对应的案例项目【欢迎star】：https://github.com/yangchong211
     compile 'cn.yc:YCUtilsLib:1.5'                                  //公共类
@@ -78,6 +90,6 @@ dependencies {
     compile 'cn.yc:YCDialogLib:3.4'                                 //弹窗
     compile 'cn.yc:YCProgressLib:1.2'                               //进度条
     compile 'cn.yc:YCVideoPlayerLib:2.3'                            //播放器
-    //compile project(':YCVideoPlayerLib')
+//    compile project(':YCVideoPlayerLib')
 
 }

@@ -7,13 +7,13 @@
     android:background="@android:color/black"
     android:gravity="center"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:visibility="visible">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="播放错误，请重试。"
         android:textColor="@android:color/white"
-        android:textSize="13sp"/>
+        android:textSize="12sp"/>
     <TextView
         android:id="@+id/retry"
         android:layout_width="wrap_content"

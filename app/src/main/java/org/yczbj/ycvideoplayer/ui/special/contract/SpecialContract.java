@@ -1,8 +1,8 @@
 package org.yczbj.ycvideoplayer.ui.special.contract;
 
 
-import org.yczbj.ycvideoplayer.base.BasePresenter;
-import org.yczbj.ycvideoplayer.base.BaseView;
+import org.yczbj.ycvideoplayer.base.mvp1.BasePresenter;
+import org.yczbj.ycvideoplayer.base.mvp1.BaseView;
 import org.yczbj.ycvideoplayer.ui.special.model.SpecialBean;
 
 import java.util.List;

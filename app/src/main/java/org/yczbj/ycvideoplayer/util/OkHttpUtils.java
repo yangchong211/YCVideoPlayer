@@ -2,7 +2,7 @@ package org.yczbj.ycvideoplayer.util;
 
 
 
-import org.yczbj.ycvideoplayer.api.http.InterceptorUtils;
+import org.yczbj.ycvideoplayer.api.http.utils.InterceptorUtils;
 import org.yczbj.ycvideoplayer.base.BaseInterceptor;
 
 import java.io.File;
@@ -11,15 +11,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.FileNameMap;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Connection;
-import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;

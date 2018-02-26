@@ -33,7 +33,7 @@ import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 import org.yczbj.ycrefreshviewlib.item.SpaceViewItemLine;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
-import org.yczbj.ycvideoplayer.base.BaseActivity;
+import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayer.ui.home.contract.VideoPlayerJzContract;
 import org.yczbj.ycvideoplayer.ui.home.model.DialogListBean;
 import org.yczbj.ycvideoplayer.ui.home.model.VideoPlayerComment;
@@ -180,7 +180,7 @@ public class VideoPlayerJzActivity extends BaseActivity implements VideoPlayerJz
             @Override
             public View onCreateView(ViewGroup parent) {
                 return LayoutInflater.from(VideoPlayerJzActivity.this).inflate(
-                        R.layout.head_video_player, parent, false);
+                        R.layout.head_video_player_top, parent, false);
             }
 
 

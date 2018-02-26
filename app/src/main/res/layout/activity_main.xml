@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.ns.yc.ycutilslib.viewPager.NoSlidingViewPager
-        android:id="@+id/vp_home"
+    <FrameLayout
+        android:id="@+id/fl_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

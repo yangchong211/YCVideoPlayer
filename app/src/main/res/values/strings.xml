@@ -40,5 +40,9 @@
     <string name="notification_min_set_desc">这是一个最少代码的Notification案例,在这里我们使用尽量少的代码将下载任务与通知绑定在一起。</string>
     <string name="notification_sample_desc">这是一个简单的Notification案例,在这里我们显示下载信息在通知面板的同时,还获取下载信息显示在Activity上,并且在下载任务结束或者暂停之后,我们依然保留任务的Notification在Notification面板上。</string>
 
+    <string name="network_error">网络不给力</string>
+    <string name="retry">重试</string>
+    <string name="loading">加载中</string>
+    <string name="error">发生错误</string>
 
 </resources>

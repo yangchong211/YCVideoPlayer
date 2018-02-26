@@ -1,8 +1,8 @@
 package org.yczbj.ycvideoplayer.base;
 
-import org.yczbj.ycvideoplayer.ui.find.view.FindFragment;
+import org.yczbj.ycvideoplayer.ui.video.VideoFragment;
 import org.yczbj.ycvideoplayer.ui.home.view.fragment.HomeFragment;
-import org.yczbj.ycvideoplayer.ui.me.view.MeFragment;
+import org.yczbj.ycvideoplayer.ui.person.MeFragment;
 import org.yczbj.ycvideoplayer.ui.special.SpecialFragment;
 
 
@@ -21,7 +21,7 @@ public class BaseFragmentFactory {
     private static BaseFragmentFactory mInstance;
     private HomeFragment mHomeFragment;
     private SpecialFragment mSpecialFragment;
-    private FindFragment mFindFragment;
+    private VideoFragment mVideoFragment;
     private MeFragment mMeFragment;
 
     private BaseFragmentFactory() {}
@@ -62,15 +62,15 @@ public class BaseFragmentFactory {
     }
 
 
-    public FindFragment getFindFragment() {
-        if (mFindFragment == null) {
+    public VideoFragment getVideoFragment() {
+        if (mVideoFragment == null) {
             synchronized (BaseFragmentFactory.class) {
-                if (mFindFragment == null) {
-                    mFindFragment = new FindFragment();
+                if (mVideoFragment == null) {
+                    mVideoFragment = new VideoFragment();
                 }
             }
         }
-        return mFindFragment;
+        return mVideoFragment;
     }
 
 

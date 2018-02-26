@@ -1,5 +1,7 @@
 package org.yczbj.ycvideoplayer.api.constant;
 
+import org.yczbj.ycvideoplayer.R;
+
 /**
  * Description:
  * Update:
@@ -25,5 +27,17 @@ public class Constant {
         int typeList5 = 11;          //list4
     }
 
+    public static final int SLIDABLE_DISABLE = 0;
+    public static final int SLIDABLE_EDGE = 1;
+    public static final int SLIDABLE_FULL = 2;
+
+    public static final int[] ICONS_DRAWABLES = new int[]{
+            R.mipmap.ic_launcher_circle,
+            R.mipmap.ic_launcher_rect,
+            R.mipmap.ic_launcher_square};
+
+    public static final String[] ICONS_TYPE = new String[]{"circle", "rect", "square"};
+
+    public static final String SP_NAME = "yc";
 
 }

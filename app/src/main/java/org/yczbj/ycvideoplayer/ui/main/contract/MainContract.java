@@ -5,8 +5,8 @@ import android.app.Activity;
 
 import com.flyco.tablayout.listener.CustomTabEntity;
 
-import org.yczbj.ycvideoplayer.base.BasePresenter;
-import org.yczbj.ycvideoplayer.base.BaseView;
+import org.yczbj.ycvideoplayer.base.mvp1.BasePresenter;
+import org.yczbj.ycvideoplayer.base.mvp1.BaseView;
 import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
 
 import java.util.ArrayList;
