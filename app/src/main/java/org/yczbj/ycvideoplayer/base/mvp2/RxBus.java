@@ -38,7 +38,6 @@ public class RxBus {
             subjectList = new ArrayList<>();
             subjectMapper.put(tag, subjectList);
         }
-
         Subject<T> subject = PublishSubject.create();
         subjectList.add(subject);
         return subject;

@@ -54,17 +54,22 @@ public class VideoArticleFragment extends BaseListFragment<IVideoArticle.Present
         });
     }
 
+    /**
+     * 懒加载调用请求数据接口
+     */
     @Override
     public void fetchData() {
         super.fetchData();
         onLoadData();
     }
 
+
     @Override
     public void onLoadData() {
         onShowLoading();
         presenter.doLoadData(categoryId);
     }
+
 
     @Override
     public void onSetAdapter(final List<?> list) {
@@ -77,10 +82,10 @@ public class VideoArticleFragment extends BaseListFragment<IVideoArticle.Present
         recyclerView.stopScroll();
     }
 
+
     /**
-     * API 跟新闻的一样 所以采用新闻的 presenter
-     *
-     * @param presenter
+     * 设置presenter
+     * @param presenter         presenter
      */
     @Override
     public void setPresenter(IVideoArticle.Presenter presenter) {

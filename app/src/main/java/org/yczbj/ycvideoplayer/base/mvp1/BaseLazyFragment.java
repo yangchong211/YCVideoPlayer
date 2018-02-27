@@ -4,7 +4,6 @@ package org.yczbj.ycvideoplayer.base.mvp1;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
-import android.support.v4.app.Fragment;
 
 /**
  * ================================================
@@ -27,7 +26,7 @@ public abstract class BaseLazyFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isPrepared = true;
-        //只有Fragment onCreateView好了，
+        //只有Fragment onCreateView好了
         //另外这里调用一次lazyLoad(）
         lazyLoad();
     }
@@ -41,7 +40,6 @@ public abstract class BaseLazyFragment extends BaseFragment {
     /**
      * 调用懒加载
      */
-
     private void lazyLoad() {
         if (getUserVisibleHint() && isPrepared && !isLazyLoaded) {
             onLazyLoad();

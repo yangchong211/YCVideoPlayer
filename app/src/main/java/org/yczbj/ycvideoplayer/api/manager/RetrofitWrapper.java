@@ -142,7 +142,6 @@ public class RetrofitWrapper {
                     return new X509Certificate[]{};
                 }
             }};
-
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, trustAllCerts, new SecureRandom());
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
@@ -173,6 +172,7 @@ public class RetrofitWrapper {
             return a != null ? a.value() : FieldNamingPolicy.IDENTITY.translateName(field);
         }
     }
+
 
 }
 
