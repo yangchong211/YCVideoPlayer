@@ -15,7 +15,7 @@ import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 
-public abstract class BaseListFragment<T extends IBasePresenter> extends LazyLoadFragment<T> implements IBaseListView<T>, SwipeRefreshLayout.OnRefreshListener {
+public abstract class BaseListFragment<T extends IBasePresenter> extends BaseMVPLazyFragment<T> implements IBaseListView<T>, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "BaseListFragment";
     protected RecyclerView recyclerView;

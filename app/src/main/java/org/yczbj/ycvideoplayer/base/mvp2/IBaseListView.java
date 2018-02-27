@@ -4,9 +4,6 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 
 import java.util.List;
 
-/**
- * Created by Meiji on 2017/7/5.
- */
 
 public interface IBaseListView<T> extends IBaseView<T> {
 
