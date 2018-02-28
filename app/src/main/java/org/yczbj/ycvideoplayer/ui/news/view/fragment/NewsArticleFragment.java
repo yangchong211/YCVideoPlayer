@@ -1,15 +1,14 @@
-package org.yczbj.ycvideoplayer.ui.video.view.fragment;
+package org.yczbj.ycvideoplayer.ui.news.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
-
 import org.yczbj.ycvideoplayer.base.mvp2.BaseList1Fragment;
 import org.yczbj.ycvideoplayer.listener.OnLoadMoreListener;
 import org.yczbj.ycvideoplayer.model.LoadingBean;
-import org.yczbj.ycvideoplayer.ui.video.contract.IVideoArticle;
-import org.yczbj.ycvideoplayer.ui.video.presenter.VideoArticlePresenter;
+import org.yczbj.ycvideoplayer.ui.news.contract.INewsArticle;
+import org.yczbj.ycvideoplayer.ui.news.presenter.NewsArticlePresenter;
 import org.yczbj.ycvideoplayer.util.DiffCallback;
 import org.yczbj.ycvideoplayer.util.Register;
 
@@ -19,17 +18,17 @@ import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 
-public class VideoArticleFragment extends BaseList1Fragment<IVideoArticle.Presenter> implements IVideoArticle.View, SwipeRefreshLayout.OnRefreshListener {
+public class NewsArticleFragment extends BaseList1Fragment<INewsArticle.Presenter> implements INewsArticle.View, SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String TAG = "VideoArticleView";
+    private static final String TAG = "NewsArticleFragment";
     private String categoryId;
 
-    public static VideoArticleFragment newInstance(String categoryId) {
+    public static NewsArticleFragment newInstance(String categoryId) {
         Bundle bundle = new Bundle();
         bundle.putString(TAG, categoryId);
-        VideoArticleFragment videoArticleView = new VideoArticleFragment();
-        videoArticleView.setArguments(bundle);
-        return videoArticleView;
+        NewsArticleFragment newsArticleView = new NewsArticleFragment();
+        newsArticleView.setArguments(bundle);
+        return newsArticleView;
     }
 
     @Override
@@ -41,8 +40,9 @@ public class VideoArticleFragment extends BaseList1Fragment<IVideoArticle.Presen
     protected void initView(View view) {
         super.initView(view);
         adapter = new MultiTypeAdapter(oldItems);
-        Register.registerVideoArticleItem(adapter);
+        Register.registerNewsArticleItem(adapter);
         recyclerView.setAdapter(adapter);
+
         recyclerView.addOnScrollListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -88,11 +88,10 @@ public class VideoArticleFragment extends BaseList1Fragment<IVideoArticle.Presen
      * @param presenter         presenter
      */
     @Override
-    public void setPresenter(IVideoArticle.Presenter presenter) {
+    public void setPresenter(INewsArticle.Presenter presenter) {
         if (null == presenter) {
-            this.presenter = new VideoArticlePresenter(this);
+            this.presenter = new NewsArticlePresenter(this);
         }
     }
-
 
 }

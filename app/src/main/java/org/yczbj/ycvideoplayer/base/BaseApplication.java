@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.Utils;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
 
+import org.yczbj.ycvideoplayer.service.InitializeService;
 import org.yczbj.ycvideoplayer.util.LogUtils;
 
 import java.net.Proxy;
@@ -67,8 +68,8 @@ public class BaseApplication extends Application {
         super.onCreate();
         instance = this;
         initUtils();
-        LogUtils.logDebug = true;
-        initDownLoadLib();
+        //在子线程中初始化
+        InitializeService.start(this);
     }
 
     /**
@@ -119,23 +120,6 @@ public class BaseApplication extends Application {
         Utils.init(this);
     }
 
-
-    /**
-     * 初始化下载库
-     */
-    private void initDownLoadLib() {
-        FileDownloader.setupOnApplicationOnCreate(this)
-                .connectionCreator(new FileDownloadUrlConnection
-                        .Creator(new FileDownloadUrlConnection.Configuration()
-                        .connectTimeout(15_000)
-                        .readTimeout(15_000)
-                        .proxy(Proxy.NO_PROXY)
-                ))
-                .commit();
-
-        //最简单的初始化
-        //FileDownloader.setup(instance);
-    }
 
 
 }

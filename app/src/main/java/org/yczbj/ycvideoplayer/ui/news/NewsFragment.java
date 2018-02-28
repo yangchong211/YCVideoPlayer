@@ -1,5 +1,6 @@
-package org.yczbj.ycvideoplayer.ui.video;
+package org.yczbj.ycvideoplayer.ui.news;
 
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -8,9 +9,10 @@ import com.blankj.utilcode.util.Utils;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.BasePagerAdapter;
-import org.yczbj.ycvideoplayer.base.mvp1.BaseFragment;
+import org.yczbj.ycvideoplayer.base.mvp1.BaseLazyFragment;
 import org.yczbj.ycvideoplayer.base.mvp2.BaseList1Fragment;
-import org.yczbj.ycvideoplayer.ui.video.view.fragment.VideoArticleFragment;
+import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
+import org.yczbj.ycvideoplayer.ui.news.view.fragment.NewsArticleFragment;
 import org.yczbj.ycvideoplayer.util.SettingUtil;
 
 import java.util.ArrayList;
@@ -19,21 +21,33 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * @author yc
- * @date 2017/12/29
+ * Created by yc on 2018/2/28.
  */
-public class VideoFragment extends BaseFragment {
 
+public class NewsFragment extends BaseLazyFragment {
 
     @Bind(R.id.tab_layout)
     TabLayout tabLayout;
     @Bind(R.id.view_pager)
     ViewPager viewPager;
+    private MainActivity activity;
 
-    private String categoryId[] = Utils.getContext().getResources().getStringArray(R.array.mobile_video_id);
-    private String categoryName[] = Utils.getContext().getResources().getStringArray(R.array.mobile_video_name);
     private List<Fragment> fragmentList = new ArrayList<>();
     private BasePagerAdapter adapter;
+    private String[] categoryId;
+    private String[] categoryName;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (MainActivity) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        activity = null;
+    }
 
     @Override
     public void onResume() {
@@ -52,7 +66,7 @@ public class VideoFragment extends BaseFragment {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setBackgroundColor(SettingUtil.getInstance().getColor());
-        viewPager.setOffscreenPageLimit(categoryId.length);
+        viewPager.setOffscreenPageLimit(10);
     }
 
     @Override
@@ -62,16 +76,24 @@ public class VideoFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        categoryId = Utils.getContext().getResources().getStringArray(R.array.mobile_news_id);
+        categoryName = Utils.getContext().getResources().getStringArray(R.array.mobile_news_name);
+    }
+
+    @Override
+    public void onLazyLoad() {
         ArrayList<String> title = new ArrayList<>();
-        for (int i = 0; i < categoryId.length; i++) {
-            Fragment fragment = VideoArticleFragment.newInstance(categoryId[i]);
+        if(categoryId.length<=15){
+            return;
+        }
+        for (int i = 0; i < 15; i++) {
+            Fragment fragment = NewsArticleFragment.newInstance(categoryId[i]);
             fragmentList.add(fragment);
             title.add(categoryName[i]);
         }
         adapter = new BasePagerAdapter(getChildFragmentManager(), fragmentList,title);
         viewPager.setAdapter(adapter);
     }
-
 
     public void onDoubleClick() {
         if (fragmentList != null && fragmentList.size() > 0) {

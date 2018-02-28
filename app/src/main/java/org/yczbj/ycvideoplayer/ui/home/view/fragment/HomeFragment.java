@@ -2,10 +2,16 @@ package org.yczbj.ycvideoplayer.ui.home.view.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -18,21 +24,25 @@ import com.yc.cn.ycbaseadapterlib.first.BaseViewHolder;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.Constant;
+import org.yczbj.ycvideoplayer.base.BaseConfig;
 import org.yczbj.ycvideoplayer.base.BaseDelegateAdapter;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseFragment;
+import org.yczbj.ycvideoplayer.test.test1.TestActivity;
+import org.yczbj.ycvideoplayer.test.test2.TestMyActivity;
+import org.yczbj.ycvideoplayer.test.test3.ui.activity.GlideCropActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerJzActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerMeActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.BannerPagerAdapter;
 import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
-import org.yczbj.ycvideoplayer.test.test1.TestActivity;
-import org.yczbj.ycvideoplayer.test.test2.TestMyActivity;
-import org.yczbj.ycvideoplayer.test.test3.ui.activity.GlideCropActivity;
+import org.yczbj.ycvideoplayer.util.LogUtils;
+import org.yczbj.ycvideoplayer.util.animation.AnimationsUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 /**
@@ -44,13 +54,17 @@ import butterknife.Bind;
  * 修订历史：
  * ================================================
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
 
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     @Bind(R.id.refresh)
     SwipeRefreshLayout refresh;
+    @Bind(R.id.ll_search)
+    LinearLayout llSearch;
+    @Bind(R.id.ll_bind)
+    LinearLayout llBind;
     private MainActivity activity;
     private BannerView mBanner;
     private VirtualLayoutManager layoutManager;
@@ -59,6 +73,7 @@ public class HomeFragment extends BaseFragment {
      * 存放各个模块的适配器
      */
     private List<DelegateAdapter.Adapter> mAdapters;
+    private DelegateAdapter delegateAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -76,7 +91,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if(mBanner!=null){
+        if (mBanner != null) {
             mBanner.pause();
         }
     }
@@ -84,20 +99,51 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(mBanner!=null){
+        if (mBanner != null) {
             mBanner.resume();
+        }
+        initOldUserBinding();
+    }
+
+    /**
+     * onHiddenChanged这个方法可以用来在切换Fragment的时候，进行一些即时的操作（如改变后要刷新、保存等）。
+     * @param hidden        是否隐藏
+     */
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            initOldUserBinding();
         }
     }
 
 
     @Override
     public int getContentView() {
-        return R.layout.base_refresh_recycler_view;
+        return R.layout.fragment_home;
     }
 
 
     @Override
     public void initView() {
+        initOldUserBinding();
+        initVLayout();
+        initRefreshView();
+    }
+
+
+    private void initOldUserBinding() {
+        boolean login = BaseConfig.INSTANCE.getIsLogin();
+        if (login) {
+            llBind.setVisibility(View.GONE);
+        } else {
+            llBind.setVisibility(View.VISIBLE);
+        }
+        llBind.setVisibility(View.VISIBLE);
+    }
+
+
+    private void initVLayout() {
         mAdapters = new LinkedList<>();
         //初始化
         //创建VirtualLayoutManager对象
@@ -110,22 +156,21 @@ public class HomeFragment extends BaseFragment {
         viewPool.setMaxRecycledViews(0, 20);
 
         //设置适配器
-        DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager, true);
+        delegateAdapter = new DelegateAdapter(layoutManager, true);
         recyclerView.setAdapter(delegateAdapter);
 
         //自定义各种不同适配器
         initAllTypeView();
         //设置适配器
         delegateAdapter.setAdapters(mAdapters);
-        initRefreshView();
     }
 
-
+    private boolean isTopShow = true;
     private void initRefreshView() {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if(refresh.isRefreshing()){
+                if (refresh.isRefreshing()) {
                     refresh.setRefreshing(false);
                 }
             }
@@ -134,12 +179,14 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(refresh.isRefreshing()){
+                if (refresh.isRefreshing()) {
                     return;
                 }
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    //加载更多
-                    ToastUtil.showToast(activity,"没有更多数据!!!!!");
+                    if (lastVisibleItem == delegateAdapter.getItemCount() -1 ){
+                        //加载更多
+                        ToastUtil.showToast(activity, "没有更多数据!!!!!");
+                    }
                 }
             }
 
@@ -147,6 +194,37 @@ public class HomeFragment extends BaseFragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                boolean isTopScroll = recyclerView.canScrollVertically(-1);
+                //判断是否滑到了顶部
+                if(!isTopScroll){
+                    isTopShow = true;
+                    llBind.animate().translationY(0);
+                    return;
+                }
+                float scaleY = recyclerView.getScaleY();
+                LogUtils.e("onScrolled"+scaleY+"---"+dy);
+                if(scaleY - dy > 0 && isTopShow) {
+                    //下移隐藏
+                    isTopShow = false;
+                    llBind.animate().translationY(-llBind.getHeight());
+                } else if(scaleY - dy < 0 && !isTopShow){
+                    //上移出现
+                    isTopShow = true;
+                    llBind.animate().translationY(0);
+                }
+                /*if(scaleY-dy>0 && isTopShow){
+                    isTopShow = false;
+                    Animation translateAnimation = AnimationsUtils
+                            .getTranslateAnimation(0,
+                                    0, -(float) llBind.getHeight(), 0, 500);
+                    llBind.setAnimation(translateAnimation);
+                }else if(scaleY-dy<0 && !isTopShow){
+                    isTopShow = true;
+                    Animation translateAnimation = AnimationsUtils
+                            .getTranslateAnimation(0,
+                                    0, 0, (float) llBind.getHeight(), 1000);
+                    llBind.setAnimation(translateAnimation);
+                }*/
             }
         });
     }
@@ -154,7 +232,8 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initListener() {
-
+        llSearch.setOnClickListener(this);
+        llBind.setOnClickListener(this);
     }
 
 
@@ -163,6 +242,19 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ll_search:
+
+                break;
+            case R.id.ll_bind:
+
+                break;
+            default:
+                break;
+        }
+    }
 
     /**
      * 添加不同类型数据布局
@@ -198,7 +290,7 @@ public class HomeFragment extends BaseFragment {
                 mBanner.setHintGravity(1);
                 mBanner.setAnimationDuration(1000);
                 mBanner.setPlayDelay(2000);
-                mBanner.setHintPadding(0,0,0, SizeUtil.dip2px(activity,10));
+                mBanner.setHintPadding(0, 0, 0, SizeUtil.dip2px(activity, 10));
                 mBanner.setAdapter(new BannerPagerAdapter(activity, arrayList));
 
             }
@@ -215,7 +307,7 @@ public class HomeFragment extends BaseFragment {
                 View.OnClickListener listener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        switch (v.getId()){
+                        switch (v.getId()) {
                             case R.id.tv_home_first:
                                 startActivity(TestActivity.class);
                                 break;
@@ -276,7 +368,6 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
-
             }
         };
         mAdapters.add(adAdapter);
@@ -397,13 +488,12 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-
     private void initTitleView(final int type) {
         BaseDelegateAdapter titleAdapter = new BaseDelegateAdapter(activity, new LinearLayoutHelper(), R.layout.view_vlayout_title, 1, Constant.viewType.typeTitle) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
-                switch (type){
+                switch (type) {
                     case 1:
                         holder.setText(R.id.tv_title, "为你精选");
                         break;
@@ -429,27 +519,27 @@ public class HomeFragment extends BaseFragment {
                 holder.getView(R.id.tv_change).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        switch (type){
+                        switch (type) {
                             case 1:
-                                ToastUtil.showToast(activity,"刷新为你精选数据");
+                                ToastUtil.showToast(activity, "刷新为你精选数据");
                                 break;
                             case 2:
-                                ToastUtil.showToast(activity,"刷新推广专区数据");
+                                ToastUtil.showToast(activity, "刷新推广专区数据");
                                 break;
                             case 3:
-                                ToastUtil.showToast(activity,"刷新行业动态数据");
+                                ToastUtil.showToast(activity, "刷新行业动态数据");
                                 break;
                             case 4:
-                                ToastUtil.showToast(activity,"刷新趋势分析数据");
+                                ToastUtil.showToast(activity, "刷新趋势分析数据");
                                 break;
                             case 5:
-                                ToastUtil.showToast(activity,"刷新大牛分享数据");
+                                ToastUtil.showToast(activity, "刷新大牛分享数据");
                                 break;
                             case 6:
-                                ToastUtil.showToast(activity,"刷新潇湘剑雨的数据");
+                                ToastUtil.showToast(activity, "刷新潇湘剑雨的数据");
                                 break;
                             default:
-                                ToastUtil.showToast(activity,"刷新XXXX数据");
+                                ToastUtil.showToast(activity, "刷新XXXX数据");
                                 break;
                         }
                     }
@@ -465,7 +555,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
-                switch (type){
+                switch (type) {
                     case 1:
                         holder.setText(R.id.tv_more, "查看更多");
                         break;
@@ -491,24 +581,24 @@ public class HomeFragment extends BaseFragment {
                 holder.getView(R.id.tv_more).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        switch (type){
+                        switch (type) {
                             case 1:
-                                ToastUtil.showToast(activity,"跳转为你精选数据");
+                                ToastUtil.showToast(activity, "跳转为你精选数据");
                                 break;
                             case 2:
-                                ToastUtil.showToast(activity,"跳转推广专区数据");
+                                ToastUtil.showToast(activity, "跳转推广专区数据");
                                 break;
                             case 3:
-                                ToastUtil.showToast(activity,"跳转行业动态数据");
+                                ToastUtil.showToast(activity, "跳转行业动态数据");
                                 break;
                             case 4:
-                                ToastUtil.showToast(activity,"跳转趋势分析数据");
+                                ToastUtil.showToast(activity, "跳转趋势分析数据");
                                 break;
                             case 5:
-                                ToastUtil.showToast(activity,"跳转大牛分享数据");
+                                ToastUtil.showToast(activity, "跳转大牛分享数据");
                                 break;
                             default:
-                                ToastUtil.showToast(activity,"跳转XXXX数据");
+                                ToastUtil.showToast(activity, "跳转XXXX数据");
                                 break;
                         }
                     }

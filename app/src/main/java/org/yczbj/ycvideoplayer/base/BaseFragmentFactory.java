@@ -1,5 +1,6 @@
 package org.yczbj.ycvideoplayer.base;
 
+import org.yczbj.ycvideoplayer.ui.news.NewsFragment;
 import org.yczbj.ycvideoplayer.ui.video.VideoFragment;
 import org.yczbj.ycvideoplayer.ui.home.view.fragment.HomeFragment;
 import org.yczbj.ycvideoplayer.ui.person.MeFragment;
@@ -20,6 +21,7 @@ public class BaseFragmentFactory {
 
     private static BaseFragmentFactory mInstance;
     private HomeFragment mHomeFragment;
+    private NewsFragment mNewsFragment;
     private SpecialFragment mSpecialFragment;
     private VideoFragment mVideoFragment;
     private MeFragment mMeFragment;
@@ -47,6 +49,17 @@ public class BaseFragmentFactory {
             }
         }
         return mHomeFragment;
+    }
+
+    public NewsFragment getNewsFragment() {
+        if (mNewsFragment == null) {
+            synchronized (BaseFragmentFactory.class) {
+                if (mNewsFragment == null) {
+                    mNewsFragment = new NewsFragment();
+                }
+            }
+        }
+        return mNewsFragment;
     }
 
 

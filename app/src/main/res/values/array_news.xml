@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--需要单独处理的 视频 / 段子 / 问答 -->
+    <string-array name="mobile_news_name">
+        <item>推荐</item>
+        <item>热点</item>
+        <item>视频</item>
+        <item>社会</item>
+        <item>娱乐</item>
+        <item>科技</item>
+
+        <item>问答</item>
+        <item>汽车</item>
+        <item>财经</item>
+        <item>军事</item>
+        <item>体育</item>
+
+        <item>段子</item>
+        <item>国际</item>
+        <item>健康</item>
+        <item>房产</item>
+        <item>育儿</item>
+        <item>数码</item>
+
+        <item>美食</item>
+        <item>养生</item>
+        <item>电影</item>
+        <item>手机</item>
+        <item>教育</item>
+
+        <item>旅游</item>
+        <item>宠物</item>
+        <item>文化</item>
+        <item>故事</item>
+        <item>游戏</item>
+
+        <item>股票</item>
+        <item>动漫</item>
+        <item>情感</item>
+        <item>精选</item>
+        <item>星座</item>
+
+        <item>家居</item>
+        <item>三农</item>
+        <item>孕产</item>
+        <item>收藏</item>
+        <item>时尚</item>
+
+        <item>历史</item>
+        <item>搞笑</item>
+        <item>辟谣</item>
+        <item>中国新唱将</item>
+        <item>彩票</item>
+
+        <item>快乐男声</item>
+        <item>正能量</item>
+        <item>政务</item>
+        <item>探索</item>
+
+    </string-array>
+
+    <string-array name="mobile_news_id">
+        <item> </item>
+        <item>news_hot</item>
+        <item>video</item>
+        <item>news_society</item>
+        <item>news_entertainment</item>
+        <item>news_tech</item>
+
+        <item>question_and_answer</item>
+        <item>news_car</item>
+        <item>news_finance</item>
+        <item>news_military</item>
+        <item>news_sports</item>
+
+        <item>essay_joke</item>
+        <item>news_world</item>
+        <item>news_health</item>
+        <item>news_house</item>
+        <item>news_baby</item>
+        <item>digital</item>
+
+        <item>news_food</item>
+        <item>news_regimen</item>
+        <item>movie</item>
+        <item>cellphone</item>
+        <item>news_edu</item>
+
+        <item>news_travel</item>
+        <item>宠物</item>
+        <item>news_culture</item>
+        <item>news_story</item>
+        <item>news_game</item>
+
+        <item>stock</item>
+        <item>news_comic</item>
+        <item>emotion</item>
+        <item>boutique</item>
+        <item>news_astrology</item>
+
+        <item>news_home</item>
+        <item>news_agriculture</item>
+        <item>pregnancy</item>
+        <item>news_collect</item>
+        <item>news_fashion</item>
+
+        <item>news_history</item>
+        <item>funny</item>
+        <item>rumor</item>
+        <item>中国新唱将</item>
+        <item>彩票</item>
+
+        <item>快乐男声</item>
+        <item>positive</item>
+        <item>government</item>
+        <item>news_discovery</item>
+    </string-array>
+
+</resources>

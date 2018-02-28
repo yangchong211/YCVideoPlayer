@@ -16,10 +16,12 @@ import com.liulishuo.filedownloader.FileDownloader;
 import com.ns.yc.ycutilslib.managerLeak.InputMethodManagerLeakUtils;
 
 import org.yczbj.ycvideoplayer.R;
+import org.yczbj.ycvideoplayer.api.constant.Constant;
 import org.yczbj.ycvideoplayer.base.AppManager;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayer.base.BaseFragmentFactory;
 import org.yczbj.ycvideoplayer.download.TasksManager;
+import org.yczbj.ycvideoplayer.ui.news.NewsFragment;
 import org.yczbj.ycvideoplayer.ui.video.VideoFragment;
 import org.yczbj.ycvideoplayer.ui.home.view.fragment.HomeFragment;
 import org.yczbj.ycvideoplayer.ui.main.contract.MainContract;
@@ -54,15 +56,18 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private static final int FRAGMENT_SPECIAL = 1;
     private static final int FRAGMENT_VIDEO = 2;
     private static final int FRAGMENT_ME = 3;
+    private static final int FRAGMENT_NEWS = 4;
     private int position;
 
     private MainContract.Presenter presenter = new MainPresenter(this);
     private long exitTime;
+    private long firstClickTime = 0;
     private Bundle savedInstanceState;
     private HomeFragment homeFragment;
     private SpecialFragment specialFragment;
     private VideoFragment videoFragment;
     private MeFragment meFragment;
+    private NewsFragment newsFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +90,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     protected void onSaveInstanceState(Bundle outState) {
         // recreate 时记录当前位置 (在 Manifest 已禁止 Activity 旋转,所以旋转屏幕并不会执行以下代码)
         // 程序意外崩溃时保存状态信息
+        super.onSaveInstanceState(outState);
         outState.putInt(POSITION, position);
         outState.putInt(SELECT_ITEM, ctlTable.getCurrentTab());
     }
@@ -133,12 +139,16 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                         showFragment(FRAGMENT_HOME);
                         break;
                     case 1:
-                        showFragment(FRAGMENT_SPECIAL);
+                        showFragment(FRAGMENT_NEWS);
                         break;
                     case 2:
-                        showFragment(FRAGMENT_VIDEO);
+                        showFragment(FRAGMENT_SPECIAL);
                         break;
                     case 3:
+                        showFragment(FRAGMENT_VIDEO);
+                        doubleClick(FRAGMENT_VIDEO);
+                        break;
+                    case 4:
                         showFragment(FRAGMENT_ME);
                         break;
                     default:
@@ -158,6 +168,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private void initFragment() {
         if(savedInstanceState!=null){
             homeFragment = BaseFragmentFactory.getInstance().getHomeFragment();
+            newsFragment = BaseFragmentFactory.getInstance().getNewsFragment();
             specialFragment = BaseFragmentFactory.getInstance().getSpecialFragment();
             videoFragment = BaseFragmentFactory.getInstance().getVideoFragment();
             meFragment = BaseFragmentFactory.getInstance().getMeFragment();
@@ -211,6 +222,14 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                     ft.show(meFragment);
                 }
                 break;
+            case FRAGMENT_NEWS:
+                if (newsFragment == null) {
+                    newsFragment = BaseFragmentFactory.getInstance().getNewsFragment();
+                    ft.add(R.id.fl_main, newsFragment, MeFragment.class.getName());
+                } else {
+                    ft.show(newsFragment);
+                }
+                break;
             default:
                 break;
         }
@@ -222,6 +241,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         // 如果不为空，就先隐藏起来
         if (homeFragment != null) {
             setHide(ft,homeFragment);
+        }
+        if (newsFragment != null) {
+            setHide(ft,newsFragment);
         }
         if (specialFragment != null) {
             setHide(ft,specialFragment);
@@ -237,6 +259,25 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private void setHide(FragmentTransaction ft, Fragment fragment) {
         if(fragment.isAdded()){
             ft.hide(fragment);
+        }
+    }
+
+
+    private void doubleClick(int index) {
+        long secondClickTime = System.currentTimeMillis();
+        if ((secondClickTime - firstClickTime < Constant.CLICK_TIME)) {
+            switch (index) {
+                case FRAGMENT_NEWS:
+                    newsFragment.onDoubleClick();
+                    break;
+                case FRAGMENT_VIDEO:
+                    videoFragment.onDoubleClick();
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            firstClickTime = secondClickTime;
         }
     }
 

@@ -15,7 +15,7 @@ import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 
-public abstract class BaseListFragment<T extends IBasePresenter> extends BaseMVPLazyFragment<T> implements IBaseListView<T>, SwipeRefreshLayout.OnRefreshListener {
+public abstract class BaseList1Fragment<T extends IBasePresenter> extends BaseMVPLazyFragment<T> implements IBaseListView<T>, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "BaseListFragment";
     protected RecyclerView recyclerView;
@@ -61,7 +61,7 @@ public abstract class BaseListFragment<T extends IBasePresenter> extends BaseMVP
 
     @Override
     public void fetchData() {
-        observable = RxBus.getInstance().register(BaseListFragment.TAG);
+        observable = RxBus.getInstance().register(BaseList1Fragment.TAG);
         observable.subscribe(new Consumer<Integer>() {
             @Override
             public void accept(@NonNull Integer integer) throws Exception {
@@ -124,7 +124,7 @@ public abstract class BaseListFragment<T extends IBasePresenter> extends BaseMVP
 
     @Override
     public void onDestroy() {
-        RxBus.getInstance().unregister(BaseListFragment.TAG, observable);
+        RxBus.getInstance().unregister(BaseList1Fragment.TAG, observable);
         super.onDestroy();
     }
 }

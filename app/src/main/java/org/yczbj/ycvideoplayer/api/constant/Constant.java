@@ -31,13 +31,17 @@ public class Constant {
     public static final int SLIDABLE_EDGE = 1;
     public static final int SLIDABLE_FULL = 2;
 
+    public static final long CLICK_TIME = 500;
+
     public static final int[] ICONS_DRAWABLES = new int[]{
             R.mipmap.ic_launcher_circle,
             R.mipmap.ic_launcher_rect,
             R.mipmap.ic_launcher_square};
 
     public static final String[] ICONS_TYPE = new String[]{"circle", "rect", "square"};
-
     public static final String SP_NAME = "yc";
+    public static final String KEY_IS_LOGIN = "is_login";
+    public static final String KEY_NIGHT_STATE = "night_state";
+
 
 }

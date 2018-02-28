@@ -17,11 +17,6 @@ import butterknife.Bind;
 
 public class MeFragment extends BaseFragment implements View.OnClickListener {
 
-    @Bind(R.id.tv_1)
-    TextView tv1;
-    @Bind(R.id.tv_2)
-    TextView tv2;
-
     @Override
     public int getContentView() {
         return R.layout.fragment_me;
@@ -34,8 +29,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void initListener() {
-        tv1.setOnClickListener(this);
-        tv2.setOnClickListener(this);
+
     }
 
     @Override
@@ -46,12 +40,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_1:
-
-                break;
-            case R.id.tv_2:
-
-                break;
             default:
                 break;
         }

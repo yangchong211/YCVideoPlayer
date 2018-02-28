@@ -54,7 +54,6 @@ import butterknife.Bind;
  * CreatedTime:2017/12/29
  * Author:yc
  */
-
 public class SpecialFragment extends BaseFragment implements SpecialContract.View {
 
 

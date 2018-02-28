@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
@@ -34,6 +35,10 @@ public class DLMyFileTestActivity extends BaseActivity implements View.OnClickLi
     Button btn1;
     @Bind(R.id.btn_2)
     Button btn2;
+    @Bind(R.id.tv_1)
+    TextView tv1;
+    @Bind(R.id.tv_2)
+    TextView tv2;
     @Bind(R.id.video_player)
     VideoPlayer videoPlayer;
 
@@ -51,6 +56,8 @@ public class DLMyFileTestActivity extends BaseActivity implements View.OnClickLi
     public void initListener() {
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
+        tv1.setOnClickListener(this);
+        tv2.setOnClickListener(this);
     }
 
     @Override
