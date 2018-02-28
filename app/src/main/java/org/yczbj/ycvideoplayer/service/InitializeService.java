@@ -48,25 +48,6 @@ public class InitializeService extends IntentService {
     private void initApplication() {
         BaseConfig.INSTANCE.initConfig();
         LogUtils.logDebug = true;
-        initDownLoadLib();
     }
-
-
-    /**
-     * 初始化下载库
-     */
-    private void initDownLoadLib() {
-        FileDownloader.setupOnApplicationOnCreate(BaseApplication.getInstance())
-                .connectionCreator(new FileDownloadUrlConnection
-                        .Creator(new FileDownloadUrlConnection.Configuration()
-                        .connectTimeout(15_000)
-                        .readTimeout(15_000)
-                        .proxy(Proxy.NO_PROXY)
-                ))
-                .commit();
-        //最简单的初始化
-        //FileDownloader.setup(instance);
-    }
-
 
 }
