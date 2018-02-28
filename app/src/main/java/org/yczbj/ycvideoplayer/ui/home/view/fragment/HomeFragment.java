@@ -55,7 +55,9 @@ public class HomeFragment extends BaseFragment {
     private BannerView mBanner;
     private VirtualLayoutManager layoutManager;
     private int lastVisibleItem;
-    //存放各个模块的适配器
+    /**
+     * 存放各个模块的适配器
+     */
     private List<DelegateAdapter.Adapter> mAdapters;
 
     @Override
@@ -135,10 +137,10 @@ public class HomeFragment extends BaseFragment {
                 if(refresh.isRefreshing()){
                     return;
                 }
-                /*if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     //加载更多
                     ToastUtil.showToast(activity,"没有更多数据!!!!!");
-                }*/
+                }
             }
 
             @Override
