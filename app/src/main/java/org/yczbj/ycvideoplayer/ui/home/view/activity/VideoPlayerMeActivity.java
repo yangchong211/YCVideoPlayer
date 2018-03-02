@@ -40,7 +40,7 @@ import org.yczbj.ycvideoplayer.ui.home.view.adapter.DialogListAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.NarrowImageAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.VideoPlayerMeAdapter;
 import org.yczbj.ycvideoplayer.ui.person.MeLoginActivity;
-import org.yczbj.ycvideoplayer.test.test1.view.second.TestSecondActivity;
+import org.yczbj.ycvideoplayer.ui.test.test1.view.second.TestSecondActivity;
 import org.yczbj.ycvideoplayer.util.AppUtil;
 import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.OnMemberClickListener;

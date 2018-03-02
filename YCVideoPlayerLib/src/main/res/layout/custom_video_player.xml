@@ -59,6 +59,23 @@
         android:layout_centerInParent="true"
         android:src="@drawable/selector_try_see"
         android:visibility="gone"/>
+    <!--锁屏布局，全屏时展示，其他隐藏-->
+    <FrameLayout
+        android:id="@+id/fl_lock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/shape_lock_bg">
+        <ImageView
+            android:id="@+id/iv_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/player_unlock_btn"/>
+    </FrameLayout>
+
     <!--试看布局，非会员显示该布局-->
     <include layout="@layout/custom_video_player_try_see"/>
 

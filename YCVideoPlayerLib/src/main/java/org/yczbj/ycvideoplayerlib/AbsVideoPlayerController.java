@@ -132,6 +132,11 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
     public abstract void setLength(long length);
 
     /**
+     * 设置总时长
+     */
+    public abstract void setLength(String length);
+
+    /**
      * 当播放器的播放状态发生变化，在此方法中国你更新不同的播放状态的UI
      *
      * @param playState 播放状态：

@@ -7,8 +7,8 @@
     android:layout_alignParentBottom="true"
     android:background="@drawable/player_mask_bottom"
     android:gravity="center_vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp">
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
     <ImageView
         android:id="@+id/restart_or_pause"
         android:layout_width="24dp"

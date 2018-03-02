@@ -21,13 +21,13 @@ import org.yczbj.ycvideoplayer.base.AppManager;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayer.base.BaseFragmentFactory;
 import org.yczbj.ycvideoplayer.download.TasksManager;
+import org.yczbj.ycvideoplayer.ui.movie.view.fragment.MovieFragment;
 import org.yczbj.ycvideoplayer.ui.news.NewsFragment;
-import org.yczbj.ycvideoplayer.ui.video.VideoFragment;
+import org.yczbj.ycvideoplayer.ui.video.view.fragment.VideoFragment;
 import org.yczbj.ycvideoplayer.ui.home.view.fragment.HomeFragment;
 import org.yczbj.ycvideoplayer.ui.main.contract.MainContract;
 import org.yczbj.ycvideoplayer.ui.main.presenter.MainPresenter;
 import org.yczbj.ycvideoplayer.ui.person.MeFragment;
-import org.yczbj.ycvideoplayer.ui.special.SpecialFragment;
 
 import java.util.ArrayList;
 
@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private static final String POSITION = "position";
     private static final String SELECT_ITEM = "selectItem";
     private static final int FRAGMENT_HOME = 0;
-    private static final int FRAGMENT_SPECIAL = 1;
+    private static final int FRAGMENT_MOVIE = 1;
     private static final int FRAGMENT_VIDEO = 2;
     private static final int FRAGMENT_ME = 3;
     private static final int FRAGMENT_NEWS = 4;
@@ -64,10 +64,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private long firstClickTime = 0;
     private Bundle savedInstanceState;
     private HomeFragment homeFragment;
-    private SpecialFragment specialFragment;
     private VideoFragment videoFragment;
+    private MovieFragment mMovieFragment;
     private MeFragment meFragment;
     private NewsFragment newsFragment;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,9 +141,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                         break;
                     case 1:
                         showFragment(FRAGMENT_NEWS);
+                        doubleClick(FRAGMENT_NEWS);
                         break;
                     case 2:
-                        showFragment(FRAGMENT_SPECIAL);
+                        showFragment(FRAGMENT_MOVIE);
+                        doubleClick(FRAGMENT_MOVIE);
                         break;
                     case 3:
                         showFragment(FRAGMENT_VIDEO);
@@ -169,7 +172,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         if(savedInstanceState!=null){
             homeFragment = BaseFragmentFactory.getInstance().getHomeFragment();
             newsFragment = BaseFragmentFactory.getInstance().getNewsFragment();
-            specialFragment = BaseFragmentFactory.getInstance().getSpecialFragment();
+            mMovieFragment = BaseFragmentFactory.getInstance().getMovieFragment();
             videoFragment = BaseFragmentFactory.getInstance().getVideoFragment();
             meFragment = BaseFragmentFactory.getInstance().getMeFragment();
             int index = savedInstanceState.getInt(POSITION);
@@ -198,12 +201,12 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                     ft.show(homeFragment);
                 }
                 break;
-            case FRAGMENT_SPECIAL:
-                if (specialFragment == null) {
-                    specialFragment = BaseFragmentFactory.getInstance().getSpecialFragment();
-                    ft.add(R.id.fl_main, specialFragment, SpecialFragment.class.getName());
+            case FRAGMENT_MOVIE:
+                if (mMovieFragment == null) {
+                    mMovieFragment = BaseFragmentFactory.getInstance().getMovieFragment();
+                    ft.add(R.id.fl_main, mMovieFragment, MovieFragment.class.getName());
                 } else {
-                    ft.show(specialFragment);
+                    ft.show(mMovieFragment);
                 }
                 break;
             case FRAGMENT_VIDEO:
@@ -245,8 +248,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         if (newsFragment != null) {
             setHide(ft,newsFragment);
         }
-        if (specialFragment != null) {
-            setHide(ft,specialFragment);
+        if (mMovieFragment != null) {
+            setHide(ft,mMovieFragment);
         }
         if (videoFragment != null) {
             setHide(ft,videoFragment);
@@ -272,6 +275,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                     break;
                 case FRAGMENT_VIDEO:
                     videoFragment.onDoubleClick();
+                    break;
+                case FRAGMENT_MOVIE:
+
                     break;
                 default:
                     break;

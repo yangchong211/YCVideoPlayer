@@ -7,8 +7,8 @@
     android:background="@drawable/player_mask_top"
     android:gravity="center_vertical"
     android:paddingTop="10dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp">
+    android:paddingStart="8dp"
+    android:paddingEnd="10dp">
     <ImageView
         android:id="@+id/back"
         android:layout_width="30dp"

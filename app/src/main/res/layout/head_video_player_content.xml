@@ -3,13 +3,71 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="10dp">
 
     <TextView
-        android:id="@+id/tv_player_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:background="@color/whiteBg"
+        android:textSize="16sp"
+        android:textColor="@color/blackText"
+        android:text="视频简介"/>
+    <View style="@style/DeepUnderLine"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/blackText2"
+            android:text="电影名称"/>
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textSize="12sp"
+            android:textColor="@color/blackText2"
+            android:text="电影名称"/>
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textSize="12sp"
+            android:textColor="@color/blackText2"
+            android:text="电影名称"/>
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textSize="12sp"
+            android:textColor="@color/blackText2"
+            android:text="电影时间"/>
+        <TextView
+            android:id="@+id/tv_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textSize="12sp"
+            android:textColor="@color/blackText2"
+            android:text="国家"/>
+    </LinearLayout>
+
+    <View style="@style/DeepUnderLine"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/whiteBg"
         android:textSize="16sp"
         android:textColor="@color/blackText"
@@ -19,11 +77,56 @@
         android:id="@+id/tv_player_curriculum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
+        android:maxLines="5"
+        android:ellipsize="end"
         android:textSize="12sp"
         android:text="综合案例训练，包含新闻，视频，图片，音乐，记事本等等模块。采用MVP+Rx+Retrofit+Desgin+Dagger2+阿里VLayout+腾讯X5等架构模式。安装阿里编码规约插件，不断修正不合理代码和最大程度去除黄色警告！！！"/>
+
+    <View style="@style/DeepUnderLine"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteBg"
+        android:textSize="16sp"
+        android:textColor="@color/blackText"
+        android:text="广告区域"/>
+    <FrameLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_image_ad"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"/>
+        <TextView
+            android:id="@+id/tv_title_ad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="@color/color_10"
+            android:text="广告标题"/>
+    </FrameLayout>
+
+    <View style="@style/DeepUnderLine"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteBg"
+        android:textSize="16sp"
+        android:textColor="@color/blackText"
+        android:text="猜你喜欢"/>
 
 </LinearLayout>

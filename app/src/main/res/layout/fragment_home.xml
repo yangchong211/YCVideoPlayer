@@ -35,8 +35,9 @@
                 android:textSize="12sp"
                 android:text="搜索更多音视频资源"/>
         </LinearLayout>
-
     </android.support.v7.widget.Toolbar>
+
+
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -63,8 +64,5 @@
                 android:text="绑定手机号立即获取3天会员资格"/>
         </LinearLayout>
     </FrameLayout>
-
-
-
 
 </LinearLayout>

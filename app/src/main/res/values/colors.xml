@@ -46,6 +46,17 @@
     <color name="redTab">#D03E49</color>
 
 
+    <color name="color_1">#60C2CB</color>
+    <color name="color_2">#6FB452</color>
+    <color name="color_3">#F2AC00</color>
+    <color name="color_4">#DF3000</color>
+    <color name="color_5">#CA004A</color>
+    <color name="color_6">#7D0000</color>
+    <color name="color_7">#20cbff</color>
+    <color name="color_8">#99CC00</color>
+    <color name="color_9">#FFCC33</color>
+    <color name="color_10">#FF0033</color>
+
     <!--透明度颜色-->
     <color name="alpha_15_white">#26FFFFFF</color>
     <color name="alpha_05_black">#0D000000</color>

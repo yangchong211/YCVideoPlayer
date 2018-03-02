@@ -7,6 +7,7 @@ import android.content.ContextWrapper;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.WindowManager;
 
@@ -25,7 +26,9 @@ public class VideoPlayerUtils {
      * @return              对象的活动对象，如果它不是活动对象，则为空。
      */
     static Activity scanForActivity(Context context) {
-        if (context == null) return null;
+        if (context == null) {
+            return null;
+        }
         if (context instanceof Activity) {
             return (Activity) context;
         } else if (context instanceof ContextWrapper) {
@@ -35,12 +38,31 @@ public class VideoPlayerUtils {
     }
 
     /**
+     * 判断某Activity是否挂掉
+     * @param activity      activity
+     * @return
+     */
+    public static boolean isActivityLiving(Activity activity) {
+        if (activity == null) {
+            return false;
+        }
+        if (activity.isFinishing()) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+    /**
      * Get AppCompatActivity from context
      * @param context           上下文
      * @return AppCompatActivity if it's not null
      */
     private static AppCompatActivity getAppCompActivity(Context context) {
-        if (context == null) return null;
+        if (context == null) {
+            return null;
+        }
         if (context instanceof AppCompatActivity) {
             return (AppCompatActivity) context;
         } else if (context instanceof ContextThemeWrapper) {

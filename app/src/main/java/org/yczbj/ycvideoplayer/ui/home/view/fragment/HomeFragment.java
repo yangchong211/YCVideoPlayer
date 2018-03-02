@@ -2,14 +2,9 @@ package org.yczbj.ycvideoplayer.ui.home.view.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -27,22 +22,20 @@ import org.yczbj.ycvideoplayer.api.constant.Constant;
 import org.yczbj.ycvideoplayer.base.BaseConfig;
 import org.yczbj.ycvideoplayer.base.BaseDelegateAdapter;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseFragment;
-import org.yczbj.ycvideoplayer.test.test1.TestActivity;
-import org.yczbj.ycvideoplayer.test.test2.TestMyActivity;
-import org.yczbj.ycvideoplayer.test.test3.ui.activity.GlideCropActivity;
+import org.yczbj.ycvideoplayer.ui.test.test1.TestActivity;
+import org.yczbj.ycvideoplayer.ui.test.test2.TestMyActivity;
+import org.yczbj.ycvideoplayer.ui.test.test3.ui.activity.GlideCropActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerJzActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerMeActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.BannerPagerAdapter;
 import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
 import org.yczbj.ycvideoplayer.util.LogUtils;
-import org.yczbj.ycvideoplayer.util.animation.AnimationsUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 
 /**

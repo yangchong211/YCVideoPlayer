@@ -762,6 +762,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
 
 
     /**
+     * 进入全屏模式
      * 全屏，将mContainer(内部包含mTextureView和mController)从当前容器中移除，并添加到android.R.content中.
      * 切换横屏时需要在manifest的activity标签下添加android:configChanges="orientation|keyboardHidden|screenSize"配置，
      * 以避免Activity重新走生命周期
@@ -773,7 +774,6 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         }
         // 隐藏ActionBar、状态栏，并横屏
         VideoPlayerUtils.hideActionBar(mContext);
-        //
         VideoPlayerUtils.scanForActivity(mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         ViewGroup contentView = (ViewGroup) VideoPlayerUtils.scanForActivity(mContext).findViewById(android.R.id.content);
         if (mCurrentMode == MODE_TINY_WINDOW) {
@@ -791,6 +791,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
 
 
     /**
+     * 退出全屏模式
      * 退出全屏，移除mTextureView和mController，并添加到非全屏的容器中。
      * 切换竖屏时需要在manifest的activity标签下添加android:configChanges="orientation|keyboardHidden|screenSize"配置，
      * 以避免Activity重新走生命周期.

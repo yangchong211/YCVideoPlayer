@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.yc.cn.ycbannerlib.first.BannerView
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp">
+        <TextView
+            android:id="@+id/tv_special_first"
+            style="@style/WeightAttr"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_category_0"
+            android:text="专题电影" />
+        <TextView
+            android:id="@+id/tv_special_second"
+            style="@style/WeightAttr"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_category_1"
+            android:text="电影资讯" />
+        <TextView
+            android:id="@+id/tv_special_third"
+            style="@style/WeightAttr"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_category_2"
+            android:text="香港映象" />
+        <TextView
+            android:id="@+id/tv_special_four"
+            style="@style/WeightAttr"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_category_3"
+            android:text="微电影" />
+        <TextView
+            android:id="@+id/tv_special_five"
+            style="@style/WeightAttr"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_category_4"
+            android:text="精彩推荐" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

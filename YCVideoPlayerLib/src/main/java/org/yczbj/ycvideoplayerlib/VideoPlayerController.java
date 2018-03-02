@@ -1,22 +1,22 @@
 package org.yczbj.ycvideoplayerlib;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.BatteryManager;
 import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 
 /**
  * @author yc
@@ -97,10 +96,13 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private TextView mTvSeeContent;
     private Button mBtnVip;
     private ImageView mIvTrySee;
-
+    private FrameLayout mFlLock;
+    private ImageView mIvLock;
 
     private boolean topBottomVisible;
-    //倒计时器
+    /**
+     * 倒计时器
+     */
     private CountDownTimer mDismissTopBottomCountDownTimer;
     private List<VideoClarity> clarities;
     private int defaultClarityIndex;
@@ -109,15 +111,29 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 是否已经注册了电池广播
      */
     private boolean hasRegisterBatteryReceiver;
-    //setMemberType 如果不设置该方法，那么默认视频都是可以看的
-    //试看类型
+    /**
+     * 试看类型 setMemberType 如果不设置该方法，那么默认视频都是可以看的
+     */
     private int mType;
-    //是否有观看权限
+    /**
+     * 是否有观看权限
+     */
     private boolean mIsSee = true;
-    //是否登录
+    /**
+     * 是否登录
+     */
     private boolean mIsLogin = true;
+    /**
+     * 是否看完
+     */
     private boolean mSeeEnd = true;
-    //会员权限话术内容
+    /**
+     * 是否锁屏
+     */
+    private boolean mIsLock = false;
+    /**
+     * 会员权限话术内容
+     */
     private ArrayList<String> mMemberContent;
     /**
      * 这个是time时间不操作界面，则自动隐藏顶部和底部视图布局
@@ -180,6 +196,8 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mTvSeeContent = (TextView)findViewById(R.id.tv_see_content);
         mBtnVip = (Button)findViewById(R.id.btn_vip);
         mIvTrySee = (ImageView) findViewById(R.id.iv_try_see);
+        mFlLock = (FrameLayout) findViewById(R.id.fl_lock);
+        mIvLock = (ImageView) findViewById(R.id.iv_lock);
     }
 
 
@@ -194,6 +212,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mShare.setOnClickListener(this);
         mBtnVip.setOnClickListener(this);
         mIvTrySee.setOnClickListener(this);
+        mFlLock.setOnClickListener(this);
         mSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -318,12 +337,22 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
 
     /**
      * 设置视频时长
-     * @param length            时长
+     * @param length            时长，long类型
      */
     @Override
     public void setLength(long length) {
         mLength.setText(VideoPlayerUtils.formatTime(length));
     }
+
+    /**
+     * 设置视频时长
+     * @param length            时长，String类型
+     */
+    @Override
+    public void setLength(String length) {
+        mLength.setText(length);
+    }
+
 
     /**
      * 设置播放器
@@ -362,8 +391,11 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                     VideoClarity clarity = clarities.get(clarityIndex);
                     mClarity.setText(clarity.getGrade());
                     long currentPosition = mVideoPlayer.getCurrentPosition();
+                    //释放播放器
                     mVideoPlayer.releasePlayer();
+                    //设置视频Url，以及headers
                     mVideoPlayer.setUp(clarity.getVideoUrl(), null);
+                    //开始从此位置播放
                     mVideoPlayer.start(currentPosition);
                 }
 
@@ -475,6 +507,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         switch (playMode) {
             //普通模式
             case VideoPlayer.MODE_NORMAL:
+                mFlLock.setVisibility(View.GONE);
                 mBack.setVisibility(View.VISIBLE);
                 mFullScreen.setImageResource(R.drawable.ic_player_enlarge);
                 mFullScreen.setVisibility(View.VISIBLE);
@@ -487,6 +520,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 break;
             //全屏模式
             case VideoPlayer.MODE_FULL_SCREEN:
+                mFlLock.setVisibility(View.VISIBLE);
                 mBack.setVisibility(View.VISIBLE);
                 mFullScreen.setVisibility(View.GONE);
                 mFullScreen.setImageResource(R.drawable.ic_player_shrink);
@@ -498,9 +532,21 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                     mContext.registerReceiver(mBatterReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
                     hasRegisterBatteryReceiver = true;
                 }
+                Activity activity = VideoPlayerUtils.scanForActivity(mContext);
+                //TODO 待处理问题，先隐藏
+                /*if(VideoPlayerUtils.isActivityLiving(activity)){
+                    if(mIsLock){
+                        //设置屏幕不能旋转
+                        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    }else {
+                        //设置自动旋转
+                        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    }
+                }*/
                 break;
             //小窗口模式
             case VideoPlayer.MODE_TINY_WINDOW:
+                mFlLock.setVisibility(View.GONE);
                 mBack.setVisibility(View.VISIBLE);
                 mClarity.setVisibility(View.GONE);
                 break;
@@ -565,7 +611,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             mLength.setVisibility(View.VISIBLE);
         }
 
-        //mCenterStart.setVisibility(View.VISIBLE);
+        mFlLock.setVisibility(View.GONE);
         mImage.setVisibility(View.VISIBLE);
         mBottom.setVisibility(View.GONE);
         mFullScreen.setImageResource(R.drawable.ic_player_enlarge);
@@ -612,10 +658,14 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mVideoPlayer.restart();
             }
         } else if (v == mFullScreen) {
-            //全屏模式
+            //全屏模式，重置锁屏，设置为未选中状态
             if (mVideoPlayer.isNormal() || mVideoPlayer.isTinyWindow()) {
+                mFlLock.setVisibility(VISIBLE);
+                mIsLock = false;
+                mIvLock.setImageResource(R.drawable.player_unlock_btn);
                 mVideoPlayer.enterFullScreen();
             } else if (mVideoPlayer.isFullScreen()) {
+                mFlLock.setVisibility(GONE);
                 mVideoPlayer.exitFullScreen();
             }
         } else if (v == mClarity) {
@@ -653,7 +703,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 //试看结束, 登录后即可观看全部免费课程。
                 mClickListener.onClick(ConstantKeys.Gender.MEMBER);
             }
-        } else if (v == this) {
+        } else if(v == mFlLock){
+            //点击锁屏按钮，则进入锁屏模式
+            setLock(mIsLock);
+        }else if (v == this) {
             if (mVideoPlayer.isPlaying() || mVideoPlayer.isPaused()
                     || mVideoPlayer.isBufferingPlaying() || mVideoPlayer.isBufferingPaused()) {
                 if(mTrySeeTime==0){
@@ -734,6 +787,24 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         }
     }
 
+    /**
+     * 设置锁屏模式，默认是未锁屏的
+     * 当为true时，则锁屏；否则为未锁屏
+     * @param isLock        是否锁屏
+     */
+    private void setLock(boolean isLock){
+        if(isLock){
+            mIsLock = false;
+            mIvLock.setImageResource(R.drawable.player_unlock_btn);
+        }else {
+            mIsLock = true;
+            mIvLock.setImageResource(R.drawable.player_locked_btn);
+        }
+    }
+
+    public boolean getLock(){
+        return mIsLock;
+    }
 
     /**
      * 更新播放进度

@@ -25,8 +25,8 @@ import org.yczbj.ycrefreshviewlib.swipeMenu.OnSwipeMenuListener;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.download.TasksManager;
 import org.yczbj.ycvideoplayer.listener.OnListItemClickListener;
-import org.yczbj.ycvideoplayer.test.test3.download2.DlCacheTasksManager;
-import org.yczbj.ycvideoplayer.test.test3.download2.DlTasksManagerModel;
+import org.yczbj.ycvideoplayer.ui.test.test3.download2.DlCacheTasksManager;
+import org.yczbj.ycvideoplayer.ui.test.test3.download2.DlTasksManagerModel;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

@@ -37,11 +37,11 @@ import org.yczbj.ycvideoplayer.ui.special.contract.SpecialContract;
 import org.yczbj.ycvideoplayer.ui.special.model.SpecialBean;
 import org.yczbj.ycvideoplayer.ui.special.presenter.SpecialPresenter;
 import org.yczbj.ycvideoplayer.ui.special.view.SpecialAdapter;
-import org.yczbj.ycvideoplayer.test.test3.ui.activity.DLHybridTestActivity;
-import org.yczbj.ycvideoplayer.test.test3.ui.activity.DLManyTestActivity;
-import org.yczbj.ycvideoplayer.test.test3.ui.activity.DLMyFileTestActivity;
-import org.yczbj.ycvideoplayer.test.test3.ui.activity.DLNotificationTestActivity;
-import org.yczbj.ycvideoplayer.test.test3.ui.activity.DLSingleTestActivity;
+import org.yczbj.ycvideoplayer.ui.test.test3.ui.activity.DLHybridTestActivity;
+import org.yczbj.ycvideoplayer.ui.test.test3.ui.activity.DLManyTestActivity;
+import org.yczbj.ycvideoplayer.ui.test.test3.ui.activity.DLMyFileTestActivity;
+import org.yczbj.ycvideoplayer.ui.test.test3.ui.activity.DLNotificationTestActivity;
+import org.yczbj.ycvideoplayer.ui.test.test3.ui.activity.DLSingleTestActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +75,22 @@ public class SpecialFragment extends BaseFragment implements SpecialContract.Vie
     public void onDetach() {
         super.onDetach();
         activity = null;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(mBanner!=null){
+            mBanner.pause();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mBanner!=null){
+            mBanner.resume();
+        }
     }
 
     @Override
