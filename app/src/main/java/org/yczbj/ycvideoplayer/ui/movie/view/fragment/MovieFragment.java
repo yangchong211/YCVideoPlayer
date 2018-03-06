@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SizeUtils;
-import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 import com.yc.cn.ycbannerlib.first.BannerView;
 import com.yc.cn.ycbannerlib.first.util.SizeUtil;
 
@@ -30,6 +30,7 @@ import org.yczbj.ycvideoplayer.ui.movie.presenter.MoviePresenter;
 import org.yczbj.ycvideoplayer.ui.movie.view.adapter.MovieAdapter;
 import org.yczbj.ycvideoplayer.ui.movie.view.adapter.MovieBannerAdapter;
 import org.yczbj.ycvideoplayer.ui.movie.view.activity.MovieDetailActivity;
+import org.yczbj.ycvideoplayer.ui.test.test4.MediaPlayerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +98,7 @@ public class MovieFragment extends BaseFragment implements MovieContract.View{
 
     @Override
     public int getContentView() {
-        return R.layout.base_easy_recycle;
+        return R.layout.fragment_movie;
     }
 
     @Override
@@ -122,7 +123,6 @@ public class MovieFragment extends BaseFragment implements MovieContract.View{
 
     @Override
     public void initData() {
-        recyclerView.setProgressView(R.layout.view_custom_loading_data);
         recyclerView.showProgress();
         presenter.getData();
     }
@@ -226,7 +226,7 @@ public class MovieFragment extends BaseFragment implements MovieContract.View{
                     public void onClick(View v) {
                         switch (v.getId()){
                             case R.id.tv_special_first:
-
+                                startActivity(MediaPlayerActivity.class);
                                 break;
                             case R.id.tv_special_second:
 
@@ -338,13 +338,7 @@ public class MovieFragment extends BaseFragment implements MovieContract.View{
             adapter.clear();
             adapter.addAll(movieList);
             adapter.notifyDataSetChanged();
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }finally {
-                recyclerView.showRecycler();
-            }
+            recyclerView.showRecycler();
         }else{
             recyclerView.showEmpty();
             recyclerView.setEmptyView(R.layout.view_custom_empty_data);

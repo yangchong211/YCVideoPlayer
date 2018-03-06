@@ -21,6 +21,7 @@ public class VideoPlayerManager {
         return sInstance;
     }
 
+
     /**
      * 获取对象
      * @return          VideoPlayerManager对象
@@ -28,6 +29,7 @@ public class VideoPlayerManager {
     public VideoPlayer getCurrentVideoPlayer() {
         return mVideoPlayer;
     }
+
 
     /**
      * 设置VideoPlayer
@@ -40,6 +42,7 @@ public class VideoPlayerManager {
         }
     }
 
+
     /**
      * 当视频正在播放或者正在缓冲时，调用该方法暂停视频
      */
@@ -48,6 +51,7 @@ public class VideoPlayerManager {
             mVideoPlayer.pause();
         }
     }
+
 
     /**
      * 当视频暂停时或者缓冲暂停时，调用该方法重新开启视频播放
@@ -58,6 +62,7 @@ public class VideoPlayerManager {
         }
     }
 
+
     /**
      * 释放，内部的播放器被释放掉，同时如果在全屏、小窗口模式下都会退出
      */
@@ -67,6 +72,7 @@ public class VideoPlayerManager {
             mVideoPlayer = null;
         }
     }
+
 
     /**
      * 处理返回键逻辑
@@ -83,4 +89,6 @@ public class VideoPlayerManager {
         }
         return false;
     }
+
+
 }

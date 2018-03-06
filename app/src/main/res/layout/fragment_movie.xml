@@ -44,32 +44,14 @@
     </android.support.v7.widget.Toolbar>
 
 
-
-    <FrameLayout
+    <org.yczbj.ycrefreshviewlib.YCRefreshView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/base_refresh_recycler_view"/>
-
-        <LinearLayout
-            android:id="@+id/ll_bind"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:background="@color/alpha_50_black">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:drawableStart="@drawable/icon_binding_hint"
-                android:drawablePadding="8dp"
-                android:textColor="@color/redTab"
-                android:textSize="13sp"
-                android:text="绑定手机号立即获取3天会员资格"/>
-        </LinearLayout>
-    </FrameLayout>
+        android:layout_height="match_parent"
+        app:layout_progress="@layout/view_custom_loading_data"
+        app:layout_empty="@layout/view_custom_empty_data"
+        app:layout_error="@layout/view_custom_data_error"/>
 
 
 </LinearLayout>

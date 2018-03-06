@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
-import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
@@ -27,7 +28,6 @@ import org.yczbj.ycrefreshviewlib.item.SpaceViewItemLine;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayer.ui.home.model.VideoPlayerFavorite;
-import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerMeActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.NarrowImageAdapter;
 import org.yczbj.ycvideoplayer.ui.movie.contract.MovieDetailContract;
 import org.yczbj.ycvideoplayer.ui.movie.model.MovieDetailBean;
@@ -56,6 +56,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     VideoPlayer videoPlayer;
     @Bind(R.id.recyclerView)
     YCRefreshView recyclerView;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
+
     private MovieDetailAdapter adapter;
 
     private MovieDetailContract.Presenter presenter = new MovieDetailPresenter(this);
@@ -85,11 +88,13 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         presenter.unSubscribe();
     }
 
+
     @Override
     protected void onStop() {
         super.onStop();
         VideoPlayerManager.instance().releaseVideoPlayer();
     }
+
 
     @Override
     public void onBackPressed() {
@@ -105,8 +110,10 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         return R.layout.base_video_view;
     }
 
+
     @Override
     public void initView() {
+        fab.setVisibility(View.VISIBLE);
         initIntentData();
         initVideoPlayer();
         initYCRefreshView();
@@ -262,6 +269,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         });
     }
 
+
     private void initHeaderTitle() {
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
             @Override
@@ -285,8 +293,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     public void setAdapterData(MovieDetailBean movieDetailBean) {
         if(movieDetailBean!=null && movieDetailBean.getRet()!=null){
             MovieDetailBean.RetBean ret = movieDetailBean.getRet();
-            String hdurl = ret.getHDURL();
-            videoPlayer.setUp(hdurl,null);
+            String hdUrl = ret.getHDURL();
+            videoPlayer.setUp(hdUrl,null);
             controller.setTitle(ret.getTitle());
             String duration = ret.getDuration();
             controller.setLength(duration);
@@ -298,7 +306,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
                 tvAuthor.setText("人物主演："+ret.getActors());
                 tvType.setText("电影类型："+ret.getVideoType());
                 tvTime.setText("放映时间："+ret.getAirTime());
-                tvCity.setText("上映国家:"+ret.getRegion());
+                tvCity.setText("上映国家："+ret.getRegion());
 
                 if(ret.getAdv()!=null){
                     ImageUtil.loadImgByPicasso(MovieDetailActivity.this,

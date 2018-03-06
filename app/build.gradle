@@ -85,9 +85,9 @@ dependencies {
     compile 'cn.yc:YCUtilsLib:1.5'                                  //公共类
     compile 'cn.yc:YCStateLib:1.1'                                  //状态管理
     compile 'cn.yc:YCBannerLib:1.2'                                 //轮播图
-    compile 'org.yczbj:YCRefreshViewLib:2.3'                        //RecyclerView封装
+    compile 'org.yczbj:YCRefreshViewLib:2.4'                        //RecyclerView封装
     compile 'cn.yc:YCBaseAdapterLib:1.2'                            //adapter封装
-    compile 'cn.yc:YCDialogLib:3.4'                                 //弹窗
+    compile 'cn.yc:YCDialogLib:3.5'                                 //弹窗
     compile 'cn.yc:YCProgressLib:1.2'                               //进度条
 //    compile 'cn.yc:YCVideoPlayerLib:2.3'                            //播放器
     compile project(':YCVideoPlayerLib')

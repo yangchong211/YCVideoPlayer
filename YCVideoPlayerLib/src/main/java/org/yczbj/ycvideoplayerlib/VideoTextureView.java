@@ -22,6 +22,11 @@ public class VideoTextureView extends TextureView {
         super(context);
     }
 
+    /**
+     * 自定义video大小
+     * @param videoWidth                宽
+     * @param videoHeight               高
+     */
     public void adaptVideoSize(int videoWidth, int videoHeight) {
         if (this.videoWidth != videoWidth && this.videoHeight != videoHeight) {
             this.videoWidth = videoWidth;
@@ -30,6 +35,10 @@ public class VideoTextureView extends TextureView {
         }
     }
 
+    /**
+     * 设置视频旋转角度
+     * @param rotation                  角度
+     */
     @Override
     public void setRotation(float rotation) {
         if (rotation != getRotation()) {

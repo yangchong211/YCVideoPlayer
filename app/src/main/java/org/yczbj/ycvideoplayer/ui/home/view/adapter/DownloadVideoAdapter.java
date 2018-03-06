@@ -19,12 +19,10 @@ import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.ns.yc.ycprogresslib.CircleProgressbar;
-import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.download.TaskViewHolderImp;
 import org.yczbj.ycvideoplayer.download.TasksManager;
-import org.yczbj.ycvideoplayer.download.TasksManagerModel;
 import org.yczbj.ycvideoplayer.ui.home.model.DialogListBean;
 import org.yczbj.ycvideoplayer.util.LogUtils;
 

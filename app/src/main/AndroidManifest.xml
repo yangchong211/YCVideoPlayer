@@ -130,6 +130,7 @@
         <activity android:name=".ui.test.test2.view.TestMySixActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.test.test4.MediaPlayerActivity"/>
 
         <activity android:name=".ui.test.test3.ui.activity.DLSingleTestActivity"/>
         <activity android:name=".ui.test.test3.ui.activity.DLHybridTestActivity"/>

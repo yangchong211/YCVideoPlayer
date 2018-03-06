@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -204,6 +205,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     }
 
     /**
+     * 注意：MediaPlayer没有这个方法
      * 设置播放速度，不必须
      * @param speed                     播放速度
      */
@@ -211,6 +213,9 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     public void setSpeed(float speed) {
         if (mMediaPlayer instanceof IjkMediaPlayer) {
             ((IjkMediaPlayer) mMediaPlayer).setSpeed(speed);
+        } else if(mMediaPlayer instanceof MediaPlayer){
+            //((MediaPlayer) mMediaPlayer).setSpeed(speed);
+            VideoLogUtil.d("只有IjkPlayer才能设置播放速度");
         } else {
             VideoLogUtil.d("只有IjkPlayer才能设置播放速度");
         }
@@ -287,6 +292,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         }
     }
 
+
     /**
      * 设置播放位置
      * @param pos                   播放位置
@@ -297,6 +303,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
             mMediaPlayer.seekTo(pos);
         }
     }
+
 
     /**
      * 设置音量
@@ -309,6 +316,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         }
     }
 
+
     /**
      * 判断是否开始播放
      * @return                      true表示播放未开始
@@ -317,6 +325,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     public boolean isIdle() {
         return mCurrentState == STATE_IDLE;
     }
+
 
     /**
      * 判断视频是否播放准备中
@@ -327,6 +336,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         return mCurrentState == STATE_PREPARING;
     }
 
+
     /**
      * 判断视频是否准备就绪
      * @return                      true表示播放准备就绪
@@ -335,6 +345,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     public boolean isPrepared() {
         return mCurrentState == STATE_PREPARED;
     }
+
 
     /**
      * 判断视频是否正在缓冲(播放器正在播放时，缓冲区数据不足，进行缓冲，缓冲区数据足够后恢复播放)
@@ -345,6 +356,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         return mCurrentState == STATE_BUFFERING_PLAYING;
     }
 
+
     /**
      * 判断是否是否缓冲暂停
      * @return                      true表示缓冲暂停
@@ -353,6 +365,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     public boolean isBufferingPaused() {
         return mCurrentState == STATE_BUFFERING_PAUSED;
     }
+
 
     /**
      * 判断视频是否正在播放
@@ -363,6 +376,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         return mCurrentState == STATE_PLAYING;
     }
 
+
     /**
      * 判断视频是否暂停播放
      * @return                      true表示暂停播放
@@ -371,6 +385,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     public boolean isPaused() {
         return mCurrentState == STATE_PAUSED;
     }
+
 
     /**
      * 判断视频是否播放错误
@@ -381,6 +396,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         return mCurrentState == STATE_ERROR;
     }
 
+
     /**
      * 判断视频是否播放完成
      * @return                      true表示播放完成
@@ -389,6 +405,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     public boolean isCompleted() {
         return mCurrentState == STATE_COMPLETED;
     }
+
 
     /**
      * 判断视频是否播放全屏
@@ -399,6 +416,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         return mCurrentMode == MODE_FULL_SCREEN;
     }
 
+
     /**
      * 判断视频是否播放小窗口
      * @return                      true表示播放小窗口
@@ -408,6 +426,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         return mCurrentMode == MODE_TINY_WINDOW;
     }
 
+
     /**
      * 判断视频是否正常播放
      * @return                      true表示正常播放
@@ -416,6 +435,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     public boolean isNormal() {
         return mCurrentMode == MODE_NORMAL;
     }
+
 
     /**
      * 获取最大音量
@@ -429,6 +449,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         return 0;
     }
 
+
     /**
      * 获取音量值
      * @return                  音量值
@@ -441,6 +462,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         return 0;
     }
 
+
     /**
      * 获取持续时长
      * @return                  long时间值
@@ -449,6 +471,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     public long getDuration() {
         return mMediaPlayer != null ? mMediaPlayer.getDuration() : 0;
     }
+
 
     /**
      * 获取播放位置
@@ -459,6 +482,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         return mMediaPlayer != null ? mMediaPlayer.getCurrentPosition() : 0;
     }
 
+
     /**
      * 获取缓冲区百分比
      * @return                  百分比
@@ -468,10 +492,11 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         return mBufferPercentage;
     }
 
+
     /**
      * 获取播放速度
      * @param speed             播放速度
-     * @return
+     * @return                  速度
      */
     @Override
     public float getSpeed(float speed) {
@@ -481,9 +506,10 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         return 0;
     }
 
+
     /**
      * 获取播放速度
-     * @return
+     * @return                  速度
      */
     @Override
     public long getTcpSpeed() {
@@ -492,6 +518,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         }
         return 0;
     }
+
 
     /**
      * 初始化音频管理器
@@ -504,6 +531,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
             }
         }
     }
+
 
     /**
      * 初始化视频管理器
@@ -530,6 +558,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         }
     }
 
+
     /**
      * 初始化TextureView
      */
@@ -537,6 +566,10 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         if (mTextureView == null) {
             mTextureView = new VideoTextureView(mContext);
             mTextureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+
+                /**
+                 * SurfaceTexture准备就绪
+                 */
                 @Override
                 public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
                     if (mSurfaceTexture == null) {
@@ -547,16 +580,25 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
                     }
                 }
 
+                /**
+                 * SurfaceTexture缓冲大小变化
+                 */
                 @Override
                 public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
 
                 }
 
+                /**
+                 * SurfaceTexture即将被销毁
+                 */
                 @Override
                 public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
                     return mSurfaceTexture == null;
                 }
 
+                /**
+                 * SurfaceTexture通过updateImage更新
+                 */
                 @Override
                 public void onSurfaceTextureUpdated(SurfaceTexture surface) {
 
@@ -564,6 +606,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
             });
         }
     }
+
 
     /**
      * 添加TextureView到视图中
@@ -605,9 +648,13 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
             if (mSurface == null) {
                 mSurface = new Surface(mSurfaceTexture);
             }
+            //
             mMediaPlayer.setSurface(mSurface);
+            // 开始加载
             mMediaPlayer.prepareAsync();
+            // 播放准备中
             mCurrentState = STATE_PREPARING;
+            // 控制器，更新不同的播放状态的UI
             mController.onPlayStateChanged(mCurrentState);
             VideoLogUtil.d("STATE_PREPARING");
         } catch (IOException e) {

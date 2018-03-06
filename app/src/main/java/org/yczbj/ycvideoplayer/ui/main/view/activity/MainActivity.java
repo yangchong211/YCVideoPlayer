@@ -293,6 +293,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         return this;
     }
 
+
     /**
      * 监听back键处理DrawerLayout和SearchView
      */

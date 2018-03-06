@@ -4,7 +4,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
+
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.model.LoadingEndBean;
 import org.yczbj.ycvideoplayer.util.SettingUtil;
