@@ -61,4 +61,10 @@
     </string-array>
 
 
+    <string-array name="movie_news">
+        <item>网易视频</item>
+        <item>头条视频</item>
+        <item>凤凰视频</item>
+    </string-array>
+
 </resources>

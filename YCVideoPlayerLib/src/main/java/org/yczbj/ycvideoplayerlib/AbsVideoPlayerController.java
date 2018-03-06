@@ -65,6 +65,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         mVideoPlayer = videoPlayer;
     }
 
+
     /**
      * 设置试看视频时间，让使用者自己定制
      * @param time                  时间

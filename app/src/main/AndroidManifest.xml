@@ -37,7 +37,7 @@
         <activity android:name=".ui.movie.view.activity.MovieDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-
+        <activity android:name=".ui.movie.view.activity.MovieNewsActivity"/>
 
 
         <!--下面这些均是测试视频播放器-->

@@ -238,7 +238,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     }
 
 
-
     /**
      * 18年1月12号添加
      * 设置加载loading类型
@@ -262,6 +261,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             pbLoadingQq.setVisibility(GONE);
         }
     }
+
 
     /**
      * 设置试看视频时间，让使用者自己定制
@@ -802,6 +802,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         }
     }
 
+    /**
+     * 获取是否是锁屏模式
+     * @return              true表示锁屏
+     */
     public boolean getLock(){
         return mIsLock;
     }

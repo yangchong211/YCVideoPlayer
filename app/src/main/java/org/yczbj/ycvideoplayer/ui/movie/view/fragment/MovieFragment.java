@@ -27,6 +27,7 @@ import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
 import org.yczbj.ycvideoplayer.ui.movie.contract.MovieContract;
 import org.yczbj.ycvideoplayer.ui.movie.model.MovieBean;
 import org.yczbj.ycvideoplayer.ui.movie.presenter.MoviePresenter;
+import org.yczbj.ycvideoplayer.ui.movie.view.activity.MovieNewsActivity;
 import org.yczbj.ycvideoplayer.ui.movie.view.adapter.MovieAdapter;
 import org.yczbj.ycvideoplayer.ui.movie.view.adapter.MovieBannerAdapter;
 import org.yczbj.ycvideoplayer.ui.movie.view.activity.MovieDetailActivity;
@@ -229,7 +230,7 @@ public class MovieFragment extends BaseFragment implements MovieContract.View{
                                 startActivity(MediaPlayerActivity.class);
                                 break;
                             case R.id.tv_special_second:
-
+                                startActivity(MovieNewsActivity.class);
                                 break;
                             case R.id.tv_special_third:
 
