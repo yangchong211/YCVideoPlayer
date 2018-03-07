@@ -63,4 +63,6 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
                 });
         mSubscriptions.add(subscribe);
     }
+
+
 }

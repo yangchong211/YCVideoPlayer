@@ -17,6 +17,8 @@ public interface MovieDetailContract {
 
     interface View extends BaseView {
         void setAdapterData(MovieDetailBean movieDetailBean);
+        void setError();
+        void setEmptyView();
     }
 
     interface Presenter extends BasePresenter {

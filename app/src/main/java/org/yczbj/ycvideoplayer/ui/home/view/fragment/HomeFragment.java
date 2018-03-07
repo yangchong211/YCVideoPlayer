@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -346,6 +347,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
                 final ImageView ivImage = holder.getView(R.id.iv_image);
+
                 ivImage.setBackgroundResource(R.drawable.bg_small_tree_min);
                 //String image = ConstantImage.homePageConcentration[position];
                 //ImageUtil.loadImgByPicasso(activity,ConstantImage.homePageConcentration[position],R.drawable.image_default,ivImage);
@@ -378,7 +380,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
-
             }
         };
         mAdapters.add(adapter);

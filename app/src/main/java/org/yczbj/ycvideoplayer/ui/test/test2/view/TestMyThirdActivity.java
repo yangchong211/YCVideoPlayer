@@ -56,8 +56,8 @@ public class TestMyThirdActivity extends BaseActivity {
         recyclerView.setRecyclerListener(new RecyclerView.RecyclerListener() {
             @Override
             public void onViewRecycled(RecyclerView.ViewHolder holder) {
-                VideoPlayer niceVideoPlayer = ((VideoAdapter.VideoViewHolder) holder).mVideoPlayer;
-                if (niceVideoPlayer == VideoPlayerManager.instance().getCurrentVideoPlayer()) {
+                VideoPlayer videoPlayer = ((VideoAdapter.VideoViewHolder) holder).mVideoPlayer;
+                if (videoPlayer == VideoPlayerManager.instance().getCurrentVideoPlayer()) {
                     VideoPlayerManager.instance().releaseVideoPlayer();
                 }
             }

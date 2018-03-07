@@ -178,4 +178,6 @@ public class NewsArticlePresenter implements INewsArticle.Presenter {
             return model.getNewsArticle2(this.category, this.time);
         }
     }
+
+
 }

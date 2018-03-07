@@ -348,5 +348,15 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         }
     }
 
+    @Override
+    public void setError() {
+        recyclerView.showError();
+    }
+
+    @Override
+    public void setEmptyView() {
+        recyclerView.showEmpty();
+    }
+
 
 }
