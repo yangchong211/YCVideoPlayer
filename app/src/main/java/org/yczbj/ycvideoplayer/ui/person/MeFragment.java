@@ -1,12 +1,19 @@
 package org.yczbj.ycvideoplayer.ui.person;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseFragment;
+import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
+import org.yczbj.ycvideoplayer.weight.AboutMeDialog;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Description:
@@ -16,6 +23,22 @@ import butterknife.Bind;
  */
 
 public class MeFragment extends BaseFragment implements View.OnClickListener {
+
+    @Bind(R.id.tv_3)
+    TextView tv3;
+    private MainActivity activity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (MainActivity) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        activity = null;
+    }
 
     @Override
     public int getContentView() {
@@ -29,7 +52,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void initListener() {
-
+        tv3.setOnClickListener(this);
     }
 
     @Override
@@ -39,9 +62,14 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
+            case R.id.tv_3:
+                new AboutMeDialog(activity, R.color.colorTheme).show();
+                break;
             default:
                 break;
         }
     }
+
+
 }

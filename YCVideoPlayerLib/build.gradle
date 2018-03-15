@@ -2,11 +2,11 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    buildToolsVersion '27.0.3'
 
 
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -30,6 +30,11 @@ dependencies {
     //这两个是必须要加的，其它的可供选择
     compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
     compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
+    //其他库文件
+    //compile 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.8'
+    //compile 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'
+    //compile 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.8'
+    //compile 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.8.8'
 }
 
 /** 以下开始是将Android Library上传到jcenter的相关配置**/

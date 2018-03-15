@@ -65,6 +65,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private LinearLayout mTop;
     private ImageView mBack;
     private TextView mTitle;
+    private LinearLayout mLlTopOther;
+    private ImageView mIvDownload;
+    private ImageView mIvAudio;
+    private ImageView mIvShare;
     private LinearLayout mBatteryTime;
     private ImageView mBattery;
     private TextView mTime;
@@ -145,6 +149,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private long mTrySeeTime;
 
 
+
     public VideoPlayerController(Context context) {
         super(context);
         mContext = context;
@@ -160,12 +165,18 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private void initFindViewById() {
         mCenterStart = (ImageView) findViewById(R.id.center_start);
         mImage = (ImageView) findViewById(R.id.image);
+
         mTop = (LinearLayout) findViewById(R.id.top);
         mBack = (ImageView) findViewById(R.id.back);
         mTitle = (TextView) findViewById(R.id.title);
+        mLlTopOther = (LinearLayout) findViewById(R.id.ll_top_other);
+        mIvDownload = (ImageView) findViewById(R.id.iv_download);
+        mIvAudio = (ImageView) findViewById(R.id.iv_audio);
+        mIvShare = (ImageView) findViewById(R.id.iv_share);
         mBatteryTime = (LinearLayout) findViewById(R.id.battery_time);
         mBattery = (ImageView) findViewById(R.id.battery);
         mTime = (TextView) findViewById(R.id.time);
+
         mBottom = (LinearLayout) findViewById(R.id.bottom);
         mRestartPause = (ImageView) findViewById(R.id.restart_or_pause);
         mPosition = (TextView) findViewById(R.id.position);
@@ -204,6 +215,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private void initListener() {
         mCenterStart.setOnClickListener(this);
         mBack.setOnClickListener(this);
+        mIvDownload.setOnClickListener(this);
+        mIvShare.setOnClickListener(this);
+        mIvAudio.setOnClickListener(this);
+
         mRestartPause.setOnClickListener(this);
         mFullScreen.setOnClickListener(this);
         mClarity.setOnClickListener(this);
@@ -298,6 +313,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         this.mMemberContent = memberContent;
     }
 
+
     /**
      * 设置不操作后，多久自动隐藏头部和底部布局
      * @param time                  时间
@@ -317,6 +333,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mTitle.setText(title);
     }
 
+
     /**
      * 获取ImageView的对象
      * @return                  对象
@@ -325,6 +342,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     public ImageView imageView() {
         return mImage;
     }
+
 
     /**
      * 设置图片
@@ -335,6 +353,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mImage.setImageResource(resId);
     }
 
+
     /**
      * 设置视频时长
      * @param length            时长，long类型
@@ -343,6 +362,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     public void setLength(long length) {
         mLength.setText(VideoPlayerUtils.formatTime(length));
     }
+
 
     /**
      * 设置视频时长
@@ -512,6 +532,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mFullScreen.setImageResource(R.drawable.ic_player_enlarge);
                 mFullScreen.setVisibility(View.VISIBLE);
                 mClarity.setVisibility(View.GONE);
+                mLlTopOther.setVisibility(VISIBLE);
                 mBatteryTime.setVisibility(View.GONE);
                 if (hasRegisterBatteryReceiver) {
                     mContext.unregisterReceiver(mBatterReceiver);
@@ -527,6 +548,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 if (clarities != null && clarities.size() > 1) {
                     mClarity.setVisibility(View.VISIBLE);
                 }
+                mLlTopOther.setVisibility(GONE);
                 mBatteryTime.setVisibility(View.VISIBLE);
                 if (!hasRegisterBatteryReceiver) {
                     mContext.registerReceiver(mBatterReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -686,9 +708,15 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             Toast.makeText(mContext, "分享", Toast.LENGTH_SHORT).show();
         } else if (v == mIvTrySee){
             //点击试看按钮，也是播放
-            mVideoPlayer.start();
+            if (mVideoPlayer.isIdle()) {
+                mVideoPlayer.start();
+            }
             mIvTrySee.setVisibility(GONE);
         } else if (v == mBtnVip){
+            if(mClickListener==null){
+                VideoLogUtil.d("请在初始化的时候设置监听事件");
+                return;
+            }
             //点击vip按钮，第一种情况是跳转登录，第二种情况是跳转购买会员页面
             if (mIsLogin) {
                 //试看结束，观看全部内容请开通会员
@@ -706,7 +734,28 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         } else if(v == mFlLock){
             //点击锁屏按钮，则进入锁屏模式
             setLock(mIsLock);
-        }else if (v == this) {
+        } else if(v == mIvDownload){
+            if(mVideoControlListener==null){
+                VideoLogUtil.d("请在初始化的时候设置下载监听事件");
+                return;
+            }
+            //点击下载
+            mVideoControlListener.onVideoControlClick(ConstantKeys.VideoControl.DOWNLOAD);
+        } else if(v == mIvAudio){
+            if(mVideoControlListener==null){
+                VideoLogUtil.d("请在初始化的时候设置切换监听事件");
+                return;
+            }
+            //点击切换音频
+            mVideoControlListener.onVideoControlClick(ConstantKeys.VideoControl.AUDIO);
+        }else if(v == mIvShare){
+            if(mVideoControlListener==null){
+                VideoLogUtil.d("请在初始化的时候设置分享监听事件");
+                return;
+            }
+            //点击分享
+            mVideoControlListener.onVideoControlClick(ConstantKeys.VideoControl.SHARE);
+        } else if (v == this) {
             if (mVideoPlayer.isPlaying() || mVideoPlayer.isPaused()
                     || mVideoPlayer.isBufferingPlaying() || mVideoPlayer.isBufferingPaused()) {
                 if(mTrySeeTime==0){
@@ -988,5 +1037,9 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         this.mBackListener = listener;
     }
 
+    private OnVideoControlListener mVideoControlListener;
+    public void setOnVideoControlListener(OnVideoControlListener listener){
+        this.mVideoControlListener = listener;
+    }
 
 }

@@ -3,6 +3,8 @@ package org.yczbj.ycvideoplayer.ui.test.test2;
 import android.view.View;
 import android.widget.Button;
 
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
@@ -19,6 +21,7 @@ import org.yczbj.ycvideoplayer.util.LogUtils;
 import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.OnMemberClickListener;
 import org.yczbj.ycvideoplayerlib.OnVideoBackListener;
+import org.yczbj.ycvideoplayerlib.OnVideoControlListener;
 import org.yczbj.ycvideoplayerlib.VideoLogUtil;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerController;
@@ -125,6 +128,45 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         videoPlayer1.setSpeed(1.0f);
         //创建视频控制器
         VideoPlayerController controller = new VideoPlayerController(this);
+        controller.setOnVideoBackListener(new OnVideoBackListener() {
+            @Override
+            public void onBackClick() {
+                onBackPressed();
+            }
+        });
+        controller.setOnMemberClickListener(new OnMemberClickListener() {
+            @Override
+            public void onClick(int type) {
+                switch (type){
+                    case ConstantKeys.Gender.LOGIN:
+                        ToastUtil.showToast(TestMyActivity.this,"登录");
+                        break;
+                    case ConstantKeys.Gender.MEMBER:
+                        ToastUtil.showToast(TestMyActivity.this,"犊子");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        controller.setOnVideoControlListener(new OnVideoControlListener() {
+            @Override
+            public void onVideoControlClick(int type) {
+                switch (type){
+                    case ConstantKeys.VideoControl.DOWNLOAD:
+                        ToastUtil.showToast(TestMyActivity.this,"下载音视频");
+                        break;
+                    case ConstantKeys.VideoControl.AUDIO:
+                        ToastUtil.showToast(TestMyActivity.this,"切换音频");
+                        break;
+                    case ConstantKeys.VideoControl.SHARE:
+                        ToastUtil.showToast(TestMyActivity.this,"分享内容");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
         controller.setTitle("办快来围观拉，自定义视频播放器可以播放视频拉");
         //设置视频时长
         controller.setLength(98000);

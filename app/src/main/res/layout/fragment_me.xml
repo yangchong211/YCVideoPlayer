@@ -46,4 +46,14 @@
         android:background="@color/gray3"
         android:text="我的音频缓存"/>
 
+
+    <TextView
+        android:id="@+id/tv_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@color/gray3"
+        android:text="关于我的说明"/>
+
 </LinearLayout>

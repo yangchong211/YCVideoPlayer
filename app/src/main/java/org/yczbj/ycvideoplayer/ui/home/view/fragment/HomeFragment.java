@@ -16,7 +16,7 @@ import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 import com.yc.cn.ycbannerlib.first.BannerView;
 import com.yc.cn.ycbannerlib.first.util.SizeUtil;
-import com.yc.cn.ycbaseadapterlib.first.BaseViewHolder;
+import com.yc.cn.ycbaseadapterlib.BaseViewHolder;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.Constant;

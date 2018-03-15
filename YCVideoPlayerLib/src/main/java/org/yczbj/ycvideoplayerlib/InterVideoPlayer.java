@@ -1,5 +1,6 @@
 package org.yczbj.ycvideoplayerlib;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,6 +17,14 @@ public interface InterVideoPlayer {
     void setUp(String url, Map<String, String> headers);
 
     /**
+     * 设置视频集合链接
+     * @param listUrl       视频集合链接
+     * @param position      位置
+     * @param headers       请求header集合
+     */
+    void setUp(List<String> listUrl , int position , List<Map<String, String>> headers);
+
+    /**
      * 开始播放
      */
     void start();
@@ -26,6 +35,20 @@ public interface InterVideoPlayer {
      * @param position      播放位置
      */
     void start(long position);
+
+    /**
+     * 注意：播放上一首和下一首只是针对设置视频集合链接后才有效
+     *      如果只是设置播放单个视频，该方法是无效的
+     * 播放下一首
+     */
+    void next();
+
+    /**
+     * 注意：播放上一首和下一首只是针对设置视频集合链接后才有效
+     *      如果只是设置播放单个视频，该方法是无效的
+     * 播放上一首
+     */
+    void prev();
 
     /**
      * 重新播放，播放器被暂停、播放错误、播放完成后，需要调用此方法重新播放

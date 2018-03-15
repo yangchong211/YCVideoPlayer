@@ -44,6 +44,8 @@ import org.yczbj.ycvideoplayer.ui.test.test1.view.second.TestSecondActivity;
 import org.yczbj.ycvideoplayer.util.AppUtil;
 import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.OnMemberClickListener;
+import org.yczbj.ycvideoplayerlib.OnVideoBackListener;
+import org.yczbj.ycvideoplayerlib.OnVideoControlListener;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerController;
 
@@ -122,31 +124,56 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
 
     private void initVideoPlayer() {
         //设置播放类型
-        // MediaPlayer
         //videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
-        // IjkPlayer
         videoPlayer.setPlayerType(VideoPlayer.TYPE_IJK);
         //网络视频地址
-        String videoUrl = ConstantVideo.VideoPlayerList[1];
+        String videoUrl = ConstantVideo.VideoPlayerList[0];
         //设置视频地址和请求头部
         videoPlayer.setUp(videoUrl, null);
+        //是否从上一次的位置继续播放
+        videoPlayer.continueFromLastPosition(true);
+        //设置播放速度
+        videoPlayer.setSpeed(1.0f);
+
         //创建视频控制器
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle("高仿优酷视频播放页面");
-        //controller.setLength(98000);
         controller.setLoadingType(2);
         controller.setMemberType(false,false,2,true);
         controller.imageView().setBackgroundResource(R.color.blackText);
-        //ImageUtil.loadImgByPicasso(this, R.color.blackText, R.drawable.image_default, controller.imageView());
+        controller.setOnVideoBackListener(new OnVideoBackListener() {
+            @Override
+            public void onBackClick() {
+                onBackPressed();
+            }
+        });
         controller.setOnMemberClickListener(new OnMemberClickListener() {
             @Override
             public void onClick(int type) {
                 switch (type){
                     case ConstantKeys.Gender.LOGIN:
-                        startActivity(MeLoginActivity.class);
+                        ToastUtil.showToast(VideoPlayerMeActivity.this,"登录");
                         break;
                     case ConstantKeys.Gender.MEMBER:
-                        startActivity(TestSecondActivity.class);
+                        ToastUtil.showToast(VideoPlayerMeActivity.this,"犊子");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        controller.setOnVideoControlListener(new OnVideoControlListener() {
+            @Override
+            public void onVideoControlClick(int type) {
+                switch (type){
+                    case ConstantKeys.VideoControl.DOWNLOAD:
+                        ToastUtil.showToast(VideoPlayerMeActivity.this,"下载音视频");
+                        break;
+                    case ConstantKeys.VideoControl.AUDIO:
+                        ToastUtil.showToast(VideoPlayerMeActivity.this,"切换音频");
+                        break;
+                    case ConstantKeys.VideoControl.SHARE:
+                        ToastUtil.showToast(VideoPlayerMeActivity.this,"分享内容");
                         break;
                     default:
                         break;
@@ -155,10 +182,6 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
         });
         //设置视频控制器
         videoPlayer.setController(controller);
-        //是否从上一次的位置继续播放
-        videoPlayer.continueFromLastPosition(true);
-        //设置播放速度
-        videoPlayer.setSpeed(1.0f);
     }
 
 

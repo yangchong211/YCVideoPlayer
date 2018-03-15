@@ -19,5 +19,12 @@ public class ConstantKeys {
         int MEMBER = 1002;
     }
 
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface VideoControl {
+        int DOWNLOAD = 1005;
+        int AUDIO = 1006;
+        int SHARE = 1007;
+    }
+
 
 }

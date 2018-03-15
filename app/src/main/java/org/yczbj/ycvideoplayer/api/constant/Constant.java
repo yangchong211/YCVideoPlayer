@@ -42,6 +42,8 @@ public class Constant {
     public static final String SP_NAME = "yc";
     public static final String KEY_IS_LOGIN = "is_login";
     public static final String KEY_NIGHT_STATE = "night_state";
+    public static final String LOCK_SCREEN_ACTION = "cn.ycbjie.lock";
+
 
 
 }

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_title_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="5dp"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingRight="20dp"
+                android:paddingTop="15dp"
+                android:text="关于该视频播放器"
+                android:textColor="@color/blackText"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:text="体验别具一格的视频播放器封装库"
+            android:textColor="@color/blackText1"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="15dp"
+            android:text="作者：潇湘剑雨"
+            android:textColor="@color/blackText1"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_author_github"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:paddingTop="2dp"
+                android:text="Github"
+                android:textColor="@color/colorPrimary" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_author_weibo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15dp"
+                android:paddingRight="20dp"
+                android:paddingTop="2dp"
+                android:text="微博"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="项目开源地址:"
+            android:textColor="@color/blackText1"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_open_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="2dp"
+            android:text="https://github.com/yangchong211"
+            android:textColor="@color/colorPrimary" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="致谢:"
+            android:textColor="@color/blackText1"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_thanks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="2dp"
+            android:text="饺子播放器"
+            android:textColor="@color/colorPrimary" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:autoLink="all"
+                android:paddingLeft="20dp"
+                android:paddingTop="2dp"
+                android:text="此应用数据均来自于" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_gankio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="0dp"
+                android:paddingRight="20dp"
+                android:paddingTop="2dp"
+                android:textColor="@color/colorPrimary"
+                android:text="来自网络，请勿商用！" />
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_affirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:text="确认"
+            android:textColor="@color/colorPrimary" />
+    </LinearLayout>
+
+</RelativeLayout>

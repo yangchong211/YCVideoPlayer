@@ -7,6 +7,8 @@ import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.Surface;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import tv.danmaku.ijk.media.player.AndroidMediaPlayer;
@@ -159,6 +162,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         this.addView(mContainer, params);
     }
 
+    /*--------------setUp为必须设置的方法，二选其一--------------------------------------*/
     /**
      * 设置，必须设置
      * @param url               视频地址，可以是本地，也可以是网络视频
@@ -169,6 +173,21 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         mUrl = url;
         mHeaders = headers;
     }
+
+    /**
+     * 设置，必须设置
+     * @param listUrl       视频集合链接
+     * @param position      位置
+     */
+    @Override
+    public void setUp(List<String> listUrl, int position , List<Map<String, String>> headers) {
+        /*添加判断，避免使用者传值不严谨导致崩溃*/
+        if(listUrl!=null && listUrl.size()>0 && headers!=null && headers.size()>0){
+            mUrl = listUrl.get(position);
+            mHeaders = headers.get(position);
+        }
+    }
+
 
     /**
      * 设置视频控制器，必须设置
@@ -186,6 +205,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         mContainer.addView(mController, params);
     }
 
+
     /**
      * 设置播放器类型，必须设置
      * @param playerType IjkPlayer or MediaPlayer.
@@ -193,6 +213,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     public void setPlayerType(int playerType) {
         mPlayerType = playerType;
     }
+
 
     /**
      * 是否从上一次的位置继续播放，不必须
@@ -203,6 +224,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     public void continueFromLastPosition(boolean continueFromLastPosition) {
         this.continueFromLastPosition = continueFromLastPosition;
     }
+
 
     /**
      * 注意：MediaPlayer没有这个方法
@@ -221,6 +243,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         }
     }
 
+
     /**
      * 开始播放
      */
@@ -237,6 +260,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         }
     }
 
+
     /**
      * 开始播放
      * @param position                 播放位置
@@ -246,6 +270,17 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         skipToPosition = position;
         start();
     }
+
+    @Override
+    public void next() {
+
+    }
+
+    @Override
+    public void prev() {
+
+    }
+
 
     /**
      * 重新播放
@@ -272,6 +307,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
             VideoLogUtil.d("VideoPlayer在mCurrentState == " + mCurrentState + "时不能调用restart()方法.");
         }
     }
+
 
     /**
      * 暂停播放
@@ -546,7 +582,9 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
                 //IjkMediaPlayer    基于Ijk
                 case TYPE_IJK:
                 default:
+                    //创建IjkMediaPlayer对象
                     mMediaPlayer = new IjkMediaPlayer();
+                    //设置ijkplayer播放器的硬件解码相关参数
                     ((IjkMediaPlayer)mMediaPlayer).setOption(1, "analyzemaxduration", 100L);
                     ((IjkMediaPlayer)mMediaPlayer).setOption(1, "probesize", 10240L);
                     ((IjkMediaPlayer)mMediaPlayer).setOption(1, "flush_packets", 1L);
@@ -554,6 +592,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
                     ((IjkMediaPlayer)mMediaPlayer).setOption(4, "framedrop", 1L);
                     break;
             }
+            //设置音频流类型
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         }
     }
@@ -562,6 +601,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     /**
      * 初始化TextureView
      */
+    @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void initTextureView() {
         if (mTextureView == null) {
             mTextureView = new VideoTextureView(mContext);
