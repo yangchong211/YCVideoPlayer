@@ -29,6 +29,7 @@ import org.yczbj.ycvideoplayer.ui.home.view.fragment.HomeFragment;
 import org.yczbj.ycvideoplayer.ui.main.contract.MainContract;
 import org.yczbj.ycvideoplayer.ui.main.presenter.MainPresenter;
 import org.yczbj.ycvideoplayer.ui.person.MeFragment;
+import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
 
 import java.util.ArrayList;
 
@@ -88,6 +89,19 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         presenter.unSubscribe();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        VideoPlayerManager.instance().releaseVideoPlayer();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (VideoPlayerManager.instance().onBackPressed()) {
+            return;
+        }
+        super.onBackPressed();
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
