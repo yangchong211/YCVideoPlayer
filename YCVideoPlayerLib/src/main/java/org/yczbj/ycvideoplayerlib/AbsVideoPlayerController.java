@@ -65,6 +65,11 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         mVideoPlayer = videoPlayer;
     }
 
+    /**
+     * 设置是否显示视频头部的下载，分享布局控件
+     * @param isVisibility          是否可见
+     */
+    public abstract void setTopVisibility(boolean isVisibility);
 
     /**
      * 设置试看视频时间，让使用者自己定制

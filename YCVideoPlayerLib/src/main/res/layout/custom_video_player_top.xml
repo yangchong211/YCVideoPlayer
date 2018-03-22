@@ -25,7 +25,7 @@
         android:maxLength="10"
         android:text="真实死亡游戏“蓝鲸”疑似进入国内，家长们要注意了"
         android:textColor="@android:color/white"
-        android:textSize="14sp"/>
+        android:textSize="15sp"/>
 
     <!--竖屏的时候需要展现的布局，定制的-->
     <LinearLayout
@@ -37,20 +37,20 @@
         android:visibility="visible">
         <ImageView
             android:id="@+id/iv_download"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:src="@drawable/ic_player_download"/>
         <ImageView
             android:id="@+id/iv_audio"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_player_audio"/>
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_study_audio"/>
         <ImageView
             android:id="@+id/iv_share"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:src="@drawable/ic_player_share"/>
     </LinearLayout>
 

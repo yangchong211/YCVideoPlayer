@@ -25,7 +25,7 @@ import org.yczbj.ycvideoplayer.base.mvp2.BaseMVPActivity;
 import org.yczbj.ycvideoplayer.ui.video.model.bean.MultiNewsArticleDataBean;
 import org.yczbj.ycvideoplayer.ui.video.model.bean.VideoContentBean;
 import org.yczbj.ycvideoplayer.ui.video.view.adapter.VideoArticleAdapter;
-import org.yczbj.ycvideoplayerlib.OnVideoBackListener;
+import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerController;
 
@@ -34,6 +34,7 @@ import java.util.zip.CRC32;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -72,6 +73,7 @@ public class VideoContentActivity extends BaseMVPActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_easy_recycle);
         ButterKnife.bind(this);
+        YCAppBar.setStatusBarLightMode(this, Color.WHITE);
         initView();
         initData();
         onLoadData();

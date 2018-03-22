@@ -1,6 +1,7 @@
 package org.yczbj.ycvideoplayer.ui.main.view.activity;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,7 @@ import org.yczbj.ycvideoplayer.ui.person.MeFragment;
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * ================================================
@@ -105,6 +107,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     public void initView() {
+        YCAppBar.setStatusBarLightMode(this, Color.WHITE);
         initTabLayout();
         initFragment();
     }

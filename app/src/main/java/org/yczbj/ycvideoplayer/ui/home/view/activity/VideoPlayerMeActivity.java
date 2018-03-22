@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,13 +40,11 @@ import org.yczbj.ycvideoplayer.ui.home.presenter.VideoPlayerMePresenter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.DialogListAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.NarrowImageAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.VideoPlayerMeAdapter;
-import org.yczbj.ycvideoplayer.ui.person.MeLoginActivity;
-import org.yczbj.ycvideoplayer.ui.test.test1.view.second.TestSecondActivity;
 import org.yczbj.ycvideoplayer.util.AppUtil;
 import org.yczbj.ycvideoplayerlib.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.OnMemberClickListener;
-import org.yczbj.ycvideoplayerlib.OnVideoBackListener;
-import org.yczbj.ycvideoplayerlib.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.listener.OnMemberClickListener;
+import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
+import org.yczbj.ycvideoplayerlib.listener.OnVideoControlListener;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerController;
 
@@ -53,6 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * ================================================
@@ -99,6 +99,7 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
 
     @Override
     public void initView() {
+        YCAppBar.translucentStatusBar(this, true);
         initVideoPlayer();
         initYCRefreshView();
     }
@@ -139,6 +140,7 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle("高仿优酷视频播放页面");
         controller.setLoadingType(2);
+        controller.setTopVisibility(true);
         controller.setMemberType(false,false,2,true);
         controller.imageView().setBackgroundResource(R.color.blackText);
         controller.setOnVideoBackListener(new OnVideoBackListener() {

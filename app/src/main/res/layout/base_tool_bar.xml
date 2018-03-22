@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="@color/colorTheme"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
     android:theme="@style/AppTheme.ActionBar"
     app:contentInsetStart="0.0dp"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -19,7 +19,7 @@
         android:layout_gravity="left"
         android:padding="10dp"
         android:text="编辑"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/blackText"
         android:textSize="15sp"
         android:visibility="gone" />
 
@@ -49,7 +49,7 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:text="标题"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/blackText"
         android:textSize="18sp" />
 
 
@@ -80,7 +80,7 @@
         android:padding="10dp"
         android:singleLine="true"
         android:text="编辑"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/blackText"
         android:textSize="16sp"
         android:visibility="gone"
         tools:targetApi="honeycomb" />

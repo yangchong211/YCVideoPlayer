@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
     <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -24,7 +22,7 @@
             android:gravity="center"
             android:text="个人中心"
             android:textSize="18sp"
-            android:textColor="@color/colorWhite"/>
+            android:textColor="@color/blackText"/>
     </android.support.v7.widget.Toolbar>
 
 

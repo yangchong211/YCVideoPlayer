@@ -10,6 +10,8 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.yczbj.ycvideoplayerlib.listener.OnClarityChangedListener;
+
 import java.util.List;
 
 /**

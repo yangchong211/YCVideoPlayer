@@ -174,20 +174,6 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         mHeaders = headers;
     }
 
-    /**
-     * 设置，必须设置
-     * @param listUrl       视频集合链接
-     * @param position      位置
-     */
-    @Override
-    public void setUp(List<String> listUrl, int position , List<Map<String, String>> headers) {
-        /*添加判断，避免使用者传值不严谨导致崩溃*/
-        if(listUrl!=null && listUrl.size()>0 && headers!=null && headers.size()>0){
-            mUrl = listUrl.get(position);
-            mHeaders = headers.get(position);
-        }
-    }
-
 
     /**
      * 设置视频控制器，必须设置
@@ -204,6 +190,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
                 ViewGroup.LayoutParams.MATCH_PARENT);
         mContainer.addView(mController, params);
     }
+
 
 
     /**
@@ -269,16 +256,6 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     public void start(long position) {
         skipToPosition = position;
         start();
-    }
-
-    @Override
-    public void next() {
-
-    }
-
-    @Override
-    public void prev() {
-
     }
 
 
@@ -559,6 +536,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     /**
      * 初始化音频管理器
      */
+    @RequiresApi(api = Build.VERSION_CODES.FROYO)
     private void initAudioManager() {
         if (mAudioManager == null) {
             mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
@@ -610,6 +588,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
                 /**
                  * SurfaceTexture准备就绪
                  */
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
                     if (mSurfaceTexture == null) {
@@ -662,6 +641,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     /**
      * 打开MediaPlayer播放器
      */
+    @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void openMediaPlayer() {
         // 屏幕常亮
         mContainer.setKeepScreenOn(true);

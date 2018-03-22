@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 import com.yc.cn.ycbannerlib.first.BannerView;
 import com.yc.cn.ycbannerlib.first.util.SizeUtil;
@@ -20,6 +22,7 @@ import com.yc.cn.ycbaseadapterlib.BaseViewHolder;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.Constant;
+import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.BaseConfig;
 import org.yczbj.ycvideoplayer.base.BaseDelegateAdapter;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseFragment;
@@ -31,6 +34,13 @@ import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerMeActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.BannerPagerAdapter;
 import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
 import org.yczbj.ycvideoplayer.util.LogUtils;
+import org.yczbj.ycvideoplayer.util.binding.BindView;
+import org.yczbj.ycvideoplayerlib.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
+import org.yczbj.ycvideoplayerlib.listener.OnVideoControlListener;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -59,6 +69,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     LinearLayout llSearch;
     @Bind(R.id.ll_bind)
     LinearLayout llBind;
+    @Bind(R.id.video_player)
+    VideoPlayer videoPlayer;
+
     private MainActivity activity;
     private BannerView mBanner;
     private VirtualLayoutManager layoutManager;
@@ -68,6 +81,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
      */
     private List<DelegateAdapter.Adapter> mAdapters;
     private DelegateAdapter delegateAdapter;
+    private VideoPlayerController controller;
 
     @Override
     public void onAttach(Context context) {
@@ -89,6 +103,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             mBanner.pause();
         }
     }
+
 
     @Override
     public void onResume() {
@@ -113,6 +128,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
 
     @Override
+    public void onStop() {
+        super.onStop();
+        VideoPlayerManager.instance().releaseVideoPlayer();
+    }
+
+    @Override
     public int getContentView() {
         return R.layout.fragment_home;
     }
@@ -120,11 +141,23 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void initView() {
+        initVideoPlayerSize();
         initOldUserBinding();
         initVLayout();
+        initVideoPlayer();
         initRefreshView();
     }
 
+    /**
+     * 设置视频宽高比是16：9
+     */
+    private void initVideoPlayerSize() {
+        int screenWidth = ScreenUtils.getScreenWidth();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.height = (int) (9*screenWidth / 16.0f);
+        videoPlayer.setLayoutParams(params);
+    }
 
     private void initOldUserBinding() {
         boolean login = BaseConfig.INSTANCE.getIsLogin();
@@ -158,6 +191,50 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         //设置适配器
         delegateAdapter.setAdapters(mAdapters);
     }
+
+
+    private void initVideoPlayer() {
+        //设置播放类型
+        videoPlayer.setPlayerType(VideoPlayer.TYPE_IJK);
+        //是否从上一次的位置继续播放
+        videoPlayer.continueFromLastPosition(true);
+        //设置播放速度
+        videoPlayer.setSpeed(1.0f);
+        //网络视频地址
+        videoPlayer.setUp(ConstantVideo.VideoPlayerList[0],null);
+        //设置视频地址和请求头部
+        //创建视频控制器
+        controller = new VideoPlayerController(activity);
+        controller.setTopVisibility(true);
+        controller.setOnVideoBackListener(new OnVideoBackListener() {
+            @Override
+            public void onBackClick() {
+                getActivity().onBackPressed();
+            }
+        });
+        controller.setOnVideoControlListener(new OnVideoControlListener() {
+            @Override
+            public void onVideoControlClick(int type) {
+                switch (type){
+                    case ConstantKeys.VideoControl.DOWNLOAD:
+                        ToastUtil.showToast(activity,"下载音视频");
+                        break;
+                    case ConstantKeys.VideoControl.AUDIO:
+
+                        break;
+                    case ConstantKeys.VideoControl.SHARE:
+                        ToastUtil.showToast(activity,"分享内容");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        //设置视频控制器
+        videoPlayer.setController(controller);
+    }
+
+
 
     private boolean isTopShow = true;
     private void initRefreshView() {
@@ -295,8 +372,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     private void initFiveButtonView() {
         BaseDelegateAdapter adapter = new BaseDelegateAdapter(activity, new LinearLayoutHelper(), R.layout.view_vlayout_button, 1, Constant.viewType.typeView) {
-            @Override
-            public void onBindViewHolder(BaseViewHolder holder, int position) {
+                @Override
+                public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
                 View.OnClickListener listener = new View.OnClickListener() {
                     @Override
@@ -347,7 +424,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
                 final ImageView ivImage = holder.getView(R.id.iv_image);
-
                 ivImage.setBackgroundResource(R.drawable.bg_small_tree_min);
                 //String image = ConstantImage.homePageConcentration[position];
                 //ImageUtil.loadImgByPicasso(activity,ConstantImage.homePageConcentration[position],R.drawable.image_default,ivImage);
@@ -409,7 +485,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         // 控制子元素之间的水平间距
         gridLayoutHelper.setHGap(0);
         gridLayoutHelper.setBgColor(Color.WHITE);
-        BaseDelegateAdapter adapter = new BaseDelegateAdapter(activity, gridLayoutHelper, R.layout.view_vlayout_grid, 2, Constant.viewType.typeGv3) {
+        BaseDelegateAdapter adapter = new BaseDelegateAdapter(activity,
+                gridLayoutHelper, R.layout.view_vlayout_grid, 2, Constant.viewType.typeGv3) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);

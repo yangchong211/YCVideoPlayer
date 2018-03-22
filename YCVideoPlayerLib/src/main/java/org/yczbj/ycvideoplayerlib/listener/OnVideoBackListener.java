@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib;
+package org.yczbj.ycvideoplayerlib.listener;
 
 /**
  * 点击事件抽象接口

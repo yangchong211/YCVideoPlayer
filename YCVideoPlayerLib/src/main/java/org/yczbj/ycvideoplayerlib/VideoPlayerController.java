@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.BatteryManager;
 import android.os.CountDownTimer;
@@ -20,6 +19,11 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.yczbj.ycvideoplayerlib.listener.OnClarityChangedListener;
+import org.yczbj.ycvideoplayerlib.listener.OnMemberClickListener;
+import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
+import org.yczbj.ycvideoplayerlib.listener.OnVideoControlListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -147,7 +151,11 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 这个是设置试看时间，当然前提是设置试看权限后才能生效，如果不设置，默认为30秒
      */
     private long mTrySeeTime;
-
+    /**
+     * 顶部的布局，下载，切换音频，分享布局是否显示
+     * 默认为false，不显示
+     */
+    private boolean mIsTopVisibility = false;
 
 
     public VideoPlayerController(Context context) {
@@ -209,6 +217,12 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mIvTrySee = (ImageView) findViewById(R.id.iv_try_see);
         mFlLock = (FrameLayout) findViewById(R.id.fl_lock);
         mIvLock = (ImageView) findViewById(R.id.iv_lock);
+
+        if(mIsTopVisibility){
+            mLlTopOther.setVisibility(VISIBLE);
+        }else {
+            mLlTopOther.setVisibility(GONE);
+        }
     }
 
 
@@ -239,6 +253,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
 
             }
 
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (mVideoPlayer.isBufferingPaused() || mVideoPlayer.isPaused()) {
@@ -250,6 +265,22 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             }
         });
         this.setOnClickListener(this);
+    }
+
+
+    /**
+     * 18年3月15日添加
+     * 设置是否显示视频头部的下载，分享布局控件
+     * @param isVisibility          是否可见
+     */
+    @Override
+    public void setTopVisibility(boolean isVisibility) {
+        this.mIsTopVisibility = isVisibility;
+        if(isVisibility){
+            mLlTopOther.setVisibility(VISIBLE);
+        }else {
+            mLlTopOther.setVisibility(GONE);
+        }
     }
 
 
@@ -386,6 +417,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             mVideoPlayer.setUp(clarities.get(defaultClarityIndex).getVideoUrl(), null);
         }
     }
+
 
     /**
      * 设置视频清晰度
@@ -532,7 +564,11 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mFullScreen.setImageResource(R.drawable.ic_player_enlarge);
                 mFullScreen.setVisibility(View.VISIBLE);
                 mClarity.setVisibility(View.GONE);
-                mLlTopOther.setVisibility(VISIBLE);
+                if(mIsTopVisibility){
+                    mLlTopOther.setVisibility(VISIBLE);
+                }else {
+                    mLlTopOther.setVisibility(GONE);
+                }
                 mBatteryTime.setVisibility(View.GONE);
                 if (hasRegisterBatteryReceiver) {
                     mContext.unregisterReceiver(mBatterReceiver);

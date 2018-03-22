@@ -53,6 +53,7 @@ import cn.jzvd.JZUserAction;
 import cn.jzvd.JZUserActionStandard;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * ================================================
@@ -101,6 +102,7 @@ public class VideoPlayerJzActivity extends BaseActivity implements VideoPlayerJz
 
     @Override
     public void initView() {
+        YCAppBar.setStatusBarLightMode(this, Color.WHITE);
         initVideoPlayer();
         initYCRefreshView();
     }
