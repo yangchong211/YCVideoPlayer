@@ -1,5 +1,6 @@
 package org.yczbj.ycvideoplayer.ui.test.test1;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import cn.jzvd.JZUserAction;
 import cn.jzvd.JZUserActionStandard;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * @author yc
@@ -74,6 +76,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initView() {
+        YCAppBar.setStatusBarLightMode(this, Color.WHITE);
         jzVideo.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子快长大");
         Picasso.with(this)

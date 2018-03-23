@@ -1,6 +1,7 @@
 package org.yczbj.ycvideoplayer.ui.test.test3.ui.activity;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import org.yczbj.ycvideoplayer.util.ImageCropUtils;
 import org.yczbj.ycvideoplayer.weight.HeightTransformation;
 
 import butterknife.Bind;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * Created by yc on 2018/1/10.
@@ -85,7 +87,8 @@ public class GlideCropActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initView() {
-
+        YCAppBar.setStatusBarLightMode(this, Color.WHITE);
+        //YCAppBar.setStatusBarColor(this,Color.WHITE);
     }
 
     @Override

@@ -118,7 +118,7 @@ public class VideoPlayerUtils {
      * @param milliseconds 毫秒数
      * @return ##:##
      */
-    static String formatTime(long milliseconds) {
+    public static String formatTime(long milliseconds) {
         if (milliseconds <= 0 || milliseconds >= 24 * 60 * 60 * 1000) {
             return "00:00";
         }
@@ -140,7 +140,7 @@ public class VideoPlayerUtils {
      * @param context           上下文
      * @param url               视频链接url
      */
-    static void savePlayPosition(Context context, String url, long position) {
+    public static void savePlayPosition(Context context, String url, long position) {
         context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION", Context.MODE_PRIVATE).edit().putLong(url, position).apply();
     }
 
@@ -150,7 +150,7 @@ public class VideoPlayerUtils {
      * @param url               视频链接url
      * @return 上次保存的播放位置
      */
-    static long getSavedPlayPosition(Context context, String url) {
+    public static long getSavedPlayPosition(Context context, String url) {
         return context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION", Context.MODE_PRIVATE).getLong(url, 0);
     }
 

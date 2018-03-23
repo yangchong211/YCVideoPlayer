@@ -42,6 +42,7 @@ import org.yczbj.ycvideoplayer.ui.home.view.adapter.NarrowImageAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.VideoPlayerMeAdapter;
 import org.yczbj.ycvideoplayer.util.AppUtil;
 import org.yczbj.ycvideoplayerlib.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
 import org.yczbj.ycvideoplayerlib.listener.OnMemberClickListener;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoControlListener;
@@ -99,7 +100,7 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
 
     @Override
     public void initView() {
-        YCAppBar.translucentStatusBar(this, true);
+        YCAppBar.setStatusBarLightMode(this, Color.WHITE);
         initVideoPlayer();
         initYCRefreshView();
     }
@@ -393,54 +394,58 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
                     "name","title",ConstantVideo.VideoPlayerList[a]);
             list.add(dialogListBean);
         }
-        BottomDialogFragment.create(getSupportFragmentManager())
-            .setViewListener(new BottomDialogFragment.ViewListener() {
-                @Override
-                public void bindView(View v) {
-                    RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
-                    ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
-                    ImageView ivDownload = (ImageView) v.findViewById(R.id.iv_download);
+        final BottomDialogFragment dialog = new BottomDialogFragment();
+        dialog.setFragmentManager(getSupportFragmentManager());
+        dialog.setViewListener(new BottomDialogFragment.ViewListener() {
+            @Override
+            public void bindView(View v) {
+                RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
+                ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
+                ImageView ivDownload = (ImageView) v.findViewById(R.id.iv_download);
 
-                    recyclerView.setLayoutManager(new LinearLayoutManager(VideoPlayerMeActivity.this));
-                    DialogListAdapter mAdapter = new DialogListAdapter(VideoPlayerMeActivity.this, list);
-                    recyclerView.setAdapter(mAdapter);
-                    final RecycleViewItemLine line = new RecycleViewItemLine(
-                            VideoPlayerMeActivity.this, LinearLayout.HORIZONTAL,
-                            SizeUtils.dp2px(1),
-                            VideoPlayerMeActivity.this.getResources().getColor(R.color.grayLine));
-                    recyclerView.addItemDecoration(line);
-                    mAdapter.setOnItemClickListener(new DialogListAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(int position) {
+                recyclerView.setLayoutManager(new LinearLayoutManager(VideoPlayerMeActivity.this));
+                DialogListAdapter mAdapter = new DialogListAdapter(VideoPlayerMeActivity.this, list);
+                recyclerView.setAdapter(mAdapter);
+                final RecycleViewItemLine line = new RecycleViewItemLine(
+                        VideoPlayerMeActivity.this, LinearLayout.HORIZONTAL,
+                        SizeUtils.dp2px(1),
+                        VideoPlayerMeActivity.this.getResources().getColor(R.color.grayLine));
+                recyclerView.addItemDecoration(line);
+                mAdapter.setOnItemClickListener(new DialogListAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
 
+                    }
+                });
+                View.OnClickListener listener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()){
+                            case R.id.iv_cancel:
+                                if(VideoPlayerUtils.isActivityLiving(VideoPlayerMeActivity.this)){
+                                    dialog.dismissDialogFragment();
+                                }
+                                break;
+                            case R.id.iv_download:
+
+                                break;
+                            default:
+                                break;
                         }
-                    });
-                    View.OnClickListener listener = new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            switch (v.getId()){
-                                case R.id.iv_cancel:
-
-                                    break;
-                                case R.id.iv_download:
-
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    };
-                    ivCancel.setOnClickListener(listener);
-                    ivDownload.setOnClickListener(listener);
-                }
-            })
-            .setLayoutRes(R.layout.dialog_bottom_list_view)
-            .setDimAmount(0.5f)
-            .setTag("BottomDialog")
-            .setCancelOutside(true)
-            .setHeight(ScreenUtils.getScreenHeight()-videoPlayer.getHeight()
-                    -AppUtil.getStatusBarHeight(this))
-            .show();
+                    }
+                };
+                ivCancel.setOnClickListener(listener);
+                ivDownload.setOnClickListener(listener);
+            }
+        });
+        dialog.setLayoutRes(R.layout.dialog_bottom_list_view);
+        dialog.setDimAmount(0.5f);
+        dialog.setTag("BottomDialog");
+        dialog.setCancelOutside(true);
+        //这个高度可以自己设置，十分灵活
+        dialog.setHeight(ScreenUtils.getScreenHeight()-videoPlayer.getHeight()
+                -AppUtil.getStatusBarHeight(this));
+        dialog.show();
     }
 
 

@@ -1,5 +1,6 @@
 package org.yczbj.ycvideoplayer.ui.test.test2;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 
@@ -31,6 +32,7 @@ import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * @author yc
@@ -107,6 +109,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void initView() {
+        YCAppBar.setStatusBarLightMode(this, Color.WHITE);
         //原始封装视频播放，没有设置登录状态和权限
         initVideo();
     }

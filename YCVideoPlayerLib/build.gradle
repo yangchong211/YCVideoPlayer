@@ -51,7 +51,7 @@ group = "cn.yc"
 //发布到JCenter上的项目名字，必须填写
 def libName = "YCVideoPlayerLib"
 // 版本号，下次更新是只需要更改版本号即可
-version = "2.4.3"
+version = "2.4.4"
 /**  上面配置后上传至jcenter后的编译路径是这样的： compile 'cn.yc:YCVideoPlayerLib:2.4'  **/
 
 //生成源文件
