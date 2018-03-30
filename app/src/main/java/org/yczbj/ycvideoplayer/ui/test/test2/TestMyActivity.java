@@ -320,7 +320,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         //设置不操作后，5秒自动隐藏头部和底部布局
         controller.setHideTime(5000);
         //设置设置会员权限类型，第一个参数是否登录，第二个参数是否有权限看，第三个参数试看完后展示的文字内容，第四个参数是否保存进度位置
-        controller.setMemberType(false,false,3,true);
+        controller.setMemberType(false,false,3);
         //设置背景图片
         controller.imageView().setBackgroundResource(R.color.blackText);
         //ImageUtil.loadImgByPicasso(this, R.color.blackText, R.drawable.image_default, controller.imageView());
@@ -376,7 +376,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         //controller.setLength(98000);
         controller.setLoadingType(1);
         controller.setTrySeeTime(60000);
-        controller.setMemberType(true,false,0,true);
+        controller.setMemberType(true,false,0);
         controller.imageView().setBackgroundResource(R.color.blackText);
         //ImageUtil.loadImgByPicasso(this, R.color.blackText, R.drawable.image_default, controller.imageView());
         controller.setOnMemberClickListener(new OnMemberClickListener() {
@@ -422,7 +422,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         controller.setTitle("高仿优酷视频播放页面");
         //controller.setLength(98000);
         controller.setLoadingType(2);
-        controller.setMemberType(true,true,1,true);
+        controller.setMemberType(true,true,1);
         controller.imageView().setBackgroundResource(R.color.blackText);
         //ImageUtil.loadImgByPicasso(this, R.color.blackText, R.drawable.image_default, controller.imageView());
         controller.setOnMemberClickListener(new OnMemberClickListener() {
@@ -553,7 +553,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         controller.setMemberContent(content);
         controller.setHideTime(5000);
         //设置设置会员权限类型，第一个参数是否登录，第二个参数是否有权限看，第三个参数试看完后展示的文字内容，第四个参数是否保存进度位置
-        controller.setMemberType(false,false,3,true);
+        controller.setMemberType(false,false,3);
         controller.imageView().setBackgroundResource(R.color.blackText);
         //ImageUtil.loadImgByPicasso(this, R.color.blackText, R.drawable.image_default, controller.imageView());
         //设置试看结束后，登录或者充值会员按钮的点击事件

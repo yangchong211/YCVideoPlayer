@@ -39,6 +39,7 @@ import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerController;
 import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.listener.OnPlayOrPauseListener;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoControlListener;
 
@@ -206,6 +207,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         //创建视频控制器
         controller = new VideoPlayerController(activity);
         controller.setTopVisibility(true);
+        controller.setOnPlayOrPauseListener(new OnPlayOrPauseListener() {
+            @Override
+            public void onPlayOrPauseClick(boolean isPlaying) {
+                if(isPlaying){
+                    ToastUtil.showToast(activity,"暂停视频");
+                }else {
+                    ToastUtil.showToast(activity,"开始播放");
+                }
+            }
+        });
         controller.setOnVideoBackListener(new OnVideoBackListener() {
             @Override
             public void onBackClick() {

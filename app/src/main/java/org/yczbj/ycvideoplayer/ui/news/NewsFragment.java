@@ -22,6 +22,7 @@ import butterknife.Bind;
 
 /**
  * Created by yc on 2018/2/28.
+ *
  */
 
 public class NewsFragment extends BaseLazyFragment {

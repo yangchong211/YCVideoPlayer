@@ -95,9 +95,8 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      * @param isLogin   是否登录
      * @param isSee     是否有权限看[及时登录，如果没有成为会员也需区分权限的]
      * @param type      视频类型
-     * @param isSaveProgress        是否保存观看位置
      */
-    public abstract void setMemberType(boolean isLogin , boolean isSee , int type , boolean isSaveProgress);
+    public abstract void setMemberType(boolean isLogin , boolean isSee , int type);
 
 
     /**

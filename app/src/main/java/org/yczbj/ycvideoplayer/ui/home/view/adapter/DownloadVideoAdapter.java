@@ -266,16 +266,6 @@ public class DownloadVideoAdapter extends RecyclerView.Adapter<DownloadVideoAdap
             switch (state){
                 //下载
                 case STATE_START:
-                    //ToastUtil.showToast(mContext,"开始下载");
-                    /*final TasksManagerModel model = TasksManager.getImpl().get(holder.position);
-                    final BaseDownloadTask task = FileDownloader.getImpl().create(model.getUrl())
-                            .setPath(model.getPath())
-                            .setCallbackProgressTimes(100)
-                            .setListener(taskDownloadListener);
-                    TasksManager.getImpl().addTaskForViewHolder(task);
-                    TasksManager.getImpl().updateViewHolder(holder.id, holder);
-                    task.start();*/
-
                     String path = TasksManager.getImpl().createPath(model.getVideo());
                     final BaseDownloadTask task = FileDownloader.getImpl().create(model.getVideo())
                             .setPath(path)

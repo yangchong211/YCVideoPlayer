@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import org.yczbj.ycvideoplayerlib.listener.OnClarityChangedListener;
 import org.yczbj.ycvideoplayerlib.listener.OnMemberClickListener;
+import org.yczbj.ycvideoplayerlib.listener.OnPlayOrPauseListener;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoControlListener;
 
@@ -324,11 +325,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 设置会员权限类型
      * @param isLogin   是否登录
      * @param isSee     是否有权限看[及时登录，如果没有成为会员也需区分权限的]
-     * @param type      视频类型
-     * @param isSaveProgress        是否保存观看位置
+     * @param type      视频试看类型
      */
     @Override
-    public void setMemberType(boolean isLogin, boolean isSee, int type ,boolean isSaveProgress) {
+    public void setMemberType(boolean isLogin, boolean isSee, int type) {
         this.mIsSee = isSee;
         this.mIsLogin = isLogin;
         this.mType = type;
@@ -712,8 +712,14 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             //重新播放或者暂停
             if (mVideoPlayer.isPlaying() || mVideoPlayer.isBufferingPlaying()) {
                 mVideoPlayer.pause();
+                if(mOnPlayOrPauseListener!=null){
+                    mOnPlayOrPauseListener.onPlayOrPauseClick(true);
+                }
             } else if (mVideoPlayer.isPaused() || mVideoPlayer.isBufferingPaused()) {
                 mVideoPlayer.restart();
+                if(mOnPlayOrPauseListener!=null){
+                    mOnPlayOrPauseListener.onPlayOrPauseClick(false);
+                }
             }
         } else if (v == mFullScreen) {
             //全屏模式，重置锁屏，设置为未选中状态
@@ -1073,9 +1079,20 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         this.mBackListener = listener;
     }
 
+    /**
+     * 设置视频分享，下载，音视频转化点击事件
+     */
     private OnVideoControlListener mVideoControlListener;
     public void setOnVideoControlListener(OnVideoControlListener listener){
         this.mVideoControlListener = listener;
+    }
+
+    /**
+     * 播放暂停监听事件
+     */
+    private OnPlayOrPauseListener mOnPlayOrPauseListener;
+    public void setOnPlayOrPauseListener(OnPlayOrPauseListener listener){
+        this.mOnPlayOrPauseListener = listener;
     }
 
 }
