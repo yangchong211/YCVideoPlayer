@@ -89,7 +89,7 @@ dependencies {
     compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
 
     //自己封装的库，都有对应的案例项目【欢迎star】：https://github.com/yangchong211
-    compile 'cn.yc:YCUtilsLib:1.5'                                  //公共类
+    compile 'cn.yc:YCUtilsLib:1.6.2'                                //公共类
     compile 'cn.yc:YCStateLib:1.1'                                  //状态管理
     compile 'cn.yc:YCBannerLib:1.2'                                 //轮播图
     compile 'org.yczbj:YCRefreshViewLib:2.4'                        //RecyclerView封装

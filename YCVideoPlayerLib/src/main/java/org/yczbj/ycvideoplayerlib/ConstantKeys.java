@@ -24,6 +24,9 @@ public class ConstantKeys {
         int DOWNLOAD = 1005;
         int AUDIO = 1006;
         int SHARE = 1007;
+        int MENU = 1008;
+        int TV = 1009;
+        int HOR_AUDIO = 1010;
     }
 
 

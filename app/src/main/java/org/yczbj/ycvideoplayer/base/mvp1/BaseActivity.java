@@ -2,20 +2,14 @@ package org.yczbj.ycvideoplayer.base.mvp1;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.WindowManager;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
-import org.yczbj.ycvideoplayer.base.AppManager;
-
 import butterknife.ButterKnife;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * ================================================
@@ -26,8 +20,12 @@ import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
  * 修订历史：
  * ================================================
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
 
+    /**
+     * 将代理类通用行为抽出来
+     */
+    protected T mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,8 +34,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         //避免切换横竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        //将当前Activity添加到容器
-        AppManager.getAppManager().addActivity(this);
+        if (mPresenter != null){
+            mPresenter.subscribe();
+        }
         initView();
         initListener();
         initData();
@@ -50,10 +49,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mPresenter != null){
+            mPresenter.unSubscribe();
+        }
         //测试内存泄漏，正式一定要隐藏
         initLeakCanary();
-        //将当前Activity移除到容器
-        AppManager.getAppManager().removeActivity(this);
     }
 
 

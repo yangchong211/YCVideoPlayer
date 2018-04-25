@@ -74,10 +74,12 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
+    private String path = "http://sandcolleges.zero2ipo.com.cn/vc-talk-video/1510661872877.mp4";
+
     @Override
     public void initView() {
         YCAppBar.setStatusBarLightMode(this, Color.WHITE);
-        jzVideo.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
+        jzVideo.setUp(path
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子快长大");
         Picasso.with(this)
                 .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")

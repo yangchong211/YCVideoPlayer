@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="cn.yc:YCUtilsLib-1.6.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/7e365af76c47e2376e8c8aef092e5569ab5fed59/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/7e365af76c47e2376e8c8aef092e5569ab5fed59/output/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cn.yc/YCUtilsLib/1.6.2/67a69449b5f375a51c6fbbb61889907932143f79/YCUtilsLib-1.6.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

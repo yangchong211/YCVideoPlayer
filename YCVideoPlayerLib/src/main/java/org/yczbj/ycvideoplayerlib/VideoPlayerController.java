@@ -70,13 +70,19 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private LinearLayout mTop;
     private ImageView mBack;
     private TextView mTitle;
+
     private LinearLayout mLlTopOther;
     private ImageView mIvDownload;
     private ImageView mIvAudio;
     private ImageView mIvShare;
-    private LinearLayout mBatteryTime;
+    private ImageView mIvMenu;
+
+    private LinearLayout mLlHorizontal;
+    private ImageView mIvHorAudio;
+    private ImageView mIvHorTv;
     private ImageView mBattery;
     private TextView mTime;
+
     private LinearLayout mBottom;
     private ImageView mRestartPause;
     private TextView mPosition;
@@ -127,7 +133,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     /**
      * 是否有观看权限
      */
-    private boolean mIsSee = true;
+    private boolean mIsSee = false;
     /**
      * 是否登录
      */
@@ -182,7 +188,11 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mIvDownload = (ImageView) findViewById(R.id.iv_download);
         mIvAudio = (ImageView) findViewById(R.id.iv_audio);
         mIvShare = (ImageView) findViewById(R.id.iv_share);
-        mBatteryTime = (LinearLayout) findViewById(R.id.battery_time);
+        mIvMenu = (ImageView) findViewById(R.id.iv_menu);
+
+        mLlHorizontal = (LinearLayout) findViewById(R.id.ll_horizontal);
+        mIvHorAudio = (ImageView) findViewById(R.id.iv_hor_audio);
+        mIvHorTv = (ImageView) findViewById(R.id.iv_hor_tv);
         mBattery = (ImageView) findViewById(R.id.battery);
         mTime = (TextView) findViewById(R.id.time);
 
@@ -230,9 +240,14 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private void initListener() {
         mCenterStart.setOnClickListener(this);
         mBack.setOnClickListener(this);
+
         mIvDownload.setOnClickListener(this);
         mIvShare.setOnClickListener(this);
         mIvAudio.setOnClickListener(this);
+        mIvMenu.setOnClickListener(this);
+
+        mIvHorAudio.setOnClickListener(this);
+        mIvHorTv.setOnClickListener(this);
 
         mRestartPause.setOnClickListener(this);
         mFullScreen.setOnClickListener(this);
@@ -312,10 +327,12 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
 
     /**
      * 设置试看视频时间，让使用者自己定制
+     * @param isSee                 是否可以试看，如果可以试看那么出现试看布局。默认是没有试看功能，也就是正常播放
      * @param time                  时间
      */
     @Override
-    public void setTrySeeTime(long time) {
+    public void setTrySeeTime(boolean isSee , long time) {
+        this.mIsSee = isSee;
         this.mTrySeeTime = time;
     }
 
@@ -324,16 +341,13 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 18年1月12号添加
      * 设置会员权限类型
      * @param isLogin   是否登录
-     * @param isSee     是否有权限看[及时登录，如果没有成为会员也需区分权限的]
      * @param type      视频试看类型
      */
     @Override
-    public void setMemberType(boolean isLogin, boolean isSee, int type) {
-        this.mIsSee = isSee;
+    public void setMemberType(boolean isLogin, int type) {
         this.mIsLogin = isLogin;
         this.mType = type;
     }
-
 
     /**
      * 设置会员权限话术内容
@@ -569,7 +583,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 }else {
                     mLlTopOther.setVisibility(GONE);
                 }
-                mBatteryTime.setVisibility(View.GONE);
+                mLlHorizontal.setVisibility(View.GONE);
                 if (hasRegisterBatteryReceiver) {
                     mContext.unregisterReceiver(mBatterReceiver);
                     hasRegisterBatteryReceiver = false;
@@ -585,22 +599,11 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                     mClarity.setVisibility(View.VISIBLE);
                 }
                 mLlTopOther.setVisibility(GONE);
-                mBatteryTime.setVisibility(View.VISIBLE);
+                mLlHorizontal.setVisibility(View.VISIBLE);
                 if (!hasRegisterBatteryReceiver) {
                     mContext.registerReceiver(mBatterReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
                     hasRegisterBatteryReceiver = true;
                 }
-                Activity activity = VideoPlayerUtils.scanForActivity(mContext);
-                //TODO 待处理问题，先隐藏
-                /*if(VideoPlayerUtils.isActivityLiving(activity)){
-                    if(mIsLock){
-                        //设置屏幕不能旋转
-                        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    }else {
-                        //设置自动旋转
-                        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    }
-                }*/
                 break;
             //小窗口模式
             case VideoPlayer.MODE_TINY_WINDOW:
@@ -797,11 +800,32 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             }
             //点击分享
             mVideoControlListener.onVideoControlClick(ConstantKeys.VideoControl.SHARE);
-        } else if (v == this) {
+        }else if(v == mIvMenu){
+            if(mVideoControlListener==null){
+                VideoLogUtil.d("请在初始化的时候设置分享监听事件");
+                return;
+            }
+            //点击菜单
+            mVideoControlListener.onVideoControlClick(ConstantKeys.VideoControl.MENU);
+        }else if(v == mIvHorAudio){
+            if(mVideoControlListener==null){
+                VideoLogUtil.d("请在初始化的时候设置横向音频监听事件");
+                return;
+            }
+            //点击横向音频
+            mVideoControlListener.onVideoControlClick(ConstantKeys.VideoControl.HOR_AUDIO);
+        }else if(v == mIvHorTv){
+            if(mVideoControlListener==null){
+                VideoLogUtil.d("请在初始化的时候设置横向Tv监听事件");
+                return;
+            }
+            //点击横向TV
+            mVideoControlListener.onVideoControlClick(ConstantKeys.VideoControl.TV);
+        }  else if (v == this) {
             if (mVideoPlayer.isPlaying() || mVideoPlayer.isPaused()
                     || mVideoPlayer.isBufferingPlaying() || mVideoPlayer.isBufferingPaused()) {
                 if(mTrySeeTime==0){
-                    mTrySeeTime = 30000;
+                    mTrySeeTime = 300000;
                 }
 
                 if(mVideoPlayer.getCurrentPosition()>mTrySeeTime){
@@ -920,17 +944,12 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         // 更新时间
         mTime.setText(new SimpleDateFormat("HH:mm", Locale.CHINA).format(new Date()));
 
-        //添加，如果没有播放权限或者没有登录，并且播放时间大于3分钟，则试看结束
-        if (!mIsSee || !mIsLogin) {
-            if(mTrySeeTime==0){
-                mTrySeeTime = 30000;
-            }
-            //避免更新中多次走这个方法
-            if(position >= mTrySeeTime && mSeeEnd){
-                // 试看结束
-                setVideoTrySeeEnd();
-                mSeeEnd = false;
-            }
+
+
+        //避免更新中多次走这个方法
+        if(mIsSee && mSeeEnd && position >= mTrySeeTime){
+            // 试看结束
+            setVideoTrySeeEnd();
         }
     }
 
@@ -941,6 +960,8 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private void setVideoTrySeeEnd() {
         //先暂停播放
         mVideoPlayer.pause();
+        mSeeEnd = false;
+        mLoading.setVisibility(GONE);
         mImage.setVisibility(View.VISIBLE);
         mImage.setBackgroundColor(Color.BLACK);
         //取消计时器

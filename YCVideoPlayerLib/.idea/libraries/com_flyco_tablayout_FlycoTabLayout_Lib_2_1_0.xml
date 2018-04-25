@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.flyco.tablayout:FlycoTabLayout_Lib-2.1.0">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/aa59cc05a8ed9b52772a2a71345949d1cc8c4ff5/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/aa59cc05a8ed9b52772a2a71345949d1cc8c4ff5/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.flyco.tablayout/FlycoTabLayout_Lib/2.1.0/84b8dc78a060b1440d2e5767ff9d1f172ced5542/FlycoTabLayout_Lib-2.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -32,7 +32,6 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.person.MeLoginActivity" />
         <activity android:name=".ui.person.MeMemberActivity"/>
-        <activity android:name=".ui.person.MeCacheActivity"/>
         <activity android:name=".ui.video.view.activity.VideoContentActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>

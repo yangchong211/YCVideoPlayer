@@ -971,6 +971,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
 
     /**
      * 释放播放器，注意一定要判断对象是否为空，增强严谨性
+     * 这样以便在当前播放器状态下可以方便的切换不同的清晰度的视频地址
      * 关于我的github：https://github.com/yangchong211
      * 关于我的个人网站：www.ycbjie.cn或者www.yczbj.org
      * 杨充修改：

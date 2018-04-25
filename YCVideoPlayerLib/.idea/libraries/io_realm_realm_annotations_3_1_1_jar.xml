@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="io.realm:realm-annotations:3.1.1@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.realm/realm-annotations/3.1.1/d37b46a110f42a4a4664ff016a607e1d2b95c8f0/realm-annotations-3.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

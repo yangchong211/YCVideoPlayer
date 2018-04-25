@@ -75,7 +75,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      * 设置试看视频时间，让使用者自己定制
      * @param time                  时间
      */
-    public abstract void setTrySeeTime(long time);
+    public abstract void setTrySeeTime(boolean isSee , long time);
 
     /**
      * 设置不操作后，多久自动隐藏头部和底部布局
@@ -93,10 +93,9 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
     /**
      * 设置会员权限类型
      * @param isLogin   是否登录
-     * @param isSee     是否有权限看[及时登录，如果没有成为会员也需区分权限的]
      * @param type      视频类型
      */
-    public abstract void setMemberType(boolean isLogin , boolean isSee , int type);
+    public abstract void setMemberType(boolean isLogin ,int type);
 
 
     /**

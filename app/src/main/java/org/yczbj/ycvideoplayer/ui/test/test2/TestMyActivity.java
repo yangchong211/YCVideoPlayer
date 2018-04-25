@@ -2,12 +2,17 @@ package org.yczbj.ycvideoplayer.ui.test.test2;
 
 import android.graphics.Color;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
+import org.yczbj.ycvideoplayer.base.BaseConfig;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayer.ui.person.MeLoginActivity;
 import org.yczbj.ycvideoplayer.ui.person.MeMemberActivity;
@@ -21,6 +26,7 @@ import org.yczbj.ycvideoplayer.util.ImageUtil;
 import org.yczbj.ycvideoplayer.util.LogUtils;
 import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.listener.OnMemberClickListener;
+import org.yczbj.ycvideoplayerlib.listener.OnPlayOrPauseListener;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoControlListener;
 import org.yczbj.ycvideoplayerlib.VideoLogUtil;
@@ -85,6 +91,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
     Button btnMy8;
     @Bind(R.id.btn_my_9)
     Button btnMy9;
+    private VideoPlayerController controller;
 
     @Override
     protected void onStop() {
@@ -111,30 +118,42 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
     public void initView() {
         YCAppBar.setStatusBarLightMode(this, Color.WHITE);
         //原始封装视频播放，没有设置登录状态和权限
+        initVideoPlayerSize();
+        initController();
         initVideo();
     }
 
-    private void initVideo() {
-        //如果不想打印库中的日志，可以设置
-        VideoLogUtil.isLog = false;
 
-        //设置播放类型
-        // IjkPlayer or MediaPlayer
-        videoPlayer1.setPlayerType(VideoPlayer.TYPE_NATIVE);
-        //网络视频地址
-        String videoUrl = ConstantVideo.VideoPlayerList[0];
-        //设置视频地址和请求头部
-        videoPlayer1.setUp(videoUrl, null);
-        //是否从上一次的位置继续播放
-        videoPlayer1.continueFromLastPosition(true);
-        //设置播放速度
-        videoPlayer1.setSpeed(1.0f);
+    /**
+     * 设置视频宽高比是16：9
+     */
+    private void initVideoPlayerSize() {
+        int screenWidth = ScreenUtils.getScreenWidth();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.height = (int) (9*screenWidth / 16.0f);
+        videoPlayer.setLayoutParams(params);
+    }
+
+    private void initController() {
         //创建视频控制器
-        VideoPlayerController controller = new VideoPlayerController(this);
+        controller = new VideoPlayerController(this);
+        controller.setTopVisibility(true);
+        controller.setTrySeeTime(true,10000);
         controller.setOnVideoBackListener(new OnVideoBackListener() {
             @Override
             public void onBackClick() {
                 onBackPressed();
+            }
+        });
+        controller.setOnPlayOrPauseListener(new OnPlayOrPauseListener() {
+            @Override
+            public void onPlayOrPauseClick(boolean isPlaying) {
+                if(isPlaying){
+                    ToastUtil.showToast(TestMyActivity.this,"暂停视频");
+                }else {
+                    ToastUtil.showToast(TestMyActivity.this,"开始播放");
+                }
             }
         });
         controller.setOnMemberClickListener(new OnMemberClickListener() {
@@ -165,6 +184,15 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
                     case ConstantKeys.VideoControl.SHARE:
                         ToastUtil.showToast(TestMyActivity.this,"分享内容");
                         break;
+                    case ConstantKeys.VideoControl.MENU:
+                        ToastUtils.showShort("点击了菜单");
+                        break;
+                    case ConstantKeys.VideoControl.HOR_AUDIO:
+                        ToastUtils.showShort("点击横向音频");
+                        break;
+                    case ConstantKeys.VideoControl.TV:
+                        ToastUtils.showShort("点击横向Tv");
+                        break;
                     default:
                         break;
                 }
@@ -175,11 +203,30 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         controller.setLength(98000);
         //设置5秒不操作后则隐藏头部和底部布局视图
         controller.setHideTime(5000);
-        //controller.setImage(R.drawable.image_default);
-        ImageUtil.loadImgByPicasso(this, R.drawable.image_default, R.drawable.image_default, controller.imageView());
+        controller.setImage(R.color.blackText);
+    }
+
+
+    private String path = "http://sandcolleges.zero2ipo.com.cn/vc-talk-video/1510661872877.mp4";
+    private void initVideo() {
+        //如果不想打印库中的日志，可以设置
+        VideoLogUtil.isLog = false;
+        //设置播放类型
+        // IjkPlayer or MediaPlayer
+        videoPlayer1.setPlayerType(VideoPlayer.TYPE_NATIVE);
+        //网络视频地址
+        String videoUrl = path;
+        //设置视频地址和请求头部
+        videoPlayer1.setUp(videoUrl, null);
+        //是否从上一次的位置继续播放
+        videoPlayer1.continueFromLastPosition(true);
+        //设置播放速度
+        videoPlayer1.setSpeed(1.0f);
         //设置视频控制器
         videoPlayer1.setController(controller);
     }
+
+
 
 
     @Override
@@ -250,24 +297,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
 
 
     private void getData() {
-        //获取最大音量值
-        int maxVolume = videoPlayer.getMaxVolume();
-        LogUtils.e("最大音量值" + maxVolume);
-        //获取音量值
-        int volume = videoPlayer.getVolume();
-        LogUtils.e("获取音量值" + volume);
-        //获取持续时长
-        long duration = videoPlayer.getDuration();
-        LogUtils.e("获取持续时长" + duration);
-        //获取播放位置
-        long currentPosition = videoPlayer.getCurrentPosition();
-        LogUtils.e("获取播放位置" + duration);
-        //获取缓冲区百分比
-        int bufferPercentage = videoPlayer.getBufferPercentage();
-        LogUtils.e("获取缓冲区百分比" + duration);
-        //获取播放速度
-        float speed = videoPlayer.getSpeed(1);
-        LogUtils.e("获取播放速度" + duration);
+
     }
 
 
@@ -283,13 +313,9 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
      */
     private void initVideo7() {
         videoPlayer.release();
-        //设置播放类型
-        // MediaPlayer
-        //videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
-        // IjkPlayer
-        videoPlayer.setPlayerType(VideoPlayer.TYPE_IJK);
+        videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
         //网络视频地址
-        String videoUrl = ConstantVideo.VideoPlayerList[1];
+        String videoUrl = path;
         //设置视频地址和请求头部
         videoPlayer.setUp(videoUrl, null);
         //是否从上一次的位置继续播放
@@ -306,9 +332,6 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         VideoPlayerController controller = new VideoPlayerController(this);
         //设置视频标题
         controller.setTitle("高仿优酷视频播放页面");
-        //设置视频时长
-        //controller.setLength(98000);
-        //设置视频加载缓冲时加载窗的类型，多种类型
         controller.setLoadingType(2);
         ArrayList<String> content = new ArrayList<>();
         content.add("试看结束，观看全部内容请开通会员1111。");
@@ -320,7 +343,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         //设置不操作后，5秒自动隐藏头部和底部布局
         controller.setHideTime(5000);
         //设置设置会员权限类型，第一个参数是否登录，第二个参数是否有权限看，第三个参数试看完后展示的文字内容，第四个参数是否保存进度位置
-        controller.setMemberType(false,false,3);
+        controller.setMemberType(false,3);
         //设置背景图片
         controller.imageView().setBackgroundResource(R.color.blackText);
         //ImageUtil.loadImgByPicasso(this, R.color.blackText, R.drawable.image_default, controller.imageView());
@@ -362,23 +385,18 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
     private void initVideo8() {
         videoPlayer.release();
         //设置播放类型
-        // MediaPlayer
-        //videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
-        // IjkPlayer
         videoPlayer.setPlayerType(VideoPlayer.TYPE_IJK);
         //网络视频地址
-        String videoUrl = ConstantVideo.VideoPlayerList[2];
+        String videoUrl = path;
         //设置视频地址和请求头部
         videoPlayer.setUp(videoUrl, null);
         //创建视频控制器
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle("高仿优酷视频播放页面");
-        //controller.setLength(98000);
         controller.setLoadingType(1);
-        controller.setTrySeeTime(60000);
-        controller.setMemberType(true,false,0);
+        controller.setTrySeeTime(true,60000);
+        controller.setMemberType(true,0);
         controller.imageView().setBackgroundResource(R.color.blackText);
-        //ImageUtil.loadImgByPicasso(this, R.color.blackText, R.drawable.image_default, controller.imageView());
         controller.setOnMemberClickListener(new OnMemberClickListener() {
             @Override
             public void onClick(int type) {
@@ -408,23 +426,17 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
      */
     private void initVideo9() {
         videoPlayer.release();
-        //设置播放类型
-        // MediaPlayer
-        //videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
-        // IjkPlayer
-        videoPlayer.setPlayerType(VideoPlayer.TYPE_IJK);
+        videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
         //网络视频地址
-        String videoUrl = ConstantVideo.VideoPlayerList[3];
+        String videoUrl = path;
         //设置视频地址和请求头部
         videoPlayer.setUp(videoUrl, null);
         //创建视频控制器
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle("高仿优酷视频播放页面");
-        //controller.setLength(98000);
         controller.setLoadingType(2);
-        controller.setMemberType(true,true,1);
+        controller.setMemberType(true,1);
         controller.imageView().setBackgroundResource(R.color.blackText);
-        //ImageUtil.loadImgByPicasso(this, R.color.blackText, R.drawable.image_default, controller.imageView());
         controller.setOnMemberClickListener(new OnMemberClickListener() {
             @Override
             public void onClick(int type) {
@@ -450,8 +462,10 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
 
 
 
+
     /**
      * 只是作用于写博客使用
+     * --------------------------------------------------------------------------------------------
      */
     private void initVideo0() {
         videoPlayer.release();
@@ -553,7 +567,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         controller.setMemberContent(content);
         controller.setHideTime(5000);
         //设置设置会员权限类型，第一个参数是否登录，第二个参数是否有权限看，第三个参数试看完后展示的文字内容，第四个参数是否保存进度位置
-        controller.setMemberType(false,false,3);
+        controller.setMemberType(false,3);
         controller.imageView().setBackgroundResource(R.color.blackText);
         //ImageUtil.loadImgByPicasso(this, R.color.blackText, R.drawable.image_default, controller.imageView());
         //设置试看结束后，登录或者充值会员按钮的点击事件
@@ -577,9 +591,5 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         //设置视频控制器
         videoPlayer.setController(controller);
     }
-
-
-
-
 
 }

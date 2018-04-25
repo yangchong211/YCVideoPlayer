@@ -37,11 +37,6 @@ import org.yczbj.ycvideoplayer.ui.special.contract.SpecialContract;
 import org.yczbj.ycvideoplayer.ui.special.model.SpecialBean;
 import org.yczbj.ycvideoplayer.ui.special.presenter.SpecialPresenter;
 import org.yczbj.ycvideoplayer.ui.special.view.SpecialAdapter;
-import org.yczbj.ycvideoplayer.ui.test.test3.ui.activity.DLHybridTestActivity;
-import org.yczbj.ycvideoplayer.ui.test.test3.ui.activity.DLManyTestActivity;
-import org.yczbj.ycvideoplayer.ui.test.test3.ui.activity.DLMyFileTestActivity;
-import org.yczbj.ycvideoplayer.ui.test.test3.ui.activity.DLNotificationTestActivity;
-import org.yczbj.ycvideoplayer.ui.test.test3.ui.activity.DLSingleTestActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -185,20 +180,15 @@ public class SpecialFragment extends BaseFragment implements SpecialContract.Vie
                         switch (v.getId()){
                             //启动单任务下载
                             case R.id.tv_special_first:
-                                startActivity(DLSingleTestActivity.class);
                                 break;
                             //多任务下载
                             case R.id.tv_special_second:
-                                startActivity(DLManyTestActivity.class);
                                 break;
                             case R.id.tv_special_third:
-                                startActivity(DLHybridTestActivity.class);
                                 break;
                             case R.id.tv_special_four:
-                                startActivity(DLNotificationTestActivity.class);
                                 break;
                             case R.id.tv_special_five:
-                                startActivity(DLMyFileTestActivity.class);
                                 break;
                             default:
                                 break;

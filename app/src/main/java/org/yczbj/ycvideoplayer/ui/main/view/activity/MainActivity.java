@@ -14,11 +14,11 @@ import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.liulishuo.filedownloader.FileDownloader;
+import com.ns.yc.ycutilslib.activityManager.AppManager;
 import com.ns.yc.ycutilslib.managerLeak.InputMethodManagerLeakUtils;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.Constant;
-import org.yczbj.ycvideoplayer.base.AppManager;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayer.base.BaseFragmentFactory;
 import org.yczbj.ycvideoplayer.download.TasksManager;
@@ -325,7 +325,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                 TasksManager.getImpl().onDestroy();
                 FileDownloader.getImpl().pauseAll();
                 finish();
-                AppManager.getAppManager().AppExit(false);
+                AppManager.getAppManager().appExit(false);
             }
             return true;
         }

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.liulishuo.filedownloader:library-1.6.9">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/0ce0a76b9b2652bad2c7dfcc2209d2bd92f58fa7/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/0ce0a76b9b2652bad2c7dfcc2209d2bd92f58fa7/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.liulishuo.filedownloader/library/1.6.9/b6b02c9b4ebe19857d3d88ec1e642e7ee0da728e/library-1.6.9-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

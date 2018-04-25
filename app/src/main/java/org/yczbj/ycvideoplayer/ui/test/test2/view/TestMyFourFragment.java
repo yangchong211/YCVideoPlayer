@@ -51,8 +51,8 @@ public class TestMyFourFragment extends Fragment {
         mRecyclerView.setRecyclerListener(new RecyclerView.RecyclerListener() {
             @Override
             public void onViewRecycled(RecyclerView.ViewHolder holder) {
-                VideoPlayer VideoPlayer = ((VideoAdapter.VideoViewHolder) holder).mVideoPlayer;
-                if (VideoPlayer == VideoPlayerManager.instance().getCurrentVideoPlayer()) {
+                VideoPlayer videoPlayer = ((VideoAdapter.VideoViewHolder) holder).mVideoPlayer;
+                if (videoPlayer == VideoPlayerManager.instance().getCurrentVideoPlayer()) {
                     VideoPlayerManager.instance().releaseVideoPlayer();
                 }
             }

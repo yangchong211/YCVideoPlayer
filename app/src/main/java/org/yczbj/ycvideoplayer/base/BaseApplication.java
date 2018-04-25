@@ -37,18 +37,6 @@ public class BaseApplication extends Application {
 
     public BaseApplication(){}
 
-    /*public static BaseApplication getInstance() {
-        if (null == instance) {
-            synchronized (BaseApplication.class){
-                if(instance == null){
-                    instance = new BaseApplication();
-                }
-            }
-        }
-        return instance;
-    }*/
-
-
     /**
      * 这个最先执行
      */
@@ -68,6 +56,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         instance = this;
         initUtils();
+        BaseLifecycleCallback.getInstance().init(this);
         initDownLoadLib();
         //在子线程中初始化
         InitializeService.start(this);

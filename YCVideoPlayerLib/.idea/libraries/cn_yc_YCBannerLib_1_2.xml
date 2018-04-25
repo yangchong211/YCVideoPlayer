@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="cn.yc:YCBannerLib-1.2">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/3ec1d1ad51a3f9aee8e31da322f062d9d7603f83/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/3ec1d1ad51a3f9aee8e31da322f062d9d7603f83/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cn.yc/YCBannerLib/1.2/47b5c654da6710a0b0560b279540428e5deab6dc/YCBannerLib-1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

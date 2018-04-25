@@ -44,13 +44,6 @@
     </android.support.v7.widget.Toolbar>
 
 
-    <!--视频播放器-->
-    <org.yczbj.ycvideoplayerlib.VideoPlayer
-        android:id="@+id/video_player"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
-
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

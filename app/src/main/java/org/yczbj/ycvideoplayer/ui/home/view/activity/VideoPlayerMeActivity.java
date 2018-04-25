@@ -142,7 +142,7 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
         controller.setTitle("高仿优酷视频播放页面");
         controller.setLoadingType(2);
         controller.setTopVisibility(true);
-        controller.setMemberType(false,false,2);
+        controller.setMemberType(false,2);
         controller.imageView().setBackgroundResource(R.color.blackText);
         controller.setOnVideoBackListener(new OnVideoBackListener() {
             @Override

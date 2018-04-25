@@ -28,13 +28,11 @@ import org.yczbj.ycvideoplayer.base.BaseDelegateAdapter;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseFragment;
 import org.yczbj.ycvideoplayer.ui.test.test1.TestActivity;
 import org.yczbj.ycvideoplayer.ui.test.test2.TestMyActivity;
-import org.yczbj.ycvideoplayer.ui.test.test3.ui.activity.GlideCropActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerJzActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerMeActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.BannerPagerAdapter;
 import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
 import org.yczbj.ycvideoplayer.util.LogUtils;
-import org.yczbj.ycvideoplayer.util.binding.BindView;
 import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerController;
@@ -70,8 +68,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     LinearLayout llSearch;
     @Bind(R.id.ll_bind)
     LinearLayout llBind;
-    @Bind(R.id.video_player)
-    VideoPlayer videoPlayer;
 
     private MainActivity activity;
     private BannerView mBanner;
@@ -129,36 +125,17 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
 
     @Override
-    public void onStop() {
-        super.onStop();
-        VideoPlayerManager.instance().releaseVideoPlayer();
-    }
-
-    @Override
     public int getContentView() {
         return R.layout.fragment_home;
     }
 
-
     @Override
     public void initView() {
-        initVideoPlayerSize();
         initOldUserBinding();
         initVLayout();
-        initVideoPlayer();
         initRefreshView();
     }
 
-    /**
-     * 设置视频宽高比是16：9
-     */
-    private void initVideoPlayerSize() {
-        int screenWidth = ScreenUtils.getScreenWidth();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.height = (int) (9*screenWidth / 16.0f);
-        videoPlayer.setLayoutParams(params);
-    }
 
     private void initOldUserBinding() {
         boolean login = BaseConfig.INSTANCE.getIsLogin();
@@ -192,59 +169,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         //设置适配器
         delegateAdapter.setAdapters(mAdapters);
     }
-
-
-    private void initVideoPlayer() {
-        //设置播放类型
-        videoPlayer.setPlayerType(VideoPlayer.TYPE_IJK);
-        //是否从上一次的位置继续播放
-        videoPlayer.continueFromLastPosition(true);
-        //设置播放速度
-        videoPlayer.setSpeed(1.0f);
-        //网络视频地址
-        videoPlayer.setUp(ConstantVideo.VideoPlayerList[0],null);
-        //设置视频地址和请求头部
-        //创建视频控制器
-        controller = new VideoPlayerController(activity);
-        controller.setTopVisibility(true);
-        controller.setOnPlayOrPauseListener(new OnPlayOrPauseListener() {
-            @Override
-            public void onPlayOrPauseClick(boolean isPlaying) {
-                if(isPlaying){
-                    ToastUtil.showToast(activity,"暂停视频");
-                }else {
-                    ToastUtil.showToast(activity,"开始播放");
-                }
-            }
-        });
-        controller.setOnVideoBackListener(new OnVideoBackListener() {
-            @Override
-            public void onBackClick() {
-                getActivity().onBackPressed();
-            }
-        });
-        controller.setOnVideoControlListener(new OnVideoControlListener() {
-            @Override
-            public void onVideoControlClick(int type) {
-                switch (type){
-                    case ConstantKeys.VideoControl.DOWNLOAD:
-                        ToastUtil.showToast(activity,"下载音视频");
-                        break;
-                    case ConstantKeys.VideoControl.AUDIO:
-
-                        break;
-                    case ConstantKeys.VideoControl.SHARE:
-                        ToastUtil.showToast(activity,"分享内容");
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        //设置视频控制器
-        videoPlayer.setController(controller);
-    }
-
 
 
     private boolean isTopShow = true;
@@ -403,7 +327,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                                 startActivity(VideoPlayerJzActivity.class);
                                 break;
                             case R.id.tv_home_five:
-                                startActivity(GlideCropActivity.class);
+
                                 break;
                             default:
                                 break;
