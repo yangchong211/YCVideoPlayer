@@ -1,6 +1,5 @@
 package org.yczbj.ycvideoplayerlib;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -129,7 +128,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     /**
      * 试看类型 setMemberType 如果不设置该方法，那么默认视频都是可以看的
      */
-    private int mType;
+    private int mType = 0;
     /**
      * 是否有观看权限
      */
@@ -237,6 +236,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     }
 
 
+
     private void initListener() {
         mCenterStart.setOnClickListener(this);
         mBack.setOnClickListener(this);
@@ -342,6 +342,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 设置会员权限类型
      * @param isLogin   是否登录
      * @param type      视频试看类型
+     *                  0
+     *                  1
+     *                  2
+     *                  3
      */
     @Override
     public void setMemberType(boolean isLogin, int type) {
@@ -662,7 +666,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
 
 
         //添加，试看视频
-        if (!mIsSee || !mIsLogin) {
+        if (mIsSee || !mIsLogin) {
             mIvTrySee.setVisibility(VISIBLE);
             mCenterStart.setVisibility(GONE);
             mLength.setVisibility(View.GONE);
@@ -679,7 +683,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mTop.setVisibility(View.VISIBLE);
         mBack.setVisibility(View.VISIBLE);
 
-        mLlTrySee.setVisibility(GONE);
         mLoading.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mCompleted.setVisibility(View.GONE);

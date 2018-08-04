@@ -43,6 +43,8 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by yc on 2018/2/26.
+ *
+ *
  */
 
 public class VideoContentActivity extends BaseMVPActivity {
@@ -68,6 +70,7 @@ public class VideoContentActivity extends BaseMVPActivity {
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +82,11 @@ public class VideoContentActivity extends BaseMVPActivity {
         onLoadData();
     }
 
+
     private void initView() {
         initRecyclerView();
     }
+
 
     private void initData() {
         Intent intent = getIntent();
