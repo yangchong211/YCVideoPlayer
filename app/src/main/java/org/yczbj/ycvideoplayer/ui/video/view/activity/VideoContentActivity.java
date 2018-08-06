@@ -25,6 +25,7 @@ import org.yczbj.ycvideoplayer.base.mvp2.BaseMVPActivity;
 import org.yczbj.ycvideoplayer.ui.video.model.bean.MultiNewsArticleDataBean;
 import org.yczbj.ycvideoplayer.ui.video.model.bean.VideoContentBean;
 import org.yczbj.ycvideoplayer.ui.video.view.adapter.VideoArticleAdapter;
+import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerController;
@@ -68,6 +69,18 @@ public class VideoContentActivity extends BaseMVPActivity {
         Utils.getContext().startActivity(intent
                 .putExtra(VideoContentActivity.TAG, bean)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        VideoPlayerManager.instance().releaseVideoPlayer();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (VideoPlayerManager.instance().onBackPressed()) return;
+        super.onBackPressed();
     }
 
 
