@@ -10,13 +10,13 @@ public class ConstantVideo {
      * 所有有时导致视频无法播放，流量过高，一个星期竟然用了20多个G。
      */
     public static String[] VideoPlayerList = {
-            "http://v11-tt.ixigua.com/214c5ba6818fca1baa5a85a4d0961da4/5b6ab01a/video/m/2202b39c878d77f492aa941deb0d4888ad9115a153000002c727121e8f6/",
-            "http://v3-tt.ixigua.com/f90ad0697447df7d963d01f21638b150/5b6ab0f4/video/m/2205083367748f4448584dc57149cbf081b115a265e00001253ac160735/",
-            "http://v3-tt.ixigua.com/b734eabb2c96549b65594ed8e8862997/5b6ab09a/video/m/220a7df5dfd2fdb4fe3b1a21335306f1226115a213500002cf2d0332a15/",
-            "http://v11-tt.ixigua.com/e854eb2e0de21282c97b03251db8919c/5b6ab19d/video/m/220f48d1feab5554b0e9c627cf579b9c27b115155ec00000293dca2a4ee/",
-            "http://v11-tt.ixigua.com/7555582352bb366453386009303fd08c/5b6ab04a/video/m/22093f49523664b46dda3d85987db0f68bb115a20ce00004d1181bd1dc6/",
-            "http://v11-tt.ixigua.com/f5c60ad87932eea3c6eae32d0948fd66/5b6ab176/video/m/220ec5463f9d3d543fcbe4af05189b911f01153c768000085c1dcd82596/",
-            "http://v3-tt.ixigua.com/a11e0afd600e99348b199ac2ef11fec1/5b6ab165/video/m/220a9d21a719c2c488db762caefb9a6f6b2115a1caf00003beddc840b50/"
+            "http://jzvd.nathen.cn/c494b340ff704015bb6682ffde3cd302/64929c369124497593205a4190d7d128-5287d2089db37e62345123a1be272f8b.mp4",
+            "http://jzvd.nathen.cn/63f3f73712544394be981d9e4f56b612/69c5767bb9e54156b5b60a1b6edeb3b5-5287d2089db37e62345123a1be272f8b.mp4",
+            "http://jzvd.nathen.cn/b201be3093814908bf987320361c5a73/2f6d913ea25941ffa78cc53a59025383-5287d2089db37e62345123a1be272f8b.mp4",
+            "http://jzvd.nathen.cn/d2438fd1c37c4618a704513ad38d68c5/68626a9d53ca421c896ac8010f172b68-5287d2089db37e62345123a1be272f8b.mp4",
+            "http://jzvd.nathen.cn/25a8d119cfa94b49a7a4117257d8ebd7/f733e65a22394abeab963908f3c336db-5287d2089db37e62345123a1be272f8b.mp4",
+            "http://jzvd.nathen.cn/7512edd1ad834d40bb5b978402274b1a/9691c7f2d7b74b5e811965350a0e5772-5287d2089db37e62345123a1be272f8b.mp4",
+            "http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
     };
 
 
