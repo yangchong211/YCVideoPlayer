@@ -203,65 +203,65 @@ compile 'cn.yc:YCVideoPlayerLib:2.4.6'
 
 #### 2.3 最简单的视频播放器参数设定
 ##### 2.3.1 这个是最简单视频播放器的设置参数代码
-    ```
-    //设置播放类型
-    // IjkPlayer or MediaPlayer
-    videoPlayer1.setPlayerType(VideoPlayer.TYPE_NATIVE);
-    //网络视频地址
-    String videoUrl = DataUtil.getVideoListData().get(0).getVideoUrl();
-    //设置视频地址和请求头部
-    videoPlayer1.setUp(videoUrl, null);
-    //是否从上一次的位置继续播放
-    videoPlayer1.continueFromLastPosition(true);
-    //设置播放速度
-    videoPlayer1.setSpeed(1.0f);
-    //创建视频控制器
-    VideoPlayerController controller = new VideoPlayerController(this);
-    controller.setTitle("办快来围观拉，自定义视频播放器可以播放视频拉");
-    //设置视频时长
-    controller.setLength(98000);
-    //设置5秒不操作后则隐藏头部和底部布局视图
-    controller.setHideTime(5000);
-    //controller.setImage(R.drawable.image_default);
-    ImageUtil.loadImgByPicasso(this, R.drawable.image_default, R.drawable.image_default, controller.imageView());
-    //设置视频控制器
-    videoPlayer1.setController(controller);
-    ```
+```
+//设置播放类型
+// IjkPlayer or MediaPlayer
+videoPlayer1.setPlayerType(VideoPlayer.TYPE_NATIVE);
+//网络视频地址
+String videoUrl = DataUtil.getVideoListData().get(0).getVideoUrl();
+//设置视频地址和请求头部
+videoPlayer1.setUp(videoUrl, null);
+//是否从上一次的位置继续播放
+videoPlayer1.continueFromLastPosition(true);
+//设置播放速度
+videoPlayer1.setSpeed(1.0f);
+//创建视频控制器
+VideoPlayerController controller = new VideoPlayerController(this);
+controller.setTitle("办快来围观拉，自定义视频播放器可以播放视频拉");
+//设置视频时长
+controller.setLength(98000);
+//设置5秒不操作后则隐藏头部和底部布局视图
+controller.setHideTime(5000);
+//controller.setImage(R.drawable.image_default);
+ImageUtil.loadImgByPicasso(this, R.drawable.image_default, R.drawable.image_default, controller.imageView());
+//设置视频控制器
+videoPlayer1.setController(controller);
+```
 
 ##### 2.3.2 关于模仿爱奇艺登录会员权限功能代码
-    ```
-    //设置视频加载缓冲时加载窗的类型，多种类型
-    controller.setLoadingType(2);
-    ArrayList<String> content = new ArrayList<>();
-    content.add("试看结束，yc观看全部内容请开通会员1111。");
-    content.add("试看结束，yc观看全部内容请开通会员2222。");
-    content.add("试看结束，yc观看全部内容请开通会员3333。");
-    content.add("试看结束，yc观看全部内容请开通会员4444。");
-    controller.setMemberContent(content);
-    controller.setHideTime(5000);
-    //设置设置会员权限类型，第一个参数是否登录，第二个参数是否有权限看，第三个参数试看完后展示的文字内容，第四个参数是否保存进度位置
-    controller.setMemberType(false,false,3,true);
-    controller.imageView().setBackgroundResource(R.color.blackText);
-    //ImageUtil.loadImgByPicasso(this, R.color.blackText, R.drawable.image_default, controller.imageView());
-    //设置试看结束后，登录或者充值会员按钮的点击事件
-    controller.setOnMemberClickListener(new OnMemberClickListener() {
-        @Override
-        public void onClick(int type) {
-            switch (type){
-                case ConstantKeys.Gender.LOGIN:
-                    //调到用户登录页面
-                    startActivity(MeLoginActivity.class);
-                    break;
-                case ConstantKeys.Gender.MEMBER:
-                    //调到用户充值会员页面
-                    startActivity(MeMemberActivity.class);
-                    break;
-                default:
-                    break;
-            }
+```
+//设置视频加载缓冲时加载窗的类型，多种类型
+controller.setLoadingType(2);
+ArrayList<String> content = new ArrayList<>();
+content.add("试看结束，yc观看全部内容请开通会员1111。");
+content.add("试看结束，yc观看全部内容请开通会员2222。");
+content.add("试看结束，yc观看全部内容请开通会员3333。");
+content.add("试看结束，yc观看全部内容请开通会员4444。");
+controller.setMemberContent(content);
+controller.setHideTime(5000);
+//设置设置会员权限类型，第一个参数是否登录，第二个参数是否有权限看，第三个参数试看完后展示的文字内容，第四个参数是否保存进度位置
+controller.setMemberType(false,false,3,true);
+controller.imageView().setBackgroundResource(R.color.blackText);
+//ImageUtil.loadImgByPicasso(this, R.color.blackText, R.drawable.image_default, controller.imageView());
+//设置试看结束后，登录或者充值会员按钮的点击事件
+controller.setOnMemberClickListener(new OnMemberClickListener() {
+    @Override
+    public void onClick(int type) {
+        switch (type){
+            case ConstantKeys.Gender.LOGIN:
+                //调到用户登录页面
+                startActivity(MeLoginActivity.class);
+                break;
+            case ConstantKeys.Gender.MEMBER:
+                //调到用户充值会员页面
+                startActivity(MeMemberActivity.class);
+                break;
+            default:
+                break;
         }
-    });
-    ```
+    }
+});
+```
 
 ##### 2.3.3其他设置，让体验更好，视频播放优化
 - **如果是在Activity中的话，建议设置下面这段代码**
