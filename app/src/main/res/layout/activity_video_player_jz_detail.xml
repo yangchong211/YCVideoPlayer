@@ -13,8 +13,8 @@
         android:orientation="vertical">
 
         <!--视频播放器-->
-        <cn.jzvd.CustomView.MyJZVideoPlayerStandard
-            android:id="@+id/jz_video"
+        <org.yczbj.ycvideoplayerlib.VideoPlayer
+            android:id="@+id/video_player"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
 

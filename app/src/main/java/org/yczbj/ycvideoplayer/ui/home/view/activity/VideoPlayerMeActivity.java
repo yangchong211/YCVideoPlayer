@@ -44,6 +44,7 @@ import org.yczbj.ycvideoplayer.util.AppUtil;
 import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
 import org.yczbj.ycvideoplayerlib.listener.OnMemberClickListener;
+import org.yczbj.ycvideoplayerlib.listener.OnPlayOrPauseListener;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoControlListener;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
@@ -150,6 +151,12 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
                 onBackPressed();
             }
         });
+        controller.setOnPlayOrPauseListener(new OnPlayOrPauseListener() {
+            @Override
+            public void onPlayOrPauseClick(boolean isPlaying) {
+
+            }
+        });
         controller.setOnMemberClickListener(new OnMemberClickListener() {
             @Override
             public void onClick(int type) {
@@ -158,7 +165,7 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
                         ToastUtil.showToast(VideoPlayerMeActivity.this,"登录");
                         break;
                     case ConstantKeys.Gender.MEMBER:
-                        ToastUtil.showToast(VideoPlayerMeActivity.this,"犊子");
+                        ToastUtil.showToast(VideoPlayerMeActivity.this,"充值会员");
                         break;
                     default:
                         break;

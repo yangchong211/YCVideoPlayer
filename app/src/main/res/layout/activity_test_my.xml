@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
 
-
-    <org.yczbj.ycvideoplayerlib.VideoPlayer
-        android:id="@+id/video_player_1"
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:layout_marginBottom="8dp"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

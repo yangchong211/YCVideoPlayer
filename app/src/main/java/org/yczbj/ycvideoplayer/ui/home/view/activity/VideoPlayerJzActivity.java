@@ -43,6 +43,12 @@ import org.yczbj.ycvideoplayer.ui.home.view.adapter.DownloadVideoAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.NarrowImageAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.VideoPlayerMeAdapter;
 import org.yczbj.ycvideoplayer.util.AppUtil;
+import org.yczbj.ycvideoplayerlib.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.listener.OnMemberClickListener;
+import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
+import org.yczbj.ycvideoplayerlib.listener.OnVideoControlListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,8 +77,8 @@ public class VideoPlayerJzActivity extends BaseActivity implements VideoPlayerJz
     YCRefreshView recyclerView;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    @Bind(R.id.jz_video)
-    MyJZVideoPlayerStandard jzVideo;
+    @Bind(R.id.video_player)
+    VideoPlayer videoPlayer;
 
 
     private VideoPlayerJzContract.Presenter presenter = new VideoPlayerJzPresenter(this);
@@ -127,12 +133,32 @@ public class VideoPlayerJzActivity extends BaseActivity implements VideoPlayerJz
 
 
     private void initVideoPlayer() {
-        jzVideo.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
-                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子快长大");
-        Picasso.with(this)
-                .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")
-                .into(jzVideo.thumbImageView);
-        JZVideoPlayer.setJzUserAction(new MyUserActionStandard());
+        //设置播放类型
+        //videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
+        videoPlayer.setPlayerType(VideoPlayer.TYPE_IJK);
+        //网络视频地址
+        String videoUrl = ConstantVideo.VideoPlayerList[0];
+        //设置视频地址和请求头部
+        videoPlayer.setUp(videoUrl, null);
+        //是否从上一次的位置继续播放
+        videoPlayer.continueFromLastPosition(true);
+        //设置播放速度
+        videoPlayer.setSpeed(1.0f);
+        //创建视频控制器
+        VideoPlayerController controller = new VideoPlayerController(this);
+        controller.setTitle("高仿优酷视频播放页面");
+        controller.setLoadingType(2);
+        controller.setTopVisibility(false);
+        controller.imageView().setBackgroundResource(R.color.blackText);
+        controller.setOnVideoBackListener(new OnVideoBackListener() {
+            @Override
+            public void onBackClick() {
+                onBackPressed();
+            }
+        });
+
+        //设置视频控制器
+        videoPlayer.setController(controller);
     }
 
 
@@ -357,7 +383,7 @@ public class VideoPlayerJzActivity extends BaseActivity implements VideoPlayerJz
             popMenu.setFocusable(true);
             //设置动画
             popMenu.setAnimationStyle(R.style.animator_dialog_download);
-            popMenu.showAsDropDown(jzVideo);
+            popMenu.showAsDropDown(videoPlayer);
             AppUtil.setBackgroundAlpha(VideoPlayerJzActivity.this,0.5f);
             popMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -403,68 +429,6 @@ public class VideoPlayerJzActivity extends BaseActivity implements VideoPlayerJz
             ivDownload.setOnClickListener(listener);
         }
     }
-
-
-
-    /**
-     * 这只是给埋点统计用户数据用的，不能写和播放相关的逻辑，监听事件请参考MyJZVideoPlayerStandard，复写函数取得相应事件
-     */
-    class MyUserActionStandard implements JZUserActionStandard {
-        @Override
-        public void onEvent(int type, Object url, int screen, Object... objects) {
-            switch (type) {
-                case JZUserAction.ON_CLICK_START_ICON:
-                    Log.i("TEST_USER_EVENT", "ON_CLICK_START_ICON" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserAction.ON_CLICK_START_ERROR:
-                    Log.i("TEST_USER_EVENT", "ON_CLICK_START_ERROR" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserAction.ON_CLICK_START_AUTO_COMPLETE:
-                    Log.i("TEST_USER_EVENT", "ON_CLICK_START_AUTO_COMPLETE" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserAction.ON_CLICK_PAUSE:
-                    Log.i("TEST_USER_EVENT", "ON_CLICK_PAUSE" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserAction.ON_CLICK_RESUME:
-                    Log.i("TEST_USER_EVENT", "ON_CLICK_RESUME" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserAction.ON_SEEK_POSITION:
-                    Log.i("TEST_USER_EVENT", "ON_SEEK_POSITION" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserAction.ON_AUTO_COMPLETE:
-                    Log.i("TEST_USER_EVENT", "ON_AUTO_COMPLETE" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserAction.ON_ENTER_FULLSCREEN:
-                    Log.i("TEST_USER_EVENT", "ON_ENTER_FULLSCREEN" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserAction.ON_QUIT_FULLSCREEN:
-                    Log.i("TEST_USER_EVENT", "ON_QUIT_FULLSCREEN" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserAction.ON_ENTER_TINYSCREEN:
-                    Log.i("TEST_USER_EVENT", "ON_ENTER_TINYSCREEN" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserAction.ON_QUIT_TINYSCREEN:
-                    Log.i("TEST_USER_EVENT", "ON_QUIT_TINYSCREEN" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserAction.ON_TOUCH_SCREEN_SEEK_VOLUME:
-                    Log.i("TEST_USER_EVENT", "ON_TOUCH_SCREEN_SEEK_VOLUME" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserAction.ON_TOUCH_SCREEN_SEEK_POSITION:
-                    Log.i("TEST_USER_EVENT", "ON_TOUCH_SCREEN_SEEK_POSITION" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserActionStandard.ON_CLICK_START_THUMB:
-                    Log.i("TEST_USER_EVENT", "ON_CLICK_START_THUMB" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                case JZUserActionStandard.ON_CLICK_BLANK:
-                    Log.i("TEST_USER_EVENT", "ON_CLICK_BLANK" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
-                    break;
-                default:
-                    Log.i("TEST_USER_EVENT", "unknow");
-                    break;
-            }
-        }
-    }
-
 
 
 }

@@ -62,9 +62,6 @@ import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 public class TestMyActivity extends BaseActivity implements View.OnClickListener {
 
 
-    @Bind(R.id.video_player_1)
-    VideoPlayer videoPlayer1;
-
     @Bind(R.id.video_player)
     VideoPlayer videoPlayer;
     @Bind(R.id.btn_my_1)
@@ -91,7 +88,8 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
     Button btnMy8;
     @Bind(R.id.btn_my_9)
     Button btnMy9;
-    private VideoPlayerController controller;
+
+    private String path = ConstantVideo.VideoPlayerList[0];
 
     @Override
     protected void onStop() {
@@ -119,8 +117,6 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         YCAppBar.setStatusBarLightMode(this, Color.WHITE);
         //原始封装视频播放，没有设置登录状态和权限
         initVideoPlayerSize();
-        initController();
-        initVideo();
     }
 
 
@@ -134,100 +130,6 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         params.height = (int) (9*screenWidth / 16.0f);
         videoPlayer.setLayoutParams(params);
     }
-
-    private void initController() {
-        //创建视频控制器
-        controller = new VideoPlayerController(this);
-        controller.setTopVisibility(true);
-        controller.setTrySeeTime(true,10000);
-        controller.setOnVideoBackListener(new OnVideoBackListener() {
-            @Override
-            public void onBackClick() {
-                onBackPressed();
-            }
-        });
-        controller.setOnPlayOrPauseListener(new OnPlayOrPauseListener() {
-            @Override
-            public void onPlayOrPauseClick(boolean isPlaying) {
-                if(isPlaying){
-                    ToastUtil.showToast(TestMyActivity.this,"暂停视频");
-                }else {
-                    ToastUtil.showToast(TestMyActivity.this,"开始播放");
-                }
-            }
-        });
-        controller.setOnMemberClickListener(new OnMemberClickListener() {
-            @Override
-            public void onClick(int type) {
-                switch (type){
-                    case ConstantKeys.Gender.LOGIN:
-                        ToastUtil.showToast(TestMyActivity.this,"登录");
-                        break;
-                    case ConstantKeys.Gender.MEMBER:
-                        ToastUtil.showToast(TestMyActivity.this,"犊子");
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        controller.setOnVideoControlListener(new OnVideoControlListener() {
-            @Override
-            public void onVideoControlClick(int type) {
-                switch (type){
-                    case ConstantKeys.VideoControl.DOWNLOAD:
-                        ToastUtil.showToast(TestMyActivity.this,"下载音视频");
-                        break;
-                    case ConstantKeys.VideoControl.AUDIO:
-                        ToastUtil.showToast(TestMyActivity.this,"切换音频");
-                        break;
-                    case ConstantKeys.VideoControl.SHARE:
-                        ToastUtil.showToast(TestMyActivity.this,"分享内容");
-                        break;
-                    case ConstantKeys.VideoControl.MENU:
-                        ToastUtils.showShort("点击了菜单");
-                        break;
-                    case ConstantKeys.VideoControl.HOR_AUDIO:
-                        ToastUtils.showShort("点击横向音频");
-                        break;
-                    case ConstantKeys.VideoControl.TV:
-                        ToastUtils.showShort("点击横向Tv");
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        controller.setTitle("办快来围观拉，自定义视频播放器可以播放视频拉");
-        //设置视频时长
-        controller.setLength(98000);
-        //设置5秒不操作后则隐藏头部和底部布局视图
-        controller.setHideTime(5000);
-        controller.setImage(R.color.blackText);
-    }
-
-
-    private String path = "http://sandcolleges.zero2ipo.com.cn/vc-talk-video/1510661872877.mp4";
-    private void initVideo() {
-        //如果不想打印库中的日志，可以设置
-        VideoLogUtil.isLog = false;
-        //设置播放类型
-        // IjkPlayer or MediaPlayer
-        videoPlayer1.setPlayerType(VideoPlayer.TYPE_NATIVE);
-        //网络视频地址
-        String videoUrl = path;
-        //设置视频地址和请求头部
-        videoPlayer1.setUp(videoUrl, null);
-        //是否从上一次的位置继续播放
-        videoPlayer1.continueFromLastPosition(true);
-        //设置播放速度
-        videoPlayer1.setSpeed(1.0f);
-        //设置视频控制器
-        videoPlayer1.setController(controller);
-    }
-
-
-
 
     @Override
     public void initListener() {
@@ -255,10 +157,8 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_my_00:
-                downloadVideo();
                 break;
             case R.id.btn_my_0:
-                getData();
                 break;
             case R.id.btn_my_1:
                 startActivity(TestMyFirstActivity.class);
@@ -295,19 +195,6 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-
-    private void getData() {
-
-    }
-
-
-    /**
-     * 下载视频
-     */
-    private void downloadVideo() {
-
-    }
-
     /**
      * 没有登录没有权限，一键设置
      */
@@ -315,7 +202,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         videoPlayer.release();
         videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
         //网络视频地址
-        String videoUrl = path;
+        String videoUrl = ConstantVideo.VideoPlayerList[0];
         //设置视频地址和请求头部
         videoPlayer.setUp(videoUrl, null);
         //是否从上一次的位置继续播放

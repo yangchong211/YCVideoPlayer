@@ -141,6 +141,11 @@ public interface InterVideoPlayer {
      * @return 网络加载速度
      */
     long getTcpSpeed();
+    /**
+     * 进入全屏模式
+     * 这个是横屏模式
+     */
+    void enterVerticalScreenScreen();
 
     /**
      * 进入全屏模式

@@ -24,6 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="2.在list页面滑动小窗口播放【注意是滑出界面再显示小窗口】"/>
+        android:text="2.点击全屏"/>
 
 </LinearLayout>

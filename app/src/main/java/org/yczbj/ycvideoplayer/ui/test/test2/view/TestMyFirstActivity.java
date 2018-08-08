@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayer.R;
+import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
@@ -47,7 +48,7 @@ public class TestMyFirstActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void initView() {
         videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE); // IjkPlayer or MediaPlayer
-        String videoUrl = Environment.getExternalStorageDirectory().getPath().concat("/办公室小野.mp4");
+        String videoUrl = ConstantVideo.VideoPlayerList[0];
         videoPlayer.setUp(videoUrl, null);
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle("办公室小野开番外了，居然在办公室开澡堂！老板还点赞？");
@@ -82,7 +83,10 @@ public class TestMyFirstActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.btn_tiny_2:
-
+                if (videoPlayer.isIdle()) {
+                    videoPlayer.start();
+                }
+                videoPlayer.enterVerticalScreenScreen();
                 break;
             default:
                 break;

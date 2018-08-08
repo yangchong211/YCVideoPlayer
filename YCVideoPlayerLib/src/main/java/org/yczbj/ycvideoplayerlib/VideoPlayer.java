@@ -865,6 +865,34 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
 
 
     /**
+     * 进入竖屏的全屏模式
+     */
+    @Override
+    public void enterVerticalScreenScreen() {
+        if (mCurrentMode == MODE_FULL_SCREEN){
+            return;
+        }
+        // 隐藏ActionBar、状态栏，并横屏
+        VideoPlayerUtils.hideActionBar(mContext);
+        VideoPlayerUtils.scanForActivity(mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ViewGroup contentView = (ViewGroup) VideoPlayerUtils.scanForActivity(mContext).findViewById(android.R.id.content);
+        if (mCurrentMode == MODE_TINY_WINDOW) {
+            contentView.removeView(mContainer);
+        } else {
+            this.removeView(mContainer);
+        }
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        contentView.addView(mContainer, params);
+
+        mCurrentMode = MODE_FULL_SCREEN;
+        mController.onPlayModeChanged(mCurrentMode);
+        VideoLogUtil.d("MODE_FULL_SCREEN");
+    }
+
+
+
+
+    /**
      * 退出全屏模式
      * 退出全屏，移除mTextureView和mController，并添加到非全屏的容器中。
      * 切换竖屏时需要在manifest的activity标签下添加android:configChanges="orientation|keyboardHidden|screenSize"配置，

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.yczbj.ycvideoplayerlib.listener.OnClarityChangedListener;
+import org.yczbj.ycvideoplayerlib.listener.OnCompletedListener;
 import org.yczbj.ycvideoplayerlib.listener.OnMemberClickListener;
 import org.yczbj.ycvideoplayerlib.listener.OnPlayOrPauseListener;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
@@ -557,6 +558,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 setTopBottomVisible(false);
                 mImage.setVisibility(View.VISIBLE);
                 mCompleted.setVisibility(View.VISIBLE);
+                //设置播放完成的监听事件
+                if(mOnCompletedListener!=null){
+                    mOnCompletedListener.onCompleted();
+                }
                 break;
             default:
                 break;
@@ -1118,5 +1123,14 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     public void setOnPlayOrPauseListener(OnPlayOrPauseListener listener){
         this.mOnPlayOrPauseListener = listener;
     }
+
+    /**
+     * 监听视频播放完成事件
+     */
+    private OnCompletedListener mOnCompletedListener;
+    public void setOnCompletedListener(OnCompletedListener listener){
+        this.mOnCompletedListener = listener;
+    }
+
 
 }

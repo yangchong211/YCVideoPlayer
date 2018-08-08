@@ -22,20 +22,23 @@
             android:id="@+id/tv_home_second"
             style="@style/WeightAttr"
             android:drawablePadding="8dp"
+            android:textColor="@color/colorAccent"
             android:drawableTop="@drawable/ic_home_second"
             android:text="封装播放器" />
         <TextView
             android:id="@+id/tv_home_third"
             style="@style/WeightAttr"
             android:drawablePadding="8dp"
+            android:textColor="@color/colorAccent"
             android:drawableTop="@drawable/ic_home_third"
-            android:text="仿优酷[Vp]" />
+            android:text="仿优酷[YC]" />
         <TextView
             android:id="@+id/tv_home_four"
             style="@style/WeightAttr"
             android:drawablePadding="8dp"
+            android:textColor="@color/colorAccent"
             android:drawableTop="@drawable/ic_home_four"
-            android:text="仿优酷[Jz]" />
+            android:text="仿优酷[YC]" />
         <TextView
             android:id="@+id/tv_home_five"
             style="@style/WeightAttr"
