@@ -15,6 +15,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
@@ -170,6 +171,9 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
      */
     @Override
     public void setUp(String url, Map<String, String> headers) {
+        if(url==null || url.length()==0){
+            VideoLogUtil.d("设置的视频链接不能为空");
+        }
         mUrl = url;
         mHeaders = headers;
     }
@@ -584,7 +588,6 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         if (mTextureView == null) {
             mTextureView = new VideoTextureView(mContext);
             mTextureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
-
                 /**
                  * SurfaceTexture准备就绪
                  */
@@ -663,8 +666,14 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         // 设置时间文本监听器
         mMediaPlayer.setOnTimedTextListener(mOnTimedTextListener);
         // 设置dataSource
+        if(mUrl==null || mUrl.length()==0){
+            Toast.makeText(mContext,"视频链接不能为空",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //避免出现Uri解析空指针异常[NullPointerException uriString]
+        Uri path = Uri.parse(mUrl);
         try {
-            mMediaPlayer.setDataSource(mContext.getApplicationContext(), Uri.parse(mUrl), mHeaders);
+            mMediaPlayer.setDataSource(mContext.getApplicationContext(), path, mHeaders);
             if (mSurface == null) {
                 mSurface = new Surface(mSurfaceTexture);
             }
