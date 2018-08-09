@@ -206,6 +206,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
             mUpdateProgressTimerTask = new TimerTask() {
                 @Override
                 public void run() {
+                    //在子线程中更新进度，包括进度条进度，展示的当前播放位置时长，总时长等。
                     AbsVideoPlayerController.this.post(new Runnable() {
                         @Override
                         public void run() {
@@ -239,6 +240,12 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      */
     protected abstract void updateProgress();
 
+    /**
+     * 滑动处理调节声音和亮度的逻辑
+     * @param v                         v
+     * @param event                     event
+     * @return                          是否自己处理滑动事件
+     */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         // 只有全屏的时候才能拖动位置、亮度、声音
@@ -248,8 +255,11 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         // 只有在播放、暂停、缓冲的时候能够拖动改变位置、亮度和声音
         if (mVideoPlayer.isIdle() || mVideoPlayer.isError() || mVideoPlayer.isPreparing()
                 || mVideoPlayer.isPrepared() || mVideoPlayer.isCompleted()) {
+            //势左右滑动改变播放位置后，手势up或者cancel时，隐藏控制器中间的播放位置变化视图
             hideChangePosition();
+            //手势在左侧上下滑动改变亮度后，手势up或者cancel时，隐藏控制器中间的亮度变化视图，
             hideChangeBrightness();
+            //手势在左侧上下滑动改变音量后，手势up或者cancel时，隐藏控制器中间的音量变化视图，
             hideChangeVolume();
             return false;
         }
@@ -318,7 +328,9 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
                     showChangeVolume(newVolumeProgress);
                 }
                 break;
+                //滑动结束
             case MotionEvent.ACTION_CANCEL:
+                //滑动手指抬起
             case MotionEvent.ACTION_UP:
                 if (mNeedChangePosition) {
                     mVideoPlayer.seekTo(mNewPosition);
