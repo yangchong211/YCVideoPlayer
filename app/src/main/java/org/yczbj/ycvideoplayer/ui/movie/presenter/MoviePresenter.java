@@ -64,14 +64,6 @@ public class MoviePresenter implements MovieContract.Presenter {
                 // 2. 指定观察者 接收 & 响应事件的线程
                 // 第一次指定观察者线程 = 主线程
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(new Consumer<MovieBean>() {
-                    @Override
-                    public void accept(MovieBean movieBean) throws Exception {
-                        LogUtils.e(TAG+"----"+"doOnNext accept(MovieBean movieBean)");
-                    }
-                })
-                // 第二次指定观察者线程 = 新的工作线程
-                .observeOn(Schedulers.newThread())
                 // 3. 最后再通过订阅（subscribe）连接观察者和被观察者
                 .subscribe(new Consumer<MovieBean>() {
                     @Override

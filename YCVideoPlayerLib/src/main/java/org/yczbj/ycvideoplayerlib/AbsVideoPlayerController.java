@@ -267,6 +267,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         float y = event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                //获取起点时的坐标
                 mDownX = x;
                 mDownY = y;
                 mNeedChangePosition = false;
@@ -274,6 +275,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
                 mNeedChangeBrightness = false;
                 break;
             case MotionEvent.ACTION_MOVE:
+                //计算移动过程中的x，y轴的绝对值
                 float deltaX = x - mDownX;
                 float deltaY = y - mDownY;
                 float absDeltaX = Math.abs(deltaX);

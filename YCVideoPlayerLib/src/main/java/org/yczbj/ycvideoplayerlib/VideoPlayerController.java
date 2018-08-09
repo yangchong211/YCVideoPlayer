@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -863,7 +864,13 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         }else {
             mTop.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
-        mBottom.setVisibility(visible ? View.VISIBLE : View.GONE);
+        if(visible){
+            mBottom.setVisibility(View.VISIBLE);
+            mBottom.animate().translationY(0);
+        }else {
+            mBottom.setVisibility(View.GONE);
+            mBottom.animate().translationY(-mBottom.getHeight());
+        }
         topBottomVisible = visible;
         if (visible) {
             if (!mVideoPlayer.isPaused() && !mVideoPlayer.isBufferingPaused()) {
