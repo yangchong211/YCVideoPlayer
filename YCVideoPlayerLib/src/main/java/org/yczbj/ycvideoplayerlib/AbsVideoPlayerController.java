@@ -2,6 +2,8 @@ package org.yczbj.ycvideoplayerlib;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
+import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -38,14 +40,24 @@ import java.util.concurrent.ScheduledExecutorService;
  */
 public abstract class AbsVideoPlayerController extends FrameLayout implements View.OnTouchListener {
 
+    private final DisplayMetrics dm;
     private Context mContext;
     protected InterVideoPlayer mVideoPlayer;
     private Timer mUpdateProgressTimer;
     private TimerTask mUpdateProgressTimerTask;
     private float mDownX;
     private float mDownY;
+    /**
+     * 是否需要改变播放的进度
+     */
     private boolean mNeedChangePosition;
+    /**
+     * 是否需要改变播放的声音
+     */
     private boolean mNeedChangeVolume;
+    /**
+     * 是否需要改变播放的亮度
+     */
     private boolean mNeedChangeBrightness;
     private static final int THRESHOLD = 80;
     private long mGestureDownPosition;
@@ -59,6 +71,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         super(context);
         mContext = context;
         this.setOnTouchListener(this);
+        dm = new DisplayMetrics();//获取屏幕宽高，处理越界的时候用到
     }
 
     public void setVideoPlayer(InterVideoPlayer videoPlayer) {
@@ -240,6 +253,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      */
     protected abstract void updateProgress();
 
+
     /**
      * 滑动处理调节声音和亮度的逻辑
      * @param v                         v
@@ -248,6 +262,112 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        //不能用这个做判断，如果是小窗口播放状态，那么这个返回时false
+        //boolean tinyWindow = mVideoPlayer.isTinyWindow();
+        int playType = mVideoPlayer.getPlayType();
+        //如果是小窗口模式，则可以拖拽。其他情况则正常处理
+        if(playType == VideoPlayer.PlayMode.MODE_TINY_WINDOW){
+            return setTinyWindowTouch(v,event);
+        }else {
+            //处理全屏播放时，滑动处理调节声音和亮度的逻辑
+            return setOnTouch(v,event);
+        }
+    }
+
+
+    /**
+     * 如果是小窗口模式，则可以拖拽。其他情况则正常处理
+     * 问题：
+     * 1.按钮拖动的界限限定。
+     * 2.按钮单击和拖动之间的冲突。
+     * 3.在界面未显示之前，获得View的高/宽。
+     * @param v                         v
+     * @param event                     event
+     * @return                          是否自己处理滑动事件
+     */
+    private boolean setTinyWindowTouch(View v, MotionEvent event) {
+        switch (event.getAction() & MotionEvent.ACTION_MASK){
+            case MotionEvent.ACTION_DOWN:
+                onTouchDown(event);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                onTouchMove(v,event);
+                break;
+            case MotionEvent.ACTION_UP:
+                isOver(v);
+                break;
+        }
+        //v.invalidate();
+        return true;
+    }
+
+    //相对于父控件的触摸位置，用于处理拖拽
+    private float xDown,yDown,xUp,yUp;
+    private int extra;
+
+    /** 按下 **/
+    private void onTouchDown(MotionEvent event){
+        xDown = event.getX();
+        yDown = event.getY();
+        xUp = event.getRawX();
+        yUp = event.getRawY();
+        extra = (int) (yUp - yDown - getTop());
+        VideoLogUtil.i("AbsPlayer"+"onTouchDown"+xDown+"----"+yDown+"----"+xUp+"----"+yUp+"----"+extra);
+    }
+
+
+    /** 拖拽 **/
+    private void onTouchMove(View view, MotionEvent event) {
+        int left, right, top, bottom;
+        top = (int) (yUp - yDown) - extra;
+        bottom = top + getHeight();
+        left = (int) (xUp - xDown);
+        right = left + getWidth();
+        //Top position, relative to parent这是该方法其中top参数的官方解释，反正我是被误导了，我不知道这个父亲到底是怎样定义的
+        // 我目前的理解是它的所有参数位置是相对于该view放置的那个xml布局的位置，那个xml布局最外面的那个layout才是父view。
+        //为什么要说的这么绕，就是它的位置不是相对屏幕的，因为你的应用可能有tab占了位置，那块位置就不能算。如果理解了这些话就能知道为什么会有extra了。
+        view.layout(left, top, right, bottom);
+        xUp = event.getRawX();
+        yUp = event.getRawY();
+        VideoLogUtil.i("AbsPlayer"+"onTouchMove"+left+"----"+top+"----"+right+"----"+bottom);
+    }
+
+    /**
+     * 拖拽时判断是否越界
+     */
+    private void isOver(View v) {
+        int width = this.getWidth()/3;
+        int height = this.getHeight()/3;
+        int left = getLeft(),right=getRight(),top=getTop(),bottom=getBottom();
+        //针对整个可用屏幕的越界,必须还能看到控件的1/3
+        if (this.getBottom() < height){
+            bottom = height;
+            top = bottom - getHeight();
+        }
+        if (this.getRight() <  width){
+            right = width;
+            left = right - getWidth();
+        }
+        if (this.getTop() > dm.heightPixels - extra - height){
+            top = dm.heightPixels - extra - height;
+            bottom = top + getHeight();
+        }
+        if (this.getLeft() > dm.widthPixels - width){
+            left = dm.widthPixels - width;
+            right = left + getWidth();
+        }
+        if (this.getBottom() < height || this.getLeft() < - width || this.getRight() > dm.widthPixels - width || this.getTop() > dm.heightPixels - extra - height) {
+            v.layout(left, top, right, bottom);
+        }
+    }
+
+    /**
+     * 处理全屏播放时，滑动处理调节声音和亮度的逻辑
+     * @param v                         v
+     * @param event                     event
+     * @return                          是否自己处理滑动事件
+     */
+    private boolean setOnTouch(View v, MotionEvent event) {
         // 只有全屏的时候才能拖动位置、亮度、声音
         if (!mVideoPlayer.isFullScreen()) {
             return false;
@@ -312,8 +432,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
                     float newBrightness = mGestureDownBrightness + deltaBrightness;
                     newBrightness = Math.max(0, Math.min(newBrightness, 1));
                     float newBrightnessPercentage = newBrightness;
-                    WindowManager.LayoutParams params = VideoPlayerUtils.scanForActivity(mContext)
-                            .getWindow().getAttributes();
+                    WindowManager.LayoutParams params = VideoPlayerUtils.scanForActivity(mContext).getWindow().getAttributes();
                     params.screenBrightness = newBrightnessPercentage;
                     VideoPlayerUtils.scanForActivity(mContext).getWindow().setAttributes(params);
                     int newBrightnessProgress = (int) (100f * newBrightnessPercentage);
@@ -330,9 +449,9 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
                     showChangeVolume(newVolumeProgress);
                 }
                 break;
-                //滑动结束
+            //滑动结束
             case MotionEvent.ACTION_CANCEL:
-                //滑动手指抬起
+            //滑动手指抬起
             case MotionEvent.ACTION_UP:
                 if (mNeedChangePosition) {
                     mVideoPlayer.seekTo(mNewPosition);

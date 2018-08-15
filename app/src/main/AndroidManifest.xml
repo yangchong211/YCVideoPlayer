@@ -42,7 +42,6 @@
 
 
         <!--下面这些均是测试视频播放器-->
-        <activity android:name=".ui.test.test3.ui.activity.GlideCropActivity"/>
         <activity android:name=".ui.test.test1.TestActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
@@ -132,12 +131,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.test.test4.MediaPlayerActivity"/>
-
-        <activity android:name=".ui.test.test3.ui.activity.DLSingleTestActivity"/>
-        <activity android:name=".ui.test.test3.ui.activity.DLHybridTestActivity"/>
-        <activity android:name=".ui.test.test3.ui.activity.DLManyTestActivity"/>
-        <activity android:name=".ui.test.test3.ui.activity.DLMyFileTestActivity"/>
-        <activity android:name=".ui.test.test3.ui.activity.DLNotificationTestActivity"/>
 
     </application>
 

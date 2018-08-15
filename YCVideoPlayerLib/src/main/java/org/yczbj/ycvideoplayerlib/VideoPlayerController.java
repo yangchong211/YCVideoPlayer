@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.BatteryManager;
 import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -128,6 +131,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      */
     private boolean hasRegisterBatteryReceiver;
     /**
+     * 是否已经注册了网络监听广播
+     */
+    private boolean hasRegisterNetReceiver;
+    /**
      * 试看类型 setMemberType 如果不设置该方法，那么默认视频都是可以看的
      */
     private int mType = 0;
@@ -165,6 +172,102 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      */
     private boolean mIsTopVisibility = false;
 
+    /**
+     * 网络变化监听广播，在网络变更时进行对应处理
+     */
+    private NetChangedReceiver netChangedReceiver;
+    private class NetChangedReceiver extends BroadcastReceiver {
+        private String getConnectionType(int type) {
+            String connType = "";
+            if (type == ConnectivityManager.TYPE_MOBILE) {
+                connType = "3G，4G网络数据";
+            } else if (type == ConnectivityManager.TYPE_WIFI) {
+                connType = "WIFI网络";
+            }
+            return connType;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 监听网络连接，包括wifi和移动数据的打开和关闭,以及连接上可用的连接都会接到监听
+            if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
+                //获取联网状态的NetworkInfo对象
+                NetworkInfo info = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+                if (info != null) {
+                    //如果当前的网络连接成功并且网络连接可用
+                    if (NetworkInfo.State.CONNECTED == info.getState() && info.isAvailable()) {
+                        if (info.getType() == ConnectivityManager.TYPE_WIFI || info.getType() == ConnectivityManager.TYPE_MOBILE) {
+                            VideoLogUtil.i(getConnectionType(info.getType()) + "连上");
+                        }
+                    } else {
+                        VideoLogUtil.i(getConnectionType(info.getType()) + "断开");
+                        onPlayStateChanged(VideoPlayer.STATE_ERROR);
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 电池状态即电量变化广播接收器
+     */
+    private BroadcastReceiver mBatterReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
+            if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
+                // 充电中
+                mBattery.setImageResource(R.drawable.battery_charging);
+            } else if (status == BatteryManager.BATTERY_STATUS_FULL) {
+                // 充电完成
+                mBattery.setImageResource(R.drawable.battery_full);
+            } else {
+                int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+                int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
+                int percentage = (int) (((float) level / scale) * 100);
+                if (percentage <= 10) {
+                    mBattery.setImageResource(R.drawable.battery_10);
+                } else if (percentage <= 20) {
+                    mBattery.setImageResource(R.drawable.battery_20);
+                } else if (percentage <= 50) {
+                    mBattery.setImageResource(R.drawable.battery_50);
+                } else if (percentage <= 80) {
+                    mBattery.setImageResource(R.drawable.battery_80);
+                } else if (percentage <= 100) {
+                    mBattery.setImageResource(R.drawable.battery_100);
+                }
+            }
+        }
+    };
+
+    /**
+     * 如果锁屏，则屏蔽返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            VideoLogUtil.i("1如果锁屏，则屏蔽返回键");
+            if(mIsLock){
+                //如果锁屏，那就屏蔽返回键
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    /**
+     * 如果锁屏，则屏蔽滑动事件
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(mIsLock){
+            //如果锁屏了，那就就不需要处理滑动的逻辑
+            return false;
+        }
+        return super.onTouchEvent(event);
+    }
 
     public VideoPlayerController(Context context) {
         super(context);
@@ -172,10 +275,43 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         init();
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        unRegisterNetChangedReceiver();//会导致崩溃
+    }
+
+    public void registerNetChangedReceiver() {
+        if (!hasRegisterNetReceiver) {
+            if (netChangedReceiver == null) {
+                netChangedReceiver = new NetChangedReceiver();
+                IntentFilter filter = new IntentFilter();
+                filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+                mContext.registerReceiver(netChangedReceiver, filter);
+                VideoLogUtil.i("注册网络监听广播");
+            }
+            hasRegisterNetReceiver = true;
+        }
+    }
+
+    public void unRegisterNetChangedReceiver() {
+        if (hasRegisterNetReceiver) {
+            if (netChangedReceiver != null) {
+                mContext.unregisterReceiver(netChangedReceiver);
+                VideoLogUtil.i("解绑注册网络监听广播");
+            }
+            hasRegisterNetReceiver = false;
+        }
+    }
+
+    /**
+     * 初始化操作
+     */
     private void init() {
         LayoutInflater.from(mContext).inflate(R.layout.custom_video_player, this, true);
         initFindViewById();
         initListener();
+        registerNetChangedReceiver();
     }
 
     private void initFindViewById() {
@@ -552,6 +688,9 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 setTopBottomVisible(false);
                 mTop.setVisibility(View.VISIBLE);
                 mError.setVisibility(View.VISIBLE);
+                if(mVideoPlayer.isError()){
+                    mVideoPlayer.pause();
+                }
                 break;
             //播放完成
             case VideoPlayer.STATE_COMPLETED:
@@ -598,6 +737,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                     mContext.unregisterReceiver(mBatterReceiver);
                     hasRegisterBatteryReceiver = false;
                 }
+                mIsLock = false;
                 break;
             //全屏模式
             case VideoPlayer.MODE_FULL_SCREEN:
@@ -620,43 +760,12 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mFlLock.setVisibility(View.GONE);
                 mBack.setVisibility(View.VISIBLE);
                 mClarity.setVisibility(View.GONE);
+                mIsLock = false;
                 break;
             default:
                 break;
         }
     }
-
-    /**
-     * 电池状态即电量变化广播接收器
-     */
-    private BroadcastReceiver mBatterReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
-            if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
-                // 充电中
-                mBattery.setImageResource(R.drawable.battery_charging);
-            } else if (status == BatteryManager.BATTERY_STATUS_FULL) {
-                // 充电完成
-                mBattery.setImageResource(R.drawable.battery_full);
-            } else {
-                int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-                int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
-                int percentage = (int) (((float) level / scale) * 100);
-                if (percentage <= 10) {
-                    mBattery.setImageResource(R.drawable.battery_10);
-                } else if (percentage <= 20) {
-                    mBattery.setImageResource(R.drawable.battery_20);
-                } else if (percentage <= 50) {
-                    mBattery.setImageResource(R.drawable.battery_50);
-                } else if (percentage <= 80) {
-                    mBattery.setImageResource(R.drawable.battery_80);
-                } else if (percentage <= 100) {
-                    mBattery.setImageResource(R.drawable.battery_100);
-                }
-            }
-        }
-    };
 
 
     /**
@@ -721,17 +830,21 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 }
             }
         } else if (v == mRestartPause) {
-            //重新播放或者暂停
-            if (mVideoPlayer.isPlaying() || mVideoPlayer.isBufferingPlaying()) {
-                mVideoPlayer.pause();
-                if(mOnPlayOrPauseListener!=null){
-                    mOnPlayOrPauseListener.onPlayOrPauseClick(true);
+            if(VideoPlayerUtils.isConnected(mContext)){
+                //重新播放或者暂停
+                if (mVideoPlayer.isPlaying() || mVideoPlayer.isBufferingPlaying()) {
+                    mVideoPlayer.pause();
+                    if(mOnPlayOrPauseListener!=null){
+                        mOnPlayOrPauseListener.onPlayOrPauseClick(true);
+                    }
+                } else if (mVideoPlayer.isPaused() || mVideoPlayer.isBufferingPaused()) {
+                    mVideoPlayer.restart();
+                    if(mOnPlayOrPauseListener!=null){
+                        mOnPlayOrPauseListener.onPlayOrPauseClick(false);
+                    }
                 }
-            } else if (mVideoPlayer.isPaused() || mVideoPlayer.isBufferingPaused()) {
-                mVideoPlayer.restart();
-                if(mOnPlayOrPauseListener!=null){
-                    mOnPlayOrPauseListener.onPlayOrPauseClick(false);
-                }
+            }else {
+                Toast.makeText(mContext,"请检测是否有网络",Toast.LENGTH_SHORT).show();
             }
         } else if (v == mFullScreen) {
             //全屏模式，重置锁屏，设置为未选中状态
@@ -753,10 +866,18 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         } else if (v == mRetry) {
             //点击重试
             //不论是否记录播放位置，都是从零开始播放
-            mVideoPlayer.restart();
+            if(VideoPlayerUtils.isConnected(mContext)){
+                mVideoPlayer.restart();
+            }else {
+                Toast.makeText(mContext,"请检测是否有网络",Toast.LENGTH_SHORT).show();
+            }
         } else if (v == mReplay) {
             //重新播放
-            mRetry.performClick();
+            if(VideoPlayerUtils.isConnected(mContext)){
+                mRetry.performClick();
+            }else {
+                Toast.makeText(mContext,"请检测是否有网络",Toast.LENGTH_SHORT).show();
+            }
         } else if (v == mShare) {
             //分享
             Toast.makeText(mContext, "分享", Toast.LENGTH_SHORT).show();
@@ -788,6 +909,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         } else if(v == mFlLock){
             //点击锁屏按钮，则进入锁屏模式
             setLock(mIsLock);
+
         } else if(v == mIvDownload){
             if(mVideoControlListener==null){
                 VideoLogUtil.d("请在初始化的时候设置下载监听事件");
@@ -866,10 +988,8 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         }
         if(visible){
             mBottom.setVisibility(View.VISIBLE);
-            mBottom.animate().translationY(0);
         }else {
             mBottom.setVisibility(View.GONE);
-            mBottom.animate().translationY(-mBottom.getHeight());
         }
         topBottomVisible = visible;
         if (visible) {
@@ -920,7 +1040,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     /**
      * 设置锁屏模式，默认是未锁屏的
      * 当为true时，则锁屏；否则为未锁屏
-     * @param isLock        是否锁屏
+     * @param isLock            是否锁屏
      */
     private void setLock(boolean isLock){
         if(isLock){
@@ -930,7 +1050,16 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             mIsLock = true;
             mIvLock.setImageResource(R.drawable.player_locked_btn);
         }
+        /*
+         * 设置锁屏时的布局
+         * 1.横屏全屏时显示，其他不展示；
+         * 2.锁屏时隐藏控制面板除锁屏按钮外其他所有控件
+         * 3.当从全屏切换到正常或者小窗口时，则默认不锁屏
+         */
+        setTopBottomVisible(!mIsLock);
     }
+
+
 
     /**
      * 获取是否是锁屏模式

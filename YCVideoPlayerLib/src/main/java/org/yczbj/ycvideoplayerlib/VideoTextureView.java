@@ -1,6 +1,7 @@
 package org.yczbj.ycvideoplayerlib;
 
 import android.content.Context;
+import android.view.SurfaceView;
 import android.view.TextureView;
 
 /**
@@ -36,6 +37,7 @@ public class VideoTextureView extends TextureView {
     }
 
     /**
+     * 记得一定要重新写这个方法，如果角度发生了变化，就重新绘制布局
      * 设置视频旋转角度
      * @param rotation                  角度
      */

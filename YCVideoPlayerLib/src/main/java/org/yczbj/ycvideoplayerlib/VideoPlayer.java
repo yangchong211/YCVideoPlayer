@@ -11,6 +11,8 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 import java.util.Map;
 
@@ -123,9 +127,23 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     private int mCurrentState = STATE_IDLE;
     /**
      * 播放模式，普通模式，小窗口模式，正常模式等等
+     * 存在局限性：比如小窗口下的正在播放模式，那么mCurrentMode就是STATE_PLAYING，而不是MODE_TINY_WINDOW并存
      **/
     private int mCurrentMode = MODE_NORMAL;
+    /**
+     * 默认时普通模式
+     */
+    private int mPlayType = PlayMode.MODE_NORMAL;
 
+    /**
+     * 播放模式，普通模式，小窗口模式，正常模式三种其中一种
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    protected @interface PlayMode {
+        int MODE_NORMAL = 1001;
+        int MODE_FULL_SCREEN = 1002;
+        int MODE_TINY_WINDOW = 1003;
+    }
 
     private Context mContext;
     private AudioManager mAudioManager;
@@ -140,6 +158,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     private int mBufferPercentage;
     private boolean continueFromLastPosition = true;
     private long skipToPosition;
+
 
     public VideoPlayer(Context context) {
         this(context, null);
@@ -162,6 +181,8 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
                 ViewGroup.LayoutParams.MATCH_PARENT);
         this.addView(mContainer, params);
     }
+
+
 
     /*--------------setUp为必须设置的方法，二选其一--------------------------------------*/
     /**
@@ -196,6 +217,12 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     }
 
 
+    /**
+     * @return                          获取当前播放模式
+     */
+    public int getPlayType() {
+        return mPlayType;
+    }
 
     /**
      * 设置播放器类型，必须设置
@@ -670,7 +697,6 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
             Toast.makeText(mContext,"视频链接不能为空",Toast.LENGTH_SHORT).show();
             return;
         }
-        //避免出现Uri解析空指针异常[NullPointerException uriString]
         Uri path = Uri.parse(mUrl);
         try {
             mMediaPlayer.setDataSource(mContext.getApplicationContext(), path, mHeaders);
@@ -868,6 +894,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         contentView.addView(mContainer, params);
 
         mCurrentMode = MODE_FULL_SCREEN;
+        mPlayType = PlayMode.MODE_FULL_SCREEN;
         mController.onPlayModeChanged(mCurrentMode);
         VideoLogUtil.d("MODE_FULL_SCREEN");
     }
@@ -894,6 +921,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         contentView.addView(mContainer, params);
 
         mCurrentMode = MODE_FULL_SCREEN;
+        mPlayType = PlayMode.MODE_FULL_SCREEN;
         mController.onPlayModeChanged(mCurrentMode);
         VideoLogUtil.d("MODE_FULL_SCREEN");
     }
@@ -921,6 +949,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
             LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             this.addView(mContainer, params);
             mCurrentMode = MODE_NORMAL;
+            mPlayType = PlayMode.MODE_NORMAL;
             mController.onPlayModeChanged(mCurrentMode);
             VideoLogUtil.d("MODE_NORMAL");
             return true;
@@ -931,6 +960,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
 
     /**
      * 进入小窗口播放，小窗口播放的实现原理与全屏播放类似。
+     * 注意：小窗口播放视频比例是        16：9
      */
     @Override
     public void enterTinyWindow() {
@@ -938,9 +968,9 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         if (mCurrentMode == MODE_TINY_WINDOW) {
             return;
         }
+        //先移除
         this.removeView(mContainer);
-        ViewGroup contentView = (ViewGroup) VideoPlayerUtils.scanForActivity(mContext)
-                .findViewById(android.R.id.content);
+        ViewGroup contentView = (ViewGroup) VideoPlayerUtils.scanForActivity(mContext).findViewById(android.R.id.content);
         // 小窗口的宽度为屏幕宽度的60%，长宽比默认为16:9，右边距、下边距为8dp。
         LayoutParams params = new LayoutParams(
                 (int) (VideoPlayerUtils.getScreenWidth(mContext) * 0.6f),
@@ -950,8 +980,8 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
         params.bottomMargin = VideoPlayerUtils.dp2px(mContext, 8f);
 
         contentView.addView(mContainer, params);
-
         mCurrentMode = MODE_TINY_WINDOW;
+        mPlayType = PlayMode.MODE_TINY_WINDOW;
         mController.onPlayModeChanged(mCurrentMode);
         VideoLogUtil.d("MODE_TINY_WINDOW");
     }
@@ -967,6 +997,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
             LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             this.addView(mContainer, params);
             mCurrentMode = MODE_NORMAL;
+            mPlayType = PlayMode.MODE_NORMAL;
             mController.onPlayModeChanged(mCurrentMode);
             VideoLogUtil.d("MODE_NORMAL");
             return true;
@@ -1001,6 +1032,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
             exitTinyWindow();
         }
         mCurrentMode = MODE_NORMAL;
+        mPlayType = PlayMode.MODE_NORMAL;
 
         // 释放播放器
         releasePlayer();

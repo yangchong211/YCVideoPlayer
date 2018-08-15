@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
@@ -161,5 +163,35 @@ public class VideoPlayerUtils {
     public static void clearPlayPosition(Context context){
         context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION", Context.MODE_PRIVATE).getAll().clear();
     }
+
+
+    /**
+     * 判断网络是否连接
+     * <p>需添加权限 {@code <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>}</p>
+     *
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isConnected(Context context) {
+        NetworkInfo info = getActiveNetworkInfo(context);
+        return info != null && info.isConnected();
+    }
+
+
+
+    /**
+     * 获取活动网络信息
+     * <p>需添加权限
+     * {@code <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />}</p>
+     *
+     * @return NetworkInfo
+     */
+    @SuppressLint("MissingPermission")
+    private static NetworkInfo getActiveNetworkInfo(Context context) {
+        ConnectivityManager manager = (ConnectivityManager)
+                context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (manager == null) return null;
+        return manager.getActiveNetworkInfo();
+    }
+
 
 }

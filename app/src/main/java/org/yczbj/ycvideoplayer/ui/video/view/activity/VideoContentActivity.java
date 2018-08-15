@@ -11,10 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.Utils;
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
@@ -151,6 +154,12 @@ public class VideoContentActivity extends BaseMVPActivity {
 
     private void addHeader() {
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
+
+            private Button mBtn1;
+            private Button mBtn2;
+            private Button mBtn3;
+            private Button mBtn4;
+
             @Override
             public View onCreateView(ViewGroup parent) {
                 return LayoutInflater.from(VideoContentActivity.this).inflate
@@ -160,6 +169,29 @@ public class VideoContentActivity extends BaseMVPActivity {
             @Override
             public void onBindView(View headerView) {
                 videoPlayer = headerView.findViewById(R.id.video_player);
+                mBtn1 =  headerView.findViewById(R.id.btn_1);
+                mBtn2 =  headerView.findViewById(R.id.btn_2);
+                mBtn3 =  headerView.findViewById(R.id.btn_3);
+                mBtn4 =  headerView.findViewById(R.id.btn_4);
+
+                View.OnClickListener listener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()){
+                            case R.id.btn_1:
+                                if (videoPlayer.isIdle()) {
+                                    ToastUtil.showToast(VideoContentActivity.this,"要点击播放后才能进入小窗口");
+                                } else {
+                                    videoPlayer.enterTinyWindow();
+                                }
+                                break;
+                        }
+                    }
+                };
+                mBtn1.setOnClickListener(listener);
+                mBtn2.setOnClickListener(listener);
+                mBtn3.setOnClickListener(listener);
+                mBtn4.setOnClickListener(listener);
             }
         });
     }

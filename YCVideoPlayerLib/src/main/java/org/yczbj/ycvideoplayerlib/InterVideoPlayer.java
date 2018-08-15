@@ -100,6 +100,13 @@ public interface InterVideoPlayer {
     int getMaxVolume();
 
     /**
+     * 获取当前播放状态
+     *
+     * @return  播放状态
+     */
+    int getPlayType();
+
+    /**
      * 获取当前音量
      *
      * @return 当前音量值
