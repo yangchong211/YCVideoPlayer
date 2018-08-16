@@ -10,8 +10,10 @@ import com.blankj.utilcode.util.Utils;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
 
+import org.yczbj.ycvideoplayer.BuildConfig;
 import org.yczbj.ycvideoplayer.service.InitializeService;
 import org.yczbj.ycvideoplayer.util.LogUtils;
+import org.yczbj.ycvideoplayerlib.VideoLogUtil;
 
 import java.net.Proxy;
 
@@ -60,6 +62,11 @@ public class BaseApplication extends Application {
         initDownLoadLib();
         //在子线程中初始化
         InitializeService.start(this);
+        if(BuildConfig.DEBUG){
+            VideoLogUtil.setIsLog(true);
+        }else {
+            VideoLogUtil.setIsLog(false);
+        }
     }
 
     /**

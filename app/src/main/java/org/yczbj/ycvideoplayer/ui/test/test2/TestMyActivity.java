@@ -200,7 +200,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
      */
     private void initVideo7() {
         videoPlayer.release();
-        videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
+        videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_NATIVE);
         //网络视频地址
         String videoUrl = ConstantVideo.VideoPlayerList[0];
         //设置视频地址和请求头部
@@ -219,7 +219,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         VideoPlayerController controller = new VideoPlayerController(this);
         //设置视频标题
         controller.setTitle("高仿优酷视频播放页面");
-        controller.setLoadingType(2);
+        controller.setLoadingType(ConstantKeys.Loading.LOADING_QQ);
         ArrayList<String> content = new ArrayList<>();
         content.add("试看结束，观看全部内容请开通会员1111。");
         content.add("试看结束，观看全部内容请开通会员2222。");
@@ -272,7 +272,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
     private void initVideo8() {
         videoPlayer.release();
         //设置播放类型
-        videoPlayer.setPlayerType(VideoPlayer.TYPE_IJK);
+        videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
         //网络视频地址
         String videoUrl = path;
         //设置视频地址和请求头部
@@ -280,7 +280,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         //创建视频控制器
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle("高仿优酷视频播放页面");
-        controller.setLoadingType(1);
+        controller.setLoadingType(ConstantKeys.Loading.LOADING_RING);
         controller.setTrySeeTime(true,60000);
         controller.setMemberType(true,0);
         controller.imageView().setBackgroundResource(R.color.blackText);
@@ -313,7 +313,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
      */
     private void initVideo9() {
         videoPlayer.release();
-        videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
+        videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
         //网络视频地址
         String videoUrl = path;
         //设置视频地址和请求头部
@@ -321,7 +321,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         //创建视频控制器
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle("高仿优酷视频播放页面");
-        controller.setLoadingType(2);
+        controller.setLoadingType(ConstantKeys.Loading.LOADING_QQ);
         controller.setMemberType(true,1);
         controller.imageView().setBackgroundResource(R.color.blackText);
         controller.setOnMemberClickListener(new OnMemberClickListener() {
@@ -358,9 +358,9 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         videoPlayer.release();
         //设置播放类型
         // MediaPlayer
-        videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
+        videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_NATIVE);
         // IjkPlayer
-        videoPlayer.setPlayerType(VideoPlayer.TYPE_IJK);
+        videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
         //网络视频地址
         String videoUrl = ConstantVideo.VideoPlayerList[4];
         //设置视频地址和请求头部
@@ -445,7 +445,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
         controller.setTitle("高仿优酷视频播放页面");
         //controller.setLength(98000);
         //设置视频加载缓冲时加载窗的类型，多种类型
-        controller.setLoadingType(2);
+        controller.setLoadingType(ConstantKeys.Loading.LOADING_QQ);
         ArrayList<String> content = new ArrayList<>();
         content.add("试看结束，观看全部内容请开通会员1111。");
         content.add("试看结束，观看全部内容请开通会员2222。");

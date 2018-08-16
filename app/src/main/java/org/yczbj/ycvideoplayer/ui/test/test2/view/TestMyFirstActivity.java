@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
+import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.VideoPlayerController;
@@ -47,7 +48,7 @@ public class TestMyFirstActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void initView() {
-        videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE); // IjkPlayer or MediaPlayer
+        videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_NATIVE); // IjkPlayer or MediaPlayer
         String videoUrl = ConstantVideo.VideoPlayerList[0];
         videoPlayer.setUp(videoUrl, null);
         VideoPlayerController controller = new VideoPlayerController(this);

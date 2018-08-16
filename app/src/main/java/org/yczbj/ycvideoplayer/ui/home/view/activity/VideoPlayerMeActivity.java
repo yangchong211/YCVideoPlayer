@@ -128,7 +128,7 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
     private void initVideoPlayer() {
         //设置播放类型
         //videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
-        videoPlayer.setPlayerType(VideoPlayer.TYPE_IJK);
+        videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
         //网络视频地址
         String videoUrl = ConstantVideo.VideoPlayerList[0];
         //设置视频地址和请求头部
@@ -141,7 +141,7 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
         //创建视频控制器
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle("高仿优酷视频播放页面");
-        controller.setLoadingType(2);
+        controller.setLoadingType(ConstantKeys.Loading.LOADING_QQ);
         controller.setTopVisibility(true);
         controller.setMemberType(false,2);
         controller.imageView().setBackgroundResource(R.color.blackText);

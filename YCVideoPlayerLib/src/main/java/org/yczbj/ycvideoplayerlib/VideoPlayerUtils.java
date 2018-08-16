@@ -48,10 +48,7 @@ public class VideoPlayerUtils {
         if (activity == null) {
             return false;
         }
-        if (activity.isFinishing()) {
-            return false;
-        }
-        return true;
+        return !activity.isFinishing();
     }
 
 
@@ -120,7 +117,7 @@ public class VideoPlayerUtils {
      * @param milliseconds 毫秒数
      * @return ##:##
      */
-    public static String formatTime(long milliseconds) {
+    static String formatTime(long milliseconds) {
         if (milliseconds <= 0 || milliseconds >= 24 * 60 * 60 * 1000) {
             return "00:00";
         }
@@ -171,7 +168,7 @@ public class VideoPlayerUtils {
      *
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    public static boolean isConnected(Context context) {
+    static boolean isConnected(Context context) {
         NetworkInfo info = getActiveNetworkInfo(context);
         return info != null && info.isConnected();
     }

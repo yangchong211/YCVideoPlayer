@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
+import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.VideoPlayerController;
@@ -48,7 +49,7 @@ public class TestMySecondActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void initView() {
-        niceVideoPlayer.setPlayerType(VideoPlayer.TYPE_IJK); // IjkPlayer or MediaPlayer
+        niceVideoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK); // IjkPlayer or MediaPlayer
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle("Beautiful China...");
         controller.setLength(117000);

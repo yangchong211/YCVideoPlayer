@@ -118,7 +118,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      *             目前1，是仿腾讯加载loading
      *             2，是转圈加载loading
      */
-    public abstract void setLoadingType(int type);
+    public abstract void setLoadingType(@ConstantKeys.LoadingType int type);
 
     /**
      * 设置播放的视频的标题
@@ -155,17 +155,6 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      * 当播放器的播放状态发生变化，在此方法中国你更新不同的播放状态的UI
      *
      * @param playState 播放状态：
-     *                  <ul>
-     *                  <li>{@link VideoPlayer#STATE_IDLE}</li>
-     *                  <li>{@link VideoPlayer#STATE_PREPARING}</li>
-     *                  <li>{@link VideoPlayer#STATE_PREPARED}</li>
-     *                  <li>{@link VideoPlayer#STATE_PLAYING}</li>
-     *                  <li>{@link VideoPlayer#STATE_PAUSED}</li>
-     *                  <li>{@link VideoPlayer#STATE_BUFFERING_PLAYING}</li>
-     *                  <li>{@link VideoPlayer#STATE_BUFFERING_PAUSED}</li>
-     *                  <li>{@link VideoPlayer#STATE_ERROR}</li>
-     *                  <li>{@link VideoPlayer#STATE_COMPLETED}</li>
-     *                  </ul>
      */
     protected abstract void onPlayStateChanged(int playState);
 
@@ -173,11 +162,6 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      * 当播放器的播放模式发生变化，在此方法中更新不同模式下的控制器界面。
      *
      * @param playMode 播放器的模式：
-     *                 <ul>
-     *                 <li>{@link VideoPlayer#MODE_NORMAL}</li>
-     *                 <li>{@link VideoPlayer#MODE_FULL_SCREEN}</li>
-     *                 <li>{@link VideoPlayer#MODE_TINY_WINDOW}</li>
-     *                 </ul>
      */
     protected abstract void onPlayModeChanged(int playMode);
 
@@ -266,7 +250,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         //boolean tinyWindow = mVideoPlayer.isTinyWindow();
         int playType = mVideoPlayer.getPlayType();
         //如果是小窗口模式，则可以拖拽。其他情况则正常处理
-        if(playType == VideoPlayer.PlayMode.MODE_TINY_WINDOW){
+        if(playType == ConstantKeys.PlayMode.MODE_TINY_WINDOW){
             return setTinyWindowTouch(v,event);
         }else {
             //处理全屏播放时，滑动处理调节声音和亮度的逻辑

@@ -33,6 +33,7 @@ import org.yczbj.ycvideoplayer.ui.movie.model.MovieDetailBean;
 import org.yczbj.ycvideoplayer.ui.movie.presenter.MovieDetailPresenter;
 import org.yczbj.ycvideoplayer.ui.movie.view.adapter.MovieDetailAdapter;
 import org.yczbj.ycvideoplayer.util.ImageUtil;
+import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerController;
@@ -149,7 +150,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     private void initVideoPlayer() {
         //设置播放类型
-        videoPlayer.setPlayerType(VideoPlayer.TYPE_IJK);
+        videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
         //网络视频地址
         //设置视频地址和请求头部
         //创建视频控制器
@@ -297,7 +298,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
             controller.setTitle(ret.getTitle());
             String duration = ret.getDuration();
             controller.setLength(duration);
-            controller.setLoadingType(2);
+            controller.setLoadingType(ConstantKeys.Loading.LOADING_QQ);
 
             if(mContentView!=null){
                 tvPlayerCurriculum.setText(ret.getDescription());

@@ -131,7 +131,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      */
     private boolean hasRegisterBatteryReceiver;
     /**
-     * 是否已经注册了网络监听广播
+     * 是否已经注册了网络监听广播，添加这个判断可以避免崩溃
      */
     private boolean hasRegisterNetReceiver;
     /**
@@ -201,7 +201,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                         }
                     } else {
                         VideoLogUtil.i(getConnectionType(info.getType()) + "断开");
-                        onPlayStateChanged(VideoPlayer.STATE_ERROR);
+                        onPlayStateChanged(ConstantKeys.CurrentState.STATE_ERROR);
+                        if(mVideoPlayer.isIdle()){
+                            mVideoPlayer.pause();
+                        }
                     }
                 }
             }
@@ -275,13 +278,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         init();
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        unRegisterNetChangedReceiver();//会导致崩溃
-    }
-
-    public void registerNetChangedReceiver() {
+    private void registerNetChangedReceiver() {
         if (!hasRegisterNetReceiver) {
             if (netChangedReceiver == null) {
                 netChangedReceiver = new NetChangedReceiver();
@@ -294,7 +291,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         }
     }
 
-    public void unRegisterNetChangedReceiver() {
+    private void unRegisterNetChangedReceiver() {
         if (hasRegisterNetReceiver) {
             if (netChangedReceiver != null) {
                 mContext.unregisterReceiver(netChangedReceiver);
@@ -449,16 +446,20 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      *             更多可以关注我的GitHub：https://github.com/yangchong211
      */
     @Override
-    public void setLoadingType(int type) {
-        if(type==1){
-            pbLoadingRing.setVisibility(GONE);
-            pbLoadingQq.setVisibility(VISIBLE);
-        }else if(type==2){
-            pbLoadingRing.setVisibility(VISIBLE);
-            pbLoadingQq.setVisibility(GONE);
-        }else {
-            pbLoadingRing.setVisibility(VISIBLE);
-            pbLoadingQq.setVisibility(GONE);
+    public void setLoadingType(@ConstantKeys.LoadingType int type) {
+        switch (type){
+            case ConstantKeys.Loading.LOADING_RING:
+                pbLoadingRing.setVisibility(VISIBLE);
+                pbLoadingQq.setVisibility(GONE);
+                break;
+            case ConstantKeys.Loading.LOADING_QQ:
+                pbLoadingRing.setVisibility(GONE);
+                pbLoadingQq.setVisibility(VISIBLE);
+                break;
+            default:
+                pbLoadingRing.setVisibility(VISIBLE);
+                pbLoadingQq.setVisibility(GONE);
+                break;
         }
     }
 
@@ -624,24 +625,14 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     /**
      * 当播放状态发生改变时
      * @param playState 播放状态：
-     *                  <ul>
-     *                  <li>{@link VideoPlayer#STATE_IDLE}</li>
-     *                  <li>{@link VideoPlayer#STATE_PREPARING}</li>
-     *                  <li>{@link VideoPlayer#STATE_PREPARED}</li>
-     *                  <li>{@link VideoPlayer#STATE_PLAYING}</li>
-     *                  <li>{@link VideoPlayer#STATE_PAUSED}</li>
-     *                  <li>{@link VideoPlayer#STATE_BUFFERING_PLAYING}</li>
-     *                  <li>{@link VideoPlayer#STATE_BUFFERING_PAUSED}</li>
-     *                  <li>{@link VideoPlayer#STATE_ERROR}</li>
-     *                  <li>{@link VideoPlayer#STATE_COMPLETED}</li>
      */
     @Override
     protected void onPlayStateChanged(int playState) {
         switch (playState) {
-            case VideoPlayer.STATE_IDLE:
+            case ConstantKeys.CurrentState.STATE_IDLE:
                 break;
             //播放准备中
-            case VideoPlayer.STATE_PREPARING:
+            case ConstantKeys.CurrentState.STATE_PREPARING:
                 mImage.setVisibility(View.GONE);
                 mLoading.setVisibility(View.VISIBLE);
                 mLoadText.setText("正在准备...");
@@ -653,47 +644,44 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mLength.setVisibility(View.GONE);
                 break;
             //播放准备就绪
-            case VideoPlayer.STATE_PREPARED:
+            case ConstantKeys.CurrentState.STATE_PREPARED:
                 startUpdateProgressTimer();
                 break;
             //正在播放
-            case VideoPlayer.STATE_PLAYING:
+            case ConstantKeys.CurrentState.STATE_PLAYING:
                 mLoading.setVisibility(View.GONE);
                 mRestartPause.setImageResource(R.drawable.ic_player_pause);
                 startDismissTopBottomTimer();
                 break;
             //暂停播放
-            case VideoPlayer.STATE_PAUSED:
+            case ConstantKeys.CurrentState.STATE_PAUSED:
                 mLoading.setVisibility(View.GONE);
                 mRestartPause.setImageResource(R.drawable.ic_player_start);
                 cancelDismissTopBottomTimer();
                 break;
             //正在缓冲(播放器正在播放时，缓冲区数据不足，进行缓冲，缓冲区数据足够后恢复播放)
-            case VideoPlayer.STATE_BUFFERING_PLAYING:
+            case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
                 mLoading.setVisibility(View.VISIBLE);
                 mRestartPause.setImageResource(R.drawable.ic_player_pause);
                 mLoadText.setText("正在缓冲...");
                 startDismissTopBottomTimer();
                 break;
             //正在缓冲
-            case VideoPlayer.STATE_BUFFERING_PAUSED:
+            case ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED:
                 mLoading.setVisibility(View.VISIBLE);
                 mRestartPause.setImageResource(R.drawable.ic_player_start);
                 mLoadText.setText("正在缓冲...");
                 cancelDismissTopBottomTimer();
                 break;
             //播放错误
-            case VideoPlayer.STATE_ERROR:
+            case ConstantKeys.CurrentState.STATE_ERROR:
                 cancelUpdateProgressTimer();
                 setTopBottomVisible(false);
                 mTop.setVisibility(View.VISIBLE);
                 mError.setVisibility(View.VISIBLE);
-                if(mVideoPlayer.isError()){
-                    mVideoPlayer.pause();
-                }
                 break;
             //播放完成
-            case VideoPlayer.STATE_COMPLETED:
+            case ConstantKeys.CurrentState.STATE_COMPLETED:
                 cancelUpdateProgressTimer();
                 setTopBottomVisible(false);
                 mImage.setVisibility(View.VISIBLE);
@@ -702,6 +690,8 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 if(mOnCompletedListener!=null){
                     mOnCompletedListener.onCompleted();
                 }
+                //当播放完成就解除广播
+                unRegisterNetChangedReceiver();
                 break;
             default:
                 break;
@@ -712,16 +702,12 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     /**
      * 当播放器的播放模式发生变化时
      * @param playMode 播放器的模式：
-     *                 <ul>
-     *                 <li>{@link VideoPlayer#MODE_NORMAL}</li>
-     *                 <li>{@link VideoPlayer#MODE_FULL_SCREEN}</li>
-     *                 <li>{@link VideoPlayer#MODE_TINY_WINDOW}</li>
      */
     @Override
     protected void onPlayModeChanged(int playMode) {
         switch (playMode) {
             //普通模式
-            case VideoPlayer.MODE_NORMAL:
+            case ConstantKeys.PlayMode.MODE_NORMAL:
                 mFlLock.setVisibility(View.GONE);
                 mBack.setVisibility(View.VISIBLE);
                 mFullScreen.setImageResource(R.drawable.ic_player_enlarge);
@@ -740,7 +726,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mIsLock = false;
                 break;
             //全屏模式
-            case VideoPlayer.MODE_FULL_SCREEN:
+            case ConstantKeys.PlayMode.MODE_FULL_SCREEN:
                 mFlLock.setVisibility(View.VISIBLE);
                 mBack.setVisibility(View.VISIBLE);
                 mFullScreen.setVisibility(View.GONE);
@@ -756,7 +742,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 }
                 break;
             //小窗口模式
-            case VideoPlayer.MODE_TINY_WINDOW:
+            case ConstantKeys.PlayMode.MODE_TINY_WINDOW:
                 mFlLock.setVisibility(View.GONE);
                 mBack.setVisibility(View.VISIBLE);
                 mClarity.setVisibility(View.GONE);
@@ -827,6 +813,8 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 //如果两种情况都不是，执行逻辑交给使用者自己实现
                 if(mBackListener!=null){
                     mBackListener.onBackClick();
+                }else {
+                    VideoLogUtil.d("返回键逻辑，如果是全屏，则先退出全屏；如果是小窗口，则退出小窗口；如果两种情况都不是，执行逻辑交给使用者自己实现");
                 }
             }
         } else if (v == mRestartPause) {
@@ -896,20 +884,21 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             if (mIsLogin) {
                 //试看结束，观看全部内容请开通会员
                 mClickListener.onClick(ConstantKeys.Gender.LOGIN);
-            }else if(mType ==1){
-                //试看结束，观看全部内容请开通会员/购买。已是会员/已购买可登陆观看
-                mClickListener.onClick(ConstantKeys.Gender.MEMBER);
-            }else if(mType == 2){
-                //试看结束，观看全部内容请开通会员。已是会员/已购买可登陆观看
-                mClickListener.onClick(ConstantKeys.Gender.MEMBER);
-            }else if(mType == 3){
-                //试看结束, 登录后即可观看全部免费课程。
-                mClickListener.onClick(ConstantKeys.Gender.MEMBER);
+            }else {
+                if(mType ==1){
+                    //试看结束，观看全部内容请开通会员/购买。已是会员/已购买可登陆观看
+                    mClickListener.onClick(ConstantKeys.Gender.MEMBER);
+                }else if(mType == 2){
+                    //试看结束，观看全部内容请开通会员。已是会员/已购买可登陆观看
+                    mClickListener.onClick(ConstantKeys.Gender.MEMBER);
+                }else if(mType == 3){
+                    //试看结束, 登录后即可观看全部免费课程。
+                    mClickListener.onClick(ConstantKeys.Gender.MEMBER);
+                }
             }
         } else if(v == mFlLock){
             //点击锁屏按钮，则进入锁屏模式
             setLock(mIsLock);
-
         } else if(v == mIvDownload){
             if(mVideoControlListener==null){
                 VideoLogUtil.d("请在初始化的时候设置下载监听事件");

@@ -28,6 +28,7 @@ import org.yczbj.ycvideoplayer.base.mvp2.BaseMVPActivity;
 import org.yczbj.ycvideoplayer.ui.video.model.bean.MultiNewsArticleDataBean;
 import org.yczbj.ycvideoplayer.ui.video.model.bean.VideoContentBean;
 import org.yczbj.ycvideoplayer.ui.video.view.adapter.VideoArticleAdapter;
+import org.yczbj.ycvideoplayerlib.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
@@ -201,13 +202,13 @@ public class VideoContentActivity extends BaseMVPActivity {
             return;
         }
         //设置播放类型
-        videoPlayer.setPlayerType(VideoPlayer.TYPE_IJK);
+        videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
         //设置视频地址和请求头部
         videoPlayer.setUp(urls, null);
         //创建视频控制器
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle(videoTitle);
-        controller.setLoadingType(2);
+        controller.setLoadingType(ConstantKeys.Loading.LOADING_QQ);
         controller.imageView().setBackgroundResource(R.color.blackText);
         controller.setOnVideoBackListener(new OnVideoBackListener() {
             @Override

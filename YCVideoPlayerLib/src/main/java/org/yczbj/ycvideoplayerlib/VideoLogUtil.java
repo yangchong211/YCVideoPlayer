@@ -8,13 +8,20 @@ import android.util.Log;
 public class VideoLogUtil {
 
     private static final String TAG = "YCVideoPlayer";
-    public static boolean isLog = true;
+    private static boolean isLog = true;
+
+    /**
+     * 设置是否开启日志
+     * @param isLog                 是否开启日志
+     */
+    public static void setIsLog(boolean isLog) {
+        VideoLogUtil.isLog = isLog;
+    }
 
     static void d(String message) {
         if(isLog){
             Log.d(TAG, message);
         }
-
     }
 
     static void i(String message) {
