@@ -132,6 +132,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.test.test4.MediaPlayerActivity"/>
 
+        <service android:name=".service.InitializeService"/>
+
     </application>
 
 </manifest>

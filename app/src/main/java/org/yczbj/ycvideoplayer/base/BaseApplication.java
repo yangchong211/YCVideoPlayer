@@ -59,14 +59,8 @@ public class BaseApplication extends Application {
         instance = this;
         initUtils();
         BaseLifecycleCallback.getInstance().init(this);
-        initDownLoadLib();
         //在子线程中初始化
         InitializeService.start(this);
-        if(BuildConfig.DEBUG){
-            VideoLogUtil.setIsLog(true);
-        }else {
-            VideoLogUtil.setIsLog(false);
-        }
     }
 
     /**
@@ -116,23 +110,6 @@ public class BaseApplication extends Application {
     private void initUtils() {
         Utils.init(this);
     }
-
-    /**
-     * 初始化下载库
-     */
-    private void initDownLoadLib() {
-        FileDownloader.setupOnApplicationOnCreate(BaseApplication.getInstance())
-                .connectionCreator(new FileDownloadUrlConnection
-                        .Creator(new FileDownloadUrlConnection.Configuration()
-                        .connectTimeout(15_000)
-                        .readTimeout(15_000)
-                        .proxy(Proxy.NO_PROXY)
-                ))
-                .commit();
-        //最简单的初始化
-        //FileDownloader.setup(instance);
-    }
-
 
 
 }
