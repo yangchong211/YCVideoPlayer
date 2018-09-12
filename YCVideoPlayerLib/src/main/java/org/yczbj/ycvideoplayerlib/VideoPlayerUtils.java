@@ -117,7 +117,7 @@ public class VideoPlayerUtils {
      * @param milliseconds 毫秒数
      * @return ##:##
      */
-    static String formatTime(long milliseconds) {
+    public static String formatTime(long milliseconds) {
         if (milliseconds <= 0 || milliseconds >= 24 * 60 * 60 * 1000) {
             return "00:00";
         }

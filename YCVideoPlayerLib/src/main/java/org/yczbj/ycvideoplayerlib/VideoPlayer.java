@@ -11,18 +11,12 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-
 import java.io.IOException;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.util.List;
 import java.util.Map;
 
 import tv.danmaku.ijk.media.player.AndroidMediaPlayer;
@@ -519,7 +513,8 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
     private void initMediaPlayer() {
         if (mMediaPlayer == null) {
             switch (mPlayerType) {
-                //MediaPlayer       基于原生
+                //AndroidMediaPlayer和IjkMediaPlayer都是实现AbstractMediaPlayer
+                //MediaPlayer
                 case ConstantKeys.IjkPlayerType.TYPE_NATIVE:
                     mMediaPlayer = new AndroidMediaPlayer();
                     break;
@@ -748,8 +743,8 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer{
             if (what != -38 && what != -2147483648 && extra != -38 && extra != -2147483648) {
                 mCurrentState = ConstantKeys.CurrentState.STATE_ERROR;
                 mController.onPlayStateChanged(mCurrentState);
-                VideoLogUtil.d("onError ——> STATE_ERROR ———— what：" + what + ", extra: " + extra);
             }
+            VideoLogUtil.d("onError ——> STATE_ERROR ———— what：" + what + ", extra: " + extra);
             return true;
         }
     };
