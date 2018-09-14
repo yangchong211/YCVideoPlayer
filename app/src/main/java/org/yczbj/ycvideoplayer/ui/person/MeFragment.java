@@ -64,7 +64,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_3:
-                new AboutMeDialog(activity, R.color.colorTheme).show();
                 break;
             default:
                 break;

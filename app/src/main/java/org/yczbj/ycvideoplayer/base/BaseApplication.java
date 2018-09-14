@@ -13,6 +13,7 @@ import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
 import org.yczbj.ycvideoplayer.BuildConfig;
 import org.yczbj.ycvideoplayer.service.InitializeService;
 import org.yczbj.ycvideoplayer.util.LogUtils;
+import org.yczbj.ycvideoplayer.util.ScreenDensityUtils;
 import org.yczbj.ycvideoplayerlib.VideoLogUtil;
 
 import java.net.Proxy;
@@ -59,6 +60,9 @@ public class BaseApplication extends Application {
         instance = this;
         initUtils();
         BaseLifecycleCallback.getInstance().init(this);
+        ScreenDensityUtils.setup(this);
+        ScreenDensityUtils.register(this,375.0f,
+                ScreenDensityUtils.MATCH_BASE_WIDTH,ScreenDensityUtils.MATCH_UNIT_DP);
         //在子线程中初始化
         InitializeService.start(this);
     }
