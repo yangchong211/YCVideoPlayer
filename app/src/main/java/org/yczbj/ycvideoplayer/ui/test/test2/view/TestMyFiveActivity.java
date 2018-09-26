@@ -9,8 +9,8 @@ import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayer.ui.test.test2.base.HomeKeyWatcher;
 import org.yczbj.ycvideoplayer.ui.test.test2.model.Video;
-import org.yczbj.ycvideoplayerlib.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 
 import java.util.ArrayList;
 import java.util.List;

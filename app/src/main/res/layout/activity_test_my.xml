@@ -26,22 +26,6 @@
                 android:text="基本使用方法介绍，这部分设置用原生封装播放器【可自由设置】"/>
 
             <Button
-                android:id="@+id/btn_my_00"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="left|center_vertical"
-                android:text="0.直接下载视频"/>
-
-            <Button
-                android:id="@+id/btn_my_0"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="left|center_vertical"
-                android:text="0.获取播放属性值"/>
-
-            <Button
                 android:id="@+id/btn_my_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,52 +73,6 @@
                 android:gravity="left|center_vertical"
                 android:text="6. Fragment中时处理播放时按下Home键处理视频播放逻辑"/>
 
-
-            <org.yczbj.ycvideoplayerlib.VideoPlayer
-                android:id="@+id/video_player"
-                android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textSize="18sp"
-                android:background="@color/colorPrimary"
-                android:text="仿优酷，爱奇艺，可以插入广告，添加视频观看权限功能，这部分设置基于ijkplayer封装播放器"/>
-
-            <Button
-                android:id="@+id/btn_my_6_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="left|center_vertical"
-                android:text="6.清楚所有视频播放位置痕迹"/>
-
-            <Button
-                android:id="@+id/btn_my_7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="left|center_vertical"
-                android:text="7.没有登录没有权限，默认试看时间30秒，一键设置"/>
-
-            <Button
-                android:id="@+id/btn_my_8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="left|center_vertical"
-                android:text="8.登录了，但会员没有权限，试看一分钟，一键设置"/>
-
-            <Button
-                android:id="@+id/btn_my_9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="left|center_vertical"
-                android:text="9.登录了，是会员，有所有权限，一键设置"/>
         </LinearLayout>
     </ScrollView>
 

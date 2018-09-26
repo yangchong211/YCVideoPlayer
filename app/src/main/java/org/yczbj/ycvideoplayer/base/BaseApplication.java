@@ -7,16 +7,9 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.blankj.utilcode.util.Utils;
-import com.liulishuo.filedownloader.FileDownloader;
-import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
 
-import org.yczbj.ycvideoplayer.BuildConfig;
 import org.yczbj.ycvideoplayer.service.InitializeService;
-import org.yczbj.ycvideoplayer.util.LogUtils;
 import org.yczbj.ycvideoplayer.util.ScreenDensityUtils;
-import org.yczbj.ycvideoplayerlib.VideoLogUtil;
-
-import java.net.Proxy;
 
 /**
  * ================================================

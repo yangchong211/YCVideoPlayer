@@ -1,1 +1,1 @@
-include ':app', ':jiaozivideoplayer', ':YCVideoPlayerLib'
+include ':app', ':YCVideoPlayerLib'

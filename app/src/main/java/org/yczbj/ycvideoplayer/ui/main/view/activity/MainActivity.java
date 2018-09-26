@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 
-import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -30,7 +29,7 @@ import org.yczbj.ycvideoplayer.ui.home.view.fragment.HomeFragment;
 import org.yczbj.ycvideoplayer.ui.main.contract.MainContract;
 import org.yczbj.ycvideoplayer.ui.main.presenter.MainPresenter;
 import org.yczbj.ycvideoplayer.ui.person.MeFragment;
-import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 
 import java.util.ArrayList;
 

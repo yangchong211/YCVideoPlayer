@@ -10,7 +10,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,7 +24,6 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
-import com.squareup.picasso.Picasso;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
@@ -43,22 +41,16 @@ import org.yczbj.ycvideoplayer.ui.home.view.adapter.DownloadVideoAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.NarrowImageAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.VideoPlayerMeAdapter;
 import org.yczbj.ycvideoplayer.util.AppUtil;
-import org.yczbj.ycvideoplayerlib.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.listener.OnMemberClickListener;
-import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
-import org.yczbj.ycvideoplayerlib.listener.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoBackListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import cn.jzvd.CustomView.MyJZVideoPlayerStandard;
-import cn.jzvd.JZUserAction;
-import cn.jzvd.JZUserActionStandard;
-import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerStandard;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
@@ -83,6 +75,22 @@ public class VideoPlayerJzActivity extends BaseActivity implements VideoPlayerJz
 
     private VideoPlayerJzContract.Presenter presenter = new VideoPlayerJzPresenter(this);
     private VideoPlayerMeAdapter adapter;
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        VideoPlayerManager.instance().releaseVideoPlayer();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (VideoPlayerManager.instance().onBackPressed()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
 
 
     @Override
@@ -137,7 +145,7 @@ public class VideoPlayerJzActivity extends BaseActivity implements VideoPlayerJz
         //videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
         videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
         //网络视频地址
-        String videoUrl = ConstantVideo.VideoPlayerList[0];
+        String videoUrl = ConstantVideo.VideoPlayerList[7];
         //设置视频地址和请求头部
         videoPlayer.setUp(videoUrl, null);
         //是否从上一次的位置继续播放

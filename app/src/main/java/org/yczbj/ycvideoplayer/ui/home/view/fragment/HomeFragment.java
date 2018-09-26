@@ -5,16 +5,13 @@ import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
-import com.blankj.utilcode.util.ScreenUtils;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 import com.yc.cn.ycbannerlib.first.BannerView;
 import com.yc.cn.ycbannerlib.first.util.SizeUtil;
@@ -22,24 +19,17 @@ import com.yc.cn.ycbaseadapterlib.BaseViewHolder;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.Constant;
-import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.BaseConfig;
 import org.yczbj.ycvideoplayer.base.BaseDelegateAdapter;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseFragment;
-import org.yczbj.ycvideoplayer.ui.test.test1.TestActivity;
+import org.yczbj.ycvideoplayer.ui.home.view.activity.WindowActivity;
 import org.yczbj.ycvideoplayer.ui.test.test2.TestMyActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerJzActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerMeActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.BannerPagerAdapter;
 import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
 import org.yczbj.ycvideoplayer.util.LogUtils;
-import org.yczbj.ycvideoplayerlib.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.listener.OnPlayOrPauseListener;
-import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
-import org.yczbj.ycvideoplayerlib.listener.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -315,7 +305,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     public void onClick(View v) {
                         switch (v.getId()) {
                             case R.id.tv_home_first:
-                                startActivity(TestActivity.class);
+                                startActivity(WindowActivity.class);
                                 break;
                             case R.id.tv_home_second:
                                 startActivity(TestMyActivity.class);

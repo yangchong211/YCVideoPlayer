@@ -9,7 +9,7 @@
         android:layout_height="8dp"
         android:background="#f1f1f1"/>
 
-    <org.yczbj.ycvideoplayerlib.VideoPlayer
+    <org.yczbj.ycvideoplayerlib.player.VideoPlayer
         android:id="@+id/nice_video_player"
         android:layout_width="match_parent"
         android:layout_height="200dp"/>

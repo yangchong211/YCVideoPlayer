@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.ui.test.test2.model.Video;
 import org.yczbj.ycvideoplayer.util.ImageUtil;
-import org.yczbj.ycvideoplayerlib.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
 
 import java.util.List;
 

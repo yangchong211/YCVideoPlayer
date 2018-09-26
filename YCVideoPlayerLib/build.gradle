@@ -1,18 +1,16 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
 
 
     defaultConfig {
-        minSdkVersion 17
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -26,9 +24,9 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.4.0'
+    compile 'com.android.support:appcompat-v7:27.1.0'
     //这两个是必须要加的，其它的可供选择
-    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
+    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
     compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
     //其他库文件
     //compile 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.8'
@@ -51,7 +49,7 @@ group = "cn.yc"
 //发布到JCenter上的项目名字，必须填写
 def libName = "YCVideoPlayerLib"
 // 版本号，下次更新是只需要更改版本号即可
-version = "2.4.9"
+version = "2.6.0"
 /**  上面配置后上传至jcenter后的编译路径是这样的： compile 'cn.yc:YCVideoPlayerLib:2.4'  **/
 
 //生成源文件

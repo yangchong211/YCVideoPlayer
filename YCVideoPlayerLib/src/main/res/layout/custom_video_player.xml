@@ -42,7 +42,9 @@
         android:visibility="visible"
         android:text="00:00"
         android:textColor="@android:color/white"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp" />
     <!--中间开始播放按钮-->
     <ImageView
         android:id="@+id/center_start"
@@ -51,14 +53,6 @@
         android:layout_centerInParent="true"
         android:src="@drawable/ic_player_center_start"
         android:visibility="visible"/>
-    <!--试看按钮-->
-    <ImageView
-        android:id="@+id/iv_try_see"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/selector_try_see"
-        android:visibility="gone"/>
     <!--锁屏布局，全屏时展示，其他隐藏-->
     <FrameLayout
         android:id="@+id/fl_lock"
@@ -67,7 +61,8 @@
         android:visibility="visible"
         android:layout_centerVertical="true"
         android:layout_marginStart="15dp"
-        android:background="@drawable/shape_lock_bg">
+        android:background="@drawable/shape_lock_bg"
+        android:layout_marginLeft="15dp">
         <ImageView
             android:id="@+id/iv_lock"
             android:layout_width="wrap_content"
@@ -75,8 +70,5 @@
             android:layout_gravity="center"
             android:src="@drawable/player_unlock_btn"/>
     </FrameLayout>
-
-    <!--试看布局，非会员显示该布局-->
-    <include layout="@layout/custom_video_player_try_see"/>
 
 </RelativeLayout>

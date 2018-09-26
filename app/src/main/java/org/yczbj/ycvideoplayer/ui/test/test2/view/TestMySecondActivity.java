@@ -7,11 +7,11 @@ import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
-import org.yczbj.ycvideoplayerlib.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.VideoClarity;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.dialog.VideoClarity;
 
 import java.util.ArrayList;
 import java.util.List;

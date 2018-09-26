@@ -2,7 +2,7 @@ package org.yczbj.ycvideoplayer.ui.test.test2.view;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
-import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 
 
 public class TestMySixActivity extends BaseActivity {

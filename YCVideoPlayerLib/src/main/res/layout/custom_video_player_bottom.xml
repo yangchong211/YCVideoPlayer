@@ -23,7 +23,8 @@
         android:layout_marginStart="8dp"
         android:text="00:00"
         android:textColor="@android:color/white"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        android:layout_marginLeft="8dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +38,8 @@
         android:layout_marginEnd="8dp"
         android:text="00:00"
         android:textColor="@android:color/white"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        android:layout_marginRight="8dp" />
     <SeekBar
         android:id="@+id/seek"
         android:layout_width="0dp"
@@ -59,7 +61,9 @@
         android:text="超清"
         android:textColor="@android:color/white"
         android:textSize="14sp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:paddingLeft="1dp"
+        android:paddingRight="4dp" />
     <ImageView
         android:id="@+id/full_screen"
         android:layout_width="20dp"

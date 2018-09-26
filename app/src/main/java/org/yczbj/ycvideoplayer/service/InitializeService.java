@@ -11,7 +11,7 @@ import org.yczbj.ycvideoplayer.BuildConfig;
 import org.yczbj.ycvideoplayer.base.BaseApplication;
 import org.yczbj.ycvideoplayer.base.BaseConfig;
 import org.yczbj.ycvideoplayer.util.LogUtils;
-import org.yczbj.ycvideoplayerlib.VideoLogUtil;
+import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
 
 import java.net.Proxy;
 

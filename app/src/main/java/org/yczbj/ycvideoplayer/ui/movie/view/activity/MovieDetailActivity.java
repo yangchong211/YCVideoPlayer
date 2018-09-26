@@ -33,11 +33,11 @@ import org.yczbj.ycvideoplayer.ui.movie.model.MovieDetailBean;
 import org.yczbj.ycvideoplayer.ui.movie.presenter.MovieDetailPresenter;
 import org.yczbj.ycvideoplayer.ui.movie.view.adapter.MovieDetailAdapter;
 import org.yczbj.ycvideoplayer.util.ImageUtil;
-import org.yczbj.ycvideoplayerlib.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
-import org.yczbj.ycvideoplayerlib.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoBackListener;
+import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 
 import java.util.ArrayList;
 import java.util.List;

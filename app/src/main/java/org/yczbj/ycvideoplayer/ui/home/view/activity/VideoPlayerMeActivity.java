@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,14 +40,14 @@ import org.yczbj.ycvideoplayer.ui.home.view.adapter.DialogListAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.NarrowImageAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.VideoPlayerMeAdapter;
 import org.yczbj.ycvideoplayer.util.AppUtil;
-import org.yczbj.ycvideoplayerlib.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
-import org.yczbj.ycvideoplayerlib.listener.OnMemberClickListener;
-import org.yczbj.ycvideoplayerlib.listener.OnPlayOrPauseListener;
-import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
-import org.yczbj.ycvideoplayerlib.listener.OnVideoControlListener;
-import org.yczbj.ycvideoplayerlib.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.utils.VideoPlayerUtils;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnPlayOrPauseListener;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoBackListener;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +90,21 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
         super.onDestroy();
         presenter.unSubscribe();
     }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        VideoPlayerManager.instance().releaseVideoPlayer();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (VideoPlayerManager.instance().onBackPressed()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
 
 
     @Override
@@ -130,7 +144,7 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
         //videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
         videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
         //网络视频地址
-        String videoUrl = ConstantVideo.VideoPlayerList[0];
+        String videoUrl = ConstantVideo.VideoPlayerList[7];
         //设置视频地址和请求头部
         videoPlayer.setUp(videoUrl, null);
         //是否从上一次的位置继续播放
@@ -143,7 +157,6 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
         controller.setTitle("高仿优酷视频播放页面");
         controller.setLoadingType(ConstantKeys.Loading.LOADING_QQ);
         controller.setTopVisibility(true);
-        controller.setMemberType(false,2);
         controller.imageView().setBackgroundResource(R.color.blackText);
         controller.setOnVideoBackListener(new OnVideoBackListener() {
             @Override
@@ -155,21 +168,6 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
             @Override
             public void onPlayOrPauseClick(boolean isPlaying) {
 
-            }
-        });
-        controller.setOnMemberClickListener(new OnMemberClickListener() {
-            @Override
-            public void onClick(int type) {
-                switch (type){
-                    case ConstantKeys.Gender.LOGIN:
-                        ToastUtil.showToast(VideoPlayerMeActivity.this,"登录");
-                        break;
-                    case ConstantKeys.Gender.MEMBER:
-                        ToastUtil.showToast(VideoPlayerMeActivity.this,"充值会员");
-                        break;
-                    default:
-                        break;
-                }
             }
         });
         controller.setOnVideoControlListener(new OnVideoControlListener() {

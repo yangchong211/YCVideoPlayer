@@ -8,13 +8,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.Utils;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
@@ -28,11 +29,11 @@ import org.yczbj.ycvideoplayer.base.mvp2.BaseMVPActivity;
 import org.yczbj.ycvideoplayer.ui.video.model.bean.MultiNewsArticleDataBean;
 import org.yczbj.ycvideoplayer.ui.video.model.bean.VideoContentBean;
 import org.yczbj.ycvideoplayer.ui.video.view.adapter.VideoArticleAdapter;
-import org.yczbj.ycvideoplayerlib.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
-import org.yczbj.ycvideoplayerlib.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoBackListener;
+import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
 
 import java.util.Random;
 import java.util.zip.CRC32;
@@ -67,6 +68,7 @@ public class VideoContentActivity extends BaseMVPActivity {
     private VideoArticleAdapter adapter;
     private String image;
     private VideoPlayer videoPlayer;
+    private VideoPlayerController controller;
 
     public static void launch(MultiNewsArticleDataBean bean) {
         Intent intent = new Intent(Utils.getContext(), VideoContentActivity.class);
@@ -99,6 +101,16 @@ public class VideoContentActivity extends BaseMVPActivity {
         onLoadData();
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK ){
+            if(controller!=null && controller.getLock()){
+                //如果锁屏，那就屏蔽返回键
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     private void initView() {
         initRecyclerView();
@@ -186,6 +198,15 @@ public class VideoContentActivity extends BaseMVPActivity {
                                     videoPlayer.enterTinyWindow();
                                 }
                                 break;
+                            case R.id.btn_2:
+                                videoPlayer.enterVerticalScreenScreen();
+                                break;
+                            case R.id.btn_3:
+                                videoPlayer.enterFullScreen();
+                                break;
+                            case R.id.btn_4:
+                                videoPlayer.restart();
+                                break;
                         }
                     }
                 };
@@ -198,15 +219,16 @@ public class VideoContentActivity extends BaseMVPActivity {
     }
 
     private void setVideoPlayer(String urls) {
-        if(videoPlayer==null){
+        if(videoPlayer==null || urls==null){
             return;
         }
+        LogUtils.e("视频链接"+urls);
         //设置播放类型
         videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
         //设置视频地址和请求头部
         videoPlayer.setUp(urls, null);
         //创建视频控制器
-        VideoPlayerController controller = new VideoPlayerController(this);
+        controller = new VideoPlayerController(this);
         controller.setTitle(videoTitle);
         controller.setLoadingType(ConstantKeys.Loading.LOADING_QQ);
         controller.imageView().setBackgroundResource(R.color.blackText);

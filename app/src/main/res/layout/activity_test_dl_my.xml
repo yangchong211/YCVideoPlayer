@@ -7,7 +7,7 @@
     android:padding="10dp">
 
 
-    <org.yczbj.ycvideoplayerlib.VideoPlayer
+    <org.yczbj.ycvideoplayerlib.player.VideoPlayer
         android:id="@+id/video_player"
         android:layout_width="match_parent"
         android:layout_height="150dp"/>

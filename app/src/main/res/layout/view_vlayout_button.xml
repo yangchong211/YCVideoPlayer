@@ -17,7 +17,7 @@
             style="@style/WeightAttr"
             android:drawablePadding="8dp"
             android:drawableTop="@drawable/ic_home_first"
-            android:text="饺子播放器" />
+            android:text="视频悬浮窗" />
         <TextView
             android:id="@+id/tv_home_second"
             style="@style/WeightAttr"

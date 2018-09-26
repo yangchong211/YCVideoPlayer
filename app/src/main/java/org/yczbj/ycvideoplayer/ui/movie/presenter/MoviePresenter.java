@@ -83,11 +83,6 @@ public class MoviePresenter implements MovieContract.Presenter {
                     public void run() throws Exception {
                         LogUtils.e(TAG+"----"+"run()");
                     }
-                }, new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        LogUtils.e(TAG+"----"+"accept(Disposable disposable)");
-                    }
                 });
         mSubscriptions.add(subscribe);
     }
