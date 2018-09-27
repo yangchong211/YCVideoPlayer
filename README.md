@@ -23,9 +23,10 @@
     - 6.1.0 v2.6.0 更新于2018年9月25日
 - 7.性能优化和库大小
 - 8.其他说明
-
-
 - [老版本详细ReadMe，原文档](https://github.com/yangchong211/YCVideoPlayer/blob/master/read/README.md)
+
+
+
 
 
 ### 1.视频具有的功能
