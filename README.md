@@ -179,7 +179,8 @@ videoPlayer.setController(controller);
 ![image](http://p2mqszpjf.bkt.clouddn.com/Screenshot_20180116-113840.png)
 ![image](http://p2mqszpjf.bkt.clouddn.com/Screenshot_20180116-135824.png)
 ![image](https://upload-images.jianshu.io/upload_images/4432347-c2b61a83c1aaecba.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![image](https://upload-images.jianshu.io/upload_images/4432347-f4776dfc42c94ebd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image](https://upload-images.jianshu.io/upload_images/4432347-1b5870de5a3d3318.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 ### 6.版本更新说明
