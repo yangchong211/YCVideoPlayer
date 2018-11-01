@@ -238,6 +238,8 @@ videoPlayer.setController(controller);
 
 
 ### 8.其他说明
+- ![image](https://upload-images.jianshu.io/upload_images/4432347-7100c8e5a455c3ee.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 #### 8.1 关于LICENSE
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
