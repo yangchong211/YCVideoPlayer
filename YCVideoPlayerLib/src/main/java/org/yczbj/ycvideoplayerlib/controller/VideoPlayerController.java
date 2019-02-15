@@ -1,5 +1,6 @@
 package org.yczbj.ycvideoplayerlib.controller;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,8 @@ import android.net.NetworkInfo;
 import android.os.BatteryManager;
 import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -131,7 +134,16 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 默认为false，不显示
      */
     private boolean mIsCenterPlayerVisibility = false;
-
+    /**
+     * 设置横屏播放时，tv图标是否显示
+     * 默认为false，不显示
+     */
+    private boolean mIsTvIconVisibility = false;
+    /**
+     * 设置横屏播放时，audio图标是否显示
+     * 默认为false，不显示
+     */
+    private boolean mIsAudioIconVisibility = false;
     /**
      * 网络变化监听广播，在网络变更时进行对应处理
      */
@@ -224,6 +236,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         }
     }
 
+
+    /**
+     * 当播放完成或者意外销毁，都需要解绑注册网络监听广播
+     */
     private void unRegisterNetChangedReceiver() {
         if (hasRegisterNetReceiver) {
             if (netChangedReceiver != null) {
@@ -340,23 +356,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         this.setOnClickListener(this);
     }
 
-    /**
-     * 设置视频播放器中间的播放键是否显示，设置自定义图片
-     * @param isVisibility          是否可见
-     * @param image                 image
-     */
-    @Override
-    public void setCenterPlayer(boolean isVisibility, @DrawableRes int image) {
-        this.mIsCenterPlayerVisibility = isVisibility;
-        if(isVisibility){
-            if(image==0){
-                mCenterStart.setImageResource(R.drawable.ic_player_center_start);
-            }else {
-                mCenterStart.setImageResource(image);
-            }
-        }
-    }
-
 
     /**
      * 18年3月15日添加
@@ -371,6 +370,19 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         }else {
             mLlTopOther.setVisibility(GONE);
         }
+    }
+
+    /**
+     * 设置横屏播放时，tv和audio图标是否显示
+     * @param isVisibility1                 tv图标是否显示
+     * @param isVisibility2                 audio图标是否显示
+     */
+    @Override
+    public void setTvAndAudioVisibility(boolean isVisibility1, boolean isVisibility2) {
+        this.mIsTvIconVisibility = isVisibility1;
+        this.mIsAudioIconVisibility = isVisibility2;
+        mIvHorTv.setVisibility(mIsTvIconVisibility?VISIBLE:GONE);
+        mIvHorAudio.setVisibility(mIsAudioIconVisibility?VISIBLE:GONE);
     }
 
 
@@ -405,10 +417,11 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
 
     /**
      * 设置不操作后，多久自动隐藏头部和底部布局
+     * 添加值范围注释，限定时间为1秒到10秒之间
      * @param time                  时间
      */
     @Override
-    public void setHideTime(long time) {
+    public void setHideTime(@IntRange(from = 1000 , to = 10000) long time) {
         this.time = time;
     }
 
@@ -418,7 +431,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * @param title             视频标题
      */
     @Override
-    public void setTitle(String title) {
+    public void setTitle(@NonNull String title) {
         mTitle.setText(title);
     }
 
@@ -476,7 +489,22 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         }
     }
 
-
+    /**
+     * 设置中间播放按钮是否显示，并且支持设置自定义图标
+     * @param isVisibility          是否可见，默认不可见
+     * @param image                 image
+     */
+    @Override
+    public void setCenterPlayer(boolean isVisibility, @DrawableRes int image) {
+        this.mIsCenterPlayerVisibility = isVisibility;
+        if(isVisibility){
+            if(image==0){
+                mCenterStart.setImageResource(R.drawable.ic_player_center_start);
+            }else {
+                mCenterStart.setImageResource(image);
+            }
+        }
+    }
 
     /**
      * 获取是否是锁屏模式
@@ -548,6 +576,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 当播放状态发生改变时
      * @param playState 播放状态：
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onPlayStateChanged(int playState) {
         switch (playState) {
@@ -564,10 +593,12 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mBottom.setVisibility(View.GONE);
                 mCenterStart.setVisibility(View.GONE);
                 mLength.setVisibility(View.GONE);
+                startUpdateNetSpeedTimer();
                 break;
             //播放准备就绪
             case ConstantKeys.CurrentState.STATE_PREPARED:
                 startUpdateProgressTimer();
+                cancelUpdateNetSpeedTimer();
                 break;
             //正在播放
             case ConstantKeys.CurrentState.STATE_PLAYING:
@@ -575,6 +606,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mCenterStart.setVisibility(View.GONE);
                 mRestartPause.setImageResource(R.drawable.ic_player_pause);
                 startDismissTopBottomTimer();
+                cancelUpdateNetSpeedTimer();
                 break;
             //暂停播放
             case ConstantKeys.CurrentState.STATE_PAUSED:
@@ -582,21 +614,24 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mCenterStart.setVisibility(mIsCenterPlayerVisibility?View.VISIBLE:View.GONE);
                 mRestartPause.setImageResource(R.drawable.ic_player_start);
                 cancelDismissTopBottomTimer();
+                cancelUpdateNetSpeedTimer();
                 break;
             //正在缓冲(播放器正在播放时，缓冲区数据不足，进行缓冲，缓冲区数据足够后恢复播放)
             case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
                 mLoading.setVisibility(View.VISIBLE);
                 mCenterStart.setVisibility(View.GONE);
                 mRestartPause.setImageResource(R.drawable.ic_player_pause);
-                mLoadText.setText("正在缓冲...");
+                mLoadText.setText("正在准备...");
                 startDismissTopBottomTimer();
+                cancelUpdateNetSpeedTimer();
                 break;
             //正在缓冲
             case ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED:
                 mLoading.setVisibility(View.VISIBLE);
                 mRestartPause.setImageResource(R.drawable.ic_player_start);
-                mLoadText.setText("正在缓冲...");
+                mLoadText.setText("正在准备...");
                 cancelDismissTopBottomTimer();
+                startUpdateNetSpeedTimer();
                 break;
             //播放错误
             case ConstantKeys.CurrentState.STATE_ERROR:
@@ -604,6 +639,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 setTopBottomVisible(false);
                 mTop.setVisibility(View.VISIBLE);
                 mError.setVisibility(View.VISIBLE);
+                cancelUpdateNetSpeedTimer();
                 break;
             //播放完成
             case ConstantKeys.CurrentState.STATE_COMPLETED:
@@ -617,11 +653,13 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 }
                 //当播放完成就解除广播
                 unRegisterNetChangedReceiver();
+                cancelUpdateNetSpeedTimer();
                 break;
             default:
                 break;
         }
     }
+
 
 
     /**
@@ -658,6 +696,8 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mLlTopOther.setVisibility(GONE);
                 if (mIsTopAndBottomVisibility){
                     mLlHorizontal.setVisibility(View.VISIBLE);
+                    mIvHorTv.setVisibility(mIsTvIconVisibility?VISIBLE:GONE);
+                    mIvHorAudio.setVisibility(mIsAudioIconVisibility?VISIBLE:GONE);
                 }else {
                     mLlHorizontal.setVisibility(View.GONE);
                 }
@@ -701,6 +741,8 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mLoading.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mCompleted.setVisibility(View.GONE);
+        //解绑注册网络监听广播
+        unRegisterNetChangedReceiver();
     }
 
 
@@ -916,6 +958,23 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         setTopBottomVisible(!mIsLock);
     }
 
+    /**
+     * 更新进度，包括更新网络加载速度
+     */
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void updateNetSpeedProgress() {
+        //获取网络加载速度
+        long tcpSpeed = mVideoPlayer.getTcpSpeed();
+        VideoLogUtil.i("获取网络加载速度++++++++"+tcpSpeed);
+        if (tcpSpeed>0){
+            int speed = (int) (tcpSpeed/1024);
+            //显示网速
+            mLoading.setVisibility(View.VISIBLE);
+            mLoadText.setText("网速"+speed+"kb");
+        }
+    }
+
 
     /**
      * 更新播放进度
@@ -935,6 +994,9 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mDuration.setText(VideoPlayerUtils.formatTime(duration));
         // 更新时间
         mTime.setText(new SimpleDateFormat("HH:mm", Locale.CHINA).format(new Date()));
+
+        long tcpSpeed = mVideoPlayer.getTcpSpeed();
+        VideoLogUtil.i("获取网络加载速度---------"+tcpSpeed);
     }
 
     /**
@@ -958,6 +1020,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      */
     @Override
     protected void hideChangePosition() {
+        //隐藏
         mChangePosition.setVisibility(View.GONE);
     }
 

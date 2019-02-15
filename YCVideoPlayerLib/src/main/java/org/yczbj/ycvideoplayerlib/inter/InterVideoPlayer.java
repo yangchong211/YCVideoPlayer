@@ -145,7 +145,7 @@ public interface InterVideoPlayer {
      * 获取播放速度
      *
      * @param speed 播放速度
-     * @return 播放速度
+     * @return      播放速度
      */
     float getSpeed(float speed);
 

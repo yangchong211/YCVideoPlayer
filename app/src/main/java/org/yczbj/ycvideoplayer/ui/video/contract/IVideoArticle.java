@@ -26,9 +26,5 @@ public interface IVideoArticle {
          */
         void doLoadMoreData();
 
-        /**
-         * 设置适配器
-         */
-        void doSetAdapter(List<MultiNewsArticleDataBean> dataBeen);
     }
 }

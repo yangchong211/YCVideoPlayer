@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.ui.test.test2.model.Video;
 import org.yczbj.ycvideoplayer.util.ImageUtil;
+import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
 
@@ -68,6 +69,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
          */
         void setController(VideoPlayerController controller) {
             mController = controller;
+            mVideoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
             mVideoPlayer.setController(mController);
         }
 

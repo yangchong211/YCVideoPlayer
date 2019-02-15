@@ -1,5 +1,6 @@
 package org.yczbj.ycvideoplayer.ui.video.view.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -78,17 +79,55 @@ public class VideoContentActivity extends BaseMVPActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        LogUtils.e("VideoContentActivity----"+"onStart");
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtils.e("VideoContentActivity----"+"onResume");
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
+        VideoPlayerManager.instance().suspendVideoPlayer();
+        LogUtils.e("VideoContentActivity----"+"onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         VideoPlayerManager.instance().releaseVideoPlayer();
     }
 
     @Override
     public void onBackPressed() {
-        if (VideoPlayerManager.instance().onBackPressed()) return;
+        if (VideoPlayerManager.instance().onBackPressed()){
+            return;
+        }else {
+            VideoPlayerManager.instance().releaseVideoPlayer();
+            LogUtils.e("VideoContentActivity----"+"退出activity");
+        }
         super.onBackPressed();
+        LogUtils.e("VideoContentActivity----"+"onBackPressed");
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        VideoPlayerManager.instance().resumeVideoPlayer();
+        LogUtils.e("VideoContentActivity----"+"onRestart");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LogUtils.e("VideoContentActivity----"+"onPause");
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,6 +138,7 @@ public class VideoContentActivity extends BaseMVPActivity {
         initView();
         initData();
         onLoadData();
+        LogUtils.e("VideoContentActivity----"+"onCreate");
     }
 
     @Override
@@ -230,7 +270,7 @@ public class VideoContentActivity extends BaseMVPActivity {
         //创建视频控制器
         controller = new VideoPlayerController(this);
         controller.setTitle(videoTitle);
-        controller.setLoadingType(ConstantKeys.Loading.LOADING_QQ);
+        controller.setLoadingType(ConstantKeys.Loading.LOADING_RING);
         controller.imageView().setBackgroundResource(R.color.blackText);
         controller.setOnVideoBackListener(new OnVideoBackListener() {
             @Override
@@ -244,6 +284,9 @@ public class VideoContentActivity extends BaseMVPActivity {
         videoPlayer.continueFromLastPosition(true);
         //设置播放速度
         videoPlayer.setSpeed(1.0f);
+
+        int maxVolume = videoPlayer.getMaxVolume();
+        LogUtils.e("视频播放器"+maxVolume);
     }
 
     private static String getVideoContentApi(String videoid) {
@@ -269,6 +312,7 @@ public class VideoContentActivity extends BaseMVPActivity {
     }
 
 
+    @SuppressLint("CheckResult")
     private void getVideoData(VideoModel model, String url) {
         model.getVideoContent(url)
                 .subscribeOn(Schedulers.io())

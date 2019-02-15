@@ -12,19 +12,14 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.AbsVideoPlayerController;
 import org.yczbj.ycvideoplayerlib.inter.InterVideoPlayer;
@@ -87,7 +82,6 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     private boolean continueFromLastPosition = true;
     private long skipToPosition;
 
-
     public VideoPlayer(Context context) {
         this(context, null);
     }
@@ -100,7 +94,6 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
         super(context, attrs, defStyleAttr);
         mContext = context;
         init();
-
     }
 
     /**
@@ -152,7 +145,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
      * 设置视频控制器，必须设置
      * @param controller        AbsVideoPlayerController子类对象，可用VideoPlayerController，也可自定义
      */
-    public void setController(AbsVideoPlayerController controller) {
+    public void setController(@NonNull AbsVideoPlayerController controller) {
         //这里必须先移除
         mContainer.removeView(mController);
         mController = controller;
@@ -194,6 +187,9 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
      */
     @Override
     public void setSpeed(float speed) {
+        if (speed<0){
+            VideoLogUtil.d("设置的视频播放速度不能小于0");
+        }
         if (mMediaPlayer instanceof IjkMediaPlayer) {
             ((IjkMediaPlayer) mMediaPlayer).setSpeed(speed);
         } else if(mMediaPlayer instanceof MediaPlayer){
@@ -228,6 +224,9 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
      */
     @Override
     public void start(long position) {
+        if (position<0){
+            VideoLogUtil.d("设置开始播放的播放位置不能小于0");
+        }
         skipToPosition = position;
         start();
     }
@@ -266,12 +265,13 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     @Override
     public void pause() {
         if (mCurrentState == ConstantKeys.CurrentState.STATE_PLAYING) {
+            //如果是播放状态，那么则暂停播放
             mMediaPlayer.pause();
             mCurrentState = ConstantKeys.CurrentState.STATE_PAUSED;
             mController.onPlayStateChanged(mCurrentState);
             VideoLogUtil.d("STATE_PAUSED");
-        }
-        if (mCurrentState == ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING) {
+        } else if (mCurrentState == ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING) {
+            //如果是正在缓冲状态，那么则暂停暂停缓冲
             mMediaPlayer.pause();
             mCurrentState = ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED;
             mController.onPlayStateChanged(mCurrentState);
@@ -286,6 +286,9 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
      */
     @Override
     public void seekTo(long pos) {
+        if (pos<0){
+            VideoLogUtil.d("设置开始跳转播放位置不能小于0");
+        }
         if (mMediaPlayer != null) {
             mMediaPlayer.seekTo(pos);
         }
@@ -552,26 +555,58 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
                 //IjkMediaPlayer    基于Ijk
                 case ConstantKeys.IjkPlayerType.TYPE_IJK:
                 default:
-                    //创建IjkMediaPlayer对象
-                    mMediaPlayer = new IjkMediaPlayer();
-                    //设置ijkPlayer播放器的硬件解码相关参数
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(1, "analyzemaxduration", 100L);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(1, "probesize", 10240L);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(1, "flush_packets", 1L);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(4, "packet-buffering", 0L);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(4, "framedrop", 1L);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(4, "mediacodec", 0);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(4, "opensles", 0);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(4, "overlay-format", IjkMediaPlayer.SDL_FCC_RV32);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(4, "framedrop", 1);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(4, "start-on-prepared", 0);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(1, "http-detect-range-support", 0);
-                    ((IjkMediaPlayer)mMediaPlayer).setOption(2, "skip_loop_filter", 48);
+                    createIjkMediaPlayer();
                     break;
             }
             //设置音频流类型
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         }
+    }
+
+    private void createIjkMediaPlayer() {
+        //创建IjkMediaPlayer对象
+        mMediaPlayer = new IjkMediaPlayer();
+        int PLAYER = IjkMediaPlayer.OPT_CATEGORY_PLAYER;
+        int CODEC = IjkMediaPlayer.OPT_CATEGORY_CODEC;
+        int FORMAT = IjkMediaPlayer.OPT_CATEGORY_FORMAT;
+
+        //设置ijkPlayer播放器的硬件解码相关参数
+        //设置播放前的最大探测时间
+        ((IjkMediaPlayer)mMediaPlayer).setOption(FORMAT, "analyzemaxduration", 100L);
+        //设置播放前的探测时间 1,达到首屏秒开效果
+        ((IjkMediaPlayer)mMediaPlayer).setOption(FORMAT, "analyzeduration", 1L);
+        //播放前的探测Size，默认是1M, 改小一点会出画面更快
+        ((IjkMediaPlayer)mMediaPlayer).setOption(FORMAT, "probesize", 10240L);
+        //设置是否开启变调isModifyTone?0:1
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER,"soundtouch",0);
+        //每处理一个packet之后刷新io上下文
+        ((IjkMediaPlayer)mMediaPlayer).setOption(FORMAT, "flush_packets", 1L);
+        //是否开启预缓冲，一般直播项目会开启，达到秒开的效果，不过带来了播放丢帧卡顿的体验
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "packet-buffering", 0L);
+        //播放重连次数
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "reconnect", 5);
+        //最大缓冲大小,单位kb
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "max-buffer-size", 10240L);
+        //跳帧处理,放CPU处理较慢时，进行跳帧处理，保证播放流程，画面和声音同步
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "framedrop", 1L);
+        //最大fps
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "max-fps", 30L);
+        //SeekTo设置优化
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "enable-accurate-seek", 1L);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "opensles", 0);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "overlay-format", IjkMediaPlayer.SDL_FCC_RV32);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "framedrop", 1);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "start-on-prepared", 0);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(FORMAT, "http-detect-range-support", 0);
+        //设置是否开启环路过滤: 0开启，画面质量高，解码开销大，48关闭，画面质量差点，解码开销小
+        ((IjkMediaPlayer)mMediaPlayer).setOption(CODEC, "skip_loop_filter", 48);
+
+        //jkPlayer支持硬解码和软解码。
+        //软解码时不会旋转视频角度这时需要你通过onInfo的what == IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED去获取角度，自己旋转画面。
+        //或者开启硬解硬解码，不过硬解码容易造成黑屏无声（硬件兼容问题），下面是设置硬解码相关的代码
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "mediacodec", 0);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "mediacodec-auto-rotate", 1);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "mediacodec-handle-resolution-change", 1);
     }
 
 
@@ -1021,9 +1056,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     public void releasePlayer() {
         if (mAudioManager != null) {
             //放弃音频焦点。使以前的焦点所有者(如果有的话)接收焦点。
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
-                mAudioManager.abandonAudioFocus(null);
-            }
+            mAudioManager.abandonAudioFocus(null);
             //置空
             mAudioManager = null;
         }

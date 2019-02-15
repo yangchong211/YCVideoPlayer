@@ -2,15 +2,11 @@ package org.yczbj.ycvideoplayerlib.controller;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.LayoutRes;
-import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
-import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
 import org.yczbj.ycvideoplayerlib.utils.VideoPlayerUtils;
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.inter.InterVideoPlayer;
@@ -33,6 +29,8 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
     protected InterVideoPlayer mVideoPlayer;
     private Timer mUpdateProgressTimer;
     private TimerTask mUpdateProgressTimerTask;
+    private Timer mUpdateNetSpeedTimer;
+    private TimerTask mUpdateNetSpeedTask;
     private float mDownX;
     private float mDownY;
     /**
@@ -64,7 +62,6 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         mVideoPlayer = videoPlayer;
     }
 
-
     /**
      * 获取是否是锁屏模式
      * @return                      true表示锁屏
@@ -83,6 +80,13 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      * @param isVisibility          是否可见
      */
     public abstract void setTopVisibility(boolean isVisibility);
+
+    /**
+     * 设置横屏播放时，tv和audio图标是否显示
+     * @param isVisibility1                 tv图标是否显示
+     * @param isVisibility2                 audio图标是否显示
+     */
+    public abstract void setTvAndAudioVisibility(boolean isVisibility1 , boolean isVisibility2);
 
     /**
      * 设置不操作后，多久自动隐藏头部和底部布局
@@ -151,6 +155,47 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
     public abstract void reset();
 
     /**
+     * 开启缓冲时更新网络加载速度
+     */
+    protected void startUpdateNetSpeedTimer() {
+        cancelUpdateNetSpeedTimer();
+        if (mUpdateNetSpeedTimer == null) {
+            mUpdateNetSpeedTimer = new Timer();
+        }
+        if (mUpdateNetSpeedTask == null) {
+            mUpdateNetSpeedTask = new TimerTask() {
+                @Override
+                public void run() {
+                    //在子线程中更新进度，包括更新网络加载速度
+                    AbsVideoPlayerController.this.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateNetSpeedProgress();
+                        }
+                    });
+                }
+            };
+        }
+        mUpdateNetSpeedTimer.schedule(mUpdateNetSpeedTask, 0, 100);
+    }
+
+
+    /**
+     * 取消缓冲时更新网络加载速度
+     */
+    protected void cancelUpdateNetSpeedTimer() {
+        if (mUpdateNetSpeedTimer != null) {
+            mUpdateNetSpeedTimer.cancel();
+            mUpdateNetSpeedTimer = null;
+        }
+        if (mUpdateNetSpeedTask != null) {
+            mUpdateNetSpeedTask.cancel();
+            mUpdateNetSpeedTask = null;
+        }
+    }
+
+
+    /**
      * 开启更新进度的计时器。
      */
     protected void startUpdateProgressTimer() {
@@ -190,6 +235,10 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         }
     }
 
+    /**
+     * 更新进度，包括更新网络加载速度
+     */
+    protected abstract void updateNetSpeedProgress();
 
     /**
      * 更新进度，包括进度条进度，展示的当前播放位置时长，总时长等。

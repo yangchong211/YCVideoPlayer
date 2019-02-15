@@ -1,5 +1,6 @@
 package org.yczbj.ycvideoplayer.ui.video.presenter;
 
+import android.annotation.SuppressLint;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.TimeUtils;
@@ -37,6 +38,7 @@ public class VideoArticlePresenter implements IVideoArticle.Presenter {
         this.time = TimeUtils.getNowString();
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void doLoadData(String... category) {
         try {
@@ -97,7 +99,9 @@ public class VideoArticlePresenter implements IVideoArticle.Presenter {
                 .subscribe(new Consumer<List<MultiNewsArticleDataBean>>() {
                     @Override
                     public void accept(@NonNull List<MultiNewsArticleDataBean> list) throws Exception {
-                        doSetAdapter(list);
+                        dataList.addAll(list);
+                        view.onSetAdapter(dataList);
+                        view.onHideLoading();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -113,12 +117,6 @@ public class VideoArticlePresenter implements IVideoArticle.Presenter {
         doLoadData();
     }
 
-    @Override
-    public void doSetAdapter(List<MultiNewsArticleDataBean> dataBeen) {
-        dataList.addAll(dataBeen);
-        view.onSetAdapter(dataList);
-        view.onHideLoading();
-    }
 
     @Override
     public void doRefresh() {

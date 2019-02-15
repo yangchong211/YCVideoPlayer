@@ -27,7 +27,8 @@
         android:maxLength="10"
         android:text="视频标题"
         android:textColor="@android:color/white"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp" />
 
     <!--竖屏的时候需要展现的布局，定制的-->
     <LinearLayout
@@ -36,7 +37,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginEnd="8dp"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:layout_marginRight="8dp">
         <ImageView
             android:id="@+id/iv_audio"
             android:layout_width="20dp"
@@ -47,19 +49,22 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="15dp"
-            android:src="@drawable/ic_player_dl"/>
+            android:src="@drawable/ic_player_dl"
+            android:layout_marginLeft="15dp" />
         <ImageView
             android:id="@+id/iv_share"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="15dp"
-            android:src="@drawable/ic_player_share"/>
+            android:src="@drawable/ic_player_share"
+            android:layout_marginLeft="15dp" />
         <ImageView
             android:id="@+id/iv_menu"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="15dp"
-            android:src="@drawable/ic_player_menu"/>
+            android:src="@drawable/ic_player_menu"
+            android:layout_marginLeft="15dp" />
     </LinearLayout>
 
 
@@ -70,28 +75,32 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:visibility="gone"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginRight="8dp">
 
         <ImageView
             android:id="@+id/iv_hor_audio"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="15dp"
-            android:src="@drawable/ic_player_audio"/>
+            android:src="@drawable/ic_player_audio"
+            android:layout_marginLeft="15dp" />
 
         <ImageView
             android:id="@+id/iv_hor_tv"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="15dp"
-            android:src="@drawable/ic_player_tv"/>
+            android:src="@drawable/ic_player_tv"
+            android:layout_marginLeft="15dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:layout_marginLeft="15dp">
             <ImageView
                 android:id="@+id/battery"
                 android:layout_width="wrap_content"
