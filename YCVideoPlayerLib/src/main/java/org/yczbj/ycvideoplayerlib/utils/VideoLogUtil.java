@@ -11,7 +11,7 @@ import android.util.Log;
  *     revise:
  * </pre>
  */
-public final class VideoLogUtil {
+public class VideoLogUtil {
 
     private static final String TAG = "YCVideoPlayer";
     private static boolean isLog = true;

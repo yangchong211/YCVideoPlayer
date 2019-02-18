@@ -165,6 +165,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
      * @param playerType IjkPlayer or MediaPlayer.
      */
     public void setPlayerType(@ConstantKeys.PlayerType int playerType) {
+        //默认是基于IjkPlayer封装播放器
         mPlayerType = playerType;
     }
 
@@ -176,6 +177,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
      */
     @Override
     public void continueFromLastPosition(boolean continueFromLastPosition) {
+        //默认是从上一次的位置继续播放
         this.continueFromLastPosition = continueFromLastPosition;
     }
 
