@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayer.ui.test.test2.view;
+package org.yczbj.ycvideoplayer.ui.person;
 
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +19,10 @@ import java.util.List;
 import butterknife.Bind;
 
 
-public class TestMySecondActivity extends BaseActivity implements View.OnClickListener {
+/**
+ * @author yc
+ */
+public class TestFiveVideoActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Bind(R.id.nice_video_player)
@@ -44,12 +47,12 @@ public class TestMySecondActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public int getContentView() {
-        return R.layout.activity_test_my_first;
+        return R.layout.activity_test_video_third;
     }
 
     @Override
     public void initView() {
-        niceVideoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK); // IjkPlayer or MediaPlayer
+        niceVideoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle("Beautiful China...");
         controller.setLength(117000);

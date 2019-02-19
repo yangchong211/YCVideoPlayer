@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayer.ui.test.test2.view;
+package org.yczbj.ycvideoplayer.ui.person;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +18,10 @@ import java.util.List;
 import butterknife.Bind;
 
 
-public class TestMyFiveActivity extends BaseActivity {
+/**
+ * @author yc
+ */
+public class TestEightVideoActivity extends BaseActivity {
 
 
     @Bind(R.id.recyclerView)

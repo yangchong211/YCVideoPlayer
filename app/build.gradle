@@ -85,7 +85,7 @@ dependencies {
     compile 'cn.yc:YCBaseAdapterLib:1.3'                            //adapter封装
     compile 'cn.yc:YCDialogLib:3.5'                                 //弹窗
     compile 'cn.yc:YCProgressLib:1.2'                               //进度条
-//    compile 'cn.yc:YCVideoPlayerLib:2.6.0'                            //播放器
-    compile project(':YCVideoPlayerLib')
-    compile 'cn.yc:YCStatusBarLib:1.3.1'                              //状态栏
+    compile 'cn.yc:YCVideoPlayerLib:2.6.1'                            //播放器
+//    compile project(':YCVideoPlayerLib')
+    compile 'cn.yc:YCStatusBarLib:1.4.0'                              //状态栏
 }

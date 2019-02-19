@@ -478,11 +478,11 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
 
     /**
      * 设置播放器
-     * @param VideoPlayer   播放器
+     * @param videoPlayer   播放器
      */
     @Override
-    public void setVideoPlayer(InterVideoPlayer VideoPlayer) {
-        super.setVideoPlayer(VideoPlayer);
+    public void setVideoPlayer(InterVideoPlayer videoPlayer) {
+        super.setVideoPlayer(videoPlayer);
         // 给播放器配置视频链接地址
         if (clarities != null && clarities.size() > 1) {
             mVideoPlayer.setUp(clarities.get(defaultClarityIndex).getVideoUrl(), null);
@@ -505,6 +505,23 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             }
         }
     }
+
+    /**
+     * 设置top到顶部的距离
+     * @param top                   top
+     */
+    @Override
+    public void setTopPadding(float top) {
+        //如果设置0，则模式是10dp
+        if (top==0){
+            top = 10.0f;
+        }
+        mTop.setPadding(VideoPlayerUtils.dp2px(mContext,10.0f),
+                VideoPlayerUtils.dp2px(mContext,top),
+                VideoPlayerUtils.dp2px(mContext,10.0f), 0);
+        mTop.invalidate();
+    }
+
 
     /**
      * 获取是否是锁屏模式

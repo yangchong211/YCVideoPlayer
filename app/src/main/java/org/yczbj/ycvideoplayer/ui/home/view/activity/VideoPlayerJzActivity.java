@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 /**
  * ================================================
@@ -116,7 +116,7 @@ public class VideoPlayerJzActivity extends BaseActivity implements VideoPlayerJz
 
     @Override
     public void initView() {
-        YCAppBar.setStatusBarLightMode(this, Color.WHITE);
+        StateAppBar.setStatusBarLightMode(this, Color.WHITE);
         initVideoPlayer();
         initYCRefreshView();
     }

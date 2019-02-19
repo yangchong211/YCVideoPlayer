@@ -12,9 +12,9 @@
 
     <ImageView
         android:id="@+id/back"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/ic_back_white"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:background="@drawable/ic_back_white"
         android:visibility="visible"/>
     <TextView
         android:id="@+id/title"

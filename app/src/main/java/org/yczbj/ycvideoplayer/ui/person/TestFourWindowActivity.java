@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayer.ui.home.view.activity;
+package org.yczbj.ycvideoplayer.ui.person;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,11 +9,9 @@ import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 
-import com.blankj.utilcode.util.ActivityUtils;
-
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
-import org.yczbj.ycvideoplayer.ui.test.test2.TestMyActivity;
+import org.yczbj.ycvideoplayer.ui.home.view.activity.EmptyActivity;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.window.FloatPlayerView;
@@ -25,7 +23,10 @@ import org.yczbj.ycvideoplayerlib.window.WindowUtil;
 import butterknife.Bind;
 
 
-public class WindowActivity extends BaseActivity implements View.OnClickListener {
+/**
+ * @author yc
+ */
+public class TestFourWindowActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.video_player)
     VideoPlayer videoPlayer;
@@ -58,7 +59,7 @@ public class WindowActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public int getContentView() {
-        return R.layout.activity_window;
+        return R.layout.activity_test_window_four;
     }
 
     @Override
@@ -89,6 +90,8 @@ public class WindowActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.btn_2:
                 startActivity(new Intent(this, EmptyActivity.class));
+                break;
+            default:
                 break;
         }
     }

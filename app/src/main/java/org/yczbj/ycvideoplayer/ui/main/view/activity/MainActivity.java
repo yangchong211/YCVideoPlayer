@@ -34,7 +34,7 @@ import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 /**
  * ================================================
@@ -121,7 +121,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     public void initView() {
-        YCAppBar.setStatusBarLightMode(this, Color.WHITE);
+        StateAppBar.setStatusBarLightMode(this, Color.WHITE);
         initTabLayout();
         initFragment();
     }

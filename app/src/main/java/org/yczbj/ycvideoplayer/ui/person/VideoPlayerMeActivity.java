@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayer.ui.home.view.activity;
+package org.yczbj.ycvideoplayer.ui.person;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -53,7 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 /**
  * ================================================
@@ -115,7 +115,7 @@ public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMe
 
     @Override
     public void initView() {
-        YCAppBar.setStatusBarLightMode(this, Color.WHITE);
+        StateAppBar.setStatusBarLightMode(this, Color.WHITE);
         initVideoPlayer();
         initYCRefreshView();
     }

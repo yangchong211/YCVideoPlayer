@@ -1,32 +1,22 @@
 package org.yczbj.ycvideoplayer.ui.test.test2;
 
 import android.graphics.Color;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-
-import com.blankj.utilcode.util.ScreenUtils;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
-import org.yczbj.ycvideoplayer.ui.test.test2.view.TestMyFirstActivity;
-import org.yczbj.ycvideoplayer.ui.test.test2.view.TestMyFiveActivity;
-import org.yczbj.ycvideoplayer.ui.test.test2.view.TestMyFourActivity;
-import org.yczbj.ycvideoplayer.ui.test.test2.view.TestMySecondActivity;
-import org.yczbj.ycvideoplayer.ui.test.test2.view.TestMySixActivity;
-import org.yczbj.ycvideoplayer.ui.test.test2.view.TestMyThirdActivity;
-import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoBackListener;
-import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayer.ui.person.TestThirdVideoActivity;
+import org.yczbj.ycvideoplayer.ui.person.TestEightVideoActivity;
+import org.yczbj.ycvideoplayer.ui.person.TestSixVideoActivity;
+import org.yczbj.ycvideoplayer.ui.person.TestFiveVideoActivity;
+import org.yczbj.ycvideoplayer.ui.person.TestNineVideoActivity;
+import org.yczbj.ycvideoplayer.ui.person.TestSevenVideoActivity;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.utils.VideoPlayerUtils;
 
 import butterknife.Bind;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 /**
  * @author yc
@@ -79,7 +69,7 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void initView() {
-        YCAppBar.setStatusBarLightMode(this, Color.WHITE);
+        StateAppBar.setStatusBarLightMode(this, Color.WHITE);
     }
 
 
@@ -104,22 +94,22 @@ public class TestMyActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_my_1:
-                startActivity(TestMyFirstActivity.class);
+                startActivity(TestThirdVideoActivity.class);
                 break;
             case R.id.btn_my_2:
-                startActivity(TestMySecondActivity.class);
+                startActivity(TestFiveVideoActivity.class);
                 break;
             case R.id.btn_my_3:
-                startActivity(TestMyThirdActivity.class);
+                startActivity(TestSevenVideoActivity.class);
                 break;
             case R.id.btn_my_4:
-                startActivity(TestMyFourActivity.class);
+                startActivity(TestSixVideoActivity.class);
                 break;
             case R.id.btn_my_5:
-                startActivity(TestMyFiveActivity.class);
+                startActivity(TestEightVideoActivity.class);
                 break;
             case R.id.btn_my_6:
-                startActivity(TestMySixActivity.class);
+                startActivity(TestNineVideoActivity.class);
                 break;
             default:
                 break;

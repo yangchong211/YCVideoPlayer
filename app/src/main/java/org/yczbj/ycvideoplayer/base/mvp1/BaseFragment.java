@@ -108,12 +108,14 @@ public abstract class BaseFragment<T extends BasePresenter>  extends Fragment {
      * 含有Bundle通过Class跳转界面
      **/
     public void startActivity(Class<?> cls, Bundle bundle) {
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), cls);
-        if (bundle != null) {
-            intent.putExtras(bundle);
+        if (getActivity()!=null){
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), cls);
+            if (bundle != null) {
+                intent.putExtras(bundle);
+            }
+            startActivity(intent);
         }
-        startActivity(intent);
     }
 
     /**用来检测所有Fragment的内存泄漏*/

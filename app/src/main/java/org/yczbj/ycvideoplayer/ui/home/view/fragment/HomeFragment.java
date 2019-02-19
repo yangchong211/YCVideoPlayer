@@ -22,10 +22,10 @@ import org.yczbj.ycvideoplayer.api.constant.Constant;
 import org.yczbj.ycvideoplayer.base.BaseConfig;
 import org.yczbj.ycvideoplayer.base.BaseDelegateAdapter;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseFragment;
-import org.yczbj.ycvideoplayer.ui.home.view.activity.WindowActivity;
+import org.yczbj.ycvideoplayer.ui.person.TestFourWindowActivity;
 import org.yczbj.ycvideoplayer.ui.test.test2.TestMyActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerJzActivity;
-import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerMeActivity;
+import org.yczbj.ycvideoplayer.ui.person.VideoPlayerMeActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.BannerPagerAdapter;
 import org.yczbj.ycvideoplayer.ui.main.view.activity.MainActivity;
 import org.yczbj.ycvideoplayer.util.LogUtils;
@@ -305,7 +305,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     public void onClick(View v) {
                         switch (v.getId()) {
                             case R.id.tv_home_first:
-                                startActivity(WindowActivity.class);
+                                startActivity(TestFourWindowActivity.class);
                                 break;
                             case R.id.tv_home_second:
                                 startActivity(TestMyActivity.class);

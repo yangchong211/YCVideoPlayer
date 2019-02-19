@@ -1,11 +1,14 @@
-package org.yczbj.ycvideoplayer.ui.test.test2.view;
+package org.yczbj.ycvideoplayer.ui.person;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 
 
-public class TestMyFourActivity extends BaseActivity  {
+/**
+ * @author yc
+ */
+public class TestSixVideoActivity extends BaseActivity  {
 
     @Override
     protected void onStop() {
@@ -29,7 +32,7 @@ public class TestMyFourActivity extends BaseActivity  {
     public void initView() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, new TestMyFourFragment())
+                .add(R.id.container, new TestSixVideoFragment())
                 .commit();
     }
 

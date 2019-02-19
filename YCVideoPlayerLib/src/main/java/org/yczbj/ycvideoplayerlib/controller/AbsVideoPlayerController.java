@@ -82,6 +82,12 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
     public abstract void setTopVisibility(boolean isVisibility);
 
     /**
+     * 设置top到顶部的距离
+     * @param top                   top距离
+     */
+    public abstract void setTopPadding(float top);
+
+    /**
      * 设置横屏播放时，tv和audio图标是否显示
      * @param isVisibility1                 tv图标是否显示
      * @param isVisibility2                 audio图标是否显示

@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayer.ui.test.test2.view;
+package org.yczbj.ycvideoplayer.ui.person;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +20,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     private Context mContext;
     private List<Video> mVideoList;
 
-    VideoAdapter(Context context, List<Video> videoList) {
+    public VideoAdapter(Context context, List<Video> videoList) {
         mContext = context;
         mVideoList = videoList;
     }
@@ -46,10 +46,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
         return mVideoList==null ? 0 : mVideoList.size();
     }
 
-    class VideoViewHolder extends RecyclerView.ViewHolder {
+    public class VideoViewHolder extends RecyclerView.ViewHolder {
 
-        VideoPlayerController mController;
-        VideoPlayer mVideoPlayer;
+        public VideoPlayerController mController;
+        public VideoPlayer mVideoPlayer;
 
         VideoViewHolder(View itemView) {
             super(itemView);

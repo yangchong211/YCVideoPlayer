@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.yczbj.ycvideoplayer">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -14,7 +15,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ui.main.view.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
@@ -25,14 +27,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.home.view.activity.VideoPlayerMeActivity"
+        <activity android:name=".ui.person.VideoPlayerMeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.home.view.activity.VideoPlayerJzActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.person.MeLoginActivity" />
-        <activity android:name=".ui.person.MeMemberActivity"/>
         <activity android:name=".ui.video.view.activity.VideoContentActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
@@ -43,26 +43,32 @@
         <activity android:name=".ui.test.test2.TestMyActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.test.test2.view.TestMyFirstActivity"
+        <activity android:name=".ui.person.TestThirdVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.test.test2.view.TestMySecondActivity"
+        <activity android:name=".ui.person.TestFiveVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.test.test2.view.TestMyThirdActivity"
+        <activity android:name=".ui.person.TestSevenVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.test.test2.view.TestMyFourActivity"
+        <activity android:name=".ui.person.TestSixVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.test.test2.view.TestMyFiveActivity"
+        <activity android:name=".ui.person.TestEightVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.test.test2.view.TestMySixActivity"
+        <activity android:name=".ui.person.TestNineVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.test.test4.MediaPlayerActivity"/>
-        <activity android:name=".ui.home.view.activity.WindowActivity"
+        <activity android:name=".ui.person.TestFourWindowActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.person.TestFirstVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.person.TestSecondFullActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.home.view.activity.EmptyActivity"/>

@@ -41,7 +41,7 @@ import java.util.zip.CRC32;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -134,7 +134,7 @@ public class VideoContentActivity extends BaseMVPActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_easy_recycle);
         ButterKnife.bind(this);
-        YCAppBar.setStatusBarLightMode(this, Color.WHITE);
+        StateAppBar.setStatusBarLightMode(this, Color.WHITE);
         initView();
         initData();
         onLoadData();
