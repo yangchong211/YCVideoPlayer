@@ -84,9 +84,9 @@
 
 ### 2.使用方法介绍
 #### 2.1 关于gradle引用说明
-```
-compile 'cn.yc:YCVideoPlayerLib:2.6.1'
-```
+    ```
+    compile 'cn.yc:YCVideoPlayerLib:2.6.1'
+    ```
 
 #### 2.2 添加布局
 - 注意，在实际开发中，由于Android手机碎片化比较严重，分辨率太多了，建议灵活设置布局的宽高比为4：3或者16：9或者你认为合适的，可以用代码设置。
@@ -100,20 +100,20 @@ compile 'cn.yc:YCVideoPlayerLib:2.6.1'
 
 
 #### 2.3 最简单的视频播放器参数设定
-```
-//设置播放类型
-// IjkPlayer or MediaPlayer
-videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
-//网络视频地址
-String videoUrl = DataUtil.getVideoListData().get(0).getVideoUrl();
-//设置视频地址和请求头部
-videoPlayer.setUp(videoUrl, null);
-//创建视频控制器
-VideoPlayerController controller = new VideoPlayerController(this);
-controller.setTitle("自定义视频播放器可以播放视频拉");
-//设置视频控制器
-videoPlayer.setController(controller);
-```
+    ```
+    //设置播放类型
+    // IjkPlayer or MediaPlayer
+    videoPlayer.setPlayerType(VideoPlayer.TYPE_NATIVE);
+    //网络视频地址
+    String videoUrl = DataUtil.getVideoListData().get(0).getVideoUrl();
+    //设置视频地址和请求头部
+    videoPlayer.setUp(videoUrl, null);
+    //创建视频控制器
+    VideoPlayerController controller = new VideoPlayerController(this);
+    controller.setTitle("自定义视频播放器可以播放视频拉");
+    //设置视频控制器
+    videoPlayer.setController(controller);
+    ```
 
 
 #### 2.4 优化代码
@@ -183,11 +183,11 @@ videoPlayer.setController(controller);
 - android:configChanges 保证了在全屏的时候横竖屏切换不会执行Activity的相关生命周期，打断视频的播放
 - android:screenOrientation 固定了屏幕的初始方向
 - 这两个变量控制全屏后和退出全屏的屏幕方向
-```
-	<activity android:name=".ui.test2.TestMyActivity"
-		android:configChanges="orientation|keyboardHidden|screenSize"
-		android:screenOrientation="portrait"/>
-```
+    ```
+        <activity android:name=".ui.test2.TestMyActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+    ```
 
 
 ### 4.文档wiki说明[待更新，待完善]
