@@ -254,7 +254,8 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 初始化操作
      */
     private void init() {
-        LayoutInflater.from(mContext).inflate(R.layout.custom_video_player, this, true);
+        LayoutInflater.from(mContext).inflate(R.layout.custom_video_player,
+                this, true);
         initFindViewById();
         initListener();
         registerNetChangedReceiver();

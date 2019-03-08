@@ -9,7 +9,90 @@
 - 07.关于so库优化
 - 08.关于网络状态监听优化
 - 09.关于代码规范优化
+- 10.关于布局优化
 
+
+
+### 02.前后台切换优化
+#### 2.1 第一种优化方式
+- 从前台切到后台，当视频正在播放或者正在缓冲时，暂停视频；当从后台切换到前台，当视频暂停时或者缓冲暂停时，自动开启视频播放。比如常见优酷，爱奇艺就类似这样。
+    - **如果是在Activity中的话，建议设置下面这段代码**
+        ```
+        @Override
+        protected void onStop() {
+            super.onStop();
+            //从前台切到后台，当视频正在播放或者正在缓冲时，调用该方法暂停视频
+            VideoPlayerManager.instance().suspendVideoPlayer();
+        }
+
+        @Override
+        protected void onDestroy() {
+            super.onDestroy();
+            //销毁页面，释放，内部的播放器被释放掉，同时如果在全屏、小窗口模式下都会退出
+            VideoPlayerManager.instance().releaseVideoPlayer();
+        }
+
+        @Override
+        public void onBackPressed() {
+            //处理返回键逻辑；如果是全屏，则退出全屏；如果是小窗口，则退出小窗口
+            if (VideoPlayerManager.instance().onBackPressed()){
+                return;
+            }else {
+                //销毁页面
+                VideoPlayerManager.instance().releaseVideoPlayer();
+            }
+            super.onBackPressed();
+        }
+
+        @Override
+        protected void onRestart() {
+            super.onRestart();
+            //从后台切换到前台，当视频暂停时或者缓冲暂停时，调用该方法重新开启视频播放
+            VideoPlayerManager.instance().resumeVideoPlayer();
+        }
+        ```
+
+
+#### 2.2 第二种优化方式
+- 当视频播放时，切换后台页面处于不可见时，则销毁视频资源。从后台切换到前台时，用户需要手动触发点击才能继续看视频。
+    - **如果是在Activity中的话，建议设置下面这段代码**
+        ```
+        @Override
+        protected void onStop() {
+            super.onStop();
+            VideoPlayerManager.instance().releaseVideoPlayer();
+        }
+
+        @Override
+        public void onBackPressed() {
+            if (VideoPlayerManager.instance().onBackPressed()) return;
+            super.onBackPressed();
+        }
+        ```
+    - **如果是在Fragment中的话，建议设置下面这段代码**
+        ```
+        //在宿主Activity中设置代码如下
+        @Override
+        protected void onStop() {
+            super.onStop();
+            VideoPlayerManager.instance().releaseVideoPlayer();
+        }
+
+        @Override
+        public void onBackPressed() {
+            if (VideoPlayerManager.instance().onBackPressed()) return;
+            super.onBackPressed();
+        }
+
+        //--------------------------------------------------
+
+        //在此Fragment中设置代码如下
+        @Override
+        public void onStop() {
+            super.onStop();
+            VideoPlayerManager.instance().releaseVideoPlayer();
+        }
+        ```
 
 
 
@@ -84,7 +167,19 @@
 
 
 
-
+### 10.关于布局优化
+- 关于正式项目中视频可能存在的布局
+    - 视频播放器初始化状态布局
+    - 视频播放加载状态布局
+    - 视频播放器顶部布局[返回键，分享键，下载键，更多键，或者其他控件]
+    - 视频播放器底部布局[播放，暂停按钮，视频进度条，切换全屏控件]
+    - 视频试看模式状态布局
+    - 视频试看结束后状态布局
+    - 视频观看结束后状态布局
+    - 音视频之间切换效果[状态]
+    - 视频播放错误时状态布局
+    - 会员权限等布局，非会员时显示布局
+    - 全屏播放时的布局
 
 
 

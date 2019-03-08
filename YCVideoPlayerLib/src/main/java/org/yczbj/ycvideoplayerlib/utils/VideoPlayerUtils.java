@@ -28,7 +28,7 @@ import java.util.Locale;
 public final class VideoPlayerUtils {
 
     /**
-     * Get activity from context object
+     * 通过上下文获取到activity，使用到了递归
      *
      * @param context       上下文
      * @return              对象的活动对象，如果它不是活动对象，则为空。
@@ -145,7 +145,11 @@ public final class VideoPlayerUtils {
      * @param url               视频链接url
      */
     public static void savePlayPosition(Context context, String url, long position) {
-        context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION", Context.MODE_PRIVATE).edit().putLong(url, position).apply();
+        if (context==null){
+            return;
+        }
+        context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION",
+                Context.MODE_PRIVATE).edit().putLong(url, position).apply();
     }
 
     /**
@@ -155,7 +159,11 @@ public final class VideoPlayerUtils {
      * @return 上次保存的播放位置
      */
     public static long getSavedPlayPosition(Context context, String url) {
-        return context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION", Context.MODE_PRIVATE).getLong(url, 0);
+        if (context==null){
+            return 0;
+        }
+        return context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION",
+                Context.MODE_PRIVATE).getLong(url, 0);
     }
 
     /**
@@ -163,7 +171,11 @@ public final class VideoPlayerUtils {
      * @param context           上下文
      */
     public static void clearPlayPosition(Context context){
-        context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION", Context.MODE_PRIVATE).getAll().clear();
+        if (context==null){
+            return;
+        }
+        context.getSharedPreferences("VIDEO_PLAYER_PLAY_POSITION",
+                Context.MODE_PRIVATE).getAll().clear();
     }
 
 
@@ -191,7 +203,9 @@ public final class VideoPlayerUtils {
     private static NetworkInfo getActiveNetworkInfo(Context context) {
         ConnectivityManager manager = (ConnectivityManager)
                 context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (manager == null) return null;
+        if (manager == null) {
+            return null;
+        }
         return manager.getActiveNetworkInfo();
     }
 

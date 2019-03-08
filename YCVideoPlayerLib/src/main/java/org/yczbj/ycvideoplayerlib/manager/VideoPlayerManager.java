@@ -10,13 +10,13 @@ import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
  *     blog  : https://github.com/yangchong211
  *     time  : 2017/10/21
  *     desc  : 视频播放器管理器
- *     revise:
+ *     revise: 将类置成final
  * </pre>
  */
 public final class VideoPlayerManager {
 
     private VideoPlayer mVideoPlayer;
-    private static VideoPlayerManager sInstance;
+    private static volatile VideoPlayerManager sInstance;
     private VideoPlayerManager() {}
 
     /**
@@ -24,9 +24,13 @@ public final class VideoPlayerManager {
      * 单例模式
      * @return          VideoPlayerManager对象
      */
-    public static synchronized VideoPlayerManager instance() {
+    public static VideoPlayerManager instance() {
         if (sInstance == null) {
-            sInstance = new VideoPlayerManager();
+            synchronized (VideoPlayerManager.class){
+                if (sInstance == null){
+                    sInstance = new VideoPlayerManager();
+                }
+            }
         }
         return sInstance;
     }
@@ -57,8 +61,10 @@ public final class VideoPlayerManager {
      * 当视频正在播放或者正在缓冲时，调用该方法暂停视频
      */
     public void suspendVideoPlayer() {
-        if (mVideoPlayer != null && (mVideoPlayer.isPlaying() || mVideoPlayer.isBufferingPlaying())) {
-            mVideoPlayer.pause();
+        if (mVideoPlayer != null) {
+            if (mVideoPlayer.isPlaying() || mVideoPlayer.isBufferingPlaying()){
+                mVideoPlayer.pause();
+            }
         }
     }
 
@@ -67,8 +73,10 @@ public final class VideoPlayerManager {
      * 当视频暂停时或者缓冲暂停时，调用该方法重新开启视频播放
      */
     public void resumeVideoPlayer() {
-        if (mVideoPlayer != null && (mVideoPlayer.isPaused() || mVideoPlayer.isBufferingPaused())) {
-            mVideoPlayer.restart();
+        if (mVideoPlayer != null) {
+            if (mVideoPlayer.isPaused() || mVideoPlayer.isBufferingPaused()){
+                mVideoPlayer.restart();
+            }
         }
     }
 

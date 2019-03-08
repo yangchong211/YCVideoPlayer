@@ -1,6 +1,5 @@
 package org.yczbj.ycvideoplayerlib.player;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -124,6 +123,23 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        VideoLogUtil.d("onAttachedToWindow");
+        //init();
+        //在构造函数初始化时addView
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        VideoLogUtil.d("onDetachedFromWindow");
+        //onDetachedFromWindow方法是在Activity destroy的时候被调用的，也就是act对应的window被删除的时候，
+        //且每个view只会被调用一次，父view的调用在后，也不论view的visibility状态都会被调用，适合做最后的清理操作
+        //防止开发者没有在onDestroy中没有做销毁视频的优化
+        release();
+    }
 
     /*--------------setUp为必须设置的方法，二选其一--------------------------------------*/
     /**
@@ -194,7 +210,10 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
         }
         if (mMediaPlayer instanceof IjkMediaPlayer) {
             ((IjkMediaPlayer) mMediaPlayer).setSpeed(speed);
-        } else if(mMediaPlayer instanceof MediaPlayer){
+        } else if (mMediaPlayer instanceof AndroidMediaPlayer){
+            //((AndroidMediaPlayer) mMediaPlayer).setSpeed(speed);
+            VideoLogUtil.d("只有IjkPlayer才能设置播放速度");
+        }else if(mMediaPlayer instanceof MediaPlayer){
             //((MediaPlayer) mMediaPlayer).setSpeed(speed);
             VideoLogUtil.d("只有IjkPlayer才能设置播放速度");
         } else {
@@ -523,7 +542,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
 
     /**
      * 获取当前播放模式
-     * @return
+     * @return                  返回当前播放模式
      */
     public int getCurrentState(){
         return mCurrentState;
@@ -537,7 +556,8 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
         if (mAudioManager == null) {
             mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
             if (mAudioManager != null) {
-                mAudioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+                mAudioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC,
+                        AudioManager.AUDIOFOCUS_GAIN);
             }
         }
     }
@@ -568,52 +588,53 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     private void createIjkMediaPlayer() {
         //创建IjkMediaPlayer对象
         mMediaPlayer = new IjkMediaPlayer();
-        int PLAYER = IjkMediaPlayer.OPT_CATEGORY_PLAYER;
-        int CODEC = IjkMediaPlayer.OPT_CATEGORY_CODEC;
-        int FORMAT = IjkMediaPlayer.OPT_CATEGORY_FORMAT;
+        int player = IjkMediaPlayer.OPT_CATEGORY_PLAYER;
+        int codec = IjkMediaPlayer.OPT_CATEGORY_CODEC;
+        int format = IjkMediaPlayer.OPT_CATEGORY_FORMAT;
 
         //设置ijkPlayer播放器的硬件解码相关参数
         //设置播放前的最大探测时间
-        ((IjkMediaPlayer)mMediaPlayer).setOption(FORMAT, "analyzemaxduration", 100L);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(format, "analyzemaxduration", 100L);
         //设置播放前的探测时间 1,达到首屏秒开效果
-        ((IjkMediaPlayer)mMediaPlayer).setOption(FORMAT, "analyzeduration", 1L);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(format, "analyzeduration", 1L);
         //播放前的探测Size，默认是1M, 改小一点会出画面更快
-        ((IjkMediaPlayer)mMediaPlayer).setOption(FORMAT, "probesize", 10240L);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(format, "probesize", 10240L);
         //设置是否开启变调isModifyTone?0:1
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER,"soundtouch",0);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player,"soundtouch",0);
         //每处理一个packet之后刷新io上下文
-        ((IjkMediaPlayer)mMediaPlayer).setOption(FORMAT, "flush_packets", 1L);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(format, "flush_packets", 1L);
         //是否开启预缓冲，一般直播项目会开启，达到秒开的效果，不过带来了播放丢帧卡顿的体验
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "packet-buffering", 0L);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "packet-buffering", 0L);
         //播放重连次数
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "reconnect", 5);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "reconnect", 5);
         //最大缓冲大小,单位kb
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "max-buffer-size", 10240L);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "max-buffer-size", 10240L);
         //跳帧处理,放CPU处理较慢时，进行跳帧处理，保证播放流程，画面和声音同步
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "framedrop", 1L);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "framedrop", 1L);
         //最大fps
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "max-fps", 30L);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "max-fps", 30L);
         //SeekTo设置优化
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "enable-accurate-seek", 1L);
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "opensles", 0);
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "overlay-format", IjkMediaPlayer.SDL_FCC_RV32);
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "framedrop", 1);
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "start-on-prepared", 0);
-        ((IjkMediaPlayer)mMediaPlayer).setOption(FORMAT, "http-detect-range-support", 0);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "enable-accurate-seek", 1L);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "opensles", 0);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "overlay-format", IjkMediaPlayer.SDL_FCC_RV32);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "framedrop", 1);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "start-on-prepared", 0);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(format, "http-detect-range-support", 0);
         //设置是否开启环路过滤: 0开启，画面质量高，解码开销大，48关闭，画面质量差点，解码开销小
-        ((IjkMediaPlayer)mMediaPlayer).setOption(CODEC, "skip_loop_filter", 48);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(codec, "skip_loop_filter", 48);
 
         //jkPlayer支持硬解码和软解码。
         //软解码时不会旋转视频角度这时需要你通过onInfo的what == IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED去获取角度，自己旋转画面。
         //或者开启硬解硬解码，不过硬解码容易造成黑屏无声（硬件兼容问题），下面是设置硬解码相关的代码
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "mediacodec", 0);
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "mediacodec-auto-rotate", 1);
-        ((IjkMediaPlayer)mMediaPlayer).setOption(PLAYER, "mediacodec-handle-resolution-change", 1);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "mediacodec", 0);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "mediacodec-auto-rotate", 1);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "mediacodec-handle-resolution-change", 1);
     }
 
 
     /**
      * 初始化TextureView
+     * 这个主要是用作视频的
      */
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void initTextureView() {
@@ -936,7 +957,8 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     /**
      * 退出全屏模式
      * 退出全屏，移除mTextureView和mController，并添加到非全屏的容器中。
-     * 切换竖屏时需要在manifest的activity标签下添加android:configChanges="orientation|keyboardHidden|screenSize"配置，
+     * 切换竖屏时需要在manifest的activity标签下添加
+     * android:configChanges="orientation|keyboardHidden|screenSize"配置，
      * 以避免Activity重新走生命周期.
      *
      * @return true退出全屏.
@@ -1067,8 +1089,10 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
             mMediaPlayer.release();
             mMediaPlayer = null;
         }
-        //从视图中移除TextureView
-        mContainer.removeView(mTextureView);
+        if (mContainer!=null){
+            //从视图中移除TextureView
+            mContainer.removeView(mTextureView);
+        }
         if (mSurface != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 mSurface.release();
