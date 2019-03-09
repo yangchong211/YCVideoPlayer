@@ -2,9 +2,13 @@ package org.yczbj.ycvideoplayerlib.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
+import android.graphics.SurfaceTexture;
+import android.view.Gravity;
 import android.view.TextureView;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+
+import org.yczbj.ycvideoplayerlib.inter.listener.OnSurfaceListener;
 
 
 /**
@@ -17,14 +21,113 @@ import android.view.TextureView;
  * </pre>
  */
 @SuppressLint("NewApi")
-public class VideoTextureView extends TextureView {
+public class VideoTextureView extends TextureView implements TextureView.SurfaceTextureListener {
 
     private int videoHeight;
     private int videoWidth;
+    private OnSurfaceListener onSurfaceListener;
+
 
     public VideoTextureView(Context context) {
         super(context);
     }
+
+
+    /**
+     * SurfaceTexture准备就绪
+     * @param surface                   surface
+     * @param width                     width
+     * @param height                    height
+     */
+    @Override
+    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+        if (onSurfaceListener != null) {
+            onSurfaceListener.onSurfaceAvailable(surface);
+        }
+    }
+
+
+    /**
+     * SurfaceTexture缓冲大小变化
+     * @param surface                   surface
+     * @param width                     width
+     * @param height                    height
+     */
+    @Override
+    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+        if (onSurfaceListener != null) {
+            onSurfaceListener.onSurfaceSizeChanged(surface, width, height);
+        }
+    }
+
+
+    /**
+     * SurfaceTexture即将被销毁
+     * @param surface                   surface
+     */
+    @Override
+    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+        //清空释放
+        if (onSurfaceListener != null) {
+            onSurfaceListener.onSurfaceDestroyed(surface);
+        }
+        return true;
+    }
+
+
+    /**
+     * SurfaceTexture通过updateImage更新
+     * @param surface                   surface
+     */
+    @Override
+    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+        //如果播放的是暂停全屏了
+        if (onSurfaceListener != null) {
+            onSurfaceListener.onSurfaceUpdated(surface);
+        }
+    }
+
+
+    /**
+     * 获取listener
+     * @return                          onSurfaceListener
+     */
+    public OnSurfaceListener getOnSurfaceListener() {
+        return onSurfaceListener;
+    }
+
+
+    /**
+     * 设置监听
+     * @param surfaceListener           onSurfaceListener
+     */
+    public void setOnSurfaceListener(OnSurfaceListener surfaceListener) {
+        setSurfaceTextureListener(this);
+        onSurfaceListener = surfaceListener;
+    }
+
+
+    /**
+     * 添加TextureView到视图中
+     * @param context                   上下文
+     * @param listener                  listener监听
+     * @param frameLayout               父布局
+     * @return                          VideoTextureView
+     */
+    public static VideoTextureView addTextureView(Context context , OnSurfaceListener listener ,
+                                                  FrameLayout frameLayout){
+        VideoTextureView videoTextureView = new VideoTextureView(context);
+        videoTextureView.setOnSurfaceListener(listener);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+        //防止多次添加，所以每次先移除，后添加
+        frameLayout.removeView(videoTextureView);
+        //添加到视图中
+        frameLayout.addView(videoTextureView, 0, params);
+        return videoTextureView;
+    }
+
 
     /**
      * 自定义video大小
@@ -39,6 +142,7 @@ public class VideoTextureView extends TextureView {
         }
     }
 
+
     /**
      * 记得一定要重新写这个方法，如果角度发生了变化，就重新绘制布局
      * 设置视频旋转角度
@@ -51,6 +155,7 @@ public class VideoTextureView extends TextureView {
             requestLayout();
         }
     }
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {

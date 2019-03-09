@@ -22,14 +22,13 @@ import android.widget.Toast;
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.AbsVideoPlayerController;
 import org.yczbj.ycvideoplayerlib.inter.InterVideoPlayer;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnSurfaceListener;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
 import org.yczbj.ycvideoplayerlib.utils.VideoPlayerUtils;
 import org.yczbj.ycvideoplayerlib.view.VideoTextureView;
-
 import java.io.IOException;
 import java.util.Map;
-
 import tv.danmaku.ijk.media.player.AndroidMediaPlayer;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
@@ -232,7 +231,6 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
             initAudioManager();
             initMediaPlayer();
             initTextureView();
-            addTextureView();
         } else {
             VideoLogUtil.d("VideoPlayer只有在mCurrentState == STATE_IDLE时才能调用start方法.");
         }
@@ -639,14 +637,13 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void initTextureView() {
         if (mTextureView == null) {
-            mTextureView = new VideoTextureView(mContext);
-            mTextureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+            mTextureView = VideoTextureView.addTextureView(mContext, new OnSurfaceListener() {
                 /**
                  * SurfaceTexture准备就绪
                  */
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
-                public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                public void onSurfaceAvailable(SurfaceTexture surface) {
                     if (mSurfaceTexture == null) {
                         mSurfaceTexture = surface;
                         openMediaPlayer();
@@ -659,7 +656,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
                  * SurfaceTexture缓冲大小变化
                  */
                 @Override
-                public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+                public void onSurfaceSizeChanged(SurfaceTexture surface, int width, int height) {
 
                 }
 
@@ -667,30 +664,19 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
                  * SurfaceTexture即将被销毁
                  */
                 @Override
-                public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-                    return mSurfaceTexture == null;
+                public boolean onSurfaceDestroyed(SurfaceTexture surface) {
+                    return false;
                 }
 
                 /**
                  * SurfaceTexture通过updateImage更新
                  */
                 @Override
-                public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+                public void onSurfaceUpdated(SurfaceTexture surface) {
 
                 }
-            });
+            },mContainer);
         }
-    }
-
-
-    /**
-     * 添加TextureView到视图中
-     */
-    private void addTextureView() {
-        mContainer.removeView(mTextureView);
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
-        mContainer.addView(mTextureView, 0, params);
     }
 
 
@@ -745,7 +731,6 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
             VideoLogUtil.e("打开播放器发生错误", e);
         }
     }
-
 
     /**
      * 设置准备视频播放监听事件
