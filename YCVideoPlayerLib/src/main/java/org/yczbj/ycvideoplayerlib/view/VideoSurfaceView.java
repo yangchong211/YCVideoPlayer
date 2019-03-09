@@ -62,7 +62,9 @@ public class VideoSurfaceView extends SurfaceView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         float viewRotation = getRotation();
         // 如果判断成立，则说明显示的TextureView和本身的位置是有90度的旋转的，所以需要交换宽高参数。
-        if (viewRotation == 90f || viewRotation == 270f) {
+        float viewRotation1 = 90f;
+        float viewRotation2 = 270f;
+        if (viewRotation == viewRotation1 || viewRotation == viewRotation2) {
             int tempMeasureSpec = widthMeasureSpec;
             //noinspection SuspiciousNameCombination
             widthMeasureSpec = heightMeasureSpec;

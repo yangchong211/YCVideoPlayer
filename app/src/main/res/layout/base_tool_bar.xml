@@ -37,7 +37,7 @@
             android:layout_width="18dp"
             android:layout_height="28dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_back_white" />
+            android:src="@drawable/ic_player_back" />
     </FrameLayout>
 
     <!--中间标题-->

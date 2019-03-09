@@ -99,6 +99,8 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private TextView mShare;
     private FrameLayout mFlLock;
     private ImageView mIvLock;
+    private LinearLayout mLine;
+    private ProgressBar mPbPlayBar;
 
     private boolean topBottomVisible;
     /**
@@ -309,9 +311,11 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mFlLock = findViewById(R.id.fl_lock);
         mIvLock = findViewById(R.id.iv_lock);
 
+        mLine = findViewById(R.id.line);
+        mPbPlayBar = findViewById(R.id.pb_play_bar);
+
         setTopVisibility(mIsTopAndBottomVisibility);
     }
-
 
 
     private void initListener() {
@@ -747,6 +751,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         cancelDismissTopBottomTimer();
         mSeek.setProgress(0);
         mSeek.setSecondaryProgress(0);
+        mPbPlayBar.setProgress(0);
         mCenterStart.setVisibility(VISIBLE);
         mLength.setVisibility(View.VISIBLE);
         mFlLock.setVisibility(View.GONE);
@@ -908,6 +913,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private void setTopBottomVisible(boolean visible) {
         mTop.setVisibility(visible ? View.VISIBLE : View.GONE);
         mBottom.setVisibility(visible ? View.VISIBLE : View.GONE);
+        mLine.setVisibility(visible ? View.GONE : View.VISIBLE);
         topBottomVisible = visible;
         if (visible) {
             if (!mVideoPlayer.isPaused() && !mVideoPlayer.isBufferingPaused()) {
@@ -1008,6 +1014,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mSeek.setSecondaryProgress(bufferPercentage);
         int progress = (int) (100f * position / duration);
         mSeek.setProgress(progress);
+        mPbPlayBar.setProgress(progress);
         mPosition.setText(VideoPlayerUtils.formatTime(position));
         mDuration.setText(VideoPlayerUtils.formatTime(duration));
         // 更新时间
@@ -1029,6 +1036,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mChangePositionCurrent.setText(VideoPlayerUtils.formatTime(newPosition));
         mChangePositionProgress.setProgress(newPositionProgress);
         mSeek.setProgress(newPositionProgress);
+        mPbPlayBar.setProgress(newPositionProgress);
         mPosition.setText(VideoPlayerUtils.formatTime(newPosition));
     }
 

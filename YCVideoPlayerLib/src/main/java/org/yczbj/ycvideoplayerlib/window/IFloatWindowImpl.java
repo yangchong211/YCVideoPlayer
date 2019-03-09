@@ -30,7 +30,7 @@ public class IFloatWindowImpl extends IFloatWindow {
     IFloatWindowImpl(FloatWindow.B b) {
         mB = b;
         if (mB.mMoveType == MoveType.fixed) {
-            if (Build.VERSION.SDK_INT >=25) {
+            if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.N_MR1) {
                 mFloatView = new FloatPhone(b.mApplicationContext);
             } else {
                 mFloatView = new FloatToast(b.mApplicationContext);
@@ -211,8 +211,12 @@ public class IFloatWindowImpl extends IFloatWindow {
                                         });
                                         startAnimator();
                                         break;
+                                        default:
+                                            break;
                                 }
                                 break;
+                                default:
+                                    break;
 
                         }
                         return false;

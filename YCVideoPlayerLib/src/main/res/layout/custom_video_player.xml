@@ -71,4 +71,7 @@
             android:src="@drawable/player_unlock_btn"/>
     </FrameLayout>
 
+    <!--底部视频播放进度条-->
+    <include layout="@layout/custom_video_player_line"/>
+
 </RelativeLayout>

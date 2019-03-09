@@ -10,6 +10,7 @@
 - 08.关于网络状态监听优化
 - 09.关于代码规范优化
 - 10.关于布局优化
+- 11.选择SurfaceView还是TextureView
 
 
 
@@ -180,6 +181,64 @@
     - 视频播放错误时状态布局
     - 会员权限等布局，非会员时显示布局
     - 全屏播放时的布局
+- 建议这样写，不要在一个布局写这么复杂的布局，这里充分体现了include的优势
+    ```
+    <?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--https://github.com/yangchong211-->
+        <!--如果你觉得好，请给个star，让更多人使用，避免重复造轮子-->
+        <!--底图，主要是显示视频缩略图-->
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:visibility="visible"/>
+        <!--加载动画view-->
+        <include layout="@layout/custom_video_player_loading"/>
+        <!--改变播放位置-->
+        <include layout="@layout/custom_video_player_change_position"/>
+        <!--改变亮度-->
+        <include layout="@layout/custom_video_player_change_brightness"/>
+        <!--改变声音-->
+        <include layout="@layout/custom_video_player_change_volume"/>
+        <!--播放完成，你也可以自定义-->
+        <include layout="@layout/custom_video_player_completed"/>
+        <!--播放错误-->
+        <include layout="@layout/custom_video_player_error"/>
+        <!--顶部控制区-->
+        <include layout="@layout/custom_video_player_top"/>
+        <!--底部控制区-->
+        <include layout="@layout/custom_video_player_bottom"/>
+
+        //这里省略部分代码
+    </RelativeLayout>
+    ```
+
+
+
+### 11.选择SurfaceView还是TextureView
+#### 11.1 SurfaceView优缺点
+- 优点：
+    - 可以在一个独立的线程中进行绘制，不会影响主线程；使用双缓冲机制，播放视频时画面更流畅
+- 缺点：
+    - Surface不在View hierachy中，它的显示也不受View的属性控制，所以不能进行平移，缩放等变换，也不能放在其它ViewGroup中。SurfaceView 不能嵌套使用。
+
+
+#### 11.2 TextureView优缺点
+- 优点：
+    - 支持移动、旋转、缩放等动画，支持截图。具有view的属性
+- 缺点：
+    - 必须在硬件加速的窗口中使用，占用内存比SurfaceView高，在5.0以前在主线程渲染，5.0以后有单独的渲染线程。
+
+
+
+#### 11.3 作为视频播放器如何选择
+
 
 
 
