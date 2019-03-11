@@ -177,9 +177,9 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                         }
                     } else {
                         VideoLogUtil.i(getConnectionType(info.getType()) + "断开");
-                        onPlayStateChanged(ConstantKeys.CurrentState.STATE_ERROR);
                         if(mVideoPlayer.isIdle()){
                             mVideoPlayer.pause();
+                            onPlayStateChanged(ConstantKeys.CurrentState.STATE_ERROR);
                         }
                     }
                 }

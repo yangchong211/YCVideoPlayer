@@ -284,6 +284,8 @@ public class VideoContentActivity extends BaseMVPActivity {
         videoPlayer.continueFromLastPosition(true);
         //设置播放速度
         videoPlayer.setSpeed(1.0f);
+        //进入竖屏的全屏模式
+        videoPlayer.enterFullScreen();
 
         int maxVolume = videoPlayer.getMaxVolume();
         LogUtils.e("视频播放器"+maxVolume);

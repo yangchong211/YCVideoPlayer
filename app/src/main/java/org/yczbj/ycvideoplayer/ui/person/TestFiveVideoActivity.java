@@ -26,7 +26,7 @@ public class TestFiveVideoActivity extends BaseActivity implements View.OnClickL
 
 
     @Bind(R.id.nice_video_player)
-    VideoPlayer niceVideoPlayer;
+    VideoPlayer mVideoPlayer;
     @Bind(R.id.btn_tiny_1)
     Button btnTiny1;
     @Bind(R.id.btn_tiny_2)
@@ -52,7 +52,7 @@ public class TestFiveVideoActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void initView() {
-        niceVideoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
+        mVideoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setTitle("Beautiful China...");
         controller.setLength(117000);
@@ -62,7 +62,7 @@ public class TestFiveVideoActivity extends BaseActivity implements View.OnClickL
                 .placeholder(R.drawable.image_default)
                 .crossFade()
                 .into(controller.imageView());
-        niceVideoPlayer.setController(controller);
+        mVideoPlayer.setController(controller);
     }
 
     @Override
