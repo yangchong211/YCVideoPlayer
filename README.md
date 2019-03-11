@@ -181,7 +181,7 @@
 
 
 #### 2.5 注意问题
-##### 2.4.1如果是全屏播放，则需要在清单文件中设置当前activity的属性值**
+##### 2.5.1如果是全屏播放，则需要在清单文件中设置当前activity的属性值**
 - android:configChanges 保证了在全屏的时候横竖屏切换不会执行Activity的相关生命周期，打断视频的播放
 - android:screenOrientation 固定了屏幕的初始方向
 - 这两个变量控制全屏后和退出全屏的屏幕方向
@@ -190,6 +190,18 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
     ```
+
+
+##### 2.5.2 关于设置日志是否打印
+- 如下所示
+    ```
+    if(BuildConfig.DEBUG){
+        VideoLogUtil.setIsLog(true);
+    }else {
+        VideoLogUtil.setIsLog(false);
+    }
+    ```
+
 
 
 ### 4.文档wiki说明[待更新，待完善]
