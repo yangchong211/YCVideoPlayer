@@ -27,7 +27,9 @@ public final class ConstantKeys {
         int TYPE_IJK = 111;
         int TYPE_NATIVE = 222;
     }
+
     @IntDef({IjkPlayerType.TYPE_IJK,IjkPlayerType.TYPE_NATIVE})
+    @Retention(RetentionPolicy.SOURCE)
     public @interface PlayerType{}
 
 
@@ -65,6 +67,7 @@ public final class ConstantKeys {
      * 6                暂停缓冲(播放器正在播放时，缓冲区数据不足，进行缓冲，此时暂停播放器，继续缓冲，缓冲区数据足够后恢复暂停
      * 7                播放完成
      */
+    @Retention(RetentionPolicy.SOURCE)
     public @interface CurrentState{
         int STATE_ERROR = -1;
         int STATE_IDLE = 0;
@@ -100,7 +103,9 @@ public final class ConstantKeys {
         int LOADING_RING = 1;
         int LOADING_QQ = 2;
     }
+
     @IntDef({Loading.LOADING_RING,Loading.LOADING_QQ})
+    @Retention(RetentionPolicy.SOURCE)
     public @interface LoadingType{}
 
 
