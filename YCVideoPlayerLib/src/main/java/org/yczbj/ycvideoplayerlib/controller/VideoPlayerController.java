@@ -225,6 +225,9 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         init();
     }
 
+    /**
+     * 注册网络监听广播
+     */
     private void registerNetChangedReceiver() {
         if (!hasRegisterNetReceiver) {
             if (netChangedReceiver == null) {
@@ -242,13 +245,36 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     /**
      * 当播放完成或者意外销毁，都需要解绑注册网络监听广播
      */
-    private void unRegisterNetChangedReceiver() {
+    public void unRegisterNetChangedReceiver() {
         if (hasRegisterNetReceiver) {
             if (netChangedReceiver != null) {
                 mContext.unregisterReceiver(netChangedReceiver);
                 VideoLogUtil.i("解绑注册网络监听广播");
             }
             hasRegisterNetReceiver = false;
+        }
+    }
+
+    /**
+     * 注册电池监听广播
+     */
+    private void registerBatterReceiver() {
+        if (!hasRegisterBatteryReceiver) {
+            mContext.registerReceiver(mBatterReceiver, new IntentFilter(
+                    Intent.ACTION_BATTERY_CHANGED));
+            hasRegisterBatteryReceiver = true;
+            VideoLogUtil.i("注册电池监听广播");
+        }
+    }
+
+
+    /**
+     * 当播放完成或者意外销毁，都需要解绑注册电池监听广播
+     */
+    public void unRegisterBatterReceiver() {
+        if (hasRegisterBatteryReceiver) {
+            mContext.unregisterReceiver(mBatterReceiver);
+            hasRegisterBatteryReceiver = false;
         }
     }
 
@@ -606,16 +632,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 break;
             //播放准备中
             case ConstantKeys.CurrentState.STATE_PREPARING:
-                mImage.setVisibility(View.GONE);
-                mLoading.setVisibility(View.VISIBLE);
-                mLoadText.setText("正在准备...");
-                mError.setVisibility(View.GONE);
-                mCompleted.setVisibility(View.GONE);
-                mTop.setVisibility(View.GONE);
-                mBottom.setVisibility(View.GONE);
-                mCenterStart.setVisibility(View.GONE);
-                mLength.setVisibility(View.GONE);
-                startUpdateNetSpeedTimer();
+                startPreparing();
                 break;
             //播放准备就绪
             case ConstantKeys.CurrentState.STATE_PREPARED:
@@ -665,23 +682,47 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 break;
             //播放完成
             case ConstantKeys.CurrentState.STATE_COMPLETED:
-                cancelUpdateProgressTimer();
-                setTopBottomVisible(false);
-                mImage.setVisibility(View.VISIBLE);
-                mCompleted.setVisibility(View.VISIBLE);
-                //设置播放完成的监听事件
-                if(mOnCompletedListener!=null){
-                    mOnCompletedListener.onCompleted();
-                }
-                //当播放完成就解除广播
-                unRegisterNetChangedReceiver();
-                cancelUpdateNetSpeedTimer();
+                stateCompleted();
                 break;
             default:
                 break;
         }
     }
 
+
+    /**
+     * 播放准备中
+     */
+    private void startPreparing() {
+        mImage.setVisibility(View.GONE);
+        mLoading.setVisibility(View.VISIBLE);
+        mLoadText.setText("正在准备...");
+        mError.setVisibility(View.GONE);
+        mCompleted.setVisibility(View.GONE);
+        mTop.setVisibility(View.GONE);
+        mBottom.setVisibility(View.GONE);
+        mCenterStart.setVisibility(View.GONE);
+        mLength.setVisibility(View.GONE);
+        startUpdateNetSpeedTimer();
+    }
+
+
+    /**
+     * 播放完成
+     */
+    private void stateCompleted() {
+        cancelUpdateProgressTimer();
+        setTopBottomVisible(false);
+        mImage.setVisibility(View.VISIBLE);
+        mCompleted.setVisibility(View.VISIBLE);
+        //设置播放完成的监听事件
+        if(mOnCompletedListener!=null){
+            mOnCompletedListener.onCompleted();
+        }
+        //当播放完成就解除广播
+        unRegisterNetChangedReceiver();
+        cancelUpdateNetSpeedTimer();
+    }
 
 
     /**
@@ -700,10 +741,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mClarity.setVisibility(View.GONE);
                 setTopVisibility(mIsTopAndBottomVisibility);
                 mLlHorizontal.setVisibility(View.GONE);
-                if (hasRegisterBatteryReceiver) {
-                    mContext.unregisterReceiver(mBatterReceiver);
-                    hasRegisterBatteryReceiver = false;
-                }
+                unRegisterBatterReceiver();
                 mIsLock = false;
                 break;
             //全屏模式
@@ -723,10 +761,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 }else {
                     mLlHorizontal.setVisibility(View.GONE);
                 }
-                if (!hasRegisterBatteryReceiver) {
-                    mContext.registerReceiver(mBatterReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-                    hasRegisterBatteryReceiver = true;
-                }
+                registerBatterReceiver();
                 break;
             //小窗口模式
             case ConstantKeys.PlayMode.MODE_TINY_WINDOW:
@@ -764,8 +799,19 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mLoading.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mCompleted.setVisibility(View.GONE);
-        //解绑注册网络监听广播
+    }
+
+    /**
+     * 注意：跟重置有区别
+     * 控制器意外销毁，比如手动退出，意外崩溃等等
+     */
+    @Override
+    public void destroy() {
+        //当播放完成就解除广播
         unRegisterNetChangedReceiver();
+        cancelUpdateProgressTimer();
+        //结束timer
+        cancelUpdateNetSpeedTimer();
     }
 
 

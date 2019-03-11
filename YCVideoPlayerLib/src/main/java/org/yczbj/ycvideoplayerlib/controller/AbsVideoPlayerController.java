@@ -161,6 +161,12 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
     public abstract void reset();
 
     /**
+     * 控制器意外销毁，比如手动退出，意外崩溃等等
+     */
+    public abstract void destroy();
+
+
+    /**
      * 开启缓冲时更新网络加载速度
      */
     protected void startUpdateNetSpeedTimer() {

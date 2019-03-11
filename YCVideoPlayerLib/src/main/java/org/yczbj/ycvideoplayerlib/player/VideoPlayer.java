@@ -134,6 +134,9 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         VideoLogUtil.d("onDetachedFromWindow");
+        if (mController!=null){
+            mController.destroy();
+        }
         //onDetachedFromWindow方法是在Activity destroy的时候被调用的，也就是act对应的window被删除的时候，
         //且每个view只会被调用一次，父view的调用在后，也不论view的visibility状态都会被调用，适合做最后的清理操作
         //防止开发者没有在onDestroy中没有做销毁视频的优化
