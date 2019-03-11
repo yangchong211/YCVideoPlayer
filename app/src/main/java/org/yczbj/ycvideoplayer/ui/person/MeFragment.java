@@ -117,6 +117,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(VideoPlayerMeActivity.class);
                 break;
             case R.id.tv_11:
+                startActivity(TestFourWindowActivity.class);
                 break;
             case R.id.tv_12:
                 break;

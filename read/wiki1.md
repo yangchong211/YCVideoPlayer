@@ -255,6 +255,47 @@
 
 
 ### 10.全局悬浮播放视频
+- 代码如下所示
+    ```
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        /*
+         * 这里在返回主页的时候销毁了，因为不想和DEMO中其他页面冲突
+         */
+        VideoPlayerManager.instance().releaseVideoPlayer();
+        FloatWindow.destroy();
+    }
+
+
+    private void startWindow() {
+        if (FloatWindow.get() != null) {
+            return;
+        }
+        String url = "http://play.g3proxy.lecloud.com/vod/v2/MjUxLzE2LzgvbGV0di11dHMvMTQvdmVyXzAwXzIyLTExMDc2NDEzODctYXZjLTE5OTgxOS1hYWMtNDgwMDAtNTI2MTEwLTE3MDg3NjEzLWY1OGY2YzM1NjkwZTA2ZGFmYjg2MTVlYzc5MjEyZjU4LTE0OTg1NTc2ODY4MjMubXA0?b=259&mmsid=65565355&tm=1499247143&key=f0eadb4f30c404d49ff8ebad673d3742&platid=3&splatid=345&playid=0&tss=no&vtype=21&cvid=2026135183914&payff=0&pip=08cc52f8b09acd3eff8bf31688ddeced&format=0&sign=mb&dname=mobile&expect=1&tag=mobile&xformat=super";
+        FloatPlayerView.setUrl(url);
+        FloatPlayerView floatPlayerView = new FloatPlayerView(getApplicationContext());
+        floatPlayerView.setCompletedListener(new FloatPlayerView.CompletedListener() {
+            @Override
+            public void Completed() {
+                FloatWindow.get().hide();
+            }
+        });
+        FloatWindow
+                .with(getApplicationContext())
+                .setView(floatPlayerView)
+                //.setWidth(WindowScreen.width, 0.4f)
+                //.setHeight(WindowScreen.width, 0.3f)
+                .setX(WindowScreen.width, 0.8f)             //这个是设置位置
+                .setY(WindowScreen.height, 0.3f)
+                .setMoveType(MoveType.slide)
+                .setFilter(false)
+                //.setFilter(true, WindowActivity.class, EmptyActivity.class)
+                .setMoveStyle(500, new BounceInterpolator())
+                .build();
+        FloatWindow.get().show();
+    }
+    ```
 
 
 

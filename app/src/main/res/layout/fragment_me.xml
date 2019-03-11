@@ -128,7 +128,7 @@
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:background="@color/colorAccent"
-                android:text="11.仿抖音可上下滑动播放视频"/>
+                android:text="11.全局视频悬浮窗，可以拖动"/>
             <TextView
                 android:id="@+id/tv_12"
                 android:layout_width="match_parent"
