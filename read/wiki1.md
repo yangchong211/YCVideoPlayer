@@ -354,13 +354,83 @@
     ```
 
 
+#### 11.4 关于controller控制器api
+- 如下所示
+    ```
+    //设置是否显示视频头部的下载，分享，其他等控件是否显示
+    controller.setTopVisibility(true);
+    controller.setTop(20);
+    //设置top到顶部的距离
+    controller.setTopPadding(30);
+    //设置加载loading类型
+    controller.setLoadingType(ConstantKeys.Loading.LOADING_RING);
+    //设置不操作后，多久自动隐藏头部和底部布局
+    controller.setHideTime(8000);
+    //设置中间播放按钮是否显示，并且支持设置自定义图标
+    controller.setCenterPlayer(true,R.drawable.image_default);
+    //获取ImageView的对象
+    ImageView imageView = controller.imageView();
+    //重新设置
+    controller.reset();
+    //设置图片
+    controller.setImage(R.drawable.ic_back_right);
+    //设置视频时长
+    controller.setLength(1000);
+    //设置视频标题
+    controller.setTitle("小杨逗比");
+    boolean lock = controller.getLock();
+    //设置横屏播放时，tv和audio图标是否显示
+    controller.setTvAndAudioVisibility(true,true);
+    //让用户自己处理返回键事件的逻辑
+    controller.setOnVideoBackListener(new OnVideoBackListener() {
+        @Override
+        public void onBackClick() {
 
+        }
+    });
+    //播放暂停监听事件
+    controller.setOnPlayOrPauseListener(new OnPlayOrPauseListener() {
+        @Override
+        public void onPlayOrPauseClick(boolean isPlaying) {
 
+        }
+    });
+    //监听视频播放完成事件
+    controller.setOnCompletedListener(new OnCompletedListener() {
+        @Override
+        public void onCompleted() {
 
+        }
+    });
+    //设置视频分享，下载，音视频转化点击事件
+    controller.setOnVideoControlListener(new OnVideoControlListener() {
+        @Override
+        public void onVideoControlClick(int type) {
 
+        }
+    });
+    ```
 
-
-
+#### 11.5 关于视频播放器管理器api
+- 如下所示
+    ```
+    //VideoPlayerManager对象
+    VideoPlayerManager instance = VideoPlayerManager.instance();
+    //当视频暂停时或者缓冲暂停时，调用该方法重新开启视频播放
+    instance.resumeVideoPlayer();
+    //当视频正在播放或者正在缓冲时，调用该方法暂停视频
+    instance.suspendVideoPlayer();
+    //释放，内部的播放器被释放掉，同时如果在全屏、小窗口模式下都会退出
+    instance.releaseVideoPlayer();
+    //处理返回键逻辑
+    //如果是全屏，则退出全屏
+    //如果是小窗口，则退出小窗口
+    instance.onBackPressed();
+    //获取对象
+    VideoPlayer currentVideoPlayer = instance.getCurrentVideoPlayer();
+    //设置VideoPlayer
+    instance.setCurrentVideoPlayer(videoPlayer);
+    ```
 
 
 

@@ -248,7 +248,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     /**
      * 当播放完成或者意外销毁，都需要解绑注册网络监听广播
      */
-    public void unRegisterNetChangedReceiver() {
+    private void unRegisterNetChangedReceiver() {
         if (hasRegisterNetReceiver) {
             if (netChangedReceiver != null) {
                 mContext.unregisterReceiver(netChangedReceiver);
@@ -274,7 +274,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     /**
      * 当播放完成或者意外销毁，都需要解绑注册电池监听广播
      */
-    public void unRegisterBatterReceiver() {
+    private void unRegisterBatterReceiver() {
         if (hasRegisterBatteryReceiver) {
             mContext.unregisterReceiver(mBatterReceiver);
             hasRegisterBatteryReceiver = false;
