@@ -54,6 +54,10 @@ public final class ConstantKeys {
         int TV = 2009;
         int HOR_AUDIO = 2010;
     }
+    @IntDef({VideoControl.DOWNLOAD,VideoControl.AUDIO,
+            VideoControl.SHARE,VideoControl.MENU,VideoControl.TV,VideoControl.HOR_AUDIO})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface VideoControlType{}
 
     /**
      * 播放模式

@@ -3,10 +3,13 @@ package org.yczbj.ycvideoplayer.ui.person;
 import android.view.View;
 import android.widget.Button;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoControlListener;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
@@ -62,6 +65,34 @@ public class TestFiveVideoActivity extends BaseActivity implements View.OnClickL
                 .placeholder(R.drawable.image_default)
                 .crossFade()
                 .into(controller.imageView());
+        controller.setTopVisibility(true);
+        controller.setOnVideoControlListener(new OnVideoControlListener() {
+            @Override
+            public void onVideoControlClick(int type) {
+                switch (type){
+                    case ConstantKeys.VideoControl.DOWNLOAD:
+                        ToastUtils.showShort("下载");
+                        break;
+                    case ConstantKeys.VideoControl.AUDIO:
+                        ToastUtils.showShort("转音频");
+                        break;
+                    case ConstantKeys.VideoControl.SHARE:
+                        ToastUtils.showShort("分享");
+                        break;
+                    case ConstantKeys.VideoControl.MENU:
+                        ToastUtils.showShort("更多");
+                        break;
+                    case ConstantKeys.VideoControl.TV:
+                        ToastUtils.showShort("tv投影");
+                        break;
+                    case ConstantKeys.VideoControl.HOR_AUDIO:
+                        ToastUtils.showShort("下载");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
         mVideoPlayer.setController(controller);
     }
 

@@ -78,20 +78,180 @@
 
 ### 06.在列表中播放
 - 代码如下所示
-```
+    - 在recyclerView中
+    ```
+    recyclerView.setRecyclerListener(new RecyclerView.RecyclerListener() {
+        @Override
+        public void onViewRecycled(RecyclerView.ViewHolder holder) {
+            VideoPlayer videoPlayer = ((VideoAdapter.VideoViewHolder) holder).mVideoPlayer;
+            if (videoPlayer == VideoPlayerManager.instance().getCurrentVideoPlayer()) {
+                VideoPlayerManager.instance().releaseVideoPlayer();
+            }
+        }
+    });
+    ```
+    - 在adapter中，仅仅展示部分代码
+    ```
+    @Override
+    public VideoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(mContext).inflate(R.layout.item_test_my_video, parent, false);
+        VideoViewHolder holder = new VideoViewHolder(itemView);
+        //创建视频播放控制器，主要只要创建一次就可以呢
+        VideoPlayerController controller = new VideoPlayerController(mContext);
+        holder.setController(controller);
+        return holder;
+    }
 
-```
+    public class VideoViewHolder extends RecyclerView.ViewHolder {
+
+        public VideoPlayerController mController;
+        public VideoPlayer mVideoPlayer;
+
+        VideoViewHolder(View itemView) {
+            super(itemView);
+            mVideoPlayer = (VideoPlayer) itemView.findViewById(R.id.nice_video_player);
+            // 将列表中的每个视频设置为默认16:9的比例
+            ViewGroup.LayoutParams params = mVideoPlayer.getLayoutParams();
+            // 宽度为屏幕宽度
+            params.width = itemView.getResources().getDisplayMetrics().widthPixels;
+            // 高度为宽度的9/16
+            params.height = (int) (params.width * 9f / 16f);
+            mVideoPlayer.setLayoutParams(params);
+        }
+
+        /**
+         * 设置视频控制器参数
+         * @param controller            控制器对象
+         */
+        void setController(VideoPlayerController controller) {
+            mController = controller;
+            mVideoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
+            mVideoPlayer.setController(mController);
+        }
+
+        void bindData(Video video) {
+            mController.setTitle(video.getTitle());
+            //mController.setLength(video.getLength());
+            ImageUtil.loadImgByPicasso(itemView.getContext(),video.getImageUrl(),R.drawable.image_default,mController.imageView());
+            mVideoPlayer.setUp(video.getVideoUrl(), null);
+        }
+    }
+    ```
 
 
 ### 07.在activity播放视频处理home键逻辑
+- 代码如下所示
+    ```
+    private boolean pressedHome;
+    private HomeKeyWatcher mHomeKeyWatcher;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mHomeKeyWatcher = new HomeKeyWatcher(this);
+        mHomeKeyWatcher.setOnHomePressedListener(new HomeKeyWatcher.OnHomePressedListener() {
+            @Override
+            public void onHomePressed() {
+                pressedHome = true;
+            }
+        });
+        pressedHome = false;
+        mHomeKeyWatcher.startWatch();
+    }
+
+    @Override
+    protected void onStop() {
+        // 在OnStop中是release还是suspend播放器，需要看是不是因为按了Home键
+        if (pressedHome) {
+            VideoPlayerManager.instance().suspendVideoPlayer();
+        } else {
+            VideoPlayerManager.instance().releaseVideoPlayer();
+        }
+        super.onStop();
+        mHomeKeyWatcher.stopWatch();
+    }
+
+    @Override
+    protected void onRestart() {
+        mHomeKeyWatcher.startWatch();
+        pressedHome = false;
+        super.onRestart();
+        VideoPlayerManager.instance().resumeVideoPlayer();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (VideoPlayerManager.instance().onBackPressed()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+    ```
 
 
 ### 08.在fragment中播放
+- 和activity中一样，不同点在于处理fragment返回键逻辑
+    ```
+    //在宿主Activity中设置代码如下
+    @Override
+    protected void onStop() {
+        super.onStop();
+        VideoPlayerManager.instance().releaseVideoPlayer();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (VideoPlayerManager.instance().onBackPressed()) return;
+        super.onBackPressed();
+    }
+
+    //--------------------------------------------------
+
+    //在此Fragment中设置代码如下
+    @Override
+    public void onStop() {
+        super.onStop();
+        VideoPlayerManager.instance().releaseVideoPlayer();
+    }
+    ```
+
 
 
 ### 09.显示视频top[分享，下载，更多按钮控件]
-
+- 默认是不显示这几个控件的，一般实际项目中，会对播放器做很多UI方面拓展
+    ```
+    controller.setTopVisibility(true);
+    ```
+- 给按钮设置点击事件
+    ```
+    controller.setOnVideoControlListener(new OnVideoControlListener() {
+        @Override
+        public void onVideoControlClick(int type) {
+            switch (type){
+                case ConstantKeys.VideoControl.DOWNLOAD:
+                    ToastUtils.showShort("下载");
+                    break;
+                case ConstantKeys.VideoControl.AUDIO:
+                    ToastUtils.showShort("转音频");
+                    break;
+                case ConstantKeys.VideoControl.SHARE:
+                    ToastUtils.showShort("分享");
+                    break;
+                case ConstantKeys.VideoControl.MENU:
+                    ToastUtils.showShort("更多");
+                    break;
+                case ConstantKeys.VideoControl.TV:
+                    ToastUtils.showShort("tv投影");
+                    break;
+                case ConstantKeys.VideoControl.HOR_AUDIO:
+                    ToastUtils.showShort("下载");
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+    ```
 
 
 ### 10.全局悬浮播放视频

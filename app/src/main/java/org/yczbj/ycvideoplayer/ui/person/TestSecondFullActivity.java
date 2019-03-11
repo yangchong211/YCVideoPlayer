@@ -11,6 +11,7 @@ import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoControlListener;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 

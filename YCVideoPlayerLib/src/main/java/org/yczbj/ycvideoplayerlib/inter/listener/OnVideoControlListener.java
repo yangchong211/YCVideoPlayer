@@ -1,6 +1,8 @@
 package org.yczbj.ycvideoplayerlib.inter.listener;
 
 
+import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
+
 /**
  * <pre>
  *     @author yangchong
@@ -25,6 +27,6 @@ public interface OnVideoControlListener {
      *                  5.TV，tv映射
      *                  6.HOR_AUDIO，音频
      */
-    void onVideoControlClick(int type);
+    void onVideoControlClick(@ConstantKeys.VideoControlType int type);
     
 }
