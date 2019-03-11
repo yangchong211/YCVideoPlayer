@@ -109,24 +109,18 @@ public class VideoTextureView extends TextureView implements TextureView.Surface
 
     /**
      * 添加TextureView到视图中
-     * @param context                   上下文
-     * @param listener                  listener监听
-     * @param frameLayout               父布局
-     * @return                          VideoTextureView
+     * @param frameLayout               布局
+     * @param textureView               textureView
      */
-    public static VideoTextureView addTextureView(Context context , OnSurfaceListener listener ,
-                                                  FrameLayout frameLayout){
-        VideoTextureView videoTextureView = new VideoTextureView(context);
-        videoTextureView.setOnSurfaceListener(listener);
+    public void addTextureView(FrameLayout frameLayout , VideoTextureView textureView){
+        frameLayout.removeView(textureView);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
-        //防止多次添加，所以每次先移除，后添加
-        frameLayout.removeView(videoTextureView);
-        //添加到视图中
-        frameLayout.addView(videoTextureView, 0, params);
-        return videoTextureView;
+        frameLayout.addView(textureView, 0, params);
     }
+
+
 
 
     /**

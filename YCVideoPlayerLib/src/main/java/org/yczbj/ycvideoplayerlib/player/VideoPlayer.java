@@ -640,46 +640,37 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void initTextureView() {
         if (mTextureView == null) {
-            mTextureView = VideoTextureView.addTextureView(mContext, new OnSurfaceListener() {
-                /**
-                 * SurfaceTexture准备就绪
-                 */
-                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            mTextureView = new VideoTextureView(mContext);
+            mTextureView.setOnSurfaceListener(new OnSurfaceListener() {
                 @Override
                 public void onSurfaceAvailable(SurfaceTexture surface) {
                     if (mSurfaceTexture == null) {
                         mSurfaceTexture = surface;
                         openMediaPlayer();
                     } else {
-                        mTextureView.setSurfaceTexture(mSurfaceTexture);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            mTextureView.setSurfaceTexture(mSurfaceTexture);
+                        }
                     }
                 }
 
-                /**
-                 * SurfaceTexture缓冲大小变化
-                 */
                 @Override
                 public void onSurfaceSizeChanged(SurfaceTexture surface, int width, int height) {
 
                 }
 
-                /**
-                 * SurfaceTexture即将被销毁
-                 */
                 @Override
                 public boolean onSurfaceDestroyed(SurfaceTexture surface) {
-                    return false;
+                    return mSurfaceTexture == null;
                 }
 
-                /**
-                 * SurfaceTexture通过updateImage更新
-                 */
                 @Override
                 public void onSurfaceUpdated(SurfaceTexture surface) {
 
                 }
-            },mContainer);
+            });
         }
+        mTextureView.addTextureView(mContainer,mTextureView);
     }
 
 

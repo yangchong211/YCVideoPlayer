@@ -84,8 +84,9 @@
 
 ### 2.使用方法介绍
 #### 2.1 关于gradle引用说明
+- 如下所示
     ```
-    compile 'cn.yc:YCVideoPlayerLib:2.6.1'
+    compile 'cn.yc:YCVideoPlayerLib:2.6.2'
     ```
 
 #### 2.2 添加布局
@@ -100,6 +101,7 @@
 
 
 #### 2.3 最简单的视频播放器参数设定
+- 如下所示
     ```
     //设置播放类型
     // IjkPlayer or MediaPlayer
