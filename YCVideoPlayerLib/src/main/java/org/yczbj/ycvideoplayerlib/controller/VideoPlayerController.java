@@ -719,7 +719,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mLine.setVisibility(GONE);
         cancelUpdateProgressTimer();
         cancelUpdateNetSpeedTimer();
-        cancelUpdateProgressTimer();
         if (!VideoPlayerUtils.isConnected(mContext)){
             mTvError.setText("没有网络，请链接网络");
         } else {

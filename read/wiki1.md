@@ -14,6 +14,22 @@
 
 
 ### 01.最简单的播放
+- 必须需要的四步骤代码如下所示
+```
+//设置播放类型
+videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
+//设置视频地址和请求头部
+videoPlayer.setUp(urls, null);
+//创建视频控制器
+controller = new VideoPlayerController(this);
+//设置视频控制器
+videoPlayer.setController(controller);
+```
+- 开始播放
+```
+
+```
+
 
 
 ### 02.竖屏全屏播放
