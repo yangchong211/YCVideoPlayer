@@ -93,6 +93,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private LinearLayout mChangeVolume;
     private ProgressBar mChangeVolumeProgress;
     private LinearLayout mError;
+    private TextView mTvError;
     private TextView mRetry;
     private LinearLayout mCompleted;
     private TextView mReplay;
@@ -170,7 +171,8 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 if (info != null) {
                     //如果当前的网络连接成功并且网络连接可用
                     if (NetworkInfo.State.CONNECTED == info.getState() && info.isAvailable()) {
-                        if (info.getType() == ConnectivityManager.TYPE_WIFI || info.getType() == ConnectivityManager.TYPE_MOBILE) {
+                        if (info.getType() == ConnectivityManager.TYPE_WIFI ||
+                                info.getType() == ConnectivityManager.TYPE_MOBILE) {
                             VideoLogUtil.i(getConnectionType(info.getType()) + "连上");
                         }
                     } else {
@@ -330,6 +332,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mChangeVolumeProgress = findViewById(R.id.change_volume_progress);
 
         mError = findViewById(R.id.error);
+        mTvError = findViewById(R.id.tv_error);
         mRetry = findViewById(R.id.retry);
         mCompleted = findViewById(R.id.completed);
         mReplay = findViewById(R.id.replay);
@@ -637,6 +640,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             //播放准备就绪
             case ConstantKeys.CurrentState.STATE_PREPARED:
                 startUpdateProgressTimer();
+                //取消缓冲时更新网络加载速度
                 cancelUpdateNetSpeedTimer();
                 break;
             //正在播放
@@ -670,15 +674,12 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mRestartPause.setImageResource(R.drawable.ic_player_start);
                 mLoadText.setText("正在准备...");
                 cancelDismissTopBottomTimer();
+                //开启缓冲时更新网络加载速度
                 startUpdateNetSpeedTimer();
                 break;
             //播放错误
             case ConstantKeys.CurrentState.STATE_ERROR:
-                cancelUpdateProgressTimer();
-                setTopBottomVisible(false);
-                mTop.setVisibility(View.VISIBLE);
-                mError.setVisibility(View.VISIBLE);
-                cancelUpdateNetSpeedTimer();
+                stateError();
                 break;
             //播放完成
             case ConstantKeys.CurrentState.STATE_COMPLETED:
@@ -703,9 +704,28 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mBottom.setVisibility(View.GONE);
         mCenterStart.setVisibility(View.GONE);
         mLength.setVisibility(View.GONE);
+        //开启缓冲时更新网络加载速度
         startUpdateNetSpeedTimer();
     }
 
+
+    /**
+     * 播放错误
+     */
+    private void stateError() {
+        setTopBottomVisible(false);
+        mTop.setVisibility(View.VISIBLE);
+        mError.setVisibility(View.VISIBLE);
+        mLine.setVisibility(GONE);
+        cancelUpdateProgressTimer();
+        cancelUpdateNetSpeedTimer();
+        cancelUpdateProgressTimer();
+        if (!VideoPlayerUtils.isConnected(mContext)){
+            mTvError.setText("没有网络，请链接网络");
+        } else {
+            mTvError.setText("播放错误，请重试");
+        }
+    }
 
     /**
      * 播放完成
@@ -809,8 +829,9 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     public void destroy() {
         //当播放完成就解除广播
         unRegisterNetChangedReceiver();
-        cancelUpdateProgressTimer();
+        unRegisterBatterReceiver();
         //结束timer
+        cancelUpdateProgressTimer();
         cancelUpdateNetSpeedTimer();
     }
 

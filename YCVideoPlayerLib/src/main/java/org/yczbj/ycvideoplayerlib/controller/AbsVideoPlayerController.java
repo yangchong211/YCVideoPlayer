@@ -167,7 +167,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
 
 
     /**
-     * 开启缓冲时更新网络加载速度
+     * 当正在缓冲或者播放准备中状态时，开启缓冲时更新网络加载速度
      */
     protected void startUpdateNetSpeedTimer() {
         cancelUpdateNetSpeedTimer();

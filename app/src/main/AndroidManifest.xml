@@ -73,8 +73,6 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.home.view.activity.EmptyActivity"/>
 
-        <service android:name=".service.InitializeService"/>
-
     </application>
 
 </manifest>

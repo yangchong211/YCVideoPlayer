@@ -7,9 +7,15 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.blankj.utilcode.util.Utils;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
 
-import org.yczbj.ycvideoplayer.service.InitializeService;
+import org.yczbj.ycvideoplayer.BuildConfig;
+import org.yczbj.ycvideoplayer.util.LogUtils;
 import org.yczbj.ycvideoplayer.util.ScreenDensityUtils;
+import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
+
+import java.net.Proxy;
 
 /**
  * ================================================
@@ -56,8 +62,14 @@ public class BaseApplication extends Application {
         ScreenDensityUtils.setup(this);
         ScreenDensityUtils.register(this,375.0f,
                 ScreenDensityUtils.MATCH_BASE_WIDTH,ScreenDensityUtils.MATCH_UNIT_DP);
-        //在子线程中初始化
-        InitializeService.start(this);
+        BaseConfig.INSTANCE.initConfig();
+        LogUtils.logDebug = true;
+        if(BuildConfig.DEBUG){
+            VideoLogUtil.setIsLog(true);
+        }else {
+            VideoLogUtil.setIsLog(false);
+        }
+        initDownLoadLib();
     }
 
     /**
@@ -106,6 +118,23 @@ public class BaseApplication extends Application {
      */
     private void initUtils() {
         Utils.init(this);
+    }
+
+
+    /**
+     * 初始化下载库
+     */
+    private void initDownLoadLib() {
+        FileDownloader.setupOnApplicationOnCreate(BaseApplication.getInstance())
+                .connectionCreator(new FileDownloadUrlConnection
+                        .Creator(new FileDownloadUrlConnection.Configuration()
+                        .connectTimeout(15_000)
+                        .readTimeout(15_000)
+                        .proxy(Proxy.NO_PROXY)
+                ))
+                .commit();
+        //最简单的初始化
+        //FileDownloader.setup(instance);
     }
 
 

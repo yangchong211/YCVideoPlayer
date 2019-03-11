@@ -71,7 +71,7 @@ public class VideoTextureView extends TextureView implements TextureView.Surface
         if (onSurfaceListener != null) {
             onSurfaceListener.onSurfaceDestroyed(surface);
         }
-        return true;
+        return false;
     }
 
 
