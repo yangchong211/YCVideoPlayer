@@ -36,7 +36,8 @@ import org.yczbj.ycvideoplayer.ui.test.test4.MediaPlayerActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
+
 
 /**
  * Created by yc on 2018/3/1.
@@ -44,7 +45,7 @@ import butterknife.Bind;
  */
 public class MovieFragment extends BaseFragment implements MovieContract.View{
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
     private MainActivity activity;
     private MovieAdapter adapter;

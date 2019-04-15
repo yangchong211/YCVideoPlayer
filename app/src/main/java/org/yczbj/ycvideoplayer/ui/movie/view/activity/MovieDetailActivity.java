@@ -42,7 +42,8 @@ import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
+
 
 /**
  * Created by yc on 2018/3/2
@@ -52,11 +53,11 @@ import butterknife.Bind;
 public class MovieDetailActivity extends BaseActivity implements MovieDetailContract.View{
 
 
-    @Bind(R.id.video_player)
+    @BindView(R.id.video_player)
     VideoPlayer videoPlayer;
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton fab;
 
     private MovieDetailAdapter adapter;

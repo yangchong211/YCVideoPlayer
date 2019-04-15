@@ -15,13 +15,12 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Surface;
-import android.view.TextureView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.AbsVideoPlayerController;
-import org.yczbj.ycvideoplayerlib.inter.InterVideoPlayer;
+import org.yczbj.ycvideoplayerlib.inter.player.InterVideoPlayer;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnSurfaceListener;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
@@ -890,14 +889,20 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
         }
         // 隐藏ActionBar、状态栏，并横屏
         VideoPlayerUtils.hideActionBar(mContext);
-        VideoPlayerUtils.scanForActivity(mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        ViewGroup contentView = VideoPlayerUtils.scanForActivity(mContext).findViewById(android.R.id.content);
+        //设置更改此页面的所需方向。如果页面当前位于前台或以其他方式影响方向
+        //则屏幕将立即更改(可能导致重新启动该页面)。否则，这将在下一次页面可见时使用。
+        VideoPlayerUtils.scanForActivity(mContext).setRequestedOrientation(
+                ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        //找到contentView
+        ViewGroup contentView = VideoPlayerUtils.scanForActivity(mContext)
+                .findViewById(android.R.id.content);
         if (mCurrentMode == ConstantKeys.PlayMode.MODE_TINY_WINDOW) {
             contentView.removeView(mContainer);
         } else {
             this.removeView(mContainer);
         }
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
         contentView.addView(mContainer, params);
         mCurrentMode = ConstantKeys.PlayMode.MODE_FULL_SCREEN;
         mController.onPlayModeChanged(mCurrentMode);
@@ -915,14 +920,17 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
         }
         // 隐藏ActionBar、状态栏，并横屏
         VideoPlayerUtils.hideActionBar(mContext);
-        VideoPlayerUtils.scanForActivity(mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        ViewGroup contentView = VideoPlayerUtils.scanForActivity(mContext).findViewById(android.R.id.content);
+        VideoPlayerUtils.scanForActivity(mContext).
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ViewGroup contentView = VideoPlayerUtils.
+                scanForActivity(mContext).findViewById(android.R.id.content);
         if (mCurrentMode == ConstantKeys.PlayMode.MODE_TINY_WINDOW) {
             contentView.removeView(mContainer);
         } else {
             this.removeView(mContainer);
         }
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
         contentView.addView(mContainer, params);
 
         mCurrentMode = ConstantKeys.PlayMode.MODE_FULL_SCREEN;
@@ -989,6 +997,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
         mController.onPlayModeChanged(mCurrentMode);
         VideoLogUtil.d("MODE_TINY_WINDOW");
     }
+
 
     /**
      * 退出小窗口播放

@@ -21,7 +21,7 @@ import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycstatusbarlib.StatusBarUtils;
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 import cn.ycbjie.ycstatusbarlib.dlBar.StatusBarView;
@@ -33,7 +33,7 @@ import cn.ycbjie.ycstatusbarlib.dlBar.StatusBarView;
 public class TestFirstVideoActivity extends BaseActivity  {
 
 
-    @Bind(R.id.nice_video_player)
+    @BindView(R.id.nice_video_player)
     VideoPlayer videoPlayer;
     private VideoPlayerController controller;
 

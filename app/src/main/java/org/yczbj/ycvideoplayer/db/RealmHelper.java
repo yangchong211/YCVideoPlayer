@@ -102,7 +102,7 @@ public class RealmHelper {
         //使用findAllSort ,先findAll再result.sort排序
         RealmResults<Collection> results = getRealm()
                 .where(Collection.class)
-                .findAllSorted("time", Sort.DESCENDING);
+                .findAllAsync("time");
         return getRealm().copyFromRealm(results);
     }
 
@@ -119,7 +119,7 @@ public class RealmHelper {
         if (maxSize != 0) {
             RealmResults<Record> results = getRealm()
                     .where(Record.class)
-                    .findAllSorted("time", Sort.DESCENDING);
+                    .findAllAsync("time");
             if (results.size() >= maxSize) {
                 for (int i = maxSize - 1; i < results.size(); i++) {
                     deleteRecord(results.get(i).getId());
@@ -164,14 +164,6 @@ public class RealmHelper {
         return false;
     }
 
-    public List<Record> getRecordList() {
-        //使用findAllSort ,先findAll再result.sort排序
-        RealmResults<Record> results = getRealm()
-                .where(Record.class)
-                .findAllSorted("time", Sort.DESCENDING);
-        return getRealm().copyFromRealm(results);
-    }
-
     /**
      * 清空历史
      */
@@ -211,7 +203,7 @@ public class RealmHelper {
         RealmResults<SearchKey> results = getRealm()
                 .where(SearchKey.class)
                 .contains("searchKey", value)
-                .findAllSorted("insertTime", Sort.DESCENDING);
+                .findAllAsync("insertTime");
         return getRealm().copyFromRealm(results);
     }
 
@@ -244,7 +236,7 @@ public class RealmHelper {
         //使用findAllSort ,先findAll再result.sort排序
         RealmResults<SearchKey> results = getRealm()
                 .where(SearchKey.class)
-                .findAllSorted("insertTime", Sort.DESCENDING);
+                .findAllAsync("insertTime");
         return getRealm().copyFromRealm(results);
     }
 }

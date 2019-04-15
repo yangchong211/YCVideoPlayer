@@ -11,7 +11,8 @@ import org.yczbj.ycvideoplayer.ui.movie.view.fragment.MovieNewsFragment;
 import org.yczbj.ycvideoplayer.util.SettingUtil;
 import java.util.ArrayList;
 import java.util.List;
-import butterknife.Bind;
+
+import butterknife.BindView;
 
 /**
  * Created by yc on 2018/3/6.
@@ -20,9 +21,9 @@ import butterknife.Bind;
 
 public class MovieNewsActivity extends BaseActivity {
 
-    @Bind(R.id.tab_layout)
+    @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     ViewPager viewPager;
 
     private List<Fragment> fragmentList = new ArrayList<>();

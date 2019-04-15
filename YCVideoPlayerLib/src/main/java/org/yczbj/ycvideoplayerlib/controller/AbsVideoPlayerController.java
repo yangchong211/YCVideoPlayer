@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import org.yczbj.ycvideoplayerlib.utils.VideoPlayerUtils;
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.inter.InterVideoPlayer;
+import org.yczbj.ycvideoplayerlib.inter.player.InterVideoPlayer;
 
 import java.util.Timer;
 import java.util.TimerTask;

@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.BaseDialog;
-import org.yczbj.ycvideoplayer.util.binding.BindView;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 

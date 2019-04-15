@@ -30,7 +30,7 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -146,19 +146,19 @@ public class DownloadVideoAdapter extends RecyclerView.Adapter<DownloadVideoAdap
         private int position;
         public int id;
 
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView tvTitle;
-        @Bind(R.id.tv_time)
+        @BindView(R.id.tv_time)
         TextView tvTime;
-        @Bind(R.id.ll_download)
+        @BindView(R.id.ll_download)
         LinearLayout llDownload;
-        @Bind(R.id.iv_download)
+        @BindView(R.id.iv_download)
         ImageView ivDownload;
-        @Bind(R.id.circle_pb)
+        @BindView(R.id.circle_pb)
         CircleProgressbar circlePb;
-        @Bind(R.id.tv_video_size)
+        @BindView(R.id.tv_video_size)
         TextView tvVideoSize;
-        @Bind(R.id.tv_download_state)
+        @BindView(R.id.tv_download_state)
         TextView tvDownloadState;
 
         ViewHolder(View itemView) {

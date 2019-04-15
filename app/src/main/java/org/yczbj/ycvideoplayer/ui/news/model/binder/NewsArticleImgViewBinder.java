@@ -26,7 +26,7 @@ import org.yczbj.ycvideoplayer.util.SettingUtil;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 import me.drakeet.multitype.ItemViewBinder;
@@ -104,21 +104,21 @@ public class NewsArticleImgViewBinder extends ItemViewBinder<MultiNewsArticleDat
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.iv_media)
+        @BindView(R.id.iv_media)
         ImageView ivMedia;
-        @Bind(R.id.tv_extra)
+        @BindView(R.id.tv_extra)
         TextView tvExtra;
-        @Bind(R.id.iv_dots)
+        @BindView(R.id.iv_dots)
         ImageView ivDots;
-        @Bind(R.id.header)
+        @BindView(R.id.header)
         LinearLayout header;
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView tvTitle;
-        @Bind(R.id.tv_abstract)
+        @BindView(R.id.tv_abstract)
         TextView tvAbstract;
-        @Bind(R.id.iv_image)
+        @BindView(R.id.iv_image)
         ImageView ivImage;
-        @Bind(R.id.ll_content)
+        @BindView(R.id.ll_content)
         LinearLayout llContent;
 
         ViewHolder(View itemView) {

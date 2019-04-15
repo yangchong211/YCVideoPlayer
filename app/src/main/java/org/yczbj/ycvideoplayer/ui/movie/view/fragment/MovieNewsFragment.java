@@ -21,7 +21,7 @@ import org.yczbj.ycvideoplayer.ui.movie.view.activity.MovieNewsActivity;
 import org.yczbj.ycvideoplayer.ui.movie.view.adapter.MovieNewsAdapter;
 import org.yczbj.ycvideoplayer.ui.video.view.adapter.VideoArticleAdapter;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 
 public class MovieNewsFragment extends BaseLazyFragment {
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
 
     private static final String TAG = "MovieNewsFragment";

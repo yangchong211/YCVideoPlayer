@@ -7,45 +7,45 @@ import android.widget.TextView;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 public class MeFragment extends BaseFragment implements View.OnClickListener {
 
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.tv_1)
+    @BindView(R.id.tv_1)
     TextView tv1;
-    @Bind(R.id.tv_2)
+    @BindView(R.id.tv_2)
     TextView tv2;
-    @Bind(R.id.tv_3)
+    @BindView(R.id.tv_3)
     TextView tv3;
-    @Bind(R.id.tv_4)
+    @BindView(R.id.tv_4)
     TextView tv4;
-    @Bind(R.id.tv_5)
+    @BindView(R.id.tv_5)
     TextView tv5;
-    @Bind(R.id.tv_6)
+    @BindView(R.id.tv_6)
     TextView tv6;
-    @Bind(R.id.tv_7)
+    @BindView(R.id.tv_7)
     TextView tv7;
-    @Bind(R.id.tv_8)
+    @BindView(R.id.tv_8)
     TextView tv8;
-    @Bind(R.id.tv_9)
+    @BindView(R.id.tv_9)
     TextView tv9;
-    @Bind(R.id.tv_10)
+    @BindView(R.id.tv_10)
     TextView tv10;
-    @Bind(R.id.tv_11)
+    @BindView(R.id.tv_11)
     TextView tv11;
-    @Bind(R.id.tv_12)
+    @BindView(R.id.tv_12)
     TextView tv12;
-    @Bind(R.id.tv_13)
+    @BindView(R.id.tv_13)
     TextView tv13;
-    @Bind(R.id.tv_14)
+    @BindView(R.id.tv_14)
     TextView tv14;
-    @Bind(R.id.tv_15)
+    @BindView(R.id.tv_15)
     TextView tv15;
-    @Bind(R.id.tv_16)
+    @BindView(R.id.tv_16)
     TextView tv16;
 
     @Override

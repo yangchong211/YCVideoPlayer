@@ -16,7 +16,8 @@ import org.yczbj.ycvideoplayer.util.SettingUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
+
 
 /**
  * @author yc
@@ -25,9 +26,9 @@ import butterknife.Bind;
 public class VideoFragment extends BaseFragment {
 
 
-    @Bind(R.id.tab_layout)
+    @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     ViewPager viewPager;
 
     private String categoryId[] = Utils.getContext().getResources().getStringArray(R.array.mobile_video_id);

@@ -30,6 +30,7 @@ import org.yczbj.ycvideoplayer.base.mvp2.BaseMVPActivity;
 import org.yczbj.ycvideoplayer.ui.video.model.bean.MultiNewsArticleDataBean;
 import org.yczbj.ycvideoplayer.ui.video.model.bean.VideoContentBean;
 import org.yczbj.ycvideoplayer.ui.video.view.adapter.VideoArticleAdapter;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnPlayerTypeListener;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
@@ -39,7 +40,7 @@ import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
 import java.util.Random;
 import java.util.zip.CRC32;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -56,7 +57,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class VideoContentActivity extends BaseMVPActivity {
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
 
     public static final String TAG = "VideoContentActivity";
@@ -247,6 +248,8 @@ public class VideoContentActivity extends BaseMVPActivity {
                             case R.id.btn_4:
                                 videoPlayer.restart();
                                 break;
+                                default:
+                                    break;
                         }
                     }
                 };
@@ -276,6 +279,29 @@ public class VideoContentActivity extends BaseMVPActivity {
             @Override
             public void onBackClick() {
                 onBackPressed();
+            }
+        });
+        controller.setOnPlayerTypeListener(new OnPlayerTypeListener() {
+            /**
+             * 切换到全屏播放监听
+             */
+            @Override
+            public void onFullScreen() {
+                LogUtils.e("setOnPlayerTypeListener"+"onFullScreen");
+            }
+            /**
+             * 切换到小窗口播放监听
+             */
+            @Override
+            public void onTinyWindow() {
+                LogUtils.e("setOnPlayerTypeListener"+"onTinyWindow");
+            }
+            /**
+             * 切换到正常播放监听
+             */
+            @Override
+            public void onNormal() {
+                LogUtils.e("setOnPlayerTypeListener"+"onNormal");
             }
         });
         //设置视频控制器

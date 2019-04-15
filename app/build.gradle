@@ -1,17 +1,15 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "org.yczbj.ycvideoplayer"
         minSdkVersion 17
-        targetSdkVersion 27
-        versionCode 11
-        versionName "1.1.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        targetSdkVersion 28
+        versionCode 28
+        versionName "2.8.0"
         // dex突破65535的限制
         multiDexEnabled true
         ndk {
@@ -32,60 +30,83 @@ android {
         exclude 'META-INF/rxjava.properties'
     }
 
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+
+    //jdk1.8
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     //官方库
-    compile 'com.android.support:appcompat-v7:27.1.0'
-    compile 'com.android.support:recyclerview-v7:27.1.0'
-    compile 'com.android.support:design:27.1.0'
-    compile 'com.android.support:cardview-v7:27.1.0'
-    compile 'com.android.support:support-annotations:25.3.1'
-    compile 'com.android.support:multidex:1.0.1'
+    implementation ('com.android.support:appcompat-v7:28.0.0'){
+        exclude module: 'support-v4'
+    }
+    implementation ('com.android.support:recyclerview-v7:28.0.0'){
+        exclude module: 'support-v4'
+    }
+    implementation ('com.android.support:design:28.0.0'){
+        exclude module: 'support-v4'
+    }
+    implementation ('com.android.support:cardview-v7:28.0.0'){
+        exclude module: 'support-v4'
+    }
+    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation 'com.android.support:multidex:1.0.1'
 
     //网络请求retrofit2+Rx
-    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     //compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     //compile 'io.reactivex:rxandroid:1.2.1'
     //compile 'io.reactivex:rxjava:1.2.3'
     // RxJava 2
-    compile 'io.reactivex.rxjava2:rxjava:2.1.3'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     //注解
-    compile 'com.jakewharton:butterknife:7.0.1'                     //黄牛刀
-    compile 'com.google.dagger:dagger:2.13'                         //注解
-    apt 'com.google.dagger:dagger-compiler:2.13'
-
+    implementation 'com.jakewharton:butterknife:8.8.1'                     //黄牛刀
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //其他库
-    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.0@aar'      //导航栏
-    compile 'com.blankj:utilcode:1.7.1'                             //工具类
-    compile 'com.squareup.picasso:picasso:2.5.2'                    //图片
-    compile 'com.github.bumptech.glide:glide:3.7.0'                 //谷歌图片加载库
-    compile 'jp.wasabeef:glide-transformations:2.0.1'
-    compile('com.alibaba.android:vlayout:1.2.2@aar') {              //阿里巴巴UI
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.0@aar'      //导航栏
+    implementation 'com.blankj:utilcode:1.7.1'                             //工具类
+    implementation 'com.squareup.picasso:picasso:2.5.2'                    //图片
+    implementation 'com.github.bumptech.glide:glide:3.7.0'                 //谷歌图片加载库
+    implementation 'jp.wasabeef:glide-transformations:2.0.1'
+    implementation('com.alibaba.android:vlayout:1.2.2@aar') {              //阿里巴巴UI
         transitive = true
+        exclude module: 'support-v4'
     }
-    compile 'com.liulishuo.filedownloader:library:1.6.9'            //下载框架
-    compile 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'             //RxLifecycle
-    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
-    compile 'me.drakeet.multitype:multitype:3.4.0'                  //简化版 Adapter
-    compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
+    implementation 'com.liulishuo.filedownloader:library:1.6.9'            //下载框架
+    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'             //RxLifecycle
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+    implementation 'me.drakeet.multitype:multitype:3.4.0'                  //简化版 Adapter
+    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
 
     //自己封装的库，都有对应的案例项目【欢迎star】：https://github.com/yangchong211
-    compile 'cn.yc:YCUtilsLib:1.6.2'                                //公共类
-    compile 'cn.yc:YCStateLib:1.1'                                  //状态管理
-    compile 'cn.yc:YCBannerLib:1.2'                                 //轮播图
-    compile 'org.yczbj:YCRefreshViewLib:2.4'                        //RecyclerView封装
-    compile 'cn.yc:YCBaseAdapterLib:1.3'                            //adapter封装
-    compile 'cn.yc:YCDialogLib:3.5'                                 //弹窗
-    compile 'cn.yc:YCProgressLib:1.2'                               //进度条
-    compile 'cn.yc:YCVideoPlayerLib:2.6.3'                            //播放器
-//    compile project(':YCVideoPlayerLib')
-    compile 'cn.yc:YCStatusBarLib:1.4.0'                              //状态栏
+    implementation 'cn.yc:YCUtilsLib:1.6.2'                                //公共类
+    implementation 'cn.yc:YCStateLib:1.1'                                  //状态管理
+    implementation 'cn.yc:YCBannerLib:1.2'                                 //轮播图
+    implementation 'org.yczbj:YCRefreshViewLib:2.4'                        //RecyclerView封装
+    implementation 'cn.yc:YCBaseAdapterLib:1.3'                            //adapter封装
+    implementation 'cn.yc:YCDialogLib:3.5'                                 //弹窗
+    implementation 'cn.yc:YCProgressLib:1.2'                               //进度条
+    implementation 'cn.yc:YCVideoPlayerLib:2.6.4'                            //播放器
+//    implementation project(':YCVideoPlayerLib')
+    implementation 'cn.yc:YCStatusBarLib:1.4.0'                              //状态栏
 }

@@ -52,7 +52,7 @@ import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 /**
@@ -66,11 +66,11 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
  */
 public class VideoPlayerMeActivity extends BaseActivity implements VideoPlayerMeContract.View{
 
-    @Bind(R.id.video_player)
+    @BindView(R.id.video_player)
     VideoPlayer videoPlayer;
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton fab;
 
     private VideoPlayerMeContract.Presenter presenter = new VideoPlayerMePresenter(this);

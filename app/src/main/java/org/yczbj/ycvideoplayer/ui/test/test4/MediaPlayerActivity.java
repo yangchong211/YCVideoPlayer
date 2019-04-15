@@ -12,8 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.util.binding.BindView;
 import org.yczbj.ycvideoplayer.util.binding.ViewBinder;
+
+import butterknife.BindView;
 
 
 /**

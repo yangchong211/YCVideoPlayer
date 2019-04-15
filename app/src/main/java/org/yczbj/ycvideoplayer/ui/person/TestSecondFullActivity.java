@@ -15,7 +15,7 @@ import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoControlListener;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 
@@ -25,11 +25,11 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 public class TestSecondFullActivity extends BaseActivity implements View.OnClickListener {
 
 
-    @Bind(R.id.nice_video_player)
+    @BindView(R.id.nice_video_player)
     VideoPlayer videoPlayer;
-    @Bind(R.id.btn_tiny_1)
+    @BindView(R.id.btn_tiny_1)
     Button btnTiny1;
-    @Bind(R.id.btn_tiny_2)
+    @BindView(R.id.btn_tiny_2)
     Button btnTiny2;
 
     @Override

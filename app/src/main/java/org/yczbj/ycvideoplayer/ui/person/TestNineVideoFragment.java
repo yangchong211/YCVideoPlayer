@@ -13,14 +13,15 @@ import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
+
 
 /**
  * 如果你需要在播放的时候按下Home键能暂停，回调此Fragment又继续的话，需要继承自CompatHomeKeyFragment
  */
 public class TestNineVideoFragment extends BaseFragment {
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
 

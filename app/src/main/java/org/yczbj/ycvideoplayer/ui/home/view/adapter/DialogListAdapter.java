@@ -15,7 +15,7 @@ import org.yczbj.ycvideoplayer.ui.home.model.DialogListBean;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -79,15 +79,15 @@ public class DialogListAdapter extends RecyclerView.Adapter<DialogListAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView tvTitle;
-        @Bind(R.id.tv_time)
+        @BindView(R.id.tv_time)
         TextView tvTime;
-        @Bind(R.id.iv_download)
+        @BindView(R.id.iv_download)
         ImageView ivDownload;
-        @Bind(R.id.circle_pb)
+        @BindView(R.id.circle_pb)
         CircleProgressbar circlePb;
-        @Bind(R.id.tv_video_size)
+        @BindView(R.id.tv_video_size)
         TextView tvVideoSize;
 
 

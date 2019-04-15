@@ -50,7 +50,7 @@ import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoBackListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 /**
@@ -65,11 +65,11 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 public class VideoPlayerJzActivity extends BaseActivity implements VideoPlayerJzContract.View {
 
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton fab;
-    @Bind(R.id.video_player)
+    @BindView(R.id.video_player)
     VideoPlayer videoPlayer;
 
 

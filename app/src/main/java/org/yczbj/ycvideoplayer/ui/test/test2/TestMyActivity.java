@@ -15,7 +15,7 @@ import org.yczbj.ycvideoplayer.ui.person.TestNineVideoActivity;
 import org.yczbj.ycvideoplayer.ui.person.TestSevenVideoActivity;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 /**
@@ -29,17 +29,17 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 public class TestMyActivity extends BaseActivity implements View.OnClickListener {
 
 
-    @Bind(R.id.btn_my_1)
+    @BindView(R.id.btn_my_1)
     Button btnMy1;
-    @Bind(R.id.btn_my_2)
+    @BindView(R.id.btn_my_2)
     Button btnMy2;
-    @Bind(R.id.btn_my_3)
+    @BindView(R.id.btn_my_3)
     Button btnMy3;
-    @Bind(R.id.btn_my_4)
+    @BindView(R.id.btn_my_4)
     Button btnMy4;
-    @Bind(R.id.btn_my_5)
+    @BindView(R.id.btn_my_5)
     Button btnMy5;
-    @Bind(R.id.btn_my_6)
+    @BindView(R.id.btn_my_6)
     Button btnMy6;
 
 

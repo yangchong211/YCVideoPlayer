@@ -18,7 +18,8 @@ import org.yczbj.ycvideoplayer.util.SettingUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
+
 
 /**
  * Created by yc on 2018/2/28.
@@ -27,9 +28,9 @@ import butterknife.Bind;
 
 public class NewsFragment extends BaseLazyFragment {
 
-    @Bind(R.id.tab_layout)
+    @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     ViewPager viewPager;
     private MainActivity activity;
 

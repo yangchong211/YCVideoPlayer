@@ -20,7 +20,7 @@ import org.yczbj.ycvideoplayerlib.window.MoveType;
 import org.yczbj.ycvideoplayerlib.window.WindowScreen;
 import org.yczbj.ycvideoplayerlib.window.WindowUtil;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 /**
@@ -28,11 +28,11 @@ import butterknife.Bind;
  */
 public class TestFourWindowActivity extends BaseActivity implements View.OnClickListener {
 
-    @Bind(R.id.video_player)
+    @BindView(R.id.video_player)
     VideoPlayer videoPlayer;
-    @Bind(R.id.btn_1)
+    @BindView(R.id.btn_1)
     Button btn1;
-    @Bind(R.id.btn_2)
+    @BindView(R.id.btn_2)
     Button btn2;
 
     @Override

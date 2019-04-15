@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.BatteryManager;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
@@ -26,10 +27,11 @@ import android.widget.Toast;
 import org.yczbj.ycvideoplayerlib.dialog.ChangeClarityDialog;
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.dialog.VideoClarity;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnPlayerTypeListener;
 import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
 import org.yczbj.ycvideoplayerlib.utils.VideoPlayerUtils;
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.inter.InterVideoPlayer;
+import org.yczbj.ycvideoplayerlib.inter.player.InterVideoPlayer;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnClarityChangedListener;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnCompletedListener;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnPlayOrPauseListener;
@@ -226,6 +228,30 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         super(context);
         mContext = context;
         init();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+    }
+
+
+    /**
+     * 注意，在view被销毁调用该方法后，手动销毁动画
+     */
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            boolean animating = pbLoadingRing.isAnimating();
+            if (animating){
+                pbLoadingRing.clearAnimation();
+            }
+            boolean ringAnimating = pbLoadingQq.isAnimating();
+            if (ringAnimating){
+                pbLoadingQq.clearAnimation();
+            }
+        }
     }
 
     /**
@@ -756,20 +782,23 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             case ConstantKeys.PlayMode.MODE_NORMAL:
                 mFlLock.setVisibility(View.GONE);
                 mBack.setVisibility(View.VISIBLE);
-                mFullScreen.setImageResource(R.drawable.ic_player_enlarge);
+                mFullScreen.setImageResource(R.drawable.ic_player_open);
                 mFullScreen.setVisibility(View.VISIBLE);
                 mClarity.setVisibility(View.GONE);
                 setTopVisibility(mIsTopAndBottomVisibility);
                 mLlHorizontal.setVisibility(View.GONE);
                 unRegisterBatterReceiver();
                 mIsLock = false;
+                if (mOnPlayerTypeListener!=null){
+                    mOnPlayerTypeListener.onNormal();
+                }
                 break;
             //全屏模式
             case ConstantKeys.PlayMode.MODE_FULL_SCREEN:
                 mFlLock.setVisibility(View.VISIBLE);
                 mBack.setVisibility(View.VISIBLE);
-                mFullScreen.setVisibility(View.GONE);
-                mFullScreen.setImageResource(R.drawable.ic_player_shrink);
+                mFullScreen.setVisibility(View.VISIBLE);
+                mFullScreen.setImageResource(R.drawable.ic_player_close);
                 if (clarities != null && clarities.size() > 1) {
                     mClarity.setVisibility(View.VISIBLE);
                 }
@@ -782,6 +811,9 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                     mLlHorizontal.setVisibility(View.GONE);
                 }
                 registerBatterReceiver();
+                if (mOnPlayerTypeListener!=null){
+                    mOnPlayerTypeListener.onFullScreen();
+                }
                 break;
             //小窗口模式
             case ConstantKeys.PlayMode.MODE_TINY_WINDOW:
@@ -789,6 +821,9 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mBack.setVisibility(View.VISIBLE);
                 mClarity.setVisibility(View.GONE);
                 mIsLock = false;
+                if (mOnPlayerTypeListener!=null){
+                    mOnPlayerTypeListener.onTinyWindow();
+                }
                 break;
             default:
                 break;
@@ -812,7 +847,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mFlLock.setVisibility(View.GONE);
         mImage.setVisibility(View.VISIBLE);
         mBottom.setVisibility(View.GONE);
-        mFullScreen.setImageResource(R.drawable.ic_player_enlarge);
+        mFullScreen.setImageResource(R.drawable.ic_player_open);
         mTop.setVisibility(View.VISIBLE);
         mBack.setVisibility(View.VISIBLE);
 
@@ -1192,5 +1227,13 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         this.mOnCompletedListener = listener;
     }
 
+
+    /**
+     * 视频播放模式监听
+     */
+    private OnPlayerTypeListener mOnPlayerTypeListener;
+    public void setOnPlayerTypeListener(OnPlayerTypeListener listener){
+        this.mOnPlayerTypeListener = listener;
+    }
 
 }

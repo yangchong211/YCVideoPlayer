@@ -14,7 +14,7 @@ import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.ui.movie.model.MovieDetailBean;
 import org.yczbj.ycvideoplayer.util.ImageUtil;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -32,15 +32,15 @@ public class MovieDetailAdapter extends RecyclerArrayAdapter<MovieDetailBean.Ret
     public class MovieViewHolder extends BaseViewHolder<MovieDetailBean.RetBean.ListBean.ChildListBean> {
 
 
-        @Bind(R.id.iv_movie_photo)
+        @BindView(R.id.iv_movie_photo)
         ImageView ivMoviePhoto;
-        @Bind(R.id.tv_movie_title)
+        @BindView(R.id.tv_movie_title)
         TextView tvMovieTitle;
-        @Bind(R.id.tv_movie_directors)
+        @BindView(R.id.tv_movie_directors)
         TextView tvMovieDirectors;
-        @Bind(R.id.tv_movie_casts)
+        @BindView(R.id.tv_movie_casts)
         TextView tvMovieCasts;
-        @Bind(R.id.tv_movie_genres)
+        @BindView(R.id.tv_movie_genres)
         TextView tvMovieGenres;
 
         MovieViewHolder(ViewGroup parent) {

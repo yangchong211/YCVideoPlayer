@@ -19,7 +19,7 @@ import org.yczbj.ycvideoplayerlib.dialog.VideoClarity;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 /**
@@ -28,11 +28,11 @@ import butterknife.Bind;
 public class TestFiveVideoActivity extends BaseActivity implements View.OnClickListener {
 
 
-    @Bind(R.id.nice_video_player)
+    @BindView(R.id.nice_video_player)
     VideoPlayer mVideoPlayer;
-    @Bind(R.id.btn_tiny_1)
+    @BindView(R.id.btn_tiny_1)
     Button btnTiny1;
-    @Bind(R.id.btn_tiny_2)
+    @BindView(R.id.btn_tiny_2)
     Button btnTiny2;
 
     @Override

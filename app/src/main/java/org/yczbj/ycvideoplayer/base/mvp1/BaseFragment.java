@@ -2,6 +2,7 @@ package org.yczbj.ycvideoplayer.base.mvp1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,9 +30,9 @@ public abstract class BaseFragment<T extends BasePresenter>  extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getContentView(), container , false);
-        ButterKnife.bind(this, view);
+        ButterKnife.bind(this,view);
         return view;
     }
 
@@ -62,7 +63,6 @@ public abstract class BaseFragment<T extends BasePresenter>  extends Fragment {
         if (mPresenter != null){
             mPresenter.unSubscribe();
         }
-        ButterKnife.unbind(this);
         initLeakCanary();             //测试内存泄漏，正式一定要隐藏
     }
 

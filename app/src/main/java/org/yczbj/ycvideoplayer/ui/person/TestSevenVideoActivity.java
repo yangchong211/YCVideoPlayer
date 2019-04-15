@@ -13,7 +13,7 @@ import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 /**
@@ -22,7 +22,7 @@ import butterknife.Bind;
 public class TestSevenVideoActivity extends BaseActivity {
 
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
     @Override

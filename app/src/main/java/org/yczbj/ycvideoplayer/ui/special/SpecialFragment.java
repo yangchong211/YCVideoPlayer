@@ -41,7 +41,8 @@ import org.yczbj.ycvideoplayer.ui.special.view.SpecialAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
+
 
 /**
  * Description:
@@ -52,7 +53,7 @@ import butterknife.Bind;
 public class SpecialFragment extends BaseFragment implements SpecialContract.View {
 
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
     private MainActivity activity;
 

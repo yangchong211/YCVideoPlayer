@@ -33,7 +33,7 @@ import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 /**
@@ -48,9 +48,9 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 public class MainActivity extends BaseActivity implements MainContract.View {
 
 
-    @Bind(R.id.ctl_table)
+    @BindView(R.id.ctl_table)
     CommonTabLayout ctlTable;
-    @Bind(R.id.fl_main)
+    @BindView(R.id.fl_main)
     FrameLayout flMain;
 
     private static final String POSITION = "position";

@@ -66,8 +66,8 @@
         android:paddingRight="4dp" />
     <ImageView
         android:id="@+id/full_screen"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/ic_player_enlarge"/>
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_player_open"/>
 
 </LinearLayout>

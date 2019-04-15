@@ -8,13 +8,13 @@ import android.widget.Button;
 
 import org.yczbj.ycvideoplayer.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EmptyActivity extends AppCompatActivity {
 
 
-    @Bind(R.id.jump_other)
+    @BindView(R.id.jump_other)
     Button jumpOther;
 
     @Override

@@ -54,7 +54,6 @@
                     android:layout_centerVertical="true"
                     android:padding="4dp"
                     android:scaleType="center"
-                    app:srcCompat="@drawable/ic_dots_grey_24dp"
                     tools:ignore="ContentDescription,VectorDrawableCompat"/>
             </RelativeLayout>
 

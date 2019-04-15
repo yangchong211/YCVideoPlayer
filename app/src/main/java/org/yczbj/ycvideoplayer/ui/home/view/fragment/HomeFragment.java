@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 /**
@@ -50,13 +50,13 @@ import butterknife.Bind;
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
-    @Bind(R.id.ll_search)
+    @BindView(R.id.ll_search)
     LinearLayout llSearch;
-    @Bind(R.id.ll_bind)
+    @BindView(R.id.ll_bind)
     LinearLayout llBind;
 
     private MainActivity activity;

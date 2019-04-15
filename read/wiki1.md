@@ -13,6 +13,8 @@
 - 11.常见api说明
 
 
+
+
 ### 01.最简单的播放
 - 必须需要的四步骤代码如下所示
     ```
@@ -448,6 +450,31 @@
         @Override
         public void onVideoControlClick(int type) {
 
+        }
+    });
+
+    //视频播放模式监听
+    controller.setOnPlayerTypeListener(new OnPlayerTypeListener() {
+        /**
+         * 切换到全屏播放监听
+         */
+        @Override
+        public void onFullScreen() {
+            LogUtils.e("setOnPlayerTypeListener"+"onFullScreen");
+        }
+        /**
+         * 切换到小窗口播放监听
+         */
+        @Override
+        public void onTinyWindow() {
+            LogUtils.e("setOnPlayerTypeListener"+"onTinyWindow");
+        }
+        /**
+         * 切换到正常播放监听
+         */
+        @Override
+        public void onNormal() {
+            LogUtils.e("setOnPlayerTypeListener"+"onNormal");
         }
     });
     ```
