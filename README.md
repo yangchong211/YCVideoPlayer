@@ -43,7 +43,6 @@
 
 
 
-
 ### 1.视频具有的功能
 - [老版本详细ReadMe，原文档](https://github.com/yangchong211/YCVideoPlayer/blob/master/read/README.md)
 - [demo中的apk下载地址]()
