@@ -89,7 +89,7 @@
 #### 2.1 关于gradle引用说明
 - 如下所示
     ```
-    compile 'cn.yc:YCVideoPlayerLib:2.6.4'
+    compile 'cn.yc:YCVideoPlayerLib:2.6.6'
     ```
 
 #### 2.2 添加布局
@@ -302,7 +302,6 @@
 
 
 ### 7.性能优化和库大小
-
 
 
 
