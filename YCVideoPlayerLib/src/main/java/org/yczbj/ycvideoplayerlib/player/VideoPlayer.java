@@ -1,3 +1,18 @@
+/*
+Copyright 2017 yangchong211（github.com/yangchong211）
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package org.yczbj.ycvideoplayerlib.player;
 
 import android.content.Context;
@@ -149,7 +164,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
      * @param headers           请求header.
      */
     @Override
-    public void setUp(String url, Map<String, String> headers) {
+    public final void setUp(String url, Map<String, String> headers) {
         if(url==null || url.length()==0){
             VideoLogUtil.d("设置的视频链接不能为空");
         }
@@ -174,6 +189,9 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
         mContainer.addView(mController, params);
     }
 
+    public AbsVideoPlayerController getController(){
+        return mController;
+    }
 
     /**
      * 设置播放器类型，必须设置
@@ -270,7 +288,8 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
             mCurrentState = ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING;
             mController.onPlayStateChanged(mCurrentState);
             VideoLogUtil.d("STATE_BUFFERING_PLAYING");
-        } else if (mCurrentState == ConstantKeys.CurrentState.STATE_COMPLETED || mCurrentState == ConstantKeys.CurrentState.STATE_ERROR) {
+        } else if (mCurrentState == ConstantKeys.CurrentState.STATE_COMPLETED
+                || mCurrentState == ConstantKeys.CurrentState.STATE_ERROR) {
             //如果是完成播放或者播放错误，则重新播放
             mMediaPlayer.reset();
             openMediaPlayer();
@@ -751,7 +770,8 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     /**
      * 设置视频播放完成监听事件
      */
-    private IMediaPlayer.OnCompletionListener mOnCompletionListener = new IMediaPlayer.OnCompletionListener() {
+    private IMediaPlayer.OnCompletionListener mOnCompletionListener =
+            new IMediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(IMediaPlayer mp) {
             mCurrentState = ConstantKeys.CurrentState.STATE_COMPLETED;
@@ -765,17 +785,25 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     /**
      * 设置视频缓冲更新监听事件
      */
-    private IMediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener = new IMediaPlayer.OnBufferingUpdateListener() {
+    private IMediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener =
+            new IMediaPlayer.OnBufferingUpdateListener() {
+        final int MAX_PERCENT = 97;
         @Override
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
             mBufferPercentage = percent;
+            //播放完成后再次播放getBufferPercentage获取的值也不准确，94、95，达不到100
+            if (percent>MAX_PERCENT){
+                mBufferPercentage = 100;
+            }
+            VideoLogUtil.d("onBufferingUpdate ——> " + percent);
         }
     };
 
     /**
      * 设置视频seek完成监听事件
      */
-    private IMediaPlayer.OnSeekCompleteListener mOnSeekCompleteListener = new IMediaPlayer.OnSeekCompleteListener() {
+    private IMediaPlayer.OnSeekCompleteListener mOnSeekCompleteListener =
+            new IMediaPlayer.OnSeekCompleteListener() {
         @Override
         public void onSeekComplete(IMediaPlayer iMediaPlayer) {
 

@@ -7,8 +7,6 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.blankj.utilcode.util.Utils;
-import com.liulishuo.filedownloader.FileDownloader;
-import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
 
 import org.yczbj.ycvideoplayer.BuildConfig;
 import org.yczbj.ycvideoplayer.util.LogUtils;
@@ -69,7 +67,6 @@ public class BaseApplication extends Application {
         }else {
             VideoLogUtil.setIsLog(false);
         }
-        initDownLoadLib();
     }
 
     /**
@@ -118,23 +115,6 @@ public class BaseApplication extends Application {
      */
     private void initUtils() {
         Utils.init(this);
-    }
-
-
-    /**
-     * 初始化下载库
-     */
-    private void initDownLoadLib() {
-        FileDownloader.setupOnApplicationOnCreate(BaseApplication.getInstance())
-                .connectionCreator(new FileDownloadUrlConnection
-                        .Creator(new FileDownloadUrlConnection.Configuration()
-                        .connectTimeout(15_000)
-                        .readTimeout(15_000)
-                        .proxy(Proxy.NO_PROXY)
-                ))
-                .commit();
-        //最简单的初始化
-        //FileDownloader.setup(instance);
     }
 
 

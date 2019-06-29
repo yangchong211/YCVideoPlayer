@@ -243,20 +243,8 @@
 
 
 ### 5.运行的效果展示
-![image](http://p2mqszpjf.bkt.clouddn.com/ycVideoPlayer2.png)
-![image](http://p0u62g00n.bkt.clouddn.com/Screenshot_2018-01-05-13-21-49.jpg)
-![image](http://p2mqszpjf.bkt.clouddn.com/Screenshot_2018-01-16-11-22-43.jpg)
-![image](http://p2mqszpjf.bkt.clouddn.com/Screenshot_2018-01-16-11-24-31.jpg)
-![image](http://p2mqszpjf.bkt.clouddn.com/Screenshot_20180116-113446.png)
-![image](http://p2mqszpjf.bkt.clouddn.com/Screenshot_20180116-113706.png)
-![image](http://p2mqszpjf.bkt.clouddn.com/Screenshot_20180116-113721.png)
-![image](http://p2mqszpjf.bkt.clouddn.com/Screenshot_20180116-113732.png)
-![image](http://p2mqszpjf.bkt.clouddn.com/Screenshot_20180116-113802.png)
-![image](http://p2mqszpjf.bkt.clouddn.com/Screenshot_20180116-113840.png)
-![image](http://p2mqszpjf.bkt.clouddn.com/Screenshot_20180116-135824.png)
-![image](https://upload-images.jianshu.io/upload_images/4432347-c2b61a83c1aaecba.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![image](https://upload-images.jianshu.io/upload_images/4432347-f4776dfc42c94ebd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![image](https://upload-images.jianshu.io/upload_images/4432347-1b5870de5a3d3318.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
 
 
 ### 6.版本更新说明
@@ -334,11 +322,13 @@
 
 #### 8.2 关于LICENSE
 ```
+Copyright 2017 yangchong211（github.com/yangchong211）
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-   http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,

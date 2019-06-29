@@ -13,7 +13,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
-import com.liulishuo.filedownloader.FileDownloader;
 import com.ns.yc.ycutilslib.activityManager.AppManager;
 import com.ns.yc.ycutilslib.managerLeak.InputMethodManagerLeakUtils;
 
@@ -21,9 +20,7 @@ import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.Constant;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayer.base.BaseFragmentFactory;
-import org.yczbj.ycvideoplayer.download.TasksManager;
-import org.yczbj.ycvideoplayer.ui.movie.view.fragment.MovieFragment;
-import org.yczbj.ycvideoplayer.ui.news.NewsFragment;
+import org.yczbj.ycvideoplayer.ui.news.view.fragment.NewsFragment;
 import org.yczbj.ycvideoplayer.ui.video.view.fragment.VideoFragment;
 import org.yczbj.ycvideoplayer.ui.home.view.fragment.HomeFragment;
 import org.yczbj.ycvideoplayer.ui.main.contract.MainContract;
@@ -56,7 +53,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private static final String POSITION = "position";
     private static final String SELECT_ITEM = "selectItem";
     private static final int FRAGMENT_HOME = 0;
-    private static final int FRAGMENT_MOVIE = 1;
     private static final int FRAGMENT_VIDEO = 2;
     private static final int FRAGMENT_ME = 3;
     private static final int FRAGMENT_NEWS = 4;
@@ -68,7 +64,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private Bundle savedInstanceState;
     private HomeFragment homeFragment;
     private VideoFragment videoFragment;
-    private MovieFragment mMovieFragment;
     private MeFragment meFragment;
     private NewsFragment newsFragment;
 
@@ -145,10 +140,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private void initTabLayout() {
         ArrayList<CustomTabEntity> mTabEntities = presenter.getTabEntity();
         ctlTable.setTabData(mTabEntities);
-        //ctlTable.showDot(3);                   //显示红点
-        //ctlTable.showMsg(2,5);                 //显示未读信息
-        //ctlTable.showMsg(1,3);                 //显示未读信息
-        //ctlTable.setMsgMargin(1, 2, 2);        //显示红点信息位置
         ctlTable.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
@@ -161,14 +152,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                         doubleClick(FRAGMENT_NEWS);
                         break;
                     case 2:
-                        showFragment(FRAGMENT_MOVIE);
-                        doubleClick(FRAGMENT_MOVIE);
-                        break;
-                    case 3:
                         showFragment(FRAGMENT_VIDEO);
                         doubleClick(FRAGMENT_VIDEO);
                         break;
-                    case 4:
+                    case 3:
                         showFragment(FRAGMENT_ME);
                         break;
                     default:
@@ -189,7 +176,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         if(savedInstanceState!=null){
             homeFragment = BaseFragmentFactory.getInstance().getHomeFragment();
             newsFragment = BaseFragmentFactory.getInstance().getNewsFragment();
-            mMovieFragment = BaseFragmentFactory.getInstance().getMovieFragment();
             videoFragment = BaseFragmentFactory.getInstance().getVideoFragment();
             meFragment = BaseFragmentFactory.getInstance().getMeFragment();
             int index = savedInstanceState.getInt(POSITION);
@@ -216,14 +202,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                     ft.add(R.id.fl_main, homeFragment, HomeFragment.class.getName());
                 } else {
                     ft.show(homeFragment);
-                }
-                break;
-            case FRAGMENT_MOVIE:
-                if (mMovieFragment == null) {
-                    mMovieFragment = BaseFragmentFactory.getInstance().getMovieFragment();
-                    ft.add(R.id.fl_main, mMovieFragment, MovieFragment.class.getName());
-                } else {
-                    ft.show(mMovieFragment);
                 }
                 break;
             case FRAGMENT_VIDEO:
@@ -265,9 +243,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         if (newsFragment != null) {
             setHide(ft,newsFragment);
         }
-        if (mMovieFragment != null) {
-            setHide(ft,mMovieFragment);
-        }
         if (videoFragment != null) {
             setHide(ft,videoFragment);
         }
@@ -292,9 +267,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                     break;
                 case FRAGMENT_VIDEO:
                     videoFragment.onDoubleClick();
-                    break;
-                case FRAGMENT_MOVIE:
-
                     break;
                 default:
                     break;
@@ -321,9 +293,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                 ToastUtils.showShort("再按一次退出");
                 exitTime = System.currentTimeMillis();
             } else {
-                // 关闭文件下载
-                TasksManager.getImpl().onDestroy();
-                FileDownloader.getImpl().pauseAll();
                 finish();
                 AppManager.getAppManager().appExit(false);
             }

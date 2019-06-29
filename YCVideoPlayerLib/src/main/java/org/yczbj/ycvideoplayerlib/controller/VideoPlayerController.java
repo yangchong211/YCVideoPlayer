@@ -1,3 +1,18 @@
+/*
+Copyright 2017 yangchong211（github.com/yangchong211）
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package org.yczbj.ycvideoplayerlib.controller;
 
 import android.annotation.SuppressLint;
@@ -28,6 +43,8 @@ import org.yczbj.ycvideoplayerlib.dialog.ChangeClarityDialog;
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.dialog.VideoClarity;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnPlayerTypeListener;
+import org.yczbj.ycvideoplayerlib.receiver.BatterReceiver;
+import org.yczbj.ycvideoplayerlib.receiver.NetChangedReceiver;
 import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
 import org.yczbj.ycvideoplayerlib.utils.VideoPlayerUtils;
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
@@ -153,76 +170,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 网络变化监听广播，在网络变更时进行对应处理
      */
     private NetChangedReceiver netChangedReceiver;
-    private class NetChangedReceiver extends BroadcastReceiver {
-        private String getConnectionType(int type) {
-            String connType = "";
-            if (type == ConnectivityManager.TYPE_MOBILE) {
-                connType = "3G，4G网络数据";
-            } else if (type == ConnectivityManager.TYPE_WIFI) {
-                connType = "WIFI网络";
-            }
-            return connType;
-        }
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // 监听网络连接，包括wifi和移动数据的打开和关闭,以及连接上可用的连接都会接到监听
-            if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
-                //获取联网状态的NetworkInfo对象
-                NetworkInfo info = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
-                if (info != null) {
-                    //如果当前的网络连接成功并且网络连接可用
-                    if (NetworkInfo.State.CONNECTED == info.getState() && info.isAvailable()) {
-                        if (info.getType() == ConnectivityManager.TYPE_WIFI ||
-                                info.getType() == ConnectivityManager.TYPE_MOBILE) {
-                            VideoLogUtil.i(getConnectionType(info.getType()) + "连上");
-                        }
-                    } else {
-                        VideoLogUtil.i(getConnectionType(info.getType()) + "断开");
-                        if(mVideoPlayer.isIdle()){
-                            mVideoPlayer.pause();
-                        }else {
-                            onPlayStateChanged(ConstantKeys.CurrentState.STATE_ERROR);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
     /**
      * 电池状态即电量变化广播接收器
      */
-    private BroadcastReceiver mBatterReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
-            if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
-                // 充电中
-                mBattery.setImageResource(R.drawable.battery_charging);
-            } else if (status == BatteryManager.BATTERY_STATUS_FULL) {
-                // 充电完成
-                mBattery.setImageResource(R.drawable.battery_full);
-            } else {
-                int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-                int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
-                int percentage = (int) (((float) level / scale) * 100);
-                if (percentage <= 10) {
-                    mBattery.setImageResource(R.drawable.battery_10);
-                } else if (percentage <= 20) {
-                    mBattery.setImageResource(R.drawable.battery_20);
-                } else if (percentage <= 50) {
-                    mBattery.setImageResource(R.drawable.battery_50);
-                } else if (percentage <= 80) {
-                    mBattery.setImageResource(R.drawable.battery_80);
-                } else if (percentage <= 100) {
-                    mBattery.setImageResource(R.drawable.battery_100);
-                }
-            }
-        }
-    };
-
+    private BroadcastReceiver mBatterReceiver;
 
     public VideoPlayerController(Context context) {
         super(context);
@@ -234,7 +185,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
     }
-
 
     /**
      * 注意，在view被销毁调用该方法后，手动销毁动画
@@ -289,6 +239,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      */
     private void registerBatterReceiver() {
         if (!hasRegisterBatteryReceiver) {
+            mBatterReceiver = new BatterReceiver();
             mContext.registerReceiver(mBatterReceiver, new IntentFilter(
                     Intent.ACTION_BATTERY_CHANGED));
             hasRegisterBatteryReceiver = true;
@@ -304,6 +255,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         if (hasRegisterBatteryReceiver) {
             mContext.unregisterReceiver(mBatterReceiver);
             hasRegisterBatteryReceiver = false;
+            VideoLogUtil.i("解绑电池监听广播");
         }
     }
 
@@ -311,8 +263,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 初始化操作
      */
     private void init() {
-        LayoutInflater.from(mContext).inflate(R.layout.custom_video_player,
-                this, true);
+        LayoutInflater.from(mContext).inflate(R.layout.custom_video_player, this, true);
         initFindViewById();
         initListener();
         registerNetChangedReceiver();
@@ -688,6 +639,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 break;
             //正在缓冲(播放器正在播放时，缓冲区数据不足，进行缓冲，缓冲区数据足够后恢复播放)
             case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
+                mError.setVisibility(View.GONE);
                 mLoading.setVisibility(View.VISIBLE);
                 mCenterStart.setVisibility(View.GONE);
                 mRestartPause.setImageResource(R.drawable.ic_player_pause);
@@ -733,6 +685,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mLength.setVisibility(View.GONE);
         //开启缓冲时更新网络加载速度
         startUpdateNetSpeedTimer();
+        startUpdateProgressTimer();
     }
 
 
@@ -870,7 +823,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         cancelUpdateNetSpeedTimer();
     }
 
-
     /**
      * 尽量不要在onClick中直接处理控件的隐藏、显示及各种UI逻辑。
      * UI相关的逻辑都尽量到{@link #onPlayStateChanged}和{@link #onPlayModeChanged}中处理.
@@ -938,8 +890,9 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             mClarityDialog.show();
         } else if (v == mRetry) {
             //点击重试
-            //不论是否记录播放位置，都是从零开始播放
             if(VideoPlayerUtils.isConnected(mContext)){
+                startPreparing();
+                //开始从此位置播放
                 mVideoPlayer.restart();
             }else {
                 Toast.makeText(mContext,"请检测是否有网络",Toast.LENGTH_SHORT).show();
@@ -1004,6 +957,40 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                     || mVideoPlayer.isBufferingPlaying() || mVideoPlayer.isBufferingPaused()) {
                 setTopBottomVisible(!topBottomVisible);
             }
+        }
+    }
+
+    /**
+     * 当电量发生变化的时候，在此方法中国你更新不同的电量状态的UI
+     *
+     * @param batterState 电量状态
+     */
+    @Override
+    public void onBatterStateChanged(@ConstantKeys.BatterMode int batterState) {
+        switch (batterState){
+            case ConstantKeys.BatterMode.BATTERY_10:
+                mBattery.setImageResource(R.drawable.battery_10);
+                break;
+            case ConstantKeys.BatterMode.BATTERY_20:
+                mBattery.setImageResource(R.drawable.battery_20);
+                break;
+            case ConstantKeys.BatterMode.BATTERY_50:
+                mBattery.setImageResource(R.drawable.battery_50);
+                break;
+            case ConstantKeys.BatterMode.BATTERY_80:
+                mBattery.setImageResource(R.drawable.battery_80);
+                break;
+            case ConstantKeys.BatterMode.BATTERY_100:
+                mBattery.setImageResource(R.drawable.battery_100);
+                break;
+            case ConstantKeys.BatterMode.BATTERY_FULL:
+                mBattery.setImageResource(R.drawable.battery_full);
+                break;
+            case ConstantKeys.BatterMode.BATTERY_CHARGING:
+                mBattery.setImageResource(R.drawable.battery_charging);
+                break;
+            default:
+                break;
         }
     }
 
@@ -1125,6 +1112,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         long tcpSpeed = mVideoPlayer.getTcpSpeed();
         VideoLogUtil.i("获取网络加载速度---------"+tcpSpeed);
     }
+
 
     /**
      * 显示视频播放位置

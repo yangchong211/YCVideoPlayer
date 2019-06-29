@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayer.ui.news;
+package org.yczbj.ycvideoplayer.ui.news.view.fragment;
 
 import android.content.Context;
 import android.support.design.widget.TabLayout;

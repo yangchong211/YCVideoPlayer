@@ -34,6 +34,10 @@ public class BaseDelegateAdapter extends DelegateAdapter.Adapter<BaseViewHolder>
         this.mViewTypeItem = viewTypeItem;
     }
 
+    public void setData(){
+
+    }
+
     @Override
     public LayoutHelper onCreateLayoutHelper() {
         return mLayoutHelper;

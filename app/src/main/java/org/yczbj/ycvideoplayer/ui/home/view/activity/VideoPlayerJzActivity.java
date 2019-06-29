@@ -33,14 +33,11 @@ import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.api.constant.ConstantVideo;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseActivity;
 import org.yczbj.ycvideoplayer.ui.home.contract.VideoPlayerJzContract;
-import org.yczbj.ycvideoplayer.ui.home.model.DialogListBean;
 import org.yczbj.ycvideoplayer.ui.home.model.VideoPlayerComment;
 import org.yczbj.ycvideoplayer.ui.home.model.VideoPlayerFavorite;
 import org.yczbj.ycvideoplayer.ui.home.presenter.VideoPlayerJzPresenter;
-import org.yczbj.ycvideoplayer.ui.home.view.adapter.DownloadVideoAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.NarrowImageAdapter;
 import org.yczbj.ycvideoplayer.ui.home.view.adapter.VideoPlayerMeAdapter;
-import org.yczbj.ycvideoplayer.util.AppUtil;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
@@ -237,7 +234,6 @@ public class VideoPlayerJzActivity extends BaseActivity implements VideoPlayerJz
                                 ToastUtil.showToast(VideoPlayerJzActivity.this, "收藏视频");
                                 break;
                             case R.id.iv_player_download:
-                                showDownloadDialog();
                                 break;
                             case R.id.iv_player_share:
                                 ToastUtil.showToast(VideoPlayerJzActivity.this, "分享视频");
@@ -362,81 +358,6 @@ public class VideoPlayerJzActivity extends BaseActivity implements VideoPlayerJz
     }
 
 
-    /**
-     * 弹出下载弹窗
-     */
-    private void showDownloadDialog() {
-        final List<DialogListBean> list = new ArrayList<>();
-        for(int a = 0; a< ConstantVideo.VideoPlayerList.length; a++){
-            DialogListBean dialogListBean = new DialogListBean("logo",
-                    "name",ConstantVideo.VideoPlayerTitle[a],ConstantVideo.VideoPlayerList[a]);
-            list.add(dialogListBean);
-        }
-        if(AppUtil.isActivityLiving(this)){
-            View view = getLayoutInflater().inflate(R.layout.dialog_download_video, null);
-            final PopupWindow popMenu = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT
-                    , RelativeLayout.LayoutParams.MATCH_PARENT, true){
-                //重写方法
-                @Override
-                public void showAsDropDown(View anchor) {
-                    Rect visibleFrame = new Rect();
-                    anchor.getGlobalVisibleRect(visibleFrame);
-                    int height = anchor.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
-                    setHeight(height);
-                    super.showAsDropDown(anchor);
-                }
-            };
-            popMenu.setClippingEnabled(false);
-            //点击其他地方关闭
-            popMenu.setFocusable(true);
-            //设置动画
-            popMenu.setAnimationStyle(R.style.animator_dialog_download);
-            popMenu.showAsDropDown(videoPlayer);
-            AppUtil.setBackgroundAlpha(VideoPlayerJzActivity.this,0.5f);
-            popMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    AppUtil.setBackgroundAlpha(VideoPlayerJzActivity.this,1.0f);
-                }
-            });
-
-
-            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-            ImageView ivCancel = (ImageView) view.findViewById(R.id.iv_cancel);
-            ImageView ivDownload = (ImageView) view.findViewById(R.id.iv_download);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            final DownloadVideoAdapter mAdapter = new DownloadVideoAdapter(this, list);
-            recyclerView.setAdapter(mAdapter);
-            final RecycleViewItemLine line = new RecycleViewItemLine(this, LinearLayout.HORIZONTAL,
-                    SizeUtils.dp2px(1), this.getResources().getColor(R.color.grayLine));
-            recyclerView.addItemDecoration(line);
-            mAdapter.setOnItemClickListener(new DownloadVideoAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    ToastUtil.showToast(VideoPlayerJzActivity.this,"点击了"+position+"条目");
-                }
-            });
-            View.OnClickListener listener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    switch (v.getId()){
-                        case R.id.iv_cancel:
-                            if(AppUtil.isActivityLiving(VideoPlayerJzActivity.this)){
-                                popMenu.dismiss();
-                            }
-                            break;
-                        case R.id.iv_download:
-
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            };
-            ivCancel.setOnClickListener(listener);
-            ivDownload.setOnClickListener(listener);
-        }
-    }
 
 
 }

@@ -25,11 +25,9 @@ public class Constant {
         int typeList4 = 9;          //list4
         int typeGvBottom = 10;      //九宫格
         int typeList5 = 11;          //list4
+        int typeRecycler = 12;          //list4
     }
 
-    public static final int SLIDABLE_DISABLE = 0;
-    public static final int SLIDABLE_EDGE = 1;
-    public static final int SLIDABLE_FULL = 2;
 
     public static final long CLICK_TIME = 500;
 

@@ -3,8 +3,10 @@ package org.yczbj.ycvideoplayer.ui.home.view.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -22,6 +24,8 @@ import org.yczbj.ycvideoplayer.api.constant.Constant;
 import org.yczbj.ycvideoplayer.base.BaseConfig;
 import org.yczbj.ycvideoplayer.base.BaseDelegateAdapter;
 import org.yczbj.ycvideoplayer.base.mvp1.BaseFragment;
+import org.yczbj.ycvideoplayer.ui.home.model.VideoPlayerFavorite;
+import org.yczbj.ycvideoplayer.ui.home.view.adapter.NarrowImageAdapter;
 import org.yczbj.ycvideoplayer.ui.person.TestFourWindowActivity;
 import org.yczbj.ycvideoplayer.ui.test.test2.TestMyActivity;
 import org.yczbj.ycvideoplayer.ui.home.view.activity.VideoPlayerJzActivity;
@@ -259,6 +263,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         initBannerView();
         initFiveButtonView();
         initListFirstView();
+        initRecyclerView();
         initFirstAdView();
         initListSecondView();
         initSecondAdView();
@@ -267,6 +272,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         initListFiveView();
         initListSixView();
     }
+
 
 
     private void initBannerView() {
@@ -291,6 +297,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
             }
         };
+
         mAdapters.add(adapter);
     }
 
@@ -356,6 +363,38 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         };
         mAdapters.add(adapter);
         initMoreView(1);
+    }
+
+    private void initRecyclerView() {
+        BaseDelegateAdapter adapter = new BaseDelegateAdapter(activity, new LinearLayoutHelper(),
+                R.layout.view_vlayout_recycler, 1, Constant.viewType.typeRecycler) {
+            @Override
+            public void onBindViewHolder(BaseViewHolder holder, int position) {
+                super.onBindViewHolder(holder, position);
+                final RecyclerView recycler = holder.getView(R.id.recyclerView);
+                recycler.setLayoutManager(new LinearLayoutManager(activity,
+                        LinearLayoutManager.HORIZONTAL,false));
+                NarrowImageAdapter narrowImageAdapter = new NarrowImageAdapter(activity);
+                recycler.setAdapter(narrowImageAdapter);
+                List<VideoPlayerFavorite> favoriteList = new ArrayList<>();
+                for (int a = 0; a < 30; a++) {
+                    VideoPlayerFavorite videoPlayerFavorite = new VideoPlayerFavorite(
+                            "这个是猜你喜欢的标题", R.drawable.bg_small_tree_min, "");
+                    favoriteList.add(videoPlayerFavorite);
+                }
+                narrowImageAdapter.addAll(favoriteList);
+            }
+        };
+
+        LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
+        BaseDelegateAdapter adapter1 = new BaseDelegateAdapter(activity, new LinearLayoutHelper(),
+                R.layout.view_video_player_favorite, 30, Constant.viewType.typeRecycler) {
+            @Override
+            public void onBindViewHolder(BaseViewHolder holder, int position) {
+                super.onBindViewHolder(holder, position);
+            }
+        };
+        mAdapters.add(adapter);
     }
 
 
@@ -547,7 +586,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
 
     private void initMoreView(final int type) {
-        BaseDelegateAdapter moreAdapter = new BaseDelegateAdapter(activity, new LinearLayoutHelper(), R.layout.view_vlayout_more, 1, Constant.viewType.typeMore) {
+        BaseDelegateAdapter moreAdapter = new BaseDelegateAdapter(activity,
+                new LinearLayoutHelper(), R.layout.view_vlayout_more, 1,
+                Constant.viewType.typeMore) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);

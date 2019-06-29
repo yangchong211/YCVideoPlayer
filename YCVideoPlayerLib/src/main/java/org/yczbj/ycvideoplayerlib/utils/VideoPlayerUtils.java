@@ -1,3 +1,18 @@
+/*
+Copyright 2017 yangchong211（github.com/yangchong211）
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package org.yczbj.ycvideoplayerlib.utils;
 
 import android.annotation.SuppressLint;
@@ -9,10 +24,8 @@ import android.net.NetworkInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.WindowManager;
-
 import java.util.Formatter;
 import java.util.Locale;
 
@@ -92,7 +105,8 @@ public final class VideoPlayerUtils {
             ab.setShowHideAnimationEnabled(false);
             ab.hide();
         }
-        scanForActivity(context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        scanForActivity(context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     /**
@@ -144,7 +158,7 @@ public final class VideoPlayerUtils {
      * @param context           上下文
      * @param url               视频链接url
      */
-    public static void savePlayPosition(Context context, String url, long position) {
+    public static synchronized void savePlayPosition(Context context, String url, long position) {
         if (context==null){
             return;
         }
@@ -158,7 +172,7 @@ public final class VideoPlayerUtils {
      * @param url               视频链接url
      * @return 上次保存的播放位置
      */
-    public static long getSavedPlayPosition(Context context, String url) {
+    public static synchronized long getSavedPlayPosition(Context context, String url) {
         if (context==null){
             return 0;
         }
@@ -170,7 +184,7 @@ public final class VideoPlayerUtils {
      * 清楚播放位置的痕迹
      * @param context           上下文
      */
-    public static void clearPlayPosition(Context context){
+    public static synchronized void clearPlayPosition(Context context){
         if (context==null){
             return;
         }
