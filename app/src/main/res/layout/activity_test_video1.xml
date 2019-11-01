@@ -4,13 +4,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/whiteBg">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <org.yczbj.ycvideoplayerlib.player.VideoPlayer
+        android:id="@+id/video_player"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="240dp"/>
 
 
 

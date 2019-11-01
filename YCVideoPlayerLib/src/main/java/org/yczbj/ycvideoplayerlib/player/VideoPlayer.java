@@ -35,8 +35,8 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.AbsVideoPlayerController;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnTextureListener;
 import org.yczbj.ycvideoplayerlib.inter.player.InterVideoPlayer;
-import org.yczbj.ycvideoplayerlib.inter.listener.OnSurfaceListener;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
 import org.yczbj.ycvideoplayerlib.utils.VideoPlayerUtils;
@@ -117,6 +117,8 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
         mContainer.setBackgroundColor(Color.BLACK);
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
+
+        //将布局添加到该视图中
         this.addView(mContainer, params);
     }
 
@@ -246,6 +248,10 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
      */
     @Override
     public void start() {
+        if (mController==null){
+            //在调用start方法前，请先初始化视频控制器，调用setController方法
+            throw new NullPointerException("Controller must not be null , please setController first");
+        }
         if (mCurrentState == ConstantKeys.CurrentState.STATE_IDLE) {
             VideoPlayerManager.instance().setCurrentVideoPlayer(this);
             initAudioManager();
@@ -635,7 +641,8 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
         //SeekTo设置优化
         ((IjkMediaPlayer)mMediaPlayer).setOption(player, "enable-accurate-seek", 1L);
         ((IjkMediaPlayer)mMediaPlayer).setOption(player, "opensles", 0);
-        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "overlay-format", IjkMediaPlayer.SDL_FCC_RV32);
+        ((IjkMediaPlayer)mMediaPlayer).setOption(player, "overlay-format",
+                IjkMediaPlayer.SDL_FCC_RV32);
         ((IjkMediaPlayer)mMediaPlayer).setOption(player, "framedrop", 1);
         ((IjkMediaPlayer)mMediaPlayer).setOption(player, "start-on-prepared", 0);
         ((IjkMediaPlayer)mMediaPlayer).setOption(format, "http-detect-range-support", 0);
@@ -659,7 +666,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     private void initTextureView() {
         if (mTextureView == null) {
             mTextureView = new VideoTextureView(mContext);
-            mTextureView.setOnSurfaceListener(new OnSurfaceListener() {
+            mTextureView.setOnTextureListener(new OnTextureListener() {
                 @Override
                 public void onSurfaceAvailable(SurfaceTexture surface) {
                     if (mSurfaceTexture == null) {
@@ -674,17 +681,18 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
 
                 @Override
                 public void onSurfaceSizeChanged(SurfaceTexture surface, int width, int height) {
-
+                    VideoLogUtil.i("OnTextureListener----"+"onSurfaceSizeChanged");
                 }
 
                 @Override
                 public boolean onSurfaceDestroyed(SurfaceTexture surface) {
+                    VideoLogUtil.i("OnTextureListener----"+"onSurfaceDestroyed");
                     return mSurfaceTexture == null;
                 }
 
                 @Override
                 public void onSurfaceUpdated(SurfaceTexture surface) {
-
+                    VideoLogUtil.i("OnTextureListener----"+"onSurfaceUpdated");
                 }
             });
         }
@@ -697,7 +705,7 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
      */
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void openMediaPlayer() {
-        // 屏幕常亮
+        // 屏幕常亮，这个很重要，如果不设置，则看视频一会儿，屏幕会变暗
         mContainer.setKeepScreenOn(true);
         // 设置监听，可以查看ijk中的IMediaPlayer源码监听事件
         // 设置准备视频播放监听事件
@@ -813,9 +821,11 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     /**
      * 设置视频大小更改监听器
      */
-    private IMediaPlayer.OnVideoSizeChangedListener mOnVideoSizeChangedListener = new IMediaPlayer.OnVideoSizeChangedListener() {
+    private IMediaPlayer.OnVideoSizeChangedListener mOnVideoSizeChangedListener =
+            new IMediaPlayer.OnVideoSizeChangedListener() {
         @Override
-        public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sar_num, int sar_den) {
+        public void onVideoSizeChanged(IMediaPlayer mp, int width, int height,
+                                       int sar_num, int sar_den) {
             mTextureView.adaptVideoSize(width, height);
             VideoLogUtil.d("onVideoSizeChanged ——> width：" + width + "， height：" + height);
         }
@@ -857,7 +867,8 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
                 VideoLogUtil.d("onInfo ——> MEDIA_INFO_VIDEO_RENDERING_START：STATE_PLAYING");
             } else if (what == IMediaPlayer.MEDIA_INFO_BUFFERING_START) {
                 // MediaPlayer暂时不播放，以缓冲更多的数据
-                if (mCurrentState == ConstantKeys.CurrentState.STATE_PAUSED || mCurrentState == ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED) {
+                if (mCurrentState == ConstantKeys.CurrentState.STATE_PAUSED ||
+                        mCurrentState == ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED) {
                     mCurrentState = ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED;
                     VideoLogUtil.d("onInfo ——> MEDIA_INFO_BUFFERING_START：STATE_BUFFERING_PAUSED");
                 } else {
@@ -896,7 +907,8 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     /**
      * 设置时间文本监听器
      */
-    private IMediaPlayer.OnTimedTextListener mOnTimedTextListener = new IMediaPlayer.OnTimedTextListener() {
+    private IMediaPlayer.OnTimedTextListener mOnTimedTextListener = new
+            IMediaPlayer.OnTimedTextListener() {
         @Override
         public void onTimedText(IMediaPlayer iMediaPlayer, IjkTimedText ijkTimedText) {
 
@@ -1088,7 +1100,6 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
      * 释放播放器，注意一定要判断对象是否为空，增强严谨性
      * 这样以便在当前播放器状态下可以方便的切换不同的清晰度的视频地址
      * 关于我的github：https://github.com/yangchong211
-     * 关于我的个人网站：www.ycbjie.cn或者www.yczbj.org
      * 杨充修改：
      *      17年12月23日，添加释放音频和TextureView
      */

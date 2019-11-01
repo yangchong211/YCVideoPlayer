@@ -66,15 +66,4 @@
     </style>
 
 
-    <style name="animator_dialog_download">
-        <item name="android:windowEnterAnimation">@anim/photo_dialog_in_anim</item>
-        <item name="android:windowExitAnimation">@anim/photo_dialog_out_anim</item>
-    </style>
-
-    <!--设置动画效果-->
-    <style name="main_menu_animStyle">
-        <item name="android:windowEnterAnimation">@anim/photo_dialog_in_anim</item>
-        <item name="android:windowExitAnimation">@anim/photo_dialog_out_anim</item>
-    </style>
-
 </resources>

@@ -1,5 +1,3 @@
-package org.yczbj.ycvideoplayerlib.controller;
-
 /*
 Copyright 2017 yangchong211（github.com/yangchong211）
 
@@ -15,6 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+package org.yczbj.ycvideoplayerlib.controller;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
@@ -205,6 +205,7 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
                     AbsVideoPlayerController.this.post(new Runnable() {
                         @Override
                         public void run() {
+                            updateProgress();
                             updateNetSpeedProgress();
                         }
                     });

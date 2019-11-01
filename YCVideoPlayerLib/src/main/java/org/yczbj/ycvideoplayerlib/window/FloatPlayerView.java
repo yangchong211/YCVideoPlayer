@@ -45,13 +45,14 @@ public class FloatPlayerView extends FrameLayout {
     }
 
     private void init() {
-        LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) this.getContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view ;
         if (inflater != null) {
             view = inflater.inflate(R.layout.view_window_dialog, this);
             mVideoPlayer = view.findViewById(R.id.video_player);
             mVideoPlayer.setUp(path,null);
-            mVideoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_NATIVE);
+            mVideoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
             //创建视频控制器
             VideoPlayerController controller = new VideoPlayerController(getContext());
             controller.setTopVisibility(false);

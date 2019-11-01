@@ -24,16 +24,6 @@ android {
         }
     }
 
-    //为了解决第三方库重复打包了META_INF问题，替换为有冲突的依赖
-    packagingOptions {
-        exclude 'META-INF/rxjava.properties'
-    }
-
-
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
-
 
     //jdk1.8
     compileOptions {
@@ -63,48 +53,14 @@ dependencies {
         exclude module: 'support-v4'
     }
     implementation 'com.android.support:support-annotations:28.0.0'
-    implementation 'com.android.support:multidex:1.0.1'
 
-    //网络请求retrofit2+Rx
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    //compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    //compile 'io.reactivex:rxandroid:1.2.1'
-    //compile 'io.reactivex:rxjava:1.2.3'
-    // RxJava 2
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-
-    //注解
-    implementation 'com.jakewharton:butterknife:8.8.1'                     //黄牛刀
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //其他库
-    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.0@aar'      //导航栏
-    implementation 'com.blankj:utilcode:1.7.1'                             //工具类
-    implementation 'com.squareup.picasso:picasso:2.5.2'                    //图片
-    implementation 'com.github.bumptech.glide:glide:3.7.0'                 //谷歌图片加载库
+    implementation 'com.github.bumptech.glide:glide:4.9.0'                 //谷歌图片加载库
     implementation 'jp.wasabeef:glide-transformations:2.0.1'
-    implementation('com.alibaba.android:vlayout:1.2.2@aar') {              //阿里巴巴UI
-        transitive = true
-        exclude module: 'support-v4'
-    }
-    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'             //RxLifecycle
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
-    implementation 'me.drakeet.multitype:multitype:3.4.0'                  //简化版 Adapter
-    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
 
     //自己封装的库，都有对应的案例项目【欢迎star】：https://github.com/yangchong211
-    implementation 'cn.yc:YCUtilsLib:1.6.2'                                //公共类
     implementation 'cn.yc:YCStateLib:1.1'                                  //状态管理
-    implementation 'cn.yc:YCBannerLib:1.2'                                 //轮播图
-    implementation 'org.yczbj:YCRefreshViewLib:2.4'                        //RecyclerView封装
-    implementation 'cn.yc:YCBaseAdapterLib:1.3'                            //adapter封装
-    implementation 'cn.yc:YCDialogLib:3.5'                                 //弹窗
-    implementation 'cn.yc:YCProgressLib:1.2'                               //进度条
-    implementation 'cn.yc:YCVideoPlayerLib:2.6.6'                            //播放器
-//    implementation project(':YCVideoPlayerLib')
+//    implementation 'cn.yc:YCVideoPlayerLib:2.6.6'                            //播放器
+    implementation project(':YCVideoPlayerLib')
     implementation 'cn.yc:YCStatusBarLib:1.4.0'                              //状态栏
 }

@@ -31,8 +31,18 @@ import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 public final class VideoPlayerManager {
 
     private VideoPlayer mVideoPlayer;
+    /**
+     * 用volatile关键字修饰对象
+     * 为何要确保只有一个对象，为了保证任何时候有且只有一个视频播放，尤其是在列表中播放
+     */
     private static volatile VideoPlayerManager sInstance;
-    private VideoPlayerManager() {}
+
+    /**
+     * 构造方法，避免直接new
+     */
+    private VideoPlayerManager() {
+        //避免初始化
+    }
 
     /**
      * 一定要使用单例模式，保证同一时刻只有一个视频在播放，其他的都是初始状态
@@ -114,9 +124,11 @@ public final class VideoPlayerManager {
      */
     public boolean onBackPressed() {
         if (mVideoPlayer != null) {
+            //如果是全屏幕，则退出全屏
             if (mVideoPlayer.isFullScreen()) {
                 return mVideoPlayer.exitFullScreen();
             } else if (mVideoPlayer.isTinyWindow()) {
+                //如果是小窗口播放，则退出小窗口
                 return mVideoPlayer.exitTinyWindow();
             }
         }

@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginEnd="8dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_marginRight="8dp">
         <ImageView
             android:id="@+id/iv_audio"
@@ -103,6 +103,7 @@
             android:layout_marginLeft="15dp">
             <ImageView
                 android:id="@+id/battery"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/battery_100"/>

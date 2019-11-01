@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
-        android:name=".base.BaseApplication"
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.main.view.activity.MainActivity"
+        <activity android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -26,53 +26,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.person.VideoPlayerMeActivity"
+        <activity android:name=".TestTinyActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.home.view.activity.VideoPlayerJzActivity"
+        <activity android:name=".TestClarityActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.video.view.activity.VideoContentActivity"
+        <activity android:name=".TestRecyclerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.movie.view.activity.MovieDetailActivity"
+        <activity android:name=".TestFragmentActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.movie.view.activity.MovieNewsActivity"/>
-        <activity android:name=".ui.test.test2.TestMyActivity"
+        <activity android:name=".TestEightVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.person.TestThirdVideoActivity"
+        <activity android:name=".TestListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.person.TestFiveVideoActivity"
+        <activity android:name=".TestWindowActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.person.TestSevenVideoActivity"
+        <activity android:name=".TestNormalActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.person.TestSixVideoActivity"
+        <activity android:name=".TestFullActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.person.TestEightVideoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.person.TestNineVideoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.test.test4.MediaPlayerActivity"/>
-        <activity android:name=".ui.person.TestFourWindowActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.person.TestFirstVideoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.person.TestSecondFullActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.home.view.activity.EmptyActivity"/>
-
     </application>
 
 </manifest>

@@ -184,7 +184,7 @@
 
 
 #### 2.5 注意问题
-##### 2.5.1如果是全屏播放，则需要在清单文件中设置当前activity的属性值**
+##### 2.5.1 如果是全屏播放，则需要在清单文件中设置当前activity的属性值**
 - android:configChanges 保证了在全屏的时候横竖屏切换不会执行Activity的相关生命周期，打断视频的播放
 - android:screenOrientation 固定了屏幕的初始方向
 - 这两个变量控制全屏后和退出全屏的屏幕方向
@@ -203,6 +203,23 @@
     }else {
         VideoLogUtil.setIsLog(false);
     }
+    ```
+
+
+##### 2.5.3 如何一进入页面就开始播放视频
+- 代码如下所示，注意避免直接start()，因为有可能视频还没有初始化完成……
+    ```
+    videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
+    videoPlayer.setUp(ConstantVideo.VideoPlayerList[0], null);
+    controller = new VideoPlayerController(this);
+    videoPlayer.setController(controller);
+    //videoPlayer.start();
+    videoPlayer.postDelayed(new Runnable() {
+        @Override
+        public void run() {
+            videoPlayer.start();
+        }
+    },500);
     ```
 
 

@@ -16,132 +16,119 @@ limitations under the License.
 
 package org.yczbj.ycvideoplayerlib.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.SurfaceTexture;
 import android.view.Gravity;
-import android.view.TextureView;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import org.yczbj.ycvideoplayerlib.inter.listener.OnTextureListener;
-
+import org.yczbj.ycvideoplayerlib.inter.listener.OnSurfaceListener;
 
 /**
  * <pre>
  *     @author yangchong
  *     blog  : https://github.com/yangchong211
- *     time  : 2017/10/21
- *     desc  : 重写TextureView，适配视频的宽高和旋转
+ *     time  : 2018/9/21
+ *     desc  : 重写SurfaceView，适配视频的宽高和旋转
  *     revise:
  * </pre>
  */
-@SuppressLint("NewApi")
-public class VideoTextureView extends TextureView implements TextureView.SurfaceTextureListener {
+public class VideoSurfaceView extends SurfaceView{
+
 
     /**
-     * 优点：支持移动、旋转、缩放等动画，支持截图。具有view的属性
-     * 缺点：必须在硬件加速的窗口中使用，占用内存比SurfaceView高，在5.0以前在主线程渲染，5.0以后有单独的渲染线程。
+     * 优点：可以在一个独立的线程中进行绘制，不会影响主线程；使用双缓冲机制，播放视频时画面更流畅
+     * 缺点：Surface不在View hierachy中，它的显示也不受View的属性控制，所以不能进行平移，缩放等变换，
+     *      也不能放在其它ViewGroup中。SurfaceView 不能嵌套使用。
      */
 
     private int videoHeight;
     private int videoWidth;
-    private OnTextureListener onTextureListener;
+    private OnSurfaceListener onSurfaceListener;
 
-
-    public VideoTextureView(Context context) {
+    public VideoSurfaceView(Context context) {
         super(context);
     }
 
-
-    /**
-     * SurfaceTexture准备就绪
-     * @param surface                   surface
-     * @param width                     width
-     * @param height                    height
-     */
     @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        if (onTextureListener != null) {
-            onTextureListener.onSurfaceAvailable(surface);
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (callback!=null){
+            getHolder().removeCallback(callback);
         }
     }
 
-
-    /**
-     * SurfaceTexture缓冲大小变化
-     * @param surface                   surface
-     * @param width                     width
-     * @param height                    height
-     */
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-        if (onTextureListener != null) {
-            onTextureListener.onSurfaceSizeChanged(surface, width, height);
+    private SurfaceHolder.Callback callback = new SurfaceHolder.Callback(){
+        /**
+         * 创建的时候调用该方法
+         * @param holder                        holder
+         */
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            if (onSurfaceListener!=null){
+                onSurfaceListener.surfaceCreated(holder);
+            }
         }
-    }
 
-
-    /**
-     * SurfaceTexture即将被销毁
-     * @param surface                   surface
-     */
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        //清空释放
-        if (onTextureListener != null) {
-            onTextureListener.onSurfaceDestroyed(surface);
+        /**
+         * 视图改变的时候调用方法
+         * @param holder
+         * @param format
+         * @param width
+         * @param height
+         */
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            if (onSurfaceListener!=null){
+                onSurfaceListener.surfaceChanged(holder, format, width, height);
+            }
         }
-        return false;
-    }
 
-
-    /**
-     * SurfaceTexture通过updateImage更新
-     * @param surface                   surface
-     */
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-        //如果播放的是暂停全屏了
-        if (onTextureListener != null) {
-            onTextureListener.onSurfaceUpdated(surface);
+        /**
+         * 销毁的时候调用该方法
+         * @param holder
+         */
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+            if (onSurfaceListener!=null){
+                onSurfaceListener.surfaceDestroyed(holder);
+            }
         }
-    }
+    };
 
 
     /**
      * 获取listener
-     * @return                          onTextureListener
+     * @return                          onSurfaceListener
      */
-    public OnTextureListener getonTextureListener() {
-        return onTextureListener;
+    public OnSurfaceListener getOnSurfaceListener() {
+        return onSurfaceListener;
     }
 
 
     /**
      * 设置监听
-     * @param surfaceListener           onTextureListener
+     * @param surfaceListener           onSurfaceListener
      */
-    public void setOnTextureListener(OnTextureListener surfaceListener) {
-        setSurfaceTextureListener(this);
-        onTextureListener = surfaceListener;
+    public void setOnSurfaceListener(OnSurfaceListener surfaceListener) {
+        this.onSurfaceListener = surfaceListener;
+        getHolder().addCallback(callback);
     }
 
 
     /**
      * 添加TextureView到视图中
      * @param frameLayout               布局
-     * @param textureView               textureView
+     * @param videoSurfaceView          videoSurfaceView
      */
-    public void addTextureView(FrameLayout frameLayout , VideoTextureView textureView){
-        frameLayout.removeView(textureView);
+    public void addTextureView(FrameLayout frameLayout , VideoSurfaceView videoSurfaceView){
+        frameLayout.removeView(videoSurfaceView);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
-        frameLayout.addView(textureView, 0, params);
+        frameLayout.addView(videoSurfaceView, 0, params);
     }
-
-
 
 
     /**
@@ -179,7 +166,6 @@ public class VideoTextureView extends TextureView implements TextureView.Surface
         // 如果判断成立，则说明显示的TextureView和本身的位置是有90度的旋转的，所以需要交换宽高参数。
         float viewRotation1 = 90f;
         float viewRotation2 = 270f;
-        //如果是横竖屏旋转切换视图，则宽高属性互换
         if (viewRotation == viewRotation1 || viewRotation == viewRotation2) {
             int tempMeasureSpec = widthMeasureSpec;
             //noinspection SuspiciousNameCombination
@@ -239,7 +225,9 @@ public class VideoTextureView extends TextureView implements TextureView.Surface
                     height = width * videoHeight / videoWidth;
                 }
             }
-        }  // no size yet, just adopt the given spec sizes
+        } else {
+            // no size yet, just adopt the given spec sizes
+        }
         setMeasuredDimension(width, height);
     }
 

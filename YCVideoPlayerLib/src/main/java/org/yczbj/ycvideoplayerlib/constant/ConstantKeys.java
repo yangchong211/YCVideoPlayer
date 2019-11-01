@@ -31,7 +31,6 @@ import java.lang.annotation.RetentionPolicy;
  */
 public final class ConstantKeys {
 
-
     /**
      * 通过注解限定类型
      * TYPE_IJK                 IjkPlayer，基于IjkPlayer封装播放器

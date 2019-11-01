@@ -33,15 +33,15 @@ public class FloatPhone extends FloatView {
 
     @Override
     public void setView(View view) {
-        int layout_type;
+        int layoutType;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            layout_type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+            layoutType = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         } else {
-            layout_type = WindowManager.LayoutParams.TYPE_PHONE;
+            layoutType = WindowManager.LayoutParams.TYPE_PHONE;
         }
         mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        mLayoutParams.type = layout_type;
+        mLayoutParams.type = layoutType;
         mLayoutParams.windowAnimations = 0;
         mView = view;
     }
