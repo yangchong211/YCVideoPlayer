@@ -8,7 +8,8 @@
 - 06.在列表中播放
 - 07.在activity播放视频处理home键逻辑
 - 08.在fragment中播放
-- 09.显示视频top[分享，下载，更多按钮控件]
+- 09.1 显示正常视频top[分享，下载，更多按钮控件]
+- 09.2 显示横屏视频top[tv投影，切换音频控件]
 - 10.全局悬浮播放视频
 - 11.常见api说明
 
@@ -31,6 +32,10 @@
     ```
     //播放视频
     videoPlayer.start();
+    ```
+- 是否设置从上一次的位置继续播放，这个参数你可以自己设置，默认是true
+    ```
+    videoPlayer.continueFromLastPosition(true);
     ```
 
 
@@ -219,7 +224,7 @@
 
 
 
-### 09.显示视频top[分享，下载，更多按钮控件]
+### 09.1 显示视频top[分享，下载，更多按钮控件]
 - 默认是不显示这几个控件的，一般实际项目中，会对播放器做很多UI方面拓展
     ```
     controller.setTopVisibility(true);
@@ -256,6 +261,32 @@
     ```
 
 
+### 09.2 显示横屏视频top[tv投影，切换音频控件]
+- 默认是不显示这几个控件的，一般实际项目中，会对播放器做很多UI方面拓展
+    ```
+    //设置横屏播放时，tv和audio图标是否显示
+    controller.setTvAndAudioVisibility(true,true);
+    ```
+- 给按钮设置点击事件
+    ```
+    controller.setOnVideoControlListener(new OnVideoControlListener() {
+        @Override
+        public void onVideoControlClick(int type) {
+            switch (type){
+                case ConstantKeys.VideoControl.TV:
+                    BaseToast.showRoundRectToast("投影tv电视");
+                    break;
+                case ConstantKeys.VideoControl.HOR_AUDIO:
+                    BaseToast.showRoundRectToast("切换音频");
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+    ```
+    
+    
 ### 10.全局悬浮播放视频
 - 代码如下所示
     ```

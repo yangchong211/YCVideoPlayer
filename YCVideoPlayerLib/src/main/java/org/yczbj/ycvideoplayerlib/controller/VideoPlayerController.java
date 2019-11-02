@@ -54,6 +54,7 @@ import org.yczbj.ycvideoplayerlib.inter.listener.OnCompletedListener;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnPlayOrPauseListener;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoBackListener;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.view.BaseToast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -225,7 +226,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 IntentFilter filter = new IntentFilter();
                 filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
                 mContext.registerReceiver(netChangedReceiver, filter);
-                VideoLogUtil.i("注册网络监听广播");
+                VideoLogUtil.i("广播监听---------注册网络监听广播");
             }
             hasRegisterNetReceiver = true;
         }
@@ -239,7 +240,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         if (hasRegisterNetReceiver) {
             if (netChangedReceiver != null) {
                 mContext.unregisterReceiver(netChangedReceiver);
-                VideoLogUtil.i("解绑注册网络监听广播");
+                VideoLogUtil.i("广播监听---------解绑注册网络监听广播");
             }
             hasRegisterNetReceiver = false;
         }
@@ -254,7 +255,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             mContext.registerReceiver(mBatterReceiver, new IntentFilter(
                     Intent.ACTION_BATTERY_CHANGED));
             hasRegisterBatteryReceiver = true;
-            VideoLogUtil.i("注册电池监听广播");
+            VideoLogUtil.i("广播监听---------注册电池监听广播");
         }
     }
 
@@ -266,7 +267,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         if (hasRegisterBatteryReceiver) {
             mContext.unregisterReceiver(mBatterReceiver);
             hasRegisterBatteryReceiver = false;
-            VideoLogUtil.i("解绑电池监听广播");
+            VideoLogUtil.i("广播监听---------解绑电池监听广播");
         }
     }
 
@@ -777,6 +778,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 //隐藏电量图标
                 mBattery.setVisibility(GONE);
                 setTopVisibility(mIsTopLayoutVisibility);
+                VideoLogUtil.d("播放模式--------普通模式");
                 break;
             //全屏模式
             case ConstantKeys.PlayMode.MODE_FULL_SCREEN:
@@ -795,6 +797,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 if (mOnPlayerTypeListener!=null){
                     mOnPlayerTypeListener.onFullScreen();
                 }
+                VideoLogUtil.d("播放模式--------全屏模式");
                 break;
             //小窗口模式
             case ConstantKeys.PlayMode.MODE_TINY_WINDOW:
@@ -807,6 +810,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 if (mOnPlayerTypeListener!=null){
                     mOnPlayerTypeListener.onTinyWindow();
                 }
+                VideoLogUtil.d("播放模式--------小窗口模式");
                 break;
             default:
                 break;
@@ -893,7 +897,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                     }
                 }
             }else {
-                Toast.makeText(mContext,"请检测是否有网络",Toast.LENGTH_SHORT).show();
+                BaseToast.showRoundRectToast("请检测是否有网络");
             }
         } else if (v == mFullScreen) {
             //全屏模式，重置锁屏，设置为未选中状态
@@ -919,14 +923,14 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 //开始从此位置播放
                 mVideoPlayer.restart();
             }else {
-                Toast.makeText(mContext,"请检测是否有网络",Toast.LENGTH_SHORT).show();
+                BaseToast.showRoundRectToast("请检测是否有网络");
             }
         } else if (v == mReplay) {
             //重新播放
             if(VideoPlayerUtils.isConnected(mContext)){
                 mRetry.performClick();
             }else {
-                Toast.makeText(mContext,"请检测是否有网络",Toast.LENGTH_SHORT).show();
+                BaseToast.showRoundRectToast("请检测是否有网络");
             }
         } else if (v == mShare) {
             //分享

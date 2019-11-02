@@ -235,7 +235,8 @@
     - 06.在列表中播放
     - 07.在activity播放视频处理home键逻辑
     - 08.在fragment中播放
-    - 09.显示视频top[分享，下载，更多按钮控件]
+    - 09.1 显示正常视频top[分享，下载，更多按钮控件，默认不显示]
+    - 09.2 显示横屏视频top[tv投影，切换音频控件，默认显示]
     - 10.全局悬浮播放视频
     - 11.常见api说明
 - [视频优化处理](https://github.com/yangchong211/YCVideoPlayer/blob/master/read/wiki2.md)
