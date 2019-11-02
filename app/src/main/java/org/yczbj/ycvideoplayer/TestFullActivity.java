@@ -7,8 +7,10 @@ import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoControlListener;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.view.BaseToast;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
@@ -75,6 +77,27 @@ public class TestFullActivity extends BaseActivity implements View.OnClickListen
         controller.setCenterPlayer(true, R.drawable.ic_player_center_start);
         controller.setTopPadding(24.0f);
         controller.setTopVisibility(true);
+        controller.setOnVideoControlListener(new OnVideoControlListener() {
+            @Override
+            public void onVideoControlClick(int type) {
+                switch (type){
+                    case ConstantKeys.VideoControl.DOWNLOAD:
+                        BaseToast.showRoundRectToast("下载");
+                        break;
+                    case ConstantKeys.VideoControl.SHARE:
+                        BaseToast.showRoundRectToast("分享");
+                        break;
+                    case ConstantKeys.VideoControl.MENU:
+                        BaseToast.showRoundRectToast("更多");
+                        break;
+                    case ConstantKeys.VideoControl.AUDIO:
+                        BaseToast.showRoundRectToast("下载");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
         videoPlayer.setController(controller);
         videoPlayer.postDelayed(new Runnable() {
             @Override

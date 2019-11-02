@@ -49,13 +49,13 @@ public final class ConstantKeys {
 
     /**
      * 控制器上的视频顶部View点击事件
-     *                  在竖屏模式下
+     *                  在竖屏模式下，默认是不显示，需要显示设置controller.setTopVisibility(true);
      *                  1.DOWNLOAD，下载
      *                  2.AUDIO，切换音频
      *                  3.SHARE，分享
      *                  4.MENU，菜单
      *
-     *                  在横屏模式下
+     *                  在横屏模式下，默认是不显示，需要显示设置controller.setTvAndAudioVisibility(true,true);
      *                  5.TV，点击投影到电视上
      *                  6.HOR_AUDIO，音频
      */
