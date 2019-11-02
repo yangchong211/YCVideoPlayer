@@ -93,9 +93,9 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
     private Map<String, String> mHeaders;
     private int mBufferPercentage;
     /**
-     * 是否从上一次位置播放，默认是true
+     * 是否从上一次位置播放，默认是false
      */
-    private boolean continueFromLastPosition = true;
+    private boolean continueFromLastPosition = false;
     private long skipToPosition;
 
     public VideoPlayer(Context context) {
@@ -711,8 +711,6 @@ public class VideoPlayer extends FrameLayout implements InterVideoPlayer {
      */
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void openMediaPlayer() {
-        //如果是重新初始化，则不用从上一次的位置继续播放
-        continueFromLastPosition(false);
         // 屏幕常亮，这个很重要，如果不设置，则看视频一会儿，屏幕会变暗
         mContainer.setKeepScreenOn(true);
         // 设置监听，可以查看ijk中的IMediaPlayer源码监听事件

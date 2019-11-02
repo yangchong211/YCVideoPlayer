@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(TestWindowActivity.class);
                 break;
             case R.id.tv_12:
+                startActivity(TestSavePosActivity.class);
                 break;
             case R.id.tv_13:
                 break;
