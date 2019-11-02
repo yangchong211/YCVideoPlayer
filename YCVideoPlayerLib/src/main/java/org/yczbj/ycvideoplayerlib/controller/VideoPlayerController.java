@@ -145,6 +145,9 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private LinearLayout mCompleted;
     private TextView mReplay;
     private TextView mShare;
+    /**
+     * 锁屏视图，只有在横屏播放的时候才会显示
+     */
     private FrameLayout mFlLock;
     private ImageView mIvLock;
     /**
@@ -1099,7 +1102,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
 
     /**
      * 设置top、bottom的显示和隐藏
-     * @param visible true显示，false隐藏.
+     * @param visible                   true显示，false隐藏.
      */
     private void setTopBottomVisible(boolean visible) {
         mTop.setVisibility(visible ? View.VISIBLE : View.GONE);
