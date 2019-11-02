@@ -198,7 +198,6 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
                     AbsVideoPlayerController.this.post(new Runnable() {
                         @Override
                         public void run() {
-                            updateProgress();
                             updateNetSpeedProgress();
                         }
                     });
@@ -207,7 +206,6 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         }
         mUpdateNetSpeedTimer.schedule(mUpdateNetSpeedTask, 0, 100);
     }
-
 
     /**
      * 取消缓冲时更新网络加载速度
@@ -222,7 +220,6 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
             mUpdateNetSpeedTask = null;
         }
     }
-
 
     /**
      * 开启更新进度的计时器。
@@ -249,7 +246,6 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
         mUpdateProgressTimer.schedule(mUpdateProgressTimerTask, 0, 1000);
     }
 
-
     /**
      * 取消更新进度的计时器。
      */
@@ -274,8 +270,6 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      */
     protected abstract void updateProgress();
 
-
-
     /**
      * 手势左右滑动改变播放位置时，显示控制器中间的播放位置变化视图，
      * 在手势滑动ACTION_MOVE的过程中，会不断调用此方法。
@@ -284,7 +278,6 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
      * @param newPositionProgress 新的位置进度，取值0到100。
      */
     protected abstract void showChangePosition(long duration, int newPositionProgress);
-
 
     /**
      * 手势左右滑动改变播放位置后，手势up或者cancel时，隐藏控制器中间的播放位置变化视图，

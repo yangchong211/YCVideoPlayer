@@ -869,7 +869,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mFlLock.setVisibility(View.GONE);
         mImage.setVisibility(View.VISIBLE);
         mBottom.setVisibility(View.GONE);
-        mFullScreen.setImageResource(R.drawable.ic_player_open);
         mLoading.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mCompleted.setVisibility(View.GONE);
