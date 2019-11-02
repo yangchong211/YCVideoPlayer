@@ -49,7 +49,7 @@
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:background="@color/colorAccent"
-                android:text="1.最简单的播放视频"/>
+                android:text="1.最简单的播放视频，也是最常见，4步即可"/>
             <TextView
                 android:id="@+id/tv_2"
                 android:layout_width="match_parent"

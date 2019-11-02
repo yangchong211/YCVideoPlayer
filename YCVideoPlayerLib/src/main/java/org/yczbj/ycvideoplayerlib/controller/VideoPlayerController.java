@@ -77,22 +77,31 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private Context mContext;
     private ImageView mImage;
     private ImageView mCenterStart;
+    /**
+     * top顶部视图，包括所有的
+     */
     private LinearLayout mTop;
     private ImageView mBack;
     private TextView mTitle;
-
+    /**
+     * 正常视频，top顶部视图，包括下载，分享，更多，音频控件
+     */
     private LinearLayout mLlTopOther;
     private ImageView mIvDownload;
     private ImageView mIvAudio;
     private ImageView mIvShare;
     private ImageView mIvMenu;
-
+    /**
+     * 横向屏幕视图，top顶部视图，包括音频，tv，电量，时间等控件
+     */
     private LinearLayout mLlHorizontal;
     private ImageView mIvHorAudio;
     private ImageView mIvHorTv;
     private ImageView mBattery;
     private TextView mTime;
-
+    /**
+     * 底部视图，包括所有的
+     */
     private LinearLayout mBottom;
     private ImageView mRestartPause;
     private TextView mPosition;
@@ -101,25 +110,46 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private TextView mClarity;
     private ImageView mFullScreen;
     private TextView mLength;
+    /**
+     * 加载loading视图，包括所有的
+     */
     private LinearLayout mLoading;
     private ProgressBar pbLoadingRing;
     private ProgressBar pbLoadingQq;
     private TextView mLoadText;
+    /**
+     * 改变播放位置视图，这个是在屏幕上左右滑动切换播放进度的控件
+     */
     private LinearLayout mChangePosition;
     private TextView mChangePositionCurrent;
     private ProgressBar mChangePositionProgress;
+    /**
+     * 改变屏幕亮度视图，这个是在屏幕左边上下滑动改变亮度的控件
+     */
     private LinearLayout mChangeBrightness;
     private ProgressBar mChangeBrightnessProgress;
+    /**
+     * 改变播放声音视图，这个是在屏幕右边上下滑动改变音量的控件
+     */
     private LinearLayout mChangeVolume;
     private ProgressBar mChangeVolumeProgress;
+    /**
+     * 异常壮体视图
+     */
     private LinearLayout mError;
     private TextView mTvError;
     private TextView mRetry;
+    /**
+     * 完成播放视图
+     */
     private LinearLayout mCompleted;
     private TextView mReplay;
     private TextView mShare;
     private FrameLayout mFlLock;
     private ImageView mIvLock;
+    /**
+     * 底部播放进度条
+     */
     private LinearLayout mLine;
     private ProgressBar mPbPlayBar;
 
@@ -647,39 +677,19 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 break;
             //正在播放
             case ConstantKeys.CurrentState.STATE_PLAYING:
-                mLoading.setVisibility(View.GONE);
-                mCenterStart.setVisibility(View.GONE);
-                mPbPlayBar.setVisibility(View.VISIBLE);
-                mRestartPause.setImageResource(R.drawable.ic_player_pause);
-                startDismissTopBottomTimer();
-                cancelUpdateNetSpeedTimer();
+                statePlaying();
                 break;
             //暂停播放
             case ConstantKeys.CurrentState.STATE_PAUSED:
-                mLoading.setVisibility(View.GONE);
-                mCenterStart.setVisibility(mIsCenterPlayerVisibility?View.VISIBLE:View.GONE);
-                mRestartPause.setImageResource(R.drawable.ic_player_start);
-                cancelDismissTopBottomTimer();
-                cancelUpdateNetSpeedTimer();
+                statePaused();
                 break;
             //正在缓冲(播放器正在播放时，缓冲区数据不足，进行缓冲，缓冲区数据足够后恢复播放)
             case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
-                mError.setVisibility(View.GONE);
-                mLoading.setVisibility(View.VISIBLE);
-                mCenterStart.setVisibility(View.GONE);
-                mRestartPause.setImageResource(R.drawable.ic_player_pause);
-                mLoadText.setText("正在准备...");
-                startDismissTopBottomTimer();
-                cancelUpdateNetSpeedTimer();
+                stateBufferingPlaying();
                 break;
-            //正在缓冲
+            //暂停缓冲
             case ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED:
-                mLoading.setVisibility(View.VISIBLE);
-                mRestartPause.setImageResource(R.drawable.ic_player_start);
-                mLoadText.setText("正在准备...");
-                cancelDismissTopBottomTimer();
-                //开启缓冲时更新网络加载速度
-                startUpdateNetSpeedTimer();
+                stateBufferingPaused();
                 break;
             //播放错误
             case ConstantKeys.CurrentState.STATE_ERROR:
@@ -694,7 +704,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         }
     }
 
-
     /**
      * 播放准备中
      */
@@ -704,8 +713,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mLoadText.setText("正在准备...");
         mError.setVisibility(View.GONE);
         mCompleted.setVisibility(View.GONE);
-        mTop.setVisibility(View.GONE);
-        mBottom.setVisibility(View.GONE);
+        setTopBottomVisible(false);
         mCenterStart.setVisibility(View.GONE);
         mLength.setVisibility(View.GONE);
         mPbPlayBar.setVisibility(GONE);
@@ -714,15 +722,62 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         startUpdateProgressTimer();
     }
 
+    /**
+     * 正在播放
+     */
+    private void statePlaying() {
+        mLoading.setVisibility(View.GONE);
+        mCenterStart.setVisibility(View.GONE);
+        mPbPlayBar.setVisibility(View.VISIBLE);
+        mRestartPause.setImageResource(R.drawable.ic_player_pause);
+        startDismissTopBottomTimer();
+        cancelUpdateNetSpeedTimer();
+    }
+
+    /**
+     * 暂停播放
+     */
+    private void statePaused() {
+        mLoading.setVisibility(View.GONE);
+        mCenterStart.setVisibility(mIsCenterPlayerVisibility?View.VISIBLE:View.GONE);
+        mRestartPause.setImageResource(R.drawable.ic_player_start);
+        cancelDismissTopBottomTimer();
+        cancelUpdateNetSpeedTimer();
+    }
+
+    /**
+     * 正在缓冲(播放器正在播放时，缓冲区数据不足，进行缓冲，缓冲区数据足够后恢复播放)
+     */
+    private void stateBufferingPlaying() {
+        mError.setVisibility(View.GONE);
+        mLoading.setVisibility(View.VISIBLE);
+        mCenterStart.setVisibility(View.GONE);
+        setTopBottomVisible(false);
+        mRestartPause.setImageResource(R.drawable.ic_player_pause);
+        mLoadText.setText("正在准备...");
+        startDismissTopBottomTimer();
+        cancelUpdateNetSpeedTimer();
+    }
+
+    /**
+     * 暂停缓冲
+     */
+    private void stateBufferingPaused() {
+        mLoading.setVisibility(View.VISIBLE);
+        mRestartPause.setImageResource(R.drawable.ic_player_start);
+        mLoadText.setText("正在准备...");
+        setTopBottomVisible(false);
+        cancelDismissTopBottomTimer();
+        //开启缓冲时更新网络加载速度
+        startUpdateNetSpeedTimer();
+    }
 
     /**
      * 播放错误
      */
     private void stateError() {
         setTopBottomVisible(false);
-        mTop.setVisibility(View.VISIBLE);
         mError.setVisibility(View.VISIBLE);
-        mLine.setVisibility(GONE);
         cancelUpdateProgressTimer();
         cancelUpdateNetSpeedTimer();
         if (!VideoPlayerUtils.isConnected(mContext)){
@@ -737,6 +792,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      */
     private void stateCompleted() {
         cancelUpdateProgressTimer();
+        cancelUpdateNetSpeedTimer();
         setTopBottomVisible(false);
         mImage.setVisibility(View.VISIBLE);
         mCompleted.setVisibility(View.VISIBLE);
@@ -746,7 +802,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         }
         //当播放完成就解除广播
         unRegisterNetChangedReceiver();
-        cancelUpdateNetSpeedTimer();
     }
 
 
