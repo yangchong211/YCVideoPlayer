@@ -789,7 +789,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         unRegisterNetChangedReceiver();
     }
 
-
     /**
      * 当播放器的播放模式发生变化时
      * @param playMode 播放器的模式：
@@ -854,7 +853,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         }
     }
 
-
     /**
      * 重新设置
      */
@@ -867,14 +865,11 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mSeek.setSecondaryProgress(0);
         mPbPlayBar.setProgress(0);
         mCenterStart.setVisibility(VISIBLE);
-        mLength.setVisibility(View.VISIBLE);
+        mLength.setVisibility(View.GONE);
         mFlLock.setVisibility(View.GONE);
         mImage.setVisibility(View.VISIBLE);
         mBottom.setVisibility(View.GONE);
         mFullScreen.setImageResource(R.drawable.ic_player_open);
-        mTop.setVisibility(View.VISIBLE);
-        mBack.setVisibility(View.VISIBLE);
-
         mLoading.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mCompleted.setVisibility(View.GONE);
