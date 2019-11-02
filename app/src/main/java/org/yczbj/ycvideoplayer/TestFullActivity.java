@@ -74,7 +74,6 @@ public class TestFullActivity extends BaseActivity implements View.OnClickListen
                 .placeholder(R.drawable.image_default)
                 .into(controller.imageView());
         //设置中间播放按钮是否显示
-        controller.setCenterPlayer(true, R.drawable.ic_player_center_start);
         controller.setTopPadding(24.0f);
         controller.setTopVisibility(true);
         controller.setOnVideoControlListener(new OnVideoControlListener() {

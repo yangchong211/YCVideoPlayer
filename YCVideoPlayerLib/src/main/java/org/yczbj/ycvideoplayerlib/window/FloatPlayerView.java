@@ -58,7 +58,6 @@ public class FloatPlayerView extends FrameLayout {
             controller.setTopVisibility(false);
             controller.setLoadingType(ConstantKeys.Loading.LOADING_QQ);
             controller.imageView().setBackgroundColor(Color.BLACK);
-            controller.setCenterPlayer(true,R.drawable.icon_play_center);
             controller.setOnCompletedListener(new OnCompletedListener() {
                 @Override
                 public void onCompleted() {

@@ -64,7 +64,6 @@ public class TestClarityActivity extends BaseActivity implements View.OnClickLis
                 .placeholder(R.drawable.image_default)
                 .into(controller.imageView());
         controller.setTopPadding(24);
-        controller.setCenterPlayer(true,R.drawable.ic_player_center_start);
         videoPlayer.setController(controller);
     }
 

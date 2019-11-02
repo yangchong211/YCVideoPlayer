@@ -170,8 +170,6 @@ public class TestNormalActivity extends BaseActivity  {
         controller.setLoadingType(ConstantKeys.Loading.LOADING_RING);
         //设置不操作后，多久自动隐藏头部和底部布局
         controller.setHideTime(8000);
-        //设置中间播放按钮是否显示，并且支持设置自定义图标
-        controller.setCenterPlayer(true,R.drawable.image_default);
         //获取ImageView的对象
         ImageView imageView = controller.imageView();
         //重新设置

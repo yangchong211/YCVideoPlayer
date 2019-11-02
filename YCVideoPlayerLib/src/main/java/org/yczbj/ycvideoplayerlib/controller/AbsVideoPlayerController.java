@@ -85,13 +85,6 @@ public abstract class AbsVideoPlayerController extends FrameLayout implements Vi
     public abstract boolean getLock();
 
     /**
-     * 设置视频播放器中间的播放键是否显示，设置自定义图片
-     * @param isVisibility          是否可见
-     * @param image                 image
-     */
-    public abstract void setCenterPlayer(boolean isVisibility ,@DrawableRes int image);
-
-    /**
      * 设置是否显示视频头部的下载，分享布局控件
      * @param isVisibility          是否可见
      */

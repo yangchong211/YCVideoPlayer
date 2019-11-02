@@ -186,11 +186,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      */
     private boolean mIsTopLayoutVisibility = false;
     /**
-     * 设置视频播放器中间的播放键是否显示
-     * 默认为false，不显示
-     */
-    private boolean mIsCenterPlayerVisibility = false;
-    /**
      * 设置横屏播放时，tv图标是否显示
      * 默认为false，不显示
      */
@@ -559,23 +554,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     }
 
     /**
-     * 设置中间播放按钮是否显示，并且支持设置自定义图标
-     * @param isVisibility          是否可见，默认不可见
-     * @param image                 image
-     */
-    @Override
-    public void setCenterPlayer(boolean isVisibility, @DrawableRes int image) {
-        this.mIsCenterPlayerVisibility = isVisibility;
-        if(isVisibility){
-            if(image==0){
-                mCenterStart.setImageResource(R.drawable.ic_player_center_start);
-            }else {
-                mCenterStart.setImageResource(image);
-            }
-        }
-    }
-
-    /**
      * 设置top到顶部的距离
      * @param top                   top
      */
@@ -711,15 +689,15 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 播放准备中
      */
     private void startPreparing() {
-        mImage.setVisibility(View.GONE);
         mLoading.setVisibility(View.VISIBLE);
         mLoadText.setText("正在准备...");
+        mImage.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mCompleted.setVisibility(View.GONE);
-        setTopBottomVisible(false);
         mCenterStart.setVisibility(View.GONE);
         mLength.setVisibility(View.GONE);
         mPbPlayBar.setVisibility(GONE);
+        setTopBottomVisible(false);
         //开启缓冲时更新网络加载速度
         startUpdateNetSpeedTimer();
         startUpdateProgressTimer();
@@ -730,9 +708,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      */
     private void statePlaying() {
         mLoading.setVisibility(View.GONE);
-        mCenterStart.setVisibility(View.GONE);
         mPbPlayBar.setVisibility(View.VISIBLE);
         mRestartPause.setImageResource(R.drawable.ic_player_pause);
+        mCenterStart.setImageResource(R.drawable.icon_pause_center);
+        setTopBottomVisible(true);
         startDismissTopBottomTimer();
         cancelUpdateNetSpeedTimer();
     }
@@ -742,8 +721,9 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      */
     private void statePaused() {
         mLoading.setVisibility(View.GONE);
-        mCenterStart.setVisibility(mIsCenterPlayerVisibility?View.VISIBLE:View.GONE);
         mRestartPause.setImageResource(R.drawable.ic_player_start);
+        mCenterStart.setImageResource(R.drawable.icon_play_center);
+        setTopBottomVisible(true);
         cancelDismissTopBottomTimer();
         cancelUpdateNetSpeedTimer();
     }
@@ -752,11 +732,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 正在缓冲(播放器正在播放时，缓冲区数据不足，进行缓冲，缓冲区数据足够后恢复播放)
      */
     private void stateBufferingPlaying() {
-        mError.setVisibility(View.GONE);
         mLoading.setVisibility(View.VISIBLE);
-        mCenterStart.setVisibility(View.GONE);
         setTopBottomVisible(false);
         mRestartPause.setImageResource(R.drawable.ic_player_pause);
+        mCenterStart.setImageResource(R.drawable.icon_pause_center);
         mLoadText.setText("正在准备...");
         startDismissTopBottomTimer();
         cancelUpdateNetSpeedTimer();
@@ -768,6 +747,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private void stateBufferingPaused() {
         mLoading.setVisibility(View.VISIBLE);
         mRestartPause.setImageResource(R.drawable.ic_player_start);
+        mCenterStart.setImageResource(R.drawable.icon_play_center);
         mLoadText.setText("正在准备...");
         setTopBottomVisible(false);
         cancelDismissTopBottomTimer();
@@ -803,6 +783,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         if(mOnCompletedListener!=null){
             mOnCompletedListener.onCompleted();
         }
+        mPbPlayBar.setProgress(100);
         //当播放完成就解除广播
         unRegisterNetChangedReceiver();
     }
@@ -1108,6 +1089,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         mTop.setVisibility(visible ? View.VISIBLE : View.GONE);
         mBottom.setVisibility(visible ? View.VISIBLE : View.GONE);
         mLine.setVisibility(visible ? View.GONE : View.VISIBLE);
+        mCenterStart.setVisibility(visible ? View.VISIBLE : View.GONE);
         topBottomVisible = visible;
         if (visible) {
             if (!mVideoPlayer.isPaused() && !mVideoPlayer.isBufferingPaused()) {
