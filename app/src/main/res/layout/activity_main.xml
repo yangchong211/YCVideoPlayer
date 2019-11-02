@@ -121,7 +121,7 @@
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:background="@color/colorAccent"
-                android:text="10.显示视频top顶部分享，下载，更多等按钮"/>
+                android:text="10.list列表，一次滑动一个视频item"/>
             <TextView
                 android:id="@+id/tv_11"
                 android:layout_width="match_parent"
