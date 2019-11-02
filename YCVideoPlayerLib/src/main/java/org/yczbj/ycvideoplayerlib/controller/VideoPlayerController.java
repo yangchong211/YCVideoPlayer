@@ -156,6 +156,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private LinearLayout mLine;
     private ProgressBar mPbPlayBar;
 
+
+    /**
+     * top视图和bottom视图是否显示
+     */
     private boolean topBottomVisible;
     /**
      * 倒计时器
@@ -368,15 +372,12 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private void initListener() {
         mCenterStart.setOnClickListener(this);
         mBack.setOnClickListener(this);
-
         mIvDownload.setOnClickListener(this);
         mIvShare.setOnClickListener(this);
         mIvAudio.setOnClickListener(this);
         mIvMenu.setOnClickListener(this);
-
         mIvHorAudio.setOnClickListener(this);
         mIvHorTv.setOnClickListener(this);
-
         mRestartPause.setOnClickListener(this);
         mFullScreen.setOnClickListener(this);
         mClarity.setOnClickListener(this);
@@ -805,18 +806,16 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mFullScreen.setVisibility(View.VISIBLE);
                 //隐藏清晰度
                 mClarity.setVisibility(View.GONE);
-                setTopVisibility(mIsTopLayoutVisibility);
                 //隐藏横屏的时候展现的布局
-                setTopVisibility(false);
                 mLlHorizontal.setVisibility(View.GONE);
                 unRegisterBatterReceiver();
                 mIsLock = false;
                 if (mOnPlayerTypeListener!=null){
                     mOnPlayerTypeListener.onNormal();
                 }
+                setTopBottomVisible(true);
                 //隐藏电量图标
                 mBattery.setVisibility(GONE);
-                setTopVisibility(mIsTopLayoutVisibility);
                 VideoLogUtil.d("播放模式--------普通模式");
                 break;
             //全屏模式
@@ -828,10 +827,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 if (clarities != null && clarities.size() > 1) {
                     mClarity.setVisibility(View.VISIBLE);
                 }
-                setTopVisibility(false);
                 mLlHorizontal.setVisibility(View.VISIBLE);
                 mIvHorTv.setVisibility(mIsTvIconVisibility?VISIBLE:GONE);
                 mIvHorAudio.setVisibility(mIsAudioIconVisibility?VISIBLE:GONE);
+                setTopBottomVisible(true);
                 registerBatterReceiver();
                 if (mOnPlayerTypeListener!=null){
                     mOnPlayerTypeListener.onFullScreen();
@@ -841,10 +840,9 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             //小窗口模式
             case ConstantKeys.PlayMode.MODE_TINY_WINDOW:
                 mFlLock.setVisibility(View.GONE);
-                mBack.setVisibility(View.VISIBLE);
+                mBack.setVisibility(View.GONE);
                 mClarity.setVisibility(View.GONE);
-                mLlHorizontal.setVisibility(View.GONE);
-                setTopVisibility(false);
+                setTopBottomVisible(false);
                 mIsLock = false;
                 if (mOnPlayerTypeListener!=null){
                     mOnPlayerTypeListener.onTinyWindow();
@@ -1025,9 +1023,11 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             //点击横向TV
             mVideoControlListener.onVideoControlClick(ConstantKeys.VideoControl.TV);
         }  else if (v == this) {
-            if (mVideoPlayer.isPlaying() || mVideoPlayer.isPaused()
-                    || mVideoPlayer.isBufferingPlaying() || mVideoPlayer.isBufferingPaused()) {
-                setTopBottomVisible(!topBottomVisible);
+            if (mVideoPlayer.isFullScreen() || mVideoPlayer.isNormal()){
+                if (mVideoPlayer.isPlaying() || mVideoPlayer.isPaused()
+                        || mVideoPlayer.isBufferingPlaying() || mVideoPlayer.isBufferingPaused()) {
+                    setTopBottomVisible(!topBottomVisible);
+                }
             }
         }
     }
