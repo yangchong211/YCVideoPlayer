@@ -76,6 +76,7 @@ public class TestFullActivity extends BaseActivity implements View.OnClickListen
         //设置中间播放按钮是否显示
         controller.setTopPadding(24.0f);
         controller.setTopVisibility(true);
+        controller.destroy();
         controller.setOnVideoControlListener(new OnVideoControlListener() {
             @Override
             public void onVideoControlClick(int type) {

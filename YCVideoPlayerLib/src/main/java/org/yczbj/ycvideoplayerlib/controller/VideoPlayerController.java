@@ -20,14 +20,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.BatteryManager;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,18 +33,17 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.yczbj.ycvideoplayerlib.dialog.ChangeClarityDialog;
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.dialog.VideoClarity;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnPlayerTypeListener;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.receiver.BatterReceiver;
 import org.yczbj.ycvideoplayerlib.receiver.NetChangedReceiver;
 import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
 import org.yczbj.ycvideoplayerlib.utils.VideoPlayerUtils;
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.inter.player.InterVideoPlayer;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnClarityChangedListener;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnCompletedListener;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnPlayOrPauseListener;
@@ -546,7 +541,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * @param videoPlayer   播放器
      */
     @Override
-    public void setVideoPlayer(InterVideoPlayer videoPlayer) {
+    public void setVideoPlayer(VideoPlayer videoPlayer) {
         super.setVideoPlayer(videoPlayer);
         // 给播放器配置视频链接地址
         if (clarities != null && clarities.size() > 1 && clarities.size()>defaultClarityIndex) {
@@ -643,7 +638,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      */
     @SuppressLint("SetTextI18n")
     @Override
-    public void onPlayStateChanged(int playState) {
+    public void onPlayStateChanged(@ConstantKeys.CurrentState int playState) {
         switch (playState) {
             case ConstantKeys.CurrentState.STATE_IDLE:
                 break;
@@ -760,6 +755,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * 播放错误
      */
     private void stateError() {
+        mLoading.setVisibility(View.GONE);
         setTopBottomVisible(false);
         mError.setVisibility(View.VISIBLE);
         cancelUpdateProgressTimer();
@@ -778,6 +774,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         cancelUpdateProgressTimer();
         cancelUpdateNetSpeedTimer();
         setTopBottomVisible(false);
+        mLoading.setVisibility(View.GONE);
         mImage.setVisibility(View.VISIBLE);
         mCompleted.setVisibility(View.VISIBLE);
         //设置播放完成的监听事件
@@ -794,7 +791,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * @param playMode 播放器的模式：
      */
     @Override
-    public void onPlayModeChanged(int playMode) {
+    public void onPlayModeChanged(@ConstantKeys.PlayMode int playMode) {
         switch (playMode) {
             //普通模式
             case ConstantKeys.PlayMode.MODE_NORMAL:
@@ -1029,7 +1026,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     /**
      * 开始播放
      */
-    public void startVideo() {
+    private void startVideo() {
         //开始播放
         if (mVideoPlayer.isIdle()) {
             mVideoPlayer.start();

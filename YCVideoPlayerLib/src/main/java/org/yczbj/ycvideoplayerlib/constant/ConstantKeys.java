@@ -46,7 +46,6 @@ public final class ConstantKeys {
     @Retention(RetentionPolicy.SOURCE)
     public @interface PlayerType{}
 
-
     /**
      * 控制器上的视频顶部View点击事件
      *                  在竖屏模式下，默认是不显示，需要显示设置controller.setTopVisibility(true);
@@ -108,8 +107,6 @@ public final class ConstantKeys {
         int MODE_FULL_SCREEN = 1002;
         int MODE_TINY_WINDOW = 1003;
     }
-
-
 
     /**
      * 通过注解限定类型
