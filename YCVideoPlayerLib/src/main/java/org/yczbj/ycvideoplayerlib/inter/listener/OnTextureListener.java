@@ -38,8 +38,8 @@ public interface OnTextureListener {
     /**
      * SurfaceTexture缓冲大小变化
      * @param surface                   surface
-     * @param width                     width
-     * @param height                    height
+     * @param width                     WIDTH
+     * @param height                    HEIGHT
      */
     void onSurfaceSizeChanged(SurfaceTexture surface, int width, int height);
 
@@ -49,7 +49,6 @@ public interface OnTextureListener {
      * @return                          销毁
      */
     boolean onSurfaceDestroyed(SurfaceTexture surface);
-
 
     /**
      * SurfaceTexture通过updateImage更新

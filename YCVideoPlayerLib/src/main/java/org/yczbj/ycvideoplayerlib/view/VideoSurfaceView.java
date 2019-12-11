@@ -46,6 +46,7 @@ public class VideoSurfaceView extends SurfaceView{
     private int videoHeight;
     private int videoWidth;
     private OnSurfaceListener onSurfaceListener;
+    private static final float EQUAL_FLOAT = 0.0000001f;
 
     public VideoSurfaceView(Context context) {
         super(context);
@@ -166,12 +167,20 @@ public class VideoSurfaceView extends SurfaceView{
         // 如果判断成立，则说明显示的TextureView和本身的位置是有90度的旋转的，所以需要交换宽高参数。
         float viewRotation1 = 90f;
         float viewRotation2 = 270f;
-        if (viewRotation == viewRotation1 || viewRotation == viewRotation2) {
+        //如果是横竖屏旋转切换视图，则宽高属性互换
+        if (Math.abs(viewRotation-viewRotation1)> EQUAL_FLOAT && Math.abs(viewRotation1-viewRotation)> EQUAL_FLOAT ||
+                (Math.abs(viewRotation-viewRotation2)> EQUAL_FLOAT && Math.abs(viewRotation2-viewRotation)> EQUAL_FLOAT)){
             int tempMeasureSpec = widthMeasureSpec;
             //noinspection SuspiciousNameCombination
             widthMeasureSpec = heightMeasureSpec;
             heightMeasureSpec = tempMeasureSpec;
         }
+        /*if (viewRotation == viewRotation1 || viewRotation == viewRotation2) {
+            int tempMeasureSpec = widthMeasureSpec;
+            //noinspection SuspiciousNameCombination
+            widthMeasureSpec = heightMeasureSpec;
+            heightMeasureSpec = tempMeasureSpec;
+        }*/
 
         int width = getDefaultSize(videoWidth, widthMeasureSpec);
         int height = getDefaultSize(videoHeight, heightMeasureSpec);
@@ -193,7 +202,7 @@ public class VideoSurfaceView extends SurfaceView{
                     height = width * videoHeight / videoWidth;
                 }
             } else if (widthSpecMode == MeasureSpec.EXACTLY) {
-                // only the width is fixed, adjust the height to match aspect ratio if possible
+                // only the WIDTH is fixed, adjust the HEIGHT to match aspect ratio if possible
                 width = widthSpecSize;
                 height = width * videoHeight / videoWidth;
                 if (heightSpecMode == MeasureSpec.AT_MOST && height > heightSpecSize) {
@@ -202,7 +211,7 @@ public class VideoSurfaceView extends SurfaceView{
                     width = height * videoWidth / videoHeight;
                 }
             } else if (heightSpecMode == MeasureSpec.EXACTLY) {
-                // only the height is fixed, adjust the width to match aspect ratio if possible
+                // only the HEIGHT is fixed, adjust the WIDTH to match aspect ratio if possible
                 height = heightSpecSize;
                 width = height * videoWidth / videoHeight;
                 if (widthSpecMode == MeasureSpec.AT_MOST && width > widthSpecSize) {
@@ -211,16 +220,16 @@ public class VideoSurfaceView extends SurfaceView{
                     height = width * videoHeight / videoWidth;
                 }
             } else {
-                // neither the width nor the height are fixed, try to use actual video size
+                // neither the WIDTH nor the HEIGHT are fixed, try to use actual video size
                 width = videoWidth;
                 height = videoHeight;
                 if (heightSpecMode == MeasureSpec.AT_MOST && height > heightSpecSize) {
-                    // too tall, decrease both width and height
+                    // too tall, decrease both WIDTH and HEIGHT
                     height = heightSpecSize;
                     width = height * videoWidth / videoHeight;
                 }
                 if (widthSpecMode == MeasureSpec.AT_MOST && width > widthSpecSize) {
-                    // too wide, decrease both width and height
+                    // too wide, decrease both WIDTH and HEIGHT
                     width = widthSpecSize;
                     height = width * videoHeight / videoWidth;
                 }

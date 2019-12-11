@@ -84,5 +84,14 @@ public class PermissionActivity extends AppCompatActivity {
 
     private static PermissionListener mPermissionListener;
 
-
+    public interface PermissionListener {
+        /**
+         * 成功
+         */
+        void onSuccess();
+        /**
+         * 失败
+         */
+        void onFail();
+    }
 }

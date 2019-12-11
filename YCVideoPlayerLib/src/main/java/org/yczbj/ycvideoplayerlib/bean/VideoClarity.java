@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package org.yczbj.ycvideoplayerlib.dialog;
+package org.yczbj.ycvideoplayerlib.bean;
 
 
 /**
@@ -50,23 +50,12 @@ public class VideoClarity {
         return grade;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
     public String getP() {
         return p;
-    }
-
-    public void setP(String p) {
-        this.p = p;
     }
 
     public String getVideoUrl() {
         return videoUrl;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
 }

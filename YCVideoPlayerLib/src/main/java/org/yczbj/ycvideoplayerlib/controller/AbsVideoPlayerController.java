@@ -240,6 +240,7 @@ public abstract class AbsVideoPlayerController extends VideoControllerView imple
                         }
                     }
                 }
+                //是否需要改变播放的进度
                 if (mNeedChangePosition) {
                     long duration = mVideoPlayer.getDuration();
                     long toPosition = (long) (mGestureDownPosition + duration * deltaX / getWidth());
@@ -247,18 +248,21 @@ public abstract class AbsVideoPlayerController extends VideoControllerView imple
                     int newPositionProgress = (int) (100f * mNewPosition / duration);
                     showChangePosition(duration, newPositionProgress);
                 }
+                //是否改变亮度
                 if (mNeedChangeBrightness) {
                     deltaY = -deltaY;
                     float deltaBrightness = deltaY * 3 / getHeight();
                     float newBrightness = mGestureDownBrightness + deltaBrightness;
                     newBrightness = Math.max(0, Math.min(newBrightness, 1));
                     float newBrightnessPercentage = newBrightness;
-                    WindowManager.LayoutParams params = VideoPlayerUtils.scanForActivity(mContext).getWindow().getAttributes();
+                    WindowManager.LayoutParams params = VideoPlayerUtils.scanForActivity(mContext)
+                            .getWindow().getAttributes();
                     params.screenBrightness = newBrightnessPercentage;
                     VideoPlayerUtils.scanForActivity(mContext).getWindow().setAttributes(params);
                     int newBrightnessProgress = (int) (100f * newBrightnessPercentage);
                     showChangeBrightness(newBrightnessProgress);
                 }
+                //是否改变音量
                 if (mNeedChangeVolume) {
                     deltaY = -deltaY;
                     int maxVolume = mVideoPlayer.getMaxVolume();

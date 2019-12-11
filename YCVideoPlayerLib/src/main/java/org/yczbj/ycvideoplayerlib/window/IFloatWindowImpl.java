@@ -103,7 +103,7 @@ public class IFloatWindowImpl extends IFloatWindow {
     @Override
     public void updateX(int screenType, float ratio) {
         checkMoveType();
-        mB.xOffset = (int) ((screenType == WindowScreen.width ?
+        mB.xOffset = (int) ((screenType == WindowScreen.WIDTH ?
                 WindowUtil.getScreenWidth(mB.mApplicationContext) :
                 WindowUtil.getScreenHeight(mB.mApplicationContext)) * ratio);
         mFloatView.updateX(mB.xOffset);
@@ -113,7 +113,7 @@ public class IFloatWindowImpl extends IFloatWindow {
     @Override
     public void updateY(int screenType, float ratio) {
         checkMoveType();
-        mB.yOffset = (int) ((screenType == WindowScreen.width ?
+        mB.yOffset = (int) ((screenType == WindowScreen.WIDTH ?
                 WindowUtil.getScreenWidth(mB.mApplicationContext) :
                 WindowUtil.getScreenHeight(mB.mApplicationContext)) * ratio);
         mFloatView.updateY(mB.yOffset);

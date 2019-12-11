@@ -18,38 +18,31 @@ package org.yczbj.ycvideoplayerlib.player;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.Surface;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
+
 import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.AbsVideoPlayerController;
-import org.yczbj.ycvideoplayerlib.inter.listener.OnTextureListener;
+import org.yczbj.ycvideoplayerlib.inter.player.InterPropertyVideoPlayer;
 import org.yczbj.ycvideoplayerlib.inter.player.InterScreenVideoPlayer;
 import org.yczbj.ycvideoplayerlib.inter.player.InterStateVideoPlayer;
-import org.yczbj.ycvideoplayerlib.inter.player.InterPropertyVideoPlayer;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
 import org.yczbj.ycvideoplayerlib.utils.VideoPlayerUtils;
 import org.yczbj.ycvideoplayerlib.view.BaseToast;
-import org.yczbj.ycvideoplayerlib.view.VideoTextureView;
-import java.io.IOException;
+
 import java.util.Map;
+
 import tv.danmaku.ijk.media.player.AndroidMediaPlayer;
-import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
-import tv.danmaku.ijk.media.player.IjkTimedText;
 
 
 /**
@@ -730,7 +723,6 @@ public class VideoPlayer extends FrameLayout implements InterPropertyVideoPlayer
         mController.onPlayModeChanged(mCurrentMode);
         VideoLogUtil.d("播放模式-------MODE_TINY_WINDOW");
     }
-
 
     /**
      * 退出小窗口播放

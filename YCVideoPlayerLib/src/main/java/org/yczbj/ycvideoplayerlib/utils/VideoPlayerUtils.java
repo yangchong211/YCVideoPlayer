@@ -21,9 +21,12 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.WindowManager;
 import java.util.Formatter;
@@ -63,11 +66,17 @@ public final class VideoPlayerUtils {
      * @param activity      activity
      * @return
      */
-    public static boolean isActivityLiving(Activity activity) {
+    public static boolean isActivityLiving(@Nullable Activity activity) {
         if (activity == null) {
             return false;
         }
-        return !activity.isFinishing();
+        if (activity.isFinishing()) {
+            return false;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && activity.isDestroyed()) {
+            return false;
+        }
+        return true;
     }
 
 
@@ -221,6 +230,33 @@ public final class VideoPlayerUtils {
             return null;
         }
         return manager.getActiveNetworkInfo();
+    }
+
+    /**
+     * 空指针检测，不能为null，可以为""
+     * @param obj           obj对象
+     * @param message       消息
+     * @param <T>           泛型
+     * @return              obj
+     */
+    public static <T> T requireNonNull(T obj, String message) {
+        if (obj == null) {
+            throw new NullPointerException(message);
+        }
+        return obj;
+    }
+
+    /**
+     * 空指针检测，不能为null，也不能为""
+     * @param obj           obj对象
+     * @param message       消息
+     * @return              字符串
+     */
+    public static String requireNonEmpty(String obj, String message) {
+        if (TextUtils.isEmpty(obj)) {
+            throw new IllegalArgumentException(message);
+        }
+        return obj;
     }
 
 

@@ -61,7 +61,7 @@ public class FloatPhone extends FloatView {
                 mLayoutParams.format = PixelFormat.RGBA_8888;
                 mWindowManager.addView(mView, mLayoutParams);
             } else {
-                PermissionActivity.request(mContext, new PermissionListener() {
+                PermissionActivity.request(mContext, new PermissionActivity.PermissionListener() {
                     @Override
                     public void onSuccess() {
                         mLayoutParams.format = PixelFormat.RGBA_8888;

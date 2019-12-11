@@ -105,8 +105,8 @@ public class TestWindowActivity extends BaseActivity implements View.OnClickList
         FloatWindow
                 .with(getApplicationContext())
                 .setView(floatPlayerView)
-                //.setWidth(WindowScreen.width, 0.4f)
-                //.setHeight(WindowScreen.width, 0.3f)
+                //.setWidth(WindowScreen.WIDTH, 0.4f)
+                //.setHeight(WindowScreen.WIDTH, 0.3f)
                 //这个是设置位置
                 .setX(WindowScreen.width, 0.8f)
                 .setY(WindowScreen.height, 0.3f)

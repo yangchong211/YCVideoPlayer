@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import org.yczbj.ycvideoplayerlib.inter.listener.OnTextureListener;
+import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
 
 
 /**
@@ -47,6 +48,7 @@ public class VideoTextureView extends TextureView implements TextureView.Surface
     private int videoHeight;
     private int videoWidth;
     private OnTextureListener onTextureListener;
+    private static final float EQUAL_FLOAT = 0.0000001f;
 
 
     public VideoTextureView(Context context) {
@@ -57,8 +59,8 @@ public class VideoTextureView extends TextureView implements TextureView.Surface
     /**
      * SurfaceTexture准备就绪
      * @param surface                   surface
-     * @param width                     width
-     * @param height                    height
+     * @param width                     WIDTH
+     * @param height                    HEIGHT
      */
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
@@ -71,8 +73,8 @@ public class VideoTextureView extends TextureView implements TextureView.Surface
     /**
      * SurfaceTexture缓冲大小变化
      * @param surface                   surface
-     * @param width                     width
-     * @param height                    height
+     * @param width                     WIDTH
+     * @param height                    HEIGHT
      */
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
@@ -180,13 +182,20 @@ public class VideoTextureView extends TextureView implements TextureView.Surface
         float viewRotation1 = 90f;
         float viewRotation2 = 270f;
         //如果是横竖屏旋转切换视图，则宽高属性互换
-        if (viewRotation == viewRotation1 || viewRotation == viewRotation2) {
+        if (Math.abs(viewRotation-viewRotation1)> EQUAL_FLOAT && Math.abs(viewRotation1-viewRotation)> EQUAL_FLOAT ||
+                (Math.abs(viewRotation-viewRotation2)> EQUAL_FLOAT && Math.abs(viewRotation2-viewRotation)> EQUAL_FLOAT)){
             int tempMeasureSpec = widthMeasureSpec;
             //noinspection SuspiciousNameCombination
             widthMeasureSpec = heightMeasureSpec;
             heightMeasureSpec = tempMeasureSpec;
+            VideoLogUtil.d("TextureView---------"+"如果是横竖屏旋转切换视图，则宽高属性互换");
         }
-
+        /*if (viewRotation == viewRotation1 || viewRotation == viewRotation2) {
+            int tempMeasureSpec = widthMeasureSpec;
+            //noinspection SuspiciousNameCombination
+            widthMeasureSpec = heightMeasureSpec;
+            heightMeasureSpec = tempMeasureSpec;
+        }*/
         int width = getDefaultSize(videoWidth, widthMeasureSpec);
         int height = getDefaultSize(videoHeight, heightMeasureSpec);
         if (videoWidth > 0 && videoHeight > 0) {
@@ -207,7 +216,7 @@ public class VideoTextureView extends TextureView implements TextureView.Surface
                     height = width * videoHeight / videoWidth;
                 }
             } else if (widthSpecMode == MeasureSpec.EXACTLY) {
-                // only the width is fixed, adjust the height to match aspect ratio if possible
+                // only the WIDTH is fixed, adjust the HEIGHT to match aspect ratio if possible
                 width = widthSpecSize;
                 height = width * videoHeight / videoWidth;
                 if (heightSpecMode == MeasureSpec.AT_MOST && height > heightSpecSize) {
@@ -216,7 +225,7 @@ public class VideoTextureView extends TextureView implements TextureView.Surface
                     width = height * videoWidth / videoHeight;
                 }
             } else if (heightSpecMode == MeasureSpec.EXACTLY) {
-                // only the height is fixed, adjust the width to match aspect ratio if possible
+                // only the HEIGHT is fixed, adjust the WIDTH to match aspect ratio if possible
                 height = heightSpecSize;
                 width = height * videoWidth / videoHeight;
                 if (widthSpecMode == MeasureSpec.AT_MOST && width > widthSpecSize) {
@@ -225,16 +234,16 @@ public class VideoTextureView extends TextureView implements TextureView.Surface
                     height = width * videoHeight / videoWidth;
                 }
             } else {
-                // neither the width nor the height are fixed, try to use actual video size
+                // neither the WIDTH nor the HEIGHT are fixed, try to use actual video size
                 width = videoWidth;
                 height = videoHeight;
                 if (heightSpecMode == MeasureSpec.AT_MOST && height > heightSpecSize) {
-                    // too tall, decrease both width and height
+                    // too tall, decrease both WIDTH and HEIGHT
                     height = heightSpecSize;
                     width = height * videoWidth / videoHeight;
                 }
                 if (widthSpecMode == MeasureSpec.AT_MOST && width > widthSpecSize) {
-                    // too wide, decrease both width and height
+                    // too wide, decrease both WIDTH and HEIGHT
                     width = widthSpecSize;
                     height = width * videoHeight / videoWidth;
                 }

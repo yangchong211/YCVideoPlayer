@@ -29,7 +29,7 @@ import tv.danmaku.ijk.media.player.IjkTimedText;
  *     blog  : https://github.com/yangchong211
  *     time  : 2017/11/21
  *     desc  : MediaPlayer帮助累
- *     revise: 主要处理音视频player初始化操作
+ *     revise: 主要处理音视频player初始化操作和各种监听
  * </pre>
  */
 public class VideoMediaPlayer {
@@ -56,7 +56,8 @@ public class VideoMediaPlayer {
     @RequiresApi(api = Build.VERSION_CODES.FROYO)
     public AudioManager initAudioManager() {
         if (mAudioManager == null) {
-            mAudioManager  = (AudioManager) videoPlayer.getContext().getSystemService(Context.AUDIO_SERVICE);
+            mAudioManager  = (AudioManager) videoPlayer.getContext()
+                    .getSystemService(Context.AUDIO_SERVICE);
             mAudioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC,
                     AudioManager.AUDIOFOCUS_GAIN);
         }
@@ -370,7 +371,7 @@ public class VideoMediaPlayer {
                 public void onVideoSizeChanged(IMediaPlayer mp, int width, int height,
                                                int sar_num, int sar_den) {
                     mTextureView.adaptVideoSize(width, height);
-                    VideoLogUtil.d("listener---------onVideoSizeChanged ——> width：" + width + "， height：" + height);
+                    VideoLogUtil.d("listener---------onVideoSizeChanged ——> WIDTH：" + width + "， HEIGHT：" + height);
                 }
             };
 
@@ -396,7 +397,6 @@ public class VideoMediaPlayer {
             return true;
         }
     };
-
 
 
     /**

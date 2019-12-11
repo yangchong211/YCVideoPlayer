@@ -1,0 +1,621 @@
+### 目录介绍
+- 1.0.0.1 请手写equal方法【String类】，讲讲具体的原理？Object类的equla方法是怎样的？
+- 1.0.0.2 请说下String与StringBuffer区别，StringBuffer底部如何实现？String类可以被继承吗，为什么？
+- 1.0.0.3 String a=""和String a=new String("")的的关系和异同？String的创建机制如何理解？
+- 1.0.0.4 为什么 Java 中的 String 是不可变的（Immutable）？字符串设计和实现考量？String不可变的好处？
+- 1.0.0.5 static关键字可以修饰什么？static使用的注意事项有哪些？static关键字的特点？使用static存在什么问题？
+- 1.0.0.6 static变量存储位置是哪里？静态变量的生命周期？静态变量何时销毁？静态引用的对象回收如何理解？
+- 1.0.0.7 访问修饰符public,private,protected,以及不写（默认）时的区别？访问修饰符底层怎么实现访问权限管理？
+- 1.0.0.8 静态变量和实例变量的区别？成员变量与局部变量的区别有那些？外部类和内部类有何区别，生命周期是怎样的？
+- 1.0.1.0 int和Integer的区别？装箱、拆箱什么含义？什么时候装箱/拆箱？装箱和拆箱是如何实现的？
+- 1.0.1.1 Object有哪些公有方法？Object类toString()返回的是什么？为什么说类一定要实现Cloneable接口才可以克隆？
+- 1.0.1.2 final，finally，finalize有什么不同？finally什么情况下不会被执行？java.lang 包下为什么要设置final？
+- 1.0.1.3 为什么要用通配符？上界通配符和下界通配符注意要点？什么是无界通配符？如何理解泛型编译器类型检查？
+- 1.0.1.4 什么是泛型擦除，能否通过开发中实际案例说下？如何获取泛型的具体的类型【反射】？
+- 1.0.1.5 如何验证int类型是否线程安全？那些类型是线程安全的？举一个线程安全的例子【AtomicInteger】？
+- 1.0.1.6 Java序列话中如果有些字段不想进行序列化怎么办？Java序列化机制底层实现原理是怎样的？
+- 1.0.1.8 原始数据类型和引用类型局限性？为何要引用基本数据包装类？基本数据类型一定存储在栈中吗？
+- 1.0.1.9 new Integer(123) 与 Integer.valueOf(123)有何区别，请从底层实现分析两者区别？
+- 1.0.2.0 instanceof它的作用是什么？在使用过程中注意事项有哪些？它底层原理是如何实现的，说说你的理解？
+- 1.0.2.1 float存储为何会精度丢失？计算机如何存储浮点型？float和double输出有何区别？
+
+
+
+### 好消息
+- 博客笔记大汇总【15年10月到至今】，包括Java基础及深入知识点，Android技术博客，Python学习笔记等等，还包括平时开发中遇到的bug汇总，当然也在工作之余收集了大量的面试题，长期更新维护并且修正，持续完善……开源的文件是markdown格式的！同时也开源了生活博客，从12年起，积累共计500篇[近100万字]，将会陆续发表到网上，转载请注明出处，谢谢！
+- **链接地址：https://github.com/yangchong211/YCBlogs**
+- 如果觉得好，可以star一下，谢谢！当然也欢迎提出建议，万事起于忽微，量变引起质变！**所有博客将陆续开源到GitHub！**
+
+
+#### 1.0.0.1 请手写equal方法【String类】，讲讲具体的原理？Object类的equla方法是怎样的？
+- 代码如下所示，如果是手写代码，一定要弄清楚逻辑思路！
+    ```
+    public boolean equals(Object anObject) {
+        if (this == anObject) {
+            return true;
+        }
+        if (anObject instanceof String) {
+            String anotherString = (String) anObject;
+            int n = count;
+            if (n == anotherString.count) {
+                int i = 0;
+                while (n-- != 0) {
+                    if (charAt(i) != anotherString.charAt(i))
+                            return false;
+                    i++;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+    ```
+- Object类的equla方法是怎样的？
+    ```
+    public boolean equals(Object obj) {
+        return (this == obj);
+    }
+    ```
+
+
+#### 1.0.0.2 请说下String与StringBuffer区别，StringBuffer底部如何实现？String类可以被继承吗，为什么？
+- String类的特点
+    - String的特点是一旦被创建，就不能被改变。注意是地址不能改变。StringBuffer底层是可变的字节序列……
+- String类可以被继承吗
+    - 看String源码可知，String类被final关键字修饰了，所以不能被继承。这个地方可以说下final关键字作用。
+- String、StringBuffer和StringBuilder的区别？
+    - String是字符串常量，而StringBuffer、StringBuilder都是字符串变量，即String对象一创建后不可更改，而后两者的对象是可更改的：
+    - StringBuffer是线程安全的，而StringBuilder是非线程安全的，这是由于StringBuffer对方法加了同步锁或者对调用的方法加了同步锁
+    - String更适用于少量的字符串操作的情况，StringBuilder适用于单线程下在字符缓冲区进行大量操作的情况，StringBuffer适用于多线程下在字符缓冲区进行大量操作的情况
+    - [技术博客大总结](https://github.com/yangchong211/YCBlogs)
+
+
+
+#### 1.0.0.3 String a=""和String a=new String("")的的关系和异同？String的创建机制如何理解？
+- 区别
+    - 通过String a=""直接赋值的方式得到的是一个字符串常量，存在于常量池；注意，相同内容的字符串在常量池中只有一个，即如果池已包含内容相等的字符串会返回池中的字符串，反之会将该字符串放入池中
+    - 通过new String("")创建的字符串不是常量是实例对象，会在堆内存开辟空间并存放数据，且每个实例对象都有自己的地址空间
+- String的创建机制
+    - 由于String在Java世界中使用过于频繁，Java为了避免在一个系统中产生大量的String对象，引入了字符串常量池。其运行机制是：创建一个字符串时，首先检查池中是否有值相同的字符串对象，如果有则不需要创建直接从池中刚查找到的对象引用；如果没有则新建字符串对象，返回对象引用，并且将新创建的对象放入池中。但是，通过new方法创建的String对象是不检查字符串池的，而是直接在堆区或栈区创建一个新的对象，也不会把对象放入池中。上述原则只适用于通过直接量给String对象引用赋值的情况。
+
+
+
+
+#### 1.0.0.4 为什么Java中的 String 是不可变的（Immutable）？字符串设计和实现考量？String不可变的好处？
+- 不可变类String的原因
+    - String主要的三个成员变量 char value[]， int offset, int count均是private，final的，并且没有对应的 getter/setter;
+    - String 对象一旦初始化完成，上述三个成员变量就不可修改；并且其所提供的接口任何对这些域的修改都将返回一个新对象；
+    - [技术博客大总结](https://github.com/yangchong211/YCBlogs)
+    - 是典型的 Immutable 类，被声明成为 final class，所有属性也都是final的。也由于它的不可变，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。
+- 字符串设计和实现考量？
+    - String 是 Immutable 类的典型实现，原生的保证了基础线程安全，因为你无法对它内部数据进行任何修改，这种便利甚至体现在拷贝构造函数中，由于不可变，Immutable 对象在拷贝时不需要额外复制数据。
+    - 为了实现修改字符序列的目的，StringBuffer 和 StringBuilder 底层都是利用可修改的（char，JDK 9 以后是 byte）数组，二者都继承了 AbstractStringBuilder，里面包含了基本操作，区别仅在于最终的方法是否加了 synchronized。
+    - 这个内部数组应该创建成多大的呢？如果太小，拼接的时候可能要重新创建足够大的数组；如果太大，又会浪费空间。目前的实现是，构建时初始字符串长度加 16（这意味着，如果没有构建对象时输入最初的字符串，那么初始值就是 16）。我们如果确定拼接会发生非常多次，而且大概是可预计的，那么就可以指定合适的大小，避免很多次扩容的开销。扩容会产生多重开销，因为要抛弃原有数组，创建新的（可以简单认为是倍数）数组，还要进行arraycopy。
+- String不可变的好处？
+    - **可以缓存 hash 值** 
+        - 因为 String 的 hash 值经常被使用，例如 String 用做 HashMap 的 key。不可变的特性可以使得 hash 值也不可变，因此只需要进行一次计算。
+    - **String Pool 的需要** 
+        - 如果一个String对象已经被创建过了，那么就会从 String Pool 中取得引用。只有 String 是不可变的，才可能使用 String Pool。
+    - **安全性** [技术博客大总结](https://github.com/yangchong211/YCBlogs)
+        - String 经常作为参数，String 不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果 String 是可变的，那么在网络连接过程中，String 被改变，改变 String 对象的那一方以为现在连接的是其它主机，而实际情况却不一定是。
+    - **线程安全** 
+        - String 不可变性天生具备线程安全，可以在多个线程中安全地使用。
+
+
+
+#### 1.0.0.5 static关键字可以修饰什么？static使用的注意事项有哪些？static关键字的特点？使用static存在什么问题？
+- 可以用来修饰：成员变量，成员方法，代码块，内部类等。具体如下所示
+    - **修饰成员变量和成员方法** 
+        - 被 static 修饰的成员属于类，不属于单个这个类的某个对象，被类中所有对象共享，可以并且建议通过类名调用。
+        - 被static 声明的成员变量属于静态成员变量，静态变量存放在Java内存区域的方法区。
+    - **静态代码块** 
+        - 静态代码块定义在类中方法外,静态代码块在非静态代码块之前执行(静态代码块—>非静态代码块—>构造方法)
+        - 该类不管创建多少对象，静态代码块只执行一次.
+    - **静态内部类（static修饰类的话只能修饰内部类）** 
+    - 静态内部类与非静态内部类之间存在一个最大的区别:
+        - 非静态内部类在编译完成之后会隐含地保存着一个引用，该引用是指向创建它的外围内，但是静态内部类却没有。没有这个引用就意味着：1.它的创建是不需要依赖外围类的创建。2.它不能使用任何外围类的非static成员变量和方法。
+    - **静态导包(用来导入类中的静态资源，1.5之后的新特性):**
+        - 这两个关键字连用可以指定导入某个类中的指定静态资源，并且不需要使用类名调用类中静态成员，可以直接使用类中静态成员变量和成员方法。
+- static使用的注意事项有哪些？
+	* 在静态方法中是没有this关键字的
+		* 静态是随着类的加载而加载，this是随着对象的创建而存在。
+		* 静态比对象先存在。
+	* 静态方法只能访问静态的成员变量和静态的成员方法【静态只能访问静态,非静态可以访问静态的也可以访问非静态的】
+- static关键字的特点？
+	* 随着类的加载而加载
+	* 优先于对象存在
+	* 被类的所有对象共享
+	* 可以通过类名调用【静态修饰的内容一般我们称其为：与类相关的，类成员】
+- 使用static存在什么问题？
+    - 1.占用内存，并且内存一般不会释放；
+    - 2.在系统不够内存情况下会自动回收静态内存，这样就会引起访问全局静态错误。
+    - 3.在Android中不能将activity作为static静态对象，这样使activity的所有组件对象都存入全局内存中，并且不会被回收；
+
+
+
+#### 1.0.0.6 static变量存储位置是哪里？静态变量的生命周期？静态变量何时销毁？静态引用的对象回收如何理解？
+- static变量存储位置
+    - 注意是：存储在JVM的方法区中
+    - static变量在类加载时被初始化，存储在JVM的方法区中，整个内存中只有一个static变量的拷贝，可以使用类名直接访问，也可以通过类的实例化对象访问，一般不推荐通过实例化对象访问，通俗的讲static变量属于类，不属于对象，任何实例化的对象访问的都是同一个static变量，任何地放都可以通过类名来访问static变量。
+- 静态变量的生命周期
+    - 类在什么时候被加载？[技术博客大总结](https://github.com/yangchong211/YCBlogs)
+    - 当我们启动一个app的时候，系统会创建一个进程，此进程会加载一个Dalvik VM的实例，然后代码就运行在DVM之上，类的加载和卸载，垃圾回收等事情都由DVM负责。也就是说在进程启动的时候，类被加载，静态变量被分配内存。
+- 静态变量何时销毁
+    - 类在什么时候被卸载？在进程结束的时候。
+    - 说明：一般情况下，所有的类都是默认的ClassLoader加载的，只要ClassLoader存在，类就不会被卸载，而默认的ClassLoader生命周期是与进程一致的
+- 静态引用的对象回收
+    - 只要静态变量没有被销毁也没有置null，其对象一直被保持引用，也即引用计数不可能是0，因此不会被垃圾回收。因此，单例对象在运行时不会被回收
+
+
+
+
+#### 1.0.0.7 访问修饰符public,private,protected,以及不写（默认）时的区别？访问修饰符底层是怎么实现访问权限管理的？
+- 访问修饰符public,private,protected,以及不写（默认）时的区别？
+    - 公有，使用public修饰，声明为公有表示可供所有其他的任何类使用，例如main方法前面就有public修饰。使用了public修饰意味着访问权限是最大的。
+    - 私有，使用private修饰，声明为私有表示仅在本类中可见。私有的方法和属性不能被其他类使用，可以起到信息隐藏的作用，是封装的主要方式。同时使用private修饰会影响继承，private修饰的类不能被继承，private修饰的方法不能被重写。所有恰好与public相反，private修饰的访问权限最低，因此需谨慎使用。
+    - 默认，什么类，变量，方法时可以不使用任何访问修饰符，此时表示默认修饰。对同一个包中的类是可以进行访问和修改的，但是不能跨包使用，这种情况使用的相对较少。
+    - 受保护的，使用protected修饰，与默认的修饰不同，受保护的修饰访问权限要大于默认修饰的，因为protected修饰的除了可以在同一个包中使用外，在其他包中的子类也是可以使用的，因此他的访问权限是大于默认的而小于公有的。
+    ```
+    区别如下：
+    作用域          当前类      同包    子类     其他
+    public            √         √       √      √
+    protected         √         √       √      ×
+    default           √         √       ×      ×
+    private           √         ×       ×      ×
+    ```
+
+
+
+
+#### 1.0.0.8 静态变量和实例变量的区别？成员变量与局部变量的区别有那些？外部类和内部类有何区别，生命周期是怎样的？
+- 静态变量和实例变量的区别
+    - 静态变量是被static修饰符修饰的变量，也称为类变量，它属于类，不属于类的任何一个对象，一个类不管创建多少个对象，静态变量在内存中有且仅有一个拷贝。静态变量可以实现让多个对象共享内存。在Java开发中，上下文类和工具类中通常会有大量的静态成员。
+    - 实例变量必须依存于某一实例，需要先创建对象然后通过对象才能访问到它
+- 成员变量与局部变量的区别
+    - 1.从语法形式上，看成员变量是属于类的，而局部变量是在方法中定义的变量或是方法的参数；成员变量可以被 public,private,static 等修饰符所修饰，而局部变量不能被访问控制修饰符及 static 所修饰；但是，成员变量和局部变量都能被 final 所修饰；
+    - 2.从变量在内存中的存储方式来看，成员变量是对象的一部分，而对象存在于堆内存，局部变量存在于栈内存
+    - 3.从变量在内存中的生存时间上看，成员变量是对象的一部分，它随着对象的创建而存在，而局部变量随着方法的调用而自动消失。
+    - 4.成员变量如果没有被赋初值，则会自动以类型的默认值而赋值（一种情况例外被 final 修饰但没有被 static 修饰的成员变量必须显示地赋值）；而局部变量则不会自动赋值。
+- 外部类和内部类有何区别，生命周期是怎样的？
+    - Java中的内部类共分为四种：
+        - 静态内部类static inner class (also called nested class)
+        - 成员内部类member inner class
+        - 局部内部类local inner class
+        - 匿名内部类anonymous inner class
+    - 内部类就相当于一个外部类的成员变量，所以可以直接访问外部变量，外部类不能直接访问内部类变量，必须通过创建内部类实例的方法访问。
+        - new InnerClass(32).m就是创建内部类实例访问内部类成员变量。你想不通的肯定是指内部类的私有变量怎么可以被外部类访问吧，按常规，私有变量m只能在InnerClass里被访问，
+
+
+
+
+
+
+
+
+#### 1.0.1.0 int和Integer的区别？装箱、拆箱什么含义？什么时候装箱和拆箱？装箱和拆箱是如何实现的？
+- int和Integer的区别：基本数据类型、引用类型
+    - Integer是int的包装类，int则是java的一种基本数据类型
+    - Integer变量必须实例化后才能使用，而int变量不需要
+    - Integer实际是对象的引用，当new一个Integer时，实际上是生成一个指针指向此对象；而int则是直接存储数据值
+    - Integer的默认值是null，int的默认值是0
+- 装箱、拆箱[技术博客大总结](https://github.com/yangchong211/YCBlogs)
+    - 装箱就是自动将基本数据类型转换为包装器类型
+    - 拆箱就是自动将包装器类型转换为基本数据类型
+    ```
+    int a = 10;
+    //装箱操作
+    Integer integer1 = Integer.valueOf(a);
+
+    //拆箱操作
+    Integer integer2 = new Integer(5);
+    int i2 = integer2.intValue();
+    ```
+- jdk中如何操作装箱、拆箱
+    - 在JDK中，装箱过程是通过调用包装器的valueOf方法实现的，而拆箱过程是通过调用包装器的xxxValue方法实现的（xxx代表对应的基本数据类型）。
+    - Integer、Short、Byte、Character、Long 这几个类的valueOf方法的实现是类似的，有限可列举，共享[-128,127]；
+    - Double、Float的valueOf方法的实现是类似的，无限不可列举，不共享；
+    - Boolean的valueOf方法的实现不同于以上的整型和浮点型，只有两个值，有限可列举，共享；
+- 什么时候装箱/拆箱？
+    - 什么时候拆箱主要取决于：在当前场景下，你需要的是引用类型还是原生类型。若需要引用类型，但传进来的值是原生类型，则自动装箱（例如，使用equals方法时传进来原生类型的值）；若需要的是原生类型，但传进来的值是引用类型，则自动拆箱（例如，使用运算符进行运算时，操作数是包装类型）。
+- 装箱和拆箱是如何实现的
+    - 以Interger类为例，下面看一段代码来了解装箱和拆箱的实现
+    ```
+    public class Main {
+        public static void main(String[] args) {
+            Integer y = 10;
+            int c = i;
+        }
+    }
+    ```
+    - 然后来编译一下：
+        - 从反编译得到的字节码内容可以看出，在装箱的时候自动调用的是Integer的valueOf(int)方法。而在拆箱的时候自动调用的是Integer的intValue方法。
+        - 因此可以用一句话总结装箱和拆箱的实现过程：装箱过程是通过调用包装器的valueOf方法实现的，而拆箱过程是通过调用包装器的 xxxValue方法实现的。（xxx代表对应的基本数据类型）。
+
+
+
+#### 1.0.1.1 Object有哪些公有方法？Object类toString()返回的是什么？为什么说类一定要实现Cloneable接口才可以克隆？
+- 常用方法
+    - equals()： 和==作用相似[技术博客大总结](https://github.com/yangchong211/YCBlogs)
+    - hashCode()：用于哈希查找，重写了equals()一般都要重写该方法
+    - getClass()： 获取Class对象
+    - wait()：让当前线程进入等待状态，并释放它所持有的锁
+    - notify()&notifyAll()： 唤醒一个（所有）正处于等待状态的线程
+    - toString()：转换成字符串
+- Android的Object类toString()返回的是什么？
+    - 返回的是类名和hashcode的组合字符串
+    ```
+    public String toString() {
+        return getClass().getName() + "@" + Integer.toHexString(hashCode());
+    }
+    ```
+- 为什么说类一定要实现Cloneable接口才可以克隆？具体看下Android中Object类代码
+    - 看一下代码即可知道，对象需要instanceof判断该对象是否是Cloneable的实例
+    ```
+    protected Object clone() throws CloneNotSupportedException {
+        if (!(this instanceof Cloneable)) {
+            throw new CloneNotSupportedException("Class " + getClass().getName() +
+                                                 " doesn't implement Cloneable");
+        }
+    
+        return internalClone();
+    }
+    ```
+
+
+
+
+#### 1.0.1.2 final，finally，finalize有什么不同？finally什么情况下不会被执行？java.lang 包下为什么要设置final？
+- **final可以修饰类，方法，变量**
+    - final修饰类代表类不可以继承拓展
+    - final修饰变量表示变量不可以修改
+    - final修饰方法表示方法不可以被重写
+- **finally则是Java保证重点代码一定要被执行的一种机制**
+    - 可以使用 try-finally 或者 try-catch-finally 来进行类似关闭 JDBC连接、保证 unlock 锁等动作。
+- **finalize 是基础类 java.lang.Object的一个方法**
+    - 它的设计目的是保证对象在被垃圾收集前完成特定资源的回收。finalize 机制现在已经不推荐使用，并且在 JDK 9开始被标记为 deprecated。
+- **final 关键字深入理解**[技术博客大总结](https://github.com/yangchong211/YCBlogs)
+    - 可以将方法或者类声明为 final，这样就可以明确告知别人，这些行为是不许修改的。
+    - 如果你关注过 Java 核心类库的定义或源码， 有没有发现java.lang 包下面的很多类，相当一部分都被声明成为final class？在第三方类库的一些基础类中同样如此，这可以有效避免 API 使用者更改基础功能，某种程度上，这是保证平台安全的必要手段。
+- **在以下4种特殊情况下，finally块不会被执行：**
+    - 1.在finally语句块中发生了异常。
+    - 2.在前面的代码中用了System.exit()退出程序。
+    - 3.程序所在的线程死亡。
+    - 4.关闭CPU。
+- java.lang 包下为什么要设置final？
+    - final 变量产生了某种程度的不可变（immutable）的效果，所以，可以用于保护只读数据，尤其是在并发编程中，因为明确地不能再赋值 final 变量，有利于减少额外的同步开销，也可以省去一些防御性拷贝的必要。
+    - 使用 final 修饰参数或者变量，也可以清楚地避免意外赋值导致的编程错误，甚至，有人明确推荐将所有方法参数、本地变量、成员变量声明成 final。
+
+
+
+
+
+
+
+#### 1.0.1.3 为什么要用通配符？上界通配符和下界通配符注意要点？什么是无界通配符？如何理解泛型编译器类型检查？
+- 为什么要使用通配符
+    - 通配符的设计存在一定的场景，例如在使用泛型后，首先声明了一个Animal的类，而后声明了一个继承Animal类的Cat类，显然Cat类是Animal类的子类，但是List<Cat>却不是List<Animal>的子类型，而在程序中往往需要表达这样的逻辑关系。为了解决这种类似的场景，在泛型的参数类型的基础上新增了通配符的用法。
+- <? extends T> 上界通配符
+    - 上界通配符顾名思义，<? extends T>表示的是类型的上界【 **包含自身**】，因此通配的参数化类型可能是T或T的子类。正因为无法确定具体的类型是什么，add方法受限（可以添加null，因为null表示任何类型），但可以从列表中获取元素后赋值给父类型。如上图中的第一个例子，第三个add()操作会受限，原因在于List<Animal>和List<Cat>是List<? extends Animal>的子类型。
+- <? super T> 下界通配符
+    - 下界通配符<? super T>表示的是参数化类型是T的超类型（**包含自身**），层层至上，直至Object，编译器无从判断get()返回的对象的类型是什么，因此get()方法受限。但是可以进行add()方法，add()方法可以添加T类型和T类型的子类型，如第二个例子中首先添加了一个Cat类型对象，然后添加了两个Cat子类类型的对象，这种方法是可行的，但是如果添加一个Animal类型的对象，显然将继承的关系弄反了，是不可行的。
+- <?> 无界通配符
+    - 任意类型，如果没有明确，那么就是Object以及任意的Java类了
+    - 无界通配符用<?>表示，?代表了任何的一种类型，能代表任何一种类型的只有null（Object本身也算是一种类型，但却不能代表任何一种类型，所以List<Object>和List<null>的含义是不同的，前者类型是Object，也就是继承树的最上层，而后者的类型完全是未知的）。
+    - [技术博客大总结](https://github.com/yangchong211/YCBlogs)
+- 如何理解编译器类型检查
+    * 看一个网上的案例
+        - ![image](https://upload-images.jianshu.io/upload_images/4432347-b5e6e5cfa996fc1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+    * 在引入泛型之后，通过将代码中的“public class Box”更改为“public class Box<T>”来创建泛型类型的声明，而这个声明的背后实质上是引入了可以在类中任何地方使用的类型变量T。如实例4中所示：可以看到，除了新增的泛型类型声明<T>外，所有在原来代码中出现的Object都被类型变量T所替换。
+    * 乍一看类型变量这个词，感觉有点晦涩难懂，但其实如果仔细思量一番会发现它其实并不难理解，上面的实例4可以理解为“在使用泛型时，可以将类型参数T传递给Box类型本身”，结合Oracle给出的官方定义“泛型的本质是类型参数化”会有更深的理解。
+    * 在实例5中，在对象声明和初始化的时候，都指定了类型参数T，在场景一种，T为String；在场景二中，T为Integer。这样，在场景二中向IntegerBox中传入String类型的数据“aaaaa”时，程序会报错。实例6中的泛型集合对象的操作也与之类似，在声明了一个List<String>的boxes对象之后，如果向boxes中传入Integer对象11111，程序会报错。
+    * 可以看到，通过对于泛型的使用，之前的多业务场景中的问题都得到了解决，因为现在在编译阶段就可以解决之前类型不匹配的问题，而不用等到运行时才暴露问题，只要合理使用泛型，就能在很大程度上规避此类风险。对于泛型的使用，这种参数化类型的作用表面上看是声明，背后其实是约定。
+
+
+
+#### 1.0.1.4 什么是泛型擦除，能否通过开发中实际案例说下？如何获取泛型的具体的类型【反射】？
+- 开发中的泛型擦除案例
+    - 泛型是提供给javac编译器使用的，限定集合的输入类型，编译器编译带类型说明的集合时会去掉“类型”信息。
+    ```
+    public class GenericTest {
+        public static void main(String[] args) {
+            new GenericTest().testType();
+        }
+        public void testType(){
+            ArrayList<Integer> collection1 = new ArrayList<Integer>();
+            ArrayList<String> collection2= new ArrayList<String>();
+            System.out.println(collection1.getClass()==collection2.getClass());
+            //两者class类型一样,即字节码一致
+            System.out.println(collection2.getClass().getName());
+            //class均为java.util.ArrayList,并无实际类型参数信息
+        }
+        
+        //输出结果
+        //true
+        //java.util.ArrayList
+    }
+    ```
+- 如何获取泛型的具体的类型？[技术博客大总结](https://github.com/yangchong211/YCBlogs)
+    - 使用反射可跳过编译器，往某个泛型集合加入其它类型数据。
+    - 只有引用类型才能作为泛型方法的实际参数，具体案例如下所示
+    ```
+    public class GenericTest {
+        public static void main(String[] args) {
+            swap(new String[]{"111","222"},0,1);//编译通过
+            
+            //swap(new int[]{1,2},0,1);
+            //编译不通过,因为int不是引用类型
+            
+            swap(new Integer[]{1,2},0,1);//编译通过
+        }
+        
+        /*交换数组a 的第i个和第j个元素*/
+        public static <T> void swap(T[]a,int i,int j){
+            T temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    }
+    ```
+    - 但注意基本类型**有时**可以作为实参，因为有**自动装箱**和**拆箱**。下面例子(编译通过了)：
+    ```
+    public class GenericTest {
+        public static void main(String[] args) {
+            new GenericTest().testType();
+            int a = biggerOne(3,5);
+            //int 和 double,取交为Number
+            Number b = biggerOne(3,5.5);
+            //String和int 取交为Object
+            Object c = biggerOne("1",2);
+        }
+        //从x,y中返回y
+        public static <T> T biggerOne(T x,T y){
+            return y;
+        }
+    }
+    ```
+    - 同时，该例还表明，**当实参不一致时，T取交集，即第一个共同的父类。**
+    - 另外，如果用`Number b = biggerOne(3,5.5);`改为`String c = biggerOne(3,5.5);`则编译报错:
+
+    ```
+    Error:(17, 29) java: 不兼容的类型: 推断类型不符合上限
+        推断: java.lang.Number&java.lang.Comparable<? extends java.lang.Number&java.lang.Comparable<?>>
+        上限: java.lang.String,java.lang.Object
+    ```
+
+
+#### 1.0.1.5 如何验证int类型是否线程安全？那些类型是线程安全的？举一个线程安全的例子【AtomicInteger】？
+- 如何验证int类型是否线程安全
+    - 200个线程，每个线程对共享变量 count 进行 50 次 ++ 操作 
+    - int 作为基本类型，直接存储在内存栈，且对其进行+,-操作以及++,–操作都不是原子操作，都有可能被其他线程抢断，所以不是线程安全。int 用于单线程变量存取，开销小，速度快
+    - [技术博客大总结](https://github.com/yangchong211/YCBlogs)
+    ```
+    int count = 0;
+    private void startThread() {
+        for (int i = 0;i < 200; i++){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int k = 0; k < 50; k++){
+                        count++;
+                    }
+                }
+            }).start();
+        }
+        // 休眠10秒，以确保线程都已启动
+        try {
+            Thread.sleep(1000*10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            Log.e("打印日志----",count+"");
+        }
+    }
+    
+    //期望输出10000，最后输出的是9818
+    //注意：打印日志----: 9818
+    ```
+- 那些类型是线程安全的
+    - Java自带的线程安全的基本类型包括： AtomicInteger, AtomicLong, AtomicBoolean, AtomicIntegerArray,AtomicLongArray等
+- AtomicInteger线程安全版
+    - AtomicInteger类中有有一个变量valueOffset，用来描述AtomicInteger类中value的内存位置 。
+    - 当需要变量的值改变的时候，先通过get（）得到valueOffset位置的值，也即当前value的值.给该值进行增加，并赋给next
+    - compareAndSet（）比较之前取到的value的值当前有没有改变，若没有改变的话，就将next的值赋给value，倘若和之前的值相比的话发生变化的话，则重新一次循环，直到存取成功，通过这样的方式能够保证该变量是线程安全的
+    - value使用了volatile关键字，使得多个线程可以共享变量，使用volatile将使得VM优化失去作用，在线程数特别大时，效率会较低。[技术博客大总结](https://github.com/yangchong211/YCBlogs)
+    ```
+    private static AtomicInteger atomicInteger = new AtomicInteger(1);
+    static Integer count1 = Integer.valueOf(0);
+    private void startThread1() {
+        for (int i = 0;i < 200; i++){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int k = 0; k < 50; k++){
+                        // getAndIncrement: 先获得值，再自增1，返回值为自增前的值
+                        count1 = atomicInteger.getAndIncrement();
+                    }
+                }
+            }).start();
+        }
+        // 休眠10秒，以确保线程都已启动
+        try {
+            Thread.sleep(1000*10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            Log.e("打印日志----",count1+"");
+        }
+    }
+    
+    //期望输出10000，最后输出的是10000
+    //注意：打印日志----: 10000
+    
+    //AtomicInteger使用了volatile关键字进行修饰，使得该类可以满足线程安全。
+    private volatile int value;
+    public AtomicInteger(int initialValue) {
+        value = initialValue;
+    }
+    ```
+
+
+#### 1.0.1.6 Java序列话中如果有些字段不想进行序列化怎么办？Java序列化机制底层实现原理是怎样的？
+- 对于不想进行序列化的变量，使用transient关键字修饰。
+- transient关键字的作用是：阻止实例中那些用此关键字修饰的的变量序列化；当对象被反序列化时，被transient修饰的变量值不会被持久化和恢复。transient只能修饰变量，不能修饰类和方法。
+
+
+
+#### 1.0.1.8 原始数据类型和引用类型局限性？为何要引用基本数据包装类？基本数据类型一定存储在栈中吗？
+- 原始数据类型和引用类型局限性
+    - 原始数据类型和 Java 泛型并不能配合使用
+    - Java 的泛型某种程度上可以算作伪泛型，它完全是一种编译期的技巧，Java 编译期会自动将类型转换为对应的特定类型，这就决定了使用泛型，必须保证相应类型可以转换为Object。
+- 为何要引用基本数据包装类[技术博客大总结](https://github.com/yangchong211/YCBlogs)
+    - 就比如，我们使用泛型，需要用到基本数据类型的包装类。
+    - Java 的对象都是引用类型，如果是一个原始数据类型数组，它在内存里是一段连续的内存，而对象数组则不然，数据存储的是引用，对象往往是分散地存储在堆的不同位置。这种设计虽然带来了极大灵活性，但是也导致了数据操作的低效，尤其是无法充分利用现代 CPU 缓存机制。
+    - Java 为对象内建了各种多态、线程安全等方面的支持，但这不是所有场合的需求，尤其是数据处理重要性日益提高，更加高密度的值类型是非常现实的需求。
+- 基本数据类型一定存储在栈中吗？
+    - 首先说明，"java中的基本数据类型一定存储在栈中的吗？”这句话肯定是错误的。
+    - 基本数据类型是放在栈中还是放在堆中，这取决于基本类型在何处声明，下面对数据类型在内存中的存储问题来解释一下：
+    - 一：在方法中声明的变量，即该变量是局部变量，每当程序调用方法时，系统都会为该方法建立一个方法栈，其所在方法中声明的变量就放在方法栈中，当方法结束系统会释放方法栈，其对应在该方法中声明的变量随着栈的销毁而结束，这就局部变量只能在方法中有效的原因
+        - 在方法中声明的变量可以是基本类型的变量，也可以是引用类型的变量。当声明是基本类型的变量的时，其变量名及值（变量名及值是两个概念）是放在JAVA虚拟机栈中。当声明的是引用变量时，所声明的变量（该变量实际上是在方法中存储的是内存地址值）是放在JAVA虚拟机的栈中，该变量所指向的对象是放在堆类存中的。
+    - 二：在类中声明的变量是成员变量，也叫全局变量，放在堆中的（因为全局变量不会随着某个方法执行结束而销毁）。同样在类中声明的变量即可是基本类型的变量，也可是引用类型的变量
+        - 当声明的是基本类型的变量其变量名及其值放在堆内存中的。引用类型时，其声明的变量仍然会存储一个内存地址值，该内存地址值指向所引用的对象。引用变量名和对应的对象仍然存储在相应的堆中
+
+
+
+
+#### 1.0.1.9 new Integer(123) 与 Integer.valueOf(123)有何区别，请从底层实现分析两者区别？
+- new Integer(123) 与 Integer.valueOf(123) 的区别在于：
+    - new Integer(123) 每次都会新建一个对象；[技术博客大总结](https://github.com/yangchong211/YCBlogs)
+    - Integer.valueOf(123) 会使用缓存池中的对象，多次调用会取得同一个对象的引用。
+    ```
+    Integer x = new Integer(123);
+    Integer y = new Integer(123);
+    System.out.println(x == y);    // false
+    Integer z = Integer.valueOf(123);
+    Integer k = Integer.valueOf(123);
+    System.out.println(z == k);   // true
+    ```
+- valueOf() 方法的实现比较简单，就是先判断值是否在缓存池中，如果在的话就直接返回缓存池的内容。
+    ```
+    public static Integer valueOf(int i) {
+        if (i >= IntegerCache.low && i <= IntegerCache.high)
+            return IntegerCache.cache[i + (-IntegerCache.low)];
+        return new Integer(i);
+    }
+    ```
+- 在 Java 8 中，Integer 缓存池的大小默认为 -128\~127。
+    ```
+    static final int low = -128;
+    static final int high;
+    static final Integer cache[];
+    
+    static {
+        // high value may be configured by property
+        int h = 127;
+        String integerCacheHighPropValue =
+            sun.misc.VM.getSavedProperty("java.lang.Integer.IntegerCache.high");
+        if (integerCacheHighPropValue != null) {
+            try {
+                int i = parseInt(integerCacheHighPropValue);
+                i = Math.max(i, 127);
+                // Maximum array size is Integer.MAX_VALUE
+                h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
+            } catch( NumberFormatException nfe) {
+                // If the property cannot be parsed into an int, ignore it.
+            }
+        }
+        high = h;
+    
+        cache = new Integer[(high - low) + 1];
+        int j = low;
+        for(int k = 0; k < cache.length; k++)
+            cache[k] = new Integer(j++);
+    
+        // range [-128, 127] must be interned (JLS7 5.1.7)
+        assert IntegerCache.high >= 127;
+    }
+    ```
+- 编译器会在自动装箱过程调用 valueOf() 方法，因此多个Integer实例使用自动装箱来创建并且值相同，那么就会引用相同的对象。
+    ```
+    Integer m = 123;
+    Integer n = 123;
+    System.out.println(m == n); // true
+    ```
+- 基本类型对应的缓冲池如下：
+    - boolean values true and false
+    - all byte values
+    - short values between -128 and 127
+    - int values between -128 and 127
+    - char in the range \u0000 to \u007F
+- 在使用这些基本类型对应的包装类型时，就可以直接使用缓冲池中的对象。
+
+
+
+#### 1.0.2.0 instanceof它的作用是什么？在使用过程中注意事项有哪些？它底层原理是如何实现的，说说你的理解？
+- 它的作用是什么？
+    - instanceof是Java的一个二元操作符，和==，>，<是同一类东西。由于它是由字母组成的，所以也是Java的保留关键字。它的作用是测试它左边的对象是否是它右边的类的实例，返回boolean类型的数据。
+- 使用过程中注意事项有哪些？[技术博客大总结](https://github.com/yangchong211/YCBlogs)
+    - 类的实例包含本身的实例，以及所有直接或间接子类的实例
+    - instanceof左边显式声明的类型与右边操作元必须是同种类或存在继承关系，也就是说需要位于同一个继承树，否则会编译错误
+    ```
+    //比如下面就会编译错误
+    String s = null;
+    s instanceof null
+    s instanceof Integer
+    ```
+
+
+
+#### 1.0.2.1 float存储为何会精度丢失？计算机如何存储浮点型？float和double输出有何区别？
+- 精度为何丢失
+    - 先看一个例子。精度为什么会丢失，计算机能存那么多数字，一个0.3+0.6怎么就丢精度了呢？
+    ```java
+    public static void main(String[] args){
+        System.out.println(0.3f + 0.6f);
+        System.out.println(0.3 + 0.6);
+        System.out.println(0.9);
+    }
+    输出:
+    
+    0.90000004
+    0.8999999999999999
+    0.9
+    ```
+- 为何精度丢失
+    - 在计算机中，一切皆为整数在算术类型上，又分为整数和浮点数，浮点数是由 符号位、有效数字、指数位这些整数共同构成的。但是计算机又不是使用人类的10进制，而是使用的2进制进行（指数）存储，所以理所当然的会有精度丢失。
+    - 十进制。10进制中的1/3这种除法我们想表示的时候只能用0.33333....来表示，那么当我们显示的位数是固定的时候就存在精度问题，1/3！=0.33，也不等于0.333333333。假设小数点之后我们只能写8位或者16位那么久丢失了精度。
+    - 二进制。所以在二进制中精度丢失也是一个道理。毕竟这种无限循环的事情，计算器不可能开辟一个无限大的空间去给你存储吧！
+- 计算机如何存储浮点型
+    - 浮点数在计算机中的存储方式其实是以补码的形式。在计算机中，数字都是用补码来表示与存储的。
+    - 正数的补码是其二进制表示的，负数的补码是其正数的二进制取反再加一。然后就是为什么0.3+0.6会导致精度丢失了。（0.3转化为二进制为0.0100110011001100）结果是保留16位的，然后导致了精度的丢失；（0.6转化为0.1001100110011001）结果是保留16位的，也导致了精度的丢失；相加起来就是0.1110011001100101再转化为十进制为0.8999786376953125和上面结果不同，但差不多应该是计算精度的不同吧。
+- 为何 float 和 double 的计算输出结果差异还挺大的呢？
+    - 附加题的话就是float和double所占的字节不同，他们的计算精度也不同。最关键的是保留有效数字的规则不同，十进制中我们是“4舍5入”，而二进制中是“0舍1入”。
+    - 所以在上面的0.3f（转化为二进制保留8位小数是0.01001101），0.6f（转化为二进制保留8位小数是0.10011010），加起来是0.11100111，转化为十进制是0.90234375，所以 float 和 double 的计算输出结果差异还挺大的是因为保留有效数字时的“0舍1入”造成的。
+
+
+
+
+### 其他介绍
+#### 01.关于博客汇总链接
+- 1.[技术博客汇总](https://www.jianshu.com/p/614cb839182c)
+- 2.[开源项目汇总](https://blog.csdn.net/m0_37700275/article/details/80863574)
+- 3.[生活博客汇总](https://blog.csdn.net/m0_37700275/article/details/79832978)
+- 4.[喜马拉雅音频汇总](https://www.jianshu.com/p/f665de16d1eb)
+- 5.[其他汇总](https://www.jianshu.com/p/53017c3fc75d)
+
+
+
+#### 02.关于我的博客
+- 我的个人站点：www.yczbj.org，www.ycbjie.cn
+- github：https://github.com/yangchong211
+- 知乎：https://www.zhihu.com/people/yang-chong-69-24/pins/posts
+- 简书：http://www.jianshu.com/u/b7b2c6ed9284
+- csdn：http://my.csdn.net/m0_37700275
+- 喜马拉雅听书：http://www.ximalaya.com/zhubo/71989305/
+- 开源中国：https://my.oschina.net/zbj1618/blog
+- 泡在网上的日子：http://www.jcodecraeer.com/member/content_list.php?channelid=1
+- 邮箱：yangchong211@163.com
+- 阿里云博客：https://yq.aliyun.com/users/article?spm=5176.100- 239.headeruserinfo.3.dT4bcV
+- segmentfault头条：https://segmentfault.com/u/xiangjianyu/articles
+- 掘金：https://juejin.im/user/5939433efe88c2006afa0c6e
+
+

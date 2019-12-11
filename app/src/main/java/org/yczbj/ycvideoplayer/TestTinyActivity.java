@@ -12,7 +12,6 @@ import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoControlListener;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.view.BaseToast;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
@@ -72,10 +71,10 @@ public class TestTinyActivity extends BaseActivity implements View.OnClickListen
             public void onVideoControlClick(int type) {
                 switch (type){
                     case ConstantKeys.VideoControl.TV:
-                        BaseToast.showRoundRectToast("投影tv电视");
+                        //BaseToast.showRoundRectToast("投影tv电视");
                         break;
                     case ConstantKeys.VideoControl.HOR_AUDIO:
-                        BaseToast.showRoundRectToast("切换音频");
+                        //BaseToast.showRoundRectToast("切换音频");
                         break;
                     default:
                         break;

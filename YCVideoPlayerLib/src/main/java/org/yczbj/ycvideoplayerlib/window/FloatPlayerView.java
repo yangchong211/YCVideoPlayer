@@ -67,8 +67,15 @@ public class FloatPlayerView extends FrameLayout {
                     }
                 }
             });
+            //controller.onPlayModeChanged(ConstantKeys.PlayMode.MODE_TINY_WINDOW);
             mVideoPlayer.setController(controller);
-            mVideoPlayer.start();
+            //mVideoPlayer.enterTinyWindow();
+            mVideoPlayer.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mVideoPlayer.start();
+                }
+            },300);
             view.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,6 +98,9 @@ public class FloatPlayerView extends FrameLayout {
     }
 
     public interface CompletedListener{
+        /**
+         * 播放完成
+         */
         void Completed();
     }
 

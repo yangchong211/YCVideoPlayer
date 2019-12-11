@@ -10,7 +10,9 @@
 - 08.关于网络状态监听优化
 - 09.关于代码规范优化
 - 10.关于布局优化
-- 11.选择SurfaceView还是TextureView
+- 11.SurfaceView和TextureView
+- 12.视频旋转角度float数值对比优化
+- 13.如何做到一次播放一个视频
 
 
 
@@ -221,7 +223,7 @@
 
 
 
-### 11.选择SurfaceView还是TextureView
+### 11.SurfaceView和TextureView
 #### 11.1 SurfaceView优缺点
 - 优点：
     - 可以在一个独立的线程中进行绘制，不会影响主线程；使用双缓冲机制，播放视频时画面更流畅
@@ -236,6 +238,36 @@
     - 必须在硬件加速的窗口中使用，占用内存比SurfaceView高，在5.0以前在主线程渲染，5.0以后有单独的渲染线程。
 
 
+
+### 12.视频旋转角度float数值对比优化
+- 如何获取视频旋转的角度，代码如下所示
+    ```
+    // 获取视图旋转的角度
+    float viewRotation = getRotation();
+    ```
+- 先看一个案例，思考一下是否妥当
+    - 下面这个案例。用==从语法上说没错，但是本来应该相等的两个浮点数由于计算机内部表示的原因可能略有微小的误差，这时用==就会认为它们不等。
+    - float运算后会有误差。因为浮点数在内存中存放，可能无法精确的储存，所以同一个值，可能有不同的内存数据
+    ```
+    float a = 2.0000001f
+    float b = 2.0000001f
+    if(a==b){
+    }
+    ```
+- 浮点数判断需要注意，float和double的精度范围，超过范围的数字会被忽略
+    - (1) 浮点数大小判断：如果没有等号关系在里面，也就必然一大一小，那么直接用  > 或者 <
+    - (2) 浮点数相等判断：因为浮点数在内存中存放，可能无法精确的储存，所以同一个值，可能有不同的内存数据
+- 正确做法
+    - 应该使用两个浮点数之间的差异的绝对值小于某个可以接受的值来判断判断它们是否相等
+    ```
+    if (Math.abs(viewRotation-viewRotation1)> EQUAL_FLOAT && Math.abs(viewRotation1-viewRotation)> EQUAL_FLOAT ||
+            (Math.abs(viewRotation-viewRotation2)> EQUAL_FLOAT && Math.abs(viewRotation2-viewRotation)> EQUAL_FLOAT)){
+        int tempMeasureSpec = widthMeasureSpec;
+        //noinspection SuspiciousNameCombination
+        widthMeasureSpec = heightMeasureSpec;
+        heightMeasureSpec = tempMeasureSpec;
+    }
+    ```
 
 
 

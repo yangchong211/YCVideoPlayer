@@ -36,7 +36,7 @@ import android.widget.TextView;
 
 import org.yczbj.ycvideoplayerlib.dialog.ChangeClarityDialog;
 import org.yczbj.ycvideoplayerlib.R;
-import org.yczbj.ycvideoplayerlib.dialog.VideoClarity;
+import org.yczbj.ycvideoplayerlib.bean.VideoClarity;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnPlayerTypeListener;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.receiver.BatterReceiver;
@@ -797,7 +797,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             case ConstantKeys.PlayMode.MODE_NORMAL:
                 //隐藏锁屏控件
                 mFlLock.setVisibility(View.GONE);
-                mBack.setVisibility(View.VISIBLE);
                 mFullScreen.setImageResource(R.drawable.ic_player_open);
                 mFullScreen.setVisibility(View.VISIBLE);
                 //隐藏清晰度
@@ -817,7 +816,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             //全屏模式
             case ConstantKeys.PlayMode.MODE_FULL_SCREEN:
                 mFlLock.setVisibility(View.VISIBLE);
-                mBack.setVisibility(View.VISIBLE);
                 mFullScreen.setVisibility(View.VISIBLE);
                 mFullScreen.setImageResource(R.drawable.ic_player_close);
                 if (clarities != null && clarities.size() > 1) {
@@ -836,13 +834,12 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             //小窗口模式
             case ConstantKeys.PlayMode.MODE_TINY_WINDOW:
                 mFlLock.setVisibility(View.GONE);
-                mBack.setVisibility(View.GONE);
-                mClarity.setVisibility(View.GONE);
                 setTopBottomVisible(false);
                 mIsLock = false;
                 if (mOnPlayerTypeListener!=null){
                     mOnPlayerTypeListener.onTinyWindow();
                 }
+                setCenterVisible(true);
                 VideoLogUtil.d("播放模式--------小窗口模式");
                 break;
             default:
@@ -902,7 +899,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             } else if (mVideoPlayer.isTinyWindow()) {
                 //如果是小窗口，则退出小窗口
                 mVideoPlayer.exitTinyWindow();
-            }else {
+            } else {
                 //如果两种情况都不是，执行逻辑交给使用者自己实现
                 if(mBackListener!=null){
                     mBackListener.onBackClick();
@@ -1077,10 +1074,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
      * @param visible                   true显示，false隐藏.
      */
     private void setTopBottomVisible(boolean visible) {
+        setCenterVisible(visible);
         mTop.setVisibility(visible ? View.VISIBLE : View.GONE);
         mBottom.setVisibility(visible ? View.VISIBLE : View.GONE);
         mLine.setVisibility(visible ? View.GONE : View.VISIBLE);
-        mCenterStart.setVisibility(visible ? View.VISIBLE : View.GONE);
         topBottomVisible = visible;
         if (visible) {
             if (!mVideoPlayer.isPaused() && !mVideoPlayer.isBufferingPaused()) {
@@ -1089,6 +1086,14 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
         } else {
             cancelDismissTopBottomTimer();
         }
+    }
+
+    /**
+     * 设置center的显示和隐藏
+     * @param visible                   true显示，false隐藏.
+     */
+    private void setCenterVisible(boolean visible){
+        mCenterStart.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
 
@@ -1293,7 +1298,6 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     public void setOnCompletedListener(OnCompletedListener listener){
         this.mOnCompletedListener = listener;
     }
-
 
     /**
      * 视频播放模式监听
