@@ -96,6 +96,7 @@ public class TestFullActivity extends BaseActivity implements View.OnClickListen
             }
         });
         videoPlayer.setController(controller);
+        videoPlayer.continueFromLastPosition(false);
         videoPlayer.postDelayed(new Runnable() {
             @Override
             public void run() {

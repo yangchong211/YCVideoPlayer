@@ -81,6 +81,7 @@ public class TestTinyActivity extends BaseActivity implements View.OnClickListen
                 }
             }
         });
+        videoPlayer.continueFromLastPosition(false);
         videoPlayer.setController(controller);
     }
 

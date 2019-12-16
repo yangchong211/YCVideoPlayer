@@ -66,6 +66,7 @@ public class TestNormalActivity extends BaseActivity  {
         videoPlayer.setUp(ConstantVideo.VideoPlayerList[0], null);
         controller = new VideoPlayerController(this);
         controller.setTopPadding(24.0f);
+        videoPlayer.continueFromLastPosition(false);
         videoPlayer.setController(controller);
     }
 

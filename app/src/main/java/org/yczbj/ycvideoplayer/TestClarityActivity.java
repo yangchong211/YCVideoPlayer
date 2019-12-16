@@ -64,6 +64,7 @@ public class TestClarityActivity extends BaseActivity implements View.OnClickLis
                 .placeholder(R.drawable.image_default)
                 .into(controller.imageView());
         controller.setTopPadding(24);
+        videoPlayer.continueFromLastPosition(false);
         videoPlayer.setController(controller);
     }
 
