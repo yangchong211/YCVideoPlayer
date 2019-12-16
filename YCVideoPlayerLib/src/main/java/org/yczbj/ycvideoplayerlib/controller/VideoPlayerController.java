@@ -834,12 +834,12 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             //小窗口模式
             case ConstantKeys.PlayMode.MODE_TINY_WINDOW:
                 mFlLock.setVisibility(View.GONE);
-                setTopBottomVisible(false);
+                mFullScreen.setImageResource(R.drawable.ic_player_open);
+                mFullScreen.setVisibility(View.VISIBLE);
                 mIsLock = false;
                 if (mOnPlayerTypeListener!=null){
                     mOnPlayerTypeListener.onTinyWindow();
                 }
-                setCenterVisible(true);
                 VideoLogUtil.d("播放模式--------小窗口模式");
                 break;
             default:

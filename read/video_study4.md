@@ -1,11 +1,5 @@
 # 认识TextureView
 #### 目录介绍
-
-
-
-
-
-#### 目录介绍
 - 01.TextureView是什么
 - 02.TextureView优缺点
 - 03.TextureView源码分析
