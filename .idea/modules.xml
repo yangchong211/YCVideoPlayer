@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/GitHub-YCVideoPlayer.iml" filepath="$PROJECT_DIR$/GitHub-YCVideoPlayer.iml" group="YCVideoPlayer" />
       <module fileurl="file://$PROJECT_DIR$/.idea/YCVideoPlayer.iml" filepath="$PROJECT_DIR$/.idea/YCVideoPlayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/YCVideoPlayerLib/YCVideoPlayer-YCVideoPlayerLib.iml" filepath="$PROJECT_DIR$/YCVideoPlayerLib/YCVideoPlayer-YCVideoPlayerLib.iml" group="YCVideoPlayer/YCVideoPlayerLib" />
+      <module fileurl="file://$PROJECT_DIR$/app/YCVideoPlayer-app.iml" filepath="$PROJECT_DIR$/app/YCVideoPlayer-app.iml" group="YCVideoPlayer/app" />
       <module fileurl="file://$PROJECT_DIR$/YCVideoPlayerLib/YCVideoPlayerLib.iml" filepath="$PROJECT_DIR$/YCVideoPlayerLib/YCVideoPlayerLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

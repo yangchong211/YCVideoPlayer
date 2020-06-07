@@ -15,6 +15,7 @@ limitations under the License.
 */
 package org.yczbj.ycvideoplayerlib.receiver;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
  */
 public class NetChangedReceiver extends BroadcastReceiver {
 
+    @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent intent) {
         VideoLogUtil.i("网络状态监听广播接收到数据了");
