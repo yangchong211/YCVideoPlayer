@@ -11,12 +11,12 @@ import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 public class NormalActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private VideoView mVideoPlayer;
+    private VideoPlayer mVideoPlayer;
     private Button mBtnScaleNormal;
     private Button mBtnScale169;
     private Button mBtnScale43;
@@ -95,11 +95,11 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v == mBtnScale169){
-            mVideoPlayer.setScreenScaleType(VideoView.SCREEN_SCALE_16_9);
+            mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_16_9);
         } else if (v == mBtnScaleNormal){
-            mVideoPlayer.setScreenScaleType(VideoView.SCREEN_SCALE_DEFAULT);
+            mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_DEFAULT);
         }else if (v == mBtnScale43){
-            mVideoPlayer.setScreenScaleType(VideoView.SCREEN_SCALE_4_3);
+            mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_4_3);
         } else if (v == mBtnCrop){
 
         } else if (v == mBtnGif){

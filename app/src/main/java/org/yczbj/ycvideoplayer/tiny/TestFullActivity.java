@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 import org.yczbj.ycvideoplayer.BaseActivity;
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
@@ -21,7 +21,7 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
  */
 public class TestFullActivity extends BaseActivity implements View.OnClickListener {
 
-    private VideoView mVideoPlayer;
+    private VideoPlayer mVideoPlayer;
     private Button mBtnTiny1;
     private Button mBtnTiny2;
 
@@ -76,7 +76,7 @@ public class TestFullActivity extends BaseActivity implements View.OnClickListen
         //设置控制器
         mVideoPlayer.setVideoController(controller);
         mVideoPlayer.setUrl(ConstantVideo.VideoPlayerList[0]);
-        mVideoPlayer.setScreenScaleType(VideoView.SCREEN_SCALE_16_9);
+        mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_16_9);
         mVideoPlayer.start();
     }
 

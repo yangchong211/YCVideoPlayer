@@ -18,9 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import org.yczbj.ycvideoplayer.R;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
 import master.flame.danmaku.controller.DrawHandler;
@@ -117,26 +118,26 @@ public class MyDanmakuView extends DanmakuView implements IControlComponent {
     @Override
     public void onPlayStateChanged(int playState) {
         switch (playState) {
-            case VideoView.STATE_IDLE:
+            case ConstantKeys.CurrentState.STATE_IDLE:
                 release();
                 break;
-            case VideoView.STATE_PREPARING:
+            case ConstantKeys.CurrentState.STATE_PREPARING:
                 if (isPrepared()) {
                     restart();
                 }
                 prepare(mParser, mContext);
                 break;
-            case VideoView.STATE_PLAYING:
+            case ConstantKeys.CurrentState.STATE_PLAYING:
                 if (isPrepared() && isPaused()) {
                     resume();
                 }
                 break;
-            case VideoView.STATE_PAUSED:
+            case ConstantKeys.CurrentState.STATE_PAUSED:
                 if (isPrepared()) {
                     pause();
                 }
                 break;
-            case VideoView.STATE_PLAYBACK_COMPLETED:
+            case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
                 clear();
                 clearDanmakusOnScreen();
                 break;

@@ -43,9 +43,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.player.config.VideoViewConfig;
+import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
 import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -507,7 +506,7 @@ public final class PlayerUtils {
      * 获取当前的播放核心
      */
     public static Object getCurrentPlayerFactory() {
-        VideoViewConfig config = VideoViewManager.getConfig();
+        PlayerConfig config = VideoViewManager.getConfig();
         Object playerFactory = null;
         try {
             Field mPlayerFactoryField = config.getClass().getDeclaredField("mPlayerFactory");
@@ -534,31 +533,31 @@ public final class PlayerUtils {
         String playStateString;
         switch (state) {
             default:
-            case VideoView.STATE_IDLE:
+            case ConstantKeys.CurrentState.STATE_IDLE:
                 playStateString = "idle";
                 break;
-            case VideoView.STATE_PREPARING:
+            case ConstantKeys.CurrentState.STATE_PREPARING:
                 playStateString = "preparing";
                 break;
-            case VideoView.STATE_PREPARED:
+            case ConstantKeys.CurrentState.STATE_PREPARED:
                 playStateString = "prepared";
                 break;
-            case VideoView.STATE_PLAYING:
+            case ConstantKeys.CurrentState.STATE_PLAYING:
                 playStateString = "playing";
                 break;
-            case VideoView.STATE_PAUSED:
+            case ConstantKeys.CurrentState.STATE_PAUSED:
                 playStateString = "pause";
                 break;
-            case VideoView.STATE_BUFFERING:
+            case ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED:
                 playStateString = "buffering";
                 break;
-            case VideoView.STATE_BUFFERED:
+            case ConstantKeys.CurrentState.STATE_COMPLETED:
                 playStateString = "buffered";
                 break;
-            case VideoView.STATE_PLAYBACK_COMPLETED:
+            case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
                 playStateString = "playback completed";
                 break;
-            case VideoView.STATE_ERROR:
+            case ConstantKeys.CurrentState.STATE_ERROR:
                 playStateString = "error";
                 break;
         }

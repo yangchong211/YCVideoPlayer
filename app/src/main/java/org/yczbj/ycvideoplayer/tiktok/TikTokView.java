@@ -17,9 +17,10 @@ import androidx.annotation.Nullable;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import org.yczbj.ycvideoplayer.R;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 
 public class TikTokView extends FrameLayout implements IControlComponent {
 
@@ -96,24 +97,24 @@ public class TikTokView extends FrameLayout implements IControlComponent {
     @Override
     public void onPlayStateChanged(int playState) {
         switch (playState) {
-            case VideoView.STATE_IDLE:
+            case ConstantKeys.CurrentState.STATE_IDLE:
                 VideoLogUtils.e("STATE_IDLE " + hashCode());
                 thumb.setVisibility(VISIBLE);
                 break;
-            case VideoView.STATE_PLAYING:
+            case ConstantKeys.CurrentState.STATE_PLAYING:
                 VideoLogUtils.e("STATE_PLAYING " + hashCode());
                 thumb.setVisibility(GONE);
                 mPlayBtn.setVisibility(GONE);
                 break;
-            case VideoView.STATE_PAUSED:
+            case ConstantKeys.CurrentState.STATE_PAUSED:
                 VideoLogUtils.e("STATE_PAUSED " + hashCode());
                 thumb.setVisibility(GONE);
                 mPlayBtn.setVisibility(VISIBLE);
                 break;
-            case VideoView.STATE_PREPARED:
+            case ConstantKeys.CurrentState.STATE_PREPARED:
                 VideoLogUtils.e("STATE_PREPARED " + hashCode());
                 break;
-            case VideoView.STATE_ERROR:
+            case ConstantKeys.CurrentState.STATE_ERROR:
                 VideoLogUtils.e("STATE_ERROR " + hashCode());
                 Toast.makeText(getContext(), R.string.error_message, Toast.LENGTH_SHORT).show();
                 break;

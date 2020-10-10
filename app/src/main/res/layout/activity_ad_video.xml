@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:background="@color/whiteBg">
 
-    <org.yczbj.ycvideoplayerlib.player.video.VideoView
+    <org.yczbj.ycvideoplayerlib.player.video.VideoPlayer
         android:id="@+id/video_player"
         android:layout_width="match_parent"
         android:layout_height="240dp"/>

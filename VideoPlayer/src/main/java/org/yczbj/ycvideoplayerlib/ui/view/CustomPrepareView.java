@@ -29,10 +29,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.yczbj.ycvideoplayerlib.R;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
 import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 
 
 
@@ -130,22 +131,22 @@ public class CustomPrepareView extends FrameLayout implements IControlComponent 
     @Override
     public void onPlayStateChanged(int playState) {
         switch (playState) {
-            case VideoView.STATE_PREPARING:
+            case ConstantKeys.CurrentState.STATE_PREPARING:
                 bringToFront();
                 setVisibility(VISIBLE);
                 mIvStartPlay.setVisibility(View.GONE);
                 mFlNetWarning.setVisibility(GONE);
                 mPbLoading.setVisibility(View.VISIBLE);
                 break;
-            case VideoView.STATE_PLAYING:
-            case VideoView.STATE_PAUSED:
-            case VideoView.STATE_ERROR:
-            case VideoView.STATE_BUFFERING:
-            case VideoView.STATE_BUFFERED:
-            case VideoView.STATE_PLAYBACK_COMPLETED:
+            case ConstantKeys.CurrentState.STATE_PLAYING:
+            case ConstantKeys.CurrentState.STATE_PAUSED:
+            case ConstantKeys.CurrentState.STATE_ERROR:
+            case ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED:
+            case ConstantKeys.CurrentState.STATE_COMPLETED:
+            case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
                 setVisibility(GONE);
                 break;
-            case VideoView.STATE_IDLE:
+            case ConstantKeys.CurrentState.STATE_IDLE:
                 setVisibility(VISIBLE);
                 bringToFront();
                 mPbLoading.setVisibility(View.GONE);
@@ -153,7 +154,7 @@ public class CustomPrepareView extends FrameLayout implements IControlComponent 
                 mIvStartPlay.setVisibility(View.VISIBLE);
                 mIvThumb.setVisibility(View.VISIBLE);
                 break;
-            case VideoView.STATE_START_ABORT:
+            case ConstantKeys.CurrentState.STATE_START_ABORT:
                 setVisibility(VISIBLE);
                 mFlNetWarning.setVisibility(VISIBLE);
                 mFlNetWarning.bringToFront();

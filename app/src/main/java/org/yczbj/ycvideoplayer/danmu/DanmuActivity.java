@@ -10,7 +10,8 @@ import com.bumptech.glide.Glide;
 import org.yczbj.ycvideoplayer.BaseActivity;
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
@@ -21,7 +22,7 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
  */
 public class DanmuActivity extends BaseActivity implements View.OnClickListener {
 
-    private VideoView mVideoPlayer;
+    private VideoPlayer mVideoPlayer;
     private LinearLayout mLayout;
     private Button mBtnShow;
     private Button mBtnHide;
@@ -83,14 +84,14 @@ public class DanmuActivity extends BaseActivity implements View.OnClickListener 
         //设置控制器
         mVideoPlayer.setVideoController(controller);
         mVideoPlayer.setUrl(ConstantVideo.VideoPlayerList[0]);
-        mVideoPlayer.setScreenScaleType(VideoView.SCREEN_SCALE_16_9);
+        mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_16_9);
         mVideoPlayer.start();
-        mVideoPlayer.addOnStateChangeListener(new VideoView.SimpleOnStateChangeListener() {
+        mVideoPlayer.addOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
             @Override
             public void onPlayStateChanged(int playState) {
-                if (playState == VideoView.STATE_PREPARED) {
+                if (playState == ConstantKeys.CurrentState.STATE_PREPARED) {
                     simulateDanmu();
-                } else if (playState == VideoView.STATE_PLAYBACK_COMPLETED) {
+                } else if (playState == ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING) {
                     mHandler.removeCallbacksAndMessages(null);
                 }
             }

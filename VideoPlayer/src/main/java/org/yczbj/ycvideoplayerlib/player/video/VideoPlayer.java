@@ -27,7 +27,7 @@ import org.yczbj.ycvideoplayerlib.player.audio.AudioFocusHelper;
 import com.yc.kernel.inter.AbstractPlayer;
 import com.yc.kernel.factory.PlayerFactory;
 import org.yczbj.ycvideoplayerlib.player.manager.ProgressManager;
-import org.yczbj.ycvideoplayerlib.player.config.VideoViewConfig;
+import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
 import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.player.render.IRenderView;
 import org.yczbj.ycvideoplayerlib.player.render.RenderViewFactory;
@@ -49,7 +49,7 @@ import java.util.Map;
  *     revise:
  * </pre>
  */
-public class VideoView<P extends AbstractPlayer> extends FrameLayout
+public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
         implements MediaPlayerControl, AbstractPlayer.PlayerEventListener {
 
     /**
@@ -90,20 +90,15 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
     protected String mUrl;//当前播放视频的地址
     protected Map<String, String> mHeaders;//当前视频地址的请求头
     protected AssetFileDescriptor mAssetFileDescriptor;//assets文件
-    protected long mCurrentPosition;//当前正在播放视频的位置
+    /**
+     * 当前正在播放视频的位置
+     */
+    protected long mCurrentPosition;
 
-    //播放器的各种状态
-    public static final int STATE_ERROR = -1;
-    public static final int STATE_IDLE = 0;
-    public static final int STATE_PREPARING = 1;
-    public static final int STATE_PREPARED = 2;
-    public static final int STATE_PLAYING = 3;
-    public static final int STATE_PAUSED = 4;
-    public static final int STATE_PLAYBACK_COMPLETED = 5;
-    public static final int STATE_BUFFERING = 6;
-    public static final int STATE_BUFFERED = 7;
-    public static final int STATE_START_ABORT = 8;//开始播放中止
-    protected int mCurrentPlayState = STATE_IDLE;//当前播放器的状态
+    /**
+     * 当前播放器的状态
+     */
+    protected int mCurrentPlayState = ConstantKeys.CurrentState.STATE_IDLE;
 
     protected int mCurrentPlayerState = ConstantKeys.PlayMode.MODE_NORMAL;
 
@@ -140,19 +135,19 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
      */
     private int mPlayerBackgroundColor;
 
-    public VideoView(@NonNull Context context) {
+    public VideoPlayer(@NonNull Context context) {
         this(context, null);
     }
 
-    public VideoView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public VideoPlayer(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public VideoView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public VideoPlayer(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         //读取全局配置
-        VideoViewConfig config = VideoViewManager.getConfig();
+        PlayerConfig config = VideoViewManager.getConfig();
         mEnableAudioFocus = config.mEnableAudioFocus;
         mProgressManager = config.mProgressManager;
         mPlayerFactory = config.mPlayerFactory;
@@ -160,13 +155,12 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
         mRenderViewFactory = config.mRenderViewFactory;
 
         //读取xml中的配置，并综合全局配置
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.VideoView);
-        mEnableAudioFocus = a.getBoolean(R.styleable.VideoView_enableAudioFocus, mEnableAudioFocus);
-        mIsLooping = a.getBoolean(R.styleable.VideoView_looping, false);
-        mCurrentScreenScaleType = a.getInt(R.styleable.VideoView_screenScaleType, mCurrentScreenScaleType);
-        mPlayerBackgroundColor = a.getColor(R.styleable.VideoView_playerBackgroundColor, Color.BLACK);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.VideoPlayer);
+        mEnableAudioFocus = a.getBoolean(R.styleable.VideoPlayer_enableAudioFocus, mEnableAudioFocus);
+        mIsLooping = a.getBoolean(R.styleable.VideoPlayer_looping, false);
+        mCurrentScreenScaleType = a.getInt(R.styleable.VideoPlayer_screenScaleType, mCurrentScreenScaleType);
+        mPlayerBackgroundColor = a.getColor(R.styleable.VideoPlayer_playerBackgroundColor, Color.BLACK);
         a.recycle();
-
         initView();
     }
 
@@ -216,7 +210,7 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
         //如果要显示移动网络提示则不继续播放
         if (showNetWarning()) {
             //中止播放
-            setPlayState(STATE_START_ABORT);
+            setPlayState(ConstantKeys.CurrentState.STATE_START_ABORT);
             return false;
         }
         //监听音频焦点改变
@@ -309,7 +303,7 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
         }
         if (prepareDataSource()) {
             mMediaPlayer.prepareAsync();
-            setPlayState(STATE_PREPARING);
+            setPlayState(ConstantKeys.CurrentState.STATE_PREPARING);
             setPlayerState(isFullScreen() ? ConstantKeys.PlayMode.MODE_FULL_SCREEN :
                     isTinyScreen() ? ConstantKeys.PlayMode.MODE_TINY_WINDOW : ConstantKeys.PlayMode.MODE_NORMAL);
         }
@@ -335,7 +329,7 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
      */
     protected void startInPlaybackState() {
         mMediaPlayer.start();
-        setPlayState(STATE_PLAYING);
+        setPlayState(ConstantKeys.CurrentState.STATE_PLAYING);
     }
 
     /**
@@ -343,10 +337,9 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
      */
     @Override
     public void pause() {
-        if (isInPlaybackState()
-                && mMediaPlayer.isPlaying()) {
+        if (isInPlaybackState() && mMediaPlayer.isPlaying()) {
             mMediaPlayer.pause();
-            setPlayState(STATE_PAUSED);
+            setPlayState(ConstantKeys.CurrentState.STATE_PAUSED);
             if (mAudioFocusHelper != null) {
                 mAudioFocusHelper.abandonFocus();
             }
@@ -358,10 +351,9 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
      * 继续播放
      */
     public void resume() {
-        if (isInPlaybackState()
-                && !mMediaPlayer.isPlaying()) {
+        if (isInPlaybackState() && !mMediaPlayer.isPlaying()) {
             mMediaPlayer.start();
-            setPlayState(STATE_PLAYING);
+            setPlayState(ConstantKeys.CurrentState.STATE_PLAYING);
             if (mAudioFocusHelper != null) {
                 mAudioFocusHelper.requestFocus();
             }
@@ -405,7 +397,7 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
             //重置播放进度
             mCurrentPosition = 0;
             //切换转态
-            setPlayState(STATE_IDLE);
+            setPlayState(ConstantKeys.CurrentState.STATE_IDLE);
         }
     }
 
@@ -424,25 +416,25 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
      */
     protected boolean isInPlaybackState() {
         return mMediaPlayer != null
-                && mCurrentPlayState != STATE_ERROR
-                && mCurrentPlayState != STATE_IDLE
-                && mCurrentPlayState != STATE_PREPARING
-                && mCurrentPlayState != STATE_START_ABORT
-                && mCurrentPlayState != STATE_PLAYBACK_COMPLETED;
+                && mCurrentPlayState != ConstantKeys.CurrentState.STATE_ERROR
+                && mCurrentPlayState != ConstantKeys.CurrentState.STATE_IDLE
+                && mCurrentPlayState != ConstantKeys.CurrentState.STATE_PREPARING
+                && mCurrentPlayState != ConstantKeys.CurrentState.STATE_START_ABORT
+                && mCurrentPlayState != ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING;
     }
 
     /**
      * 是否处于未播放状态
      */
     protected boolean isInIdleState() {
-        return mCurrentPlayState == STATE_IDLE;
+        return mCurrentPlayState == ConstantKeys.CurrentState.STATE_IDLE;
     }
 
     /**
      * 播放中止状态
      */
     private boolean isInStartAbortState() {
-        return mCurrentPlayState == STATE_START_ABORT;
+        return mCurrentPlayState == ConstantKeys.CurrentState.STATE_START_ABORT;
     }
 
     /**
@@ -535,7 +527,7 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
     @Override
     public void onError() {
         mPlayerContainer.setKeepScreenOn(false);
-        setPlayState(STATE_ERROR);
+        setPlayState(ConstantKeys.CurrentState.STATE_ERROR);
     }
 
     /**
@@ -549,20 +541,20 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
             //播放完成，清除进度
             mProgressManager.saveProgress(mUrl, 0);
         }
-        setPlayState(STATE_PLAYBACK_COMPLETED);
+        setPlayState(ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING);
     }
 
     @Override
     public void onInfo(int what, int extra) {
         switch (what) {
             case AbstractPlayer.MEDIA_INFO_BUFFERING_START:
-                setPlayState(STATE_BUFFERING);
+                setPlayState(ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED);
                 break;
             case AbstractPlayer.MEDIA_INFO_BUFFERING_END:
-                setPlayState(STATE_BUFFERED);
+                setPlayState(ConstantKeys.CurrentState.STATE_COMPLETED);
                 break;
             case AbstractPlayer.MEDIA_INFO_VIDEO_RENDERING_START: // 视频开始渲染
-                setPlayState(STATE_PLAYING);
+                setPlayState(ConstantKeys.CurrentState.STATE_PLAYING);
                 if (mPlayerContainer.getWindowVisibility() != VISIBLE) {
                     pause();
                 }
@@ -579,7 +571,7 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
      */
     @Override
     public void onPrepared() {
-        setPlayState(STATE_PREPARED);
+        setPlayState(ConstantKeys.CurrentState.STATE_PREPARED);
         if (mCurrentPosition > 0) {
             seekTo(mCurrentPosition);
         }

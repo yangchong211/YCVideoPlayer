@@ -28,9 +28,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.yczbj.ycvideoplayerlib.R;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 
 
 /**
@@ -110,10 +111,10 @@ public class CustomErrorView extends LinearLayout implements IControlComponent {
 
     @Override
     public void onPlayStateChanged(int playState) {
-        if (playState == VideoView.STATE_ERROR) {
+        if (playState == ConstantKeys.CurrentState.STATE_ERROR) {
             bringToFront();
             setVisibility(VISIBLE);
-        } else if (playState == VideoView.STATE_IDLE) {
+        } else if (playState == ConstantKeys.CurrentState.STATE_IDLE) {
             setVisibility(GONE);
         }
     }

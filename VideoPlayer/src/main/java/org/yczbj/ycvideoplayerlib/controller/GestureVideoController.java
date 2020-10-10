@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
 import java.util.Map;
@@ -104,12 +104,12 @@ public abstract class GestureVideoController extends BaseVideoController impleme
 
     private boolean isInPlaybackState() {
         return mControlWrapper != null
-                && mCurPlayState != VideoView.STATE_ERROR
-                && mCurPlayState != VideoView.STATE_IDLE
-                && mCurPlayState != VideoView.STATE_PREPARING
-                && mCurPlayState != VideoView.STATE_PREPARED
-                && mCurPlayState != VideoView.STATE_START_ABORT
-                && mCurPlayState != VideoView.STATE_PLAYBACK_COMPLETED;
+                && mCurPlayState != ConstantKeys.CurrentState.STATE_ERROR
+                && mCurPlayState != ConstantKeys.CurrentState.STATE_IDLE
+                && mCurPlayState != ConstantKeys.CurrentState.STATE_PREPARING
+                && mCurPlayState != ConstantKeys.CurrentState.STATE_PREPARED
+                && mCurPlayState != ConstantKeys.CurrentState.STATE_START_ABORT
+                && mCurPlayState != ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING;
     }
 
     @Override

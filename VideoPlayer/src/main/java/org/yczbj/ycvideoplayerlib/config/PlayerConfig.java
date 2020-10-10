@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.player.config;
+package org.yczbj.ycvideoplayerlib.config;
 
 
 import androidx.annotation.Nullable;
@@ -10,10 +10,17 @@ import org.yczbj.ycvideoplayerlib.player.render.RenderViewFactory;
 import org.yczbj.ycvideoplayerlib.player.render.TextureRenderViewFactory;
 
 
+
 /**
- * 播放器全局配置
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/11/9
+ *     desc  : 播放器全局配置
+ *     revise:
+ * </pre>
  */
-public class VideoViewConfig {
+public class PlayerConfig {
 
     public static Builder newBuilder() {
         return new Builder();
@@ -36,29 +43,6 @@ public class VideoViewConfig {
     public final RenderViewFactory mRenderViewFactory;
 
     public final boolean mAdaptCutout;
-
-    private VideoViewConfig(Builder builder) {
-        mIsEnableLog = builder.mIsEnableLog;
-        mEnableOrientation = builder.mEnableOrientation;
-        mPlayOnMobileNetwork = builder.mPlayOnMobileNetwork;
-        mEnableAudioFocus = builder.mEnableAudioFocus;
-        mProgressManager = builder.mProgressManager;
-        mScreenScaleType = builder.mScreenScaleType;
-        if (builder.mPlayerFactory == null) {
-            //默认为AndroidMediaPlayer
-            mPlayerFactory = MediaPlayerFactory.create();
-        } else {
-            mPlayerFactory = builder.mPlayerFactory;
-        }
-        if (builder.mRenderViewFactory == null) {
-            //默认使用TextureView渲染视频
-            mRenderViewFactory = TextureRenderViewFactory.create();
-        } else {
-            mRenderViewFactory = builder.mRenderViewFactory;
-        }
-        mAdaptCutout = builder.mAdaptCutout;
-    }
-
 
     public final static class Builder {
 
@@ -144,8 +128,35 @@ public class VideoViewConfig {
             return this;
         }
 
-        public VideoViewConfig build() {
-            return new VideoViewConfig(this);
+        public PlayerConfig build() {
+            //创建builder对象
+            return new PlayerConfig(this);
         }
     }
+
+
+
+    private PlayerConfig(Builder builder) {
+        mIsEnableLog = builder.mIsEnableLog;
+        mEnableOrientation = builder.mEnableOrientation;
+        mPlayOnMobileNetwork = builder.mPlayOnMobileNetwork;
+        mEnableAudioFocus = builder.mEnableAudioFocus;
+        mProgressManager = builder.mProgressManager;
+        mScreenScaleType = builder.mScreenScaleType;
+        if (builder.mPlayerFactory == null) {
+            //默认为AndroidMediaPlayer
+            mPlayerFactory = MediaPlayerFactory.create();
+        } else {
+            mPlayerFactory = builder.mPlayerFactory;
+        }
+        if (builder.mRenderViewFactory == null) {
+            //默认使用TextureView渲染视频
+            mRenderViewFactory = TextureRenderViewFactory.create();
+        } else {
+            mRenderViewFactory = builder.mRenderViewFactory;
+        }
+        mAdaptCutout = builder.mAdaptCutout;
+    }
+
+
 }

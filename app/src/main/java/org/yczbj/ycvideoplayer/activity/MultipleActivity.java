@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ public class MultipleActivity extends AppCompatActivity {
 
     private static final String VOD_URL_1 = ConstantVideo.VideoPlayerList[3];
     private static final String VOD_URL_2 = ConstantVideo.VideoPlayerList[0];
-    private VideoView player1;
-    private VideoView player2;
-    private List<VideoView> mVideoViews = new ArrayList<>();
+    private VideoPlayer player1;
+    private VideoPlayer player2;
+    private List<VideoPlayer> mVideoViews = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class MultipleActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        for (VideoView vv : mVideoViews) {
+        for (VideoPlayer vv : mVideoViews) {
             vv.pause();
         }
     }
@@ -63,7 +63,7 @@ public class MultipleActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        for (VideoView vv : mVideoViews) {
+        for (VideoPlayer vv : mVideoViews) {
             vv.pause();
         }
     }
@@ -71,14 +71,14 @@ public class MultipleActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        for (VideoView vv : mVideoViews) {
+        for (VideoPlayer vv : mVideoViews) {
             vv.release();
         }
     }
 
     @Override
     public void onBackPressed() {
-        for (VideoView vv : mVideoViews) {
+        for (VideoPlayer vv : mVideoViews) {
             if (vv.onBackPressed())
                 return;
         }

@@ -16,7 +16,7 @@ import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.cache.PreloadManager;
 import org.yczbj.ycvideoplayer.cache.ProxyVideoCacheManager;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class TikTok2Activity extends AppCompatActivity {
     private Tiktok2Adapter mTiktok2Adapter;
     private VerticalViewPager mViewPager;
     private PreloadManager mPreloadManager;
-    private VideoView mVideoPlayer;
+    private VideoPlayer mVideoPlayer;
     private BasisVideoController mController;
 
     private static final String KEY_INDEX = "index";
@@ -120,7 +120,7 @@ public class TikTok2Activity extends AppCompatActivity {
     }
 
     private void initVideoView() {
-        mVideoPlayer = new VideoView(this);
+        mVideoPlayer = new VideoPlayer(this);
         mVideoPlayer.setLooping(true);
         //以下只能二选一，看你的需求
         mVideoPlayer.setRenderViewFactory(TikTokRenderViewFactory.create());

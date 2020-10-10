@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.StatesCutoutUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.NetworkUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
@@ -113,7 +113,7 @@ public abstract class BaseVideoController extends FrameLayout implements IVideoC
     protected abstract int getLayoutId();
 
     /**
-     * 重要：此方法用于将{@link VideoView} 和控制器绑定
+     * 重要：此方法用于将{@link VideoPlayer} 和控制器绑定
      */
     @CallSuper
     public void setMediaPlayer(MediaPlayerControl mediaPlayer) {
@@ -178,7 +178,7 @@ public abstract class BaseVideoController extends FrameLayout implements IVideoC
     }
 
     /**
-     * {@link VideoView}调用此方法向控制器设置播放状态
+     * {@link VideoPlayer}调用此方法向控制器设置播放状态
      */
     @CallSuper
     public void setPlayState(int playState) {
@@ -186,7 +186,7 @@ public abstract class BaseVideoController extends FrameLayout implements IVideoC
     }
 
     /**
-     * {@link VideoView}调用此方法向控制器设置播放器状态
+     * {@link VideoPlayer}调用此方法向控制器设置播放器状态
      */
     @CallSuper
     public void setPlayerState(final int playerState) {
@@ -557,18 +557,18 @@ public abstract class BaseVideoController extends FrameLayout implements IVideoC
     @CallSuper
     protected void onPlayStateChanged(int playState) {
         switch (playState) {
-            case VideoView.STATE_IDLE:
+            case ConstantKeys.CurrentState.STATE_IDLE:
                 mOrientationHelper.disable();
                 mOrientation = 0;
                 mIsLocked = false;
                 mShowing = false;
                 removeAllPrivateComponents();
                 break;
-            case VideoView.STATE_PLAYBACK_COMPLETED:
+            case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
                 mIsLocked = false;
                 mShowing = false;
                 break;
-            case VideoView.STATE_ERROR:
+            case ConstantKeys.CurrentState.STATE_ERROR:
                 mShowing = false;
                 break;
         }

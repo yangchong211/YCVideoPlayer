@@ -33,7 +33,7 @@ import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
@@ -136,7 +136,7 @@ public class CustomCompleteView extends FrameLayout implements IControlComponent
 
     @Override
     public void onPlayStateChanged(int playState) {
-        if (playState == VideoView.STATE_PLAYBACK_COMPLETED) {
+        if (playState == ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING) {
             setVisibility(VISIBLE);
             mIvStopFullscreen.setVisibility(mControlWrapper.isFullScreen() ? VISIBLE : GONE);
             bringToFront();

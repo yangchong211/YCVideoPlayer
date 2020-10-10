@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.yc.kernel.inter.AbstractPlayer;
 import org.yczbj.ycvideoplayerlib.player.render.IRenderView;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 
 
 /**
@@ -33,10 +33,10 @@ public class TikTokRenderView implements IRenderView {
             mProxyRenderView.setVideoSize(videoWidth, videoHeight);
             if (videoHeight > videoWidth) {
                 //竖屏视频，使用居中裁剪
-                mProxyRenderView.setScaleType(VideoView.SCREEN_SCALE_CENTER_CROP);
+                mProxyRenderView.setScaleType(VideoPlayer.SCREEN_SCALE_CENTER_CROP);
             } else {
                 //横屏视频，使用默认模式
-                mProxyRenderView.setScaleType(VideoView.SCREEN_SCALE_DEFAULT);
+                mProxyRenderView.setScaleType(VideoPlayer.SCREEN_SCALE_DEFAULT);
             }
         }
     }

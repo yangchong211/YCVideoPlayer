@@ -15,9 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
@@ -34,7 +35,7 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
     protected RecyclerView mRecyclerView;
     protected LinearLayoutManager mLinearLayoutManager;
 
-    protected VideoView mVideoView;
+    protected VideoPlayer mVideoView;
     protected BasisVideoController mController;
 
     /**
@@ -88,12 +89,12 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
     }
 
     protected void initVideoView() {
-        mVideoView = new VideoView(getActivity());
-        mVideoView.setOnStateChangeListener(new VideoView.SimpleOnStateChangeListener() {
+        mVideoView = new VideoPlayer(getActivity());
+        mVideoView.setOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
             @Override
             public void onPlayStateChanged(int playState) {
                 //监听VideoViewManager释放，重置状态
-                if (playState == VideoView.STATE_IDLE) {
+                if (playState == ConstantKeys.CurrentState.STATE_IDLE) {
                     PlayerUtils.removeViewFormParent(mVideoView);
                     mLastPos = mCurPos;
                     mCurPos = -1;

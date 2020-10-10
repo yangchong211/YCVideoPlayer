@@ -13,14 +13,14 @@ import androidx.core.view.ViewCompat;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 public class DetailActivity extends AppCompatActivity {
 
     private FrameLayout mPlayerContainer;
-    private VideoView mVideoView;
+    private VideoPlayer mVideoView;
     public static final String VIEW_NAME_PLAYER_CONTAINER = "player_container";
 
     @Override
@@ -41,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void initVideoView() {
         //拿到VideoView实例
-        VideoView mVideoView = VideoViewManager.instance().get("seamless");
+        VideoPlayer mVideoView = VideoViewManager.instance().get("seamless");
         //如果已经添加到某个父容器，就将其移除
         PlayerUtils.removeViewFormParent(mVideoView);
         //把播放器添加到页面的容器中

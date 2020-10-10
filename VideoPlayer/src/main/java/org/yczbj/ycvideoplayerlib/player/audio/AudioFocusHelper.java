@@ -7,7 +7,7 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 
 import java.lang.ref.WeakReference;
 
@@ -18,7 +18,7 @@ public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeLi
 
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
-    private WeakReference<VideoView> mWeakVideoView;
+    private WeakReference<VideoPlayer> mWeakVideoView;
 
     private AudioManager mAudioManager;
 
@@ -26,7 +26,7 @@ public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeLi
     private boolean mPausedForLoss = false;
     private int mCurrentFocus = 0;
 
-    public AudioFocusHelper(@NonNull VideoView videoView) {
+    public AudioFocusHelper(@NonNull VideoPlayer videoView) {
         mWeakVideoView = new WeakReference<>(videoView);
         mAudioManager = (AudioManager) videoView.getContext().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
     }
@@ -50,7 +50,7 @@ public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeLi
     }
 
     private void handleAudioFocusChange(int focusChange) {
-        final VideoView videoView = mWeakVideoView.get();
+        final VideoPlayer videoView = mWeakVideoView.get();
         if (videoView == null) {
             return;
         }
@@ -81,35 +81,30 @@ public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeLi
     }
 
     /**
-     * Requests to obtain the audio focus
+     * 请求获取音频焦点
      */
     public void requestFocus() {
         if (mCurrentFocus == AudioManager.AUDIOFOCUS_GAIN) {
             return;
         }
-
         if (mAudioManager == null) {
             return;
         }
-
         int status = mAudioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
         if (AudioManager.AUDIOFOCUS_REQUEST_GRANTED == status) {
             mCurrentFocus = AudioManager.AUDIOFOCUS_GAIN;
             return;
         }
-
         mStartRequested = true;
     }
 
     /**
-     * Requests the system to drop the audio focus
+     * 请求系统放下音频焦点
      */
     public void abandonFocus() {
-
         if (mAudioManager == null) {
             return;
         }
-
         mStartRequested = false;
         mAudioManager.abandonAudioFocus(this);
     }

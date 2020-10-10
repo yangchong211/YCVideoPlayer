@@ -13,13 +13,14 @@ import com.yc.videocache.HttpProxyCacheServer;
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.cache.ProxyVideoCacheManager;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 public class AdActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private VideoView mVideoPlayer;
+    private VideoPlayer mVideoPlayer;
     private Button mBtnScaleNormal;
     private Button mBtnScale169;
     private Button mBtnScale43;
@@ -102,10 +103,10 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
         mVideoPlayer.setUrl(proxyUrl);
         mVideoPlayer.start();
         //监听播放结束
-        mVideoPlayer.addOnStateChangeListener(new VideoView.SimpleOnStateChangeListener() {
+        mVideoPlayer.addOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
             @Override
             public void onPlayStateChanged(int playState) {
-                if (playState == VideoView.STATE_PLAYBACK_COMPLETED) {
+                if (playState == ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING) {
                     playVideo();
                 }
             }
@@ -138,11 +139,11 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if (v == mBtnScale169){
-            mVideoPlayer.setScreenScaleType(VideoView.SCREEN_SCALE_16_9);
+            mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_16_9);
         } else if (v == mBtnScaleNormal){
-            mVideoPlayer.setScreenScaleType(VideoView.SCREEN_SCALE_DEFAULT);
+            mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_DEFAULT);
         }else if (v == mBtnScale43){
-            mVideoPlayer.setScreenScaleType(VideoView.SCREEN_SCALE_4_3);
+            mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_4_3);
         } else if (v == mBtnCrop){
 
         } else if (v == mBtnGif){

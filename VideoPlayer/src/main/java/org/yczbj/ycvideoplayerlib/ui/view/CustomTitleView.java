@@ -36,7 +36,7 @@ import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
 
@@ -175,12 +175,12 @@ public class CustomTitleView extends FrameLayout implements IControlComponent, V
     @Override
     public void onPlayStateChanged(int playState) {
         switch (playState) {
-            case VideoView.STATE_IDLE:
-            case VideoView.STATE_START_ABORT:
-            case VideoView.STATE_PREPARING:
-            case VideoView.STATE_PREPARED:
-            case VideoView.STATE_ERROR:
-            case VideoView.STATE_PLAYBACK_COMPLETED:
+            case ConstantKeys.CurrentState.STATE_IDLE:
+            case ConstantKeys.CurrentState.STATE_START_ABORT:
+            case ConstantKeys.CurrentState.STATE_PREPARING:
+            case ConstantKeys.CurrentState.STATE_PREPARED:
+            case ConstantKeys.CurrentState.STATE_ERROR:
+            case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
                 setVisibility(GONE);
                 break;
         }

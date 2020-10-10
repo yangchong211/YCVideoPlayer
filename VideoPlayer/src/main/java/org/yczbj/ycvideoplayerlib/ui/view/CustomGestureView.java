@@ -30,9 +30,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import org.yczbj.ycvideoplayerlib.R;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.controller.IGestureComponent;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
 /**
@@ -169,12 +170,12 @@ public class CustomGestureView extends FrameLayout implements IGestureComponent 
 
     @Override
     public void onPlayStateChanged(int playState) {
-        if (playState == VideoView.STATE_IDLE
-                || playState == VideoView.STATE_START_ABORT
-                || playState == VideoView.STATE_PREPARING
-                || playState == VideoView.STATE_PREPARED
-                || playState == VideoView.STATE_ERROR
-                || playState == VideoView.STATE_PLAYBACK_COMPLETED) {
+        if (playState == ConstantKeys.CurrentState.STATE_IDLE
+                || playState == ConstantKeys.CurrentState.STATE_START_ABORT
+                || playState == ConstantKeys.CurrentState.STATE_PREPARING
+                || playState == ConstantKeys.CurrentState.STATE_PREPARED
+                || playState == ConstantKeys.CurrentState.STATE_ERROR
+                || playState == ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING) {
             setVisibility(GONE);
         } else {
             setVisibility(VISIBLE);

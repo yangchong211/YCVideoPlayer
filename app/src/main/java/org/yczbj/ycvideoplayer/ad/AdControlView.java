@@ -17,7 +17,7 @@ import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
 
@@ -83,11 +83,11 @@ public class AdControlView extends FrameLayout implements IControlComponent, Vie
     @Override
     public void onPlayStateChanged(int playState) {
         switch (playState) {
-            case VideoView.STATE_PLAYING:
+            case ConstantKeys.CurrentState.STATE_PLAYING:
                 mControlWrapper.startProgress();
                 mPlayButton.setSelected(true);
                 break;
-            case VideoView.STATE_PAUSED:
+            case ConstantKeys.CurrentState.STATE_PAUSED:
                 mPlayButton.setSelected(false);
                 break;
         }

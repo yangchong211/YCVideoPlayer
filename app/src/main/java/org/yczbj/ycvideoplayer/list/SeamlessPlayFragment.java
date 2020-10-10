@@ -13,9 +13,10 @@ import androidx.core.app.ActivityOptionsCompat;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.activity.DetailActivity;
 import org.yczbj.ycvideoplayer.activity.IntentKeys;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
 /**
@@ -45,7 +46,7 @@ public class SeamlessPlayFragment extends RecyclerViewAutoPlayFragment {
                 //无需无缝播放，把相应数据传到详情页
                 mVideoView.release();
                 //需要把控制器还原
-                mController.setPlayState(VideoView.STATE_IDLE);
+                mController.setPlayState(ConstantKeys.CurrentState.STATE_IDLE);
                 bundle.putBoolean(IntentKeys.SEAMLESS_PLAY, false);
                 bundle.putString(IntentKeys.URL, videoBean.getVideoUrl());
                 bundle.putString(IntentKeys.TITLE, videoBean.getTitle());

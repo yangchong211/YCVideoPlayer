@@ -2,8 +2,8 @@ package org.yczbj.ycvideoplayerlib.player.manager;
 
 import android.app.Application;
 
-import org.yczbj.ycvideoplayerlib.player.config.VideoViewConfig;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.LinkedHashMap;
@@ -18,7 +18,7 @@ public class VideoViewManager {
     /**
      * 保存VideoView的容器
      */
-    private LinkedHashMap<String, VideoView> mVideoViews = new LinkedHashMap<>();
+    private LinkedHashMap<String, VideoPlayer> mVideoViews = new LinkedHashMap<>();
 
     /**
      * 是否在移动网络下直接播放视频
@@ -33,7 +33,7 @@ public class VideoViewManager {
     /**
      * VideoViewConfig实例
      */
-    private static VideoViewConfig sConfig;
+    private static PlayerConfig sConfig;
 
     private VideoViewManager() {
         mPlayOnMobileNetwork = getConfig().mPlayOnMobileNetwork;
@@ -42,11 +42,11 @@ public class VideoViewManager {
     /**
      * 设置VideoViewConfig
      */
-    public static void setConfig(VideoViewConfig config) {
+    public static void setConfig(PlayerConfig config) {
         if (sConfig == null) {
-            synchronized (VideoViewConfig.class) {
+            synchronized (PlayerConfig.class) {
                 if (sConfig == null) {
-                    sConfig = config == null ? VideoViewConfig.newBuilder().build() : config;
+                    sConfig = config == null ? PlayerConfig.newBuilder().build() : config;
                 }
             }
         }
@@ -55,7 +55,7 @@ public class VideoViewManager {
     /**
      * 获取VideoViewConfig
      */
-    public static VideoViewConfig getConfig() {
+    public static PlayerConfig getConfig() {
         setConfig(null);
         return sConfig;
     }
@@ -89,12 +89,12 @@ public class VideoViewManager {
      * 添加VideoView
      * @param tag 相同tag的VideoView只会保存一个，如果tag相同则会release并移除前一个
      */
-    public void add(VideoView videoView, String tag) {
+    public void add(VideoPlayer videoView, String tag) {
         if (!(videoView.getContext() instanceof Application)) {
             VideoLogUtils.i("The Context of this VideoView is not an Application Context," +
                     "you must remove it after release,or it will lead to memory leek.");
         }
-        VideoView old = get(tag);
+        VideoPlayer old = get(tag);
         if (old != null) {
             old.release();
             remove(tag);
@@ -102,7 +102,7 @@ public class VideoViewManager {
         mVideoViews.put(tag, videoView);
     }
 
-    public VideoView get(String tag) {
+    public VideoPlayer get(String tag) {
         return mVideoViews.get(tag);
     }
 
@@ -122,7 +122,7 @@ public class VideoViewManager {
     }
 
     public void releaseByTag(String tag, boolean isRemove) {
-        VideoView videoView = get(tag);
+        VideoPlayer videoView = get(tag);
         if (videoView != null) {
             videoView.release();
             if (isRemove) {
@@ -132,7 +132,7 @@ public class VideoViewManager {
     }
 
     public boolean onBackPress(String tag) {
-        VideoView videoView = get(tag);
+        VideoPlayer videoView = get(tag);
         if (videoView == null) {
             return false;
         }

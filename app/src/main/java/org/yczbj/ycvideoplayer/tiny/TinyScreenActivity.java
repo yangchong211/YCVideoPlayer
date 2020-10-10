@@ -14,8 +14,9 @@ import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.list.OnItemChildClickListener;
 import org.yczbj.ycvideoplayer.list.VideoRecyclerViewAdapter;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
@@ -29,7 +30,7 @@ public class TinyScreenActivity extends AppCompatActivity implements OnItemChild
     private BasisVideoController mController;
     private List<VideoInfoBean> mVideos;
     private LinearLayoutManager mLinearLayoutManager;
-    private VideoView mVideoPlayer;
+    private VideoPlayer mVideoPlayer;
     private int mCurPos = -1;
 
     @Override
@@ -74,11 +75,11 @@ public class TinyScreenActivity extends AppCompatActivity implements OnItemChild
 
 
     protected void initView() {
-        mVideoPlayer = new VideoView(this);
-        mVideoPlayer.setOnStateChangeListener(new VideoView.SimpleOnStateChangeListener() {
+        mVideoPlayer = new VideoPlayer(this);
+        mVideoPlayer.setOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
             @Override
             public void onPlayStateChanged(int playState) {
-                if (playState == VideoView.STATE_PLAYBACK_COMPLETED) {
+                if (playState == ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING) {
                     if (mVideoPlayer.isTinyScreen()) {
                         mVideoPlayer.stopTinyScreen();
                         releaseVideoView();
@@ -116,7 +117,7 @@ public class TinyScreenActivity extends AppCompatActivity implements OnItemChild
                 if (position == mCurPos && !mVideoPlayer.isFullScreen()) {
                     mVideoPlayer.startTinyScreen();
                     mVideoPlayer.setVideoController(null);
-                    mController.setPlayState(VideoView.STATE_IDLE);
+                    mController.setPlayState(ConstantKeys.CurrentState.STATE_IDLE);
                 }
             }
         });

@@ -32,7 +32,7 @@ import androidx.annotation.Nullable;
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.GestureVideoController;
-import org.yczbj.ycvideoplayerlib.player.video.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
@@ -235,22 +235,22 @@ public class BasisVideoController extends GestureVideoController implements View
         super.onPlayStateChanged(playState);
         switch (playState) {
             //调用release方法会回到此状态
-            case VideoView.STATE_IDLE:
+            case ConstantKeys.CurrentState.STATE_IDLE:
                 mLockButton.setSelected(false);
                 mLoadingProgress.setVisibility(GONE);
                 break;
-            case VideoView.STATE_PLAYING:
-            case VideoView.STATE_PAUSED:
-            case VideoView.STATE_PREPARED:
-            case VideoView.STATE_ERROR:
-            case VideoView.STATE_BUFFERED:
+            case ConstantKeys.CurrentState.STATE_PLAYING:
+            case ConstantKeys.CurrentState.STATE_PAUSED:
+            case ConstantKeys.CurrentState.STATE_PREPARED:
+            case ConstantKeys.CurrentState.STATE_ERROR:
+            case ConstantKeys.CurrentState.STATE_COMPLETED:
                 mLoadingProgress.setVisibility(GONE);
                 break;
-            case VideoView.STATE_PREPARING:
-            case VideoView.STATE_BUFFERING:
+            case ConstantKeys.CurrentState.STATE_PREPARING:
+            case ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED:
                 mLoadingProgress.setVisibility(VISIBLE);
                 break;
-            case VideoView.STATE_PLAYBACK_COMPLETED:
+            case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
                 mLoadingProgress.setVisibility(GONE);
                 mLockButton.setVisibility(GONE);
                 mLockButton.setSelected(false);
