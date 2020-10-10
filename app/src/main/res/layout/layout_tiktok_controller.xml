@@ -12,11 +12,11 @@
 
     <ImageView
         android:id="@+id/play_btn"
-        android:layout_width="@dimen/dkplayer_play_btn_size"
-        android:layout_height="@dimen/dkplayer_play_btn_size"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:background="@drawable/shape_play_bg"
-        android:padding="@dimen/dkplayer_default_spacing"
+        android:padding="10dp"
         android:src="@drawable/selector_play_button"
         android:visibility="gone"
         tools:visibility="visible"/>
