@@ -4,7 +4,7 @@ import android.widget.ImageView;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.view.controller.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener2;
 import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
 
@@ -183,7 +183,7 @@ public class TestNormalActivity extends BaseActivity  {
         controller.setTvAndAudioVisibility(true,true);
 
         //设置视频分享，下载，音视频转化点击事件
-        controller.setOnVideoControlListener(new OnVideoControlListener() {
+        controller.setOnVideoControlListener(new OnVideoControlListener2() {
             @Override
             public void onVideoControlClick(int type) {
 

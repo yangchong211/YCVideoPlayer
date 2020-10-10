@@ -6,7 +6,7 @@ import android.widget.Button;
 import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener2;
 import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.view.controller.VideoPlayerController;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
@@ -75,7 +75,7 @@ public class TestFullActivity2 extends BaseActivity implements View.OnClickListe
         //设置中间播放按钮是否显示
         controller.setTopPadding(24.0f);
         controller.setTopVisibility(true);
-        controller.setOnVideoControlListener(new OnVideoControlListener() {
+        controller.setOnVideoControlListener(new OnVideoControlListener2() {
             @Override
             public void onVideoControlClick(int type) {
                 switch (type){

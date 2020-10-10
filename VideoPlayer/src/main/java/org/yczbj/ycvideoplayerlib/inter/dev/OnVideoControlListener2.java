@@ -27,7 +27,7 @@ import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
  *     revise:
  * </pre>
  */
-public interface OnVideoControlListener {
+public interface OnVideoControlListener2 {
 
     /**
      * 视频顶部点击事件【下载，切换音频，分享等】

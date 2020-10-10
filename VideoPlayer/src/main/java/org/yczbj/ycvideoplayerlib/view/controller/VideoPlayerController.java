@@ -48,7 +48,7 @@ import org.yczbj.ycvideoplayerlib.tool.receiver.NetChangedReceiver;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnClarityChangedListener;
-import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener2;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 
 import java.text.SimpleDateFormat;
@@ -806,7 +806,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 unRegisterBatterReceiver();
                 mIsLock = false;
                 if (mOnPlayerTypeListener!=null){
-                    mOnPlayerTypeListener.onPlayerPattern(ConstantKeys.PlayerPatternType.NORMAL);
+                    mOnPlayerTypeListener.onPlayerPattern(ConstantKeys.PlayMode.MODE_NORMAL);
                 }
 
                 setTopBottomVisible(true);
@@ -828,7 +828,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 setTopBottomVisible(true);
                 registerBatterReceiver();
                 if (mOnPlayerTypeListener!=null){
-                    mOnPlayerTypeListener.onPlayerPattern(ConstantKeys.PlayerPatternType.FULL_SCREEN);
+                    mOnPlayerTypeListener.onPlayerPattern(ConstantKeys.PlayMode.MODE_FULL_SCREEN);
                 }
                 VideoLogUtils.d("播放模式--------全屏模式");
                 break;
@@ -839,7 +839,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
                 mFullScreen.setVisibility(View.VISIBLE);
                 mIsLock = false;
                 if (mOnPlayerTypeListener!=null){
-                    mOnPlayerTypeListener.onPlayerPattern(ConstantKeys.PlayerPatternType.TINY_WINDOW);
+                    mOnPlayerTypeListener.onPlayerPattern(ConstantKeys.PlayMode.MODE_TINY_WINDOW);
                 }
                 VideoLogUtils.d("播放模式--------小窗口模式");
                 break;
@@ -1269,8 +1269,8 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     /**
      * 设置视频分享，下载，音视频转化点击事件
      */
-    private OnVideoControlListener mVideoControlListener;
-    public void setOnVideoControlListener(OnVideoControlListener listener){
+    private OnVideoControlListener2 mVideoControlListener;
+    public void setOnVideoControlListener(OnVideoControlListener2 listener){
         this.mVideoControlListener = listener;
     }
 

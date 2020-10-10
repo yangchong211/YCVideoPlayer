@@ -36,6 +36,6 @@ public interface OnPlayerTypeListener {
      * int NORMAL = 103; 切换到正常播放监听
      * @param type                              类型
      */
-    void onPlayerPattern(@ConstantKeys.PlayerPatternType int type);
+    void onPlayerPattern(@ConstantKeys.PlayMode int type);
 
 }

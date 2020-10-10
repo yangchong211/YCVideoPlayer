@@ -1,6 +1,5 @@
 package org.yczbj.ycvideoplayerlib.player;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -75,15 +74,24 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     protected ISurfaceView mRenderView;
     protected SurfaceViewFactory mRenderViewFactory;
     protected int mCurrentScreenScaleType;
-
     protected int[] mVideoSize = {0, 0};
+    /**
+     * 是否静音
+     */
+    protected boolean mIsMute;
 
-    protected boolean mIsMute;//是否静音
-
-    //--------- data sources ---------//
-    protected String mUrl;//当前播放视频的地址
-    protected Map<String, String> mHeaders;//当前视频地址的请求头
-    protected AssetFileDescriptor mAssetFileDescriptor;//assets文件
+    /**
+     * 当前播放视频的地址
+     */
+    protected String mUrl;
+    /**
+     * 当前视频地址的请求头
+     */
+    protected Map<String, String> mHeaders;
+    /**
+     * assets文件
+     */
+    protected AssetFileDescriptor mAssetFileDescriptor;
     /**
      * 当前正在播放视频的位置
      */
@@ -117,7 +125,7 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     /**
      * OnStateChangeListener集合，保存了所有开发者设置的监听器
      */
-    protected List<OnStateChangeListener> mOnStateChangeListeners;
+    protected List<OnVideoStateListener> mOnStateChangeListeners;
 
     /**
      * 进度管理器，设置之后播放器会记录播放进度，以便下次播放恢复进度
@@ -744,7 +752,7 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
         if (mIsFullScreen){
             return;
         }
-        ViewGroup decorView = getDecorView();
+        ViewGroup decorView = VideoPlayerHelper.instance().getDecorView(mContext,mVideoController);
         if (decorView == null){
             return;
         }
@@ -767,7 +775,7 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
             uiOptions |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         }
         decorView.setSystemUiVisibility(uiOptions);
-        getActivity().getWindow().setFlags(
+        VideoPlayerHelper.instance().getActivity(mContext,mVideoController).getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
@@ -777,7 +785,7 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
         super.onWindowFocusChanged(hasWindowFocus);
         if (hasWindowFocus && mIsFullScreen) {
             //重新获得焦点时保持全屏状态
-            hideSysBar(getDecorView());
+            hideSysBar(VideoPlayerHelper.instance().getDecorView(mContext,mVideoController));
         }
     }
 
@@ -786,10 +794,10 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
      */
     @Override
     public void stopFullScreen() {
-        if (!mIsFullScreen)
+        if (!mIsFullScreen){
             return;
-
-        ViewGroup decorView = getDecorView();
+        }
+        ViewGroup decorView = VideoPlayerHelper.instance().getDecorView(mContext,mVideoController);
         if (decorView == null)
             return;
 
@@ -814,42 +822,10 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
             uiOptions &= ~View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         }
         decorView.setSystemUiVisibility(uiOptions);
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        VideoPlayerHelper.instance().getActivity(mContext,mVideoController)
+                .getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
-    /**
-     * 获取DecorView
-     */
-    protected ViewGroup getDecorView() {
-        Activity activity = getActivity();
-        if (activity == null) return null;
-        return (ViewGroup) activity.getWindow().getDecorView();
-    }
-
-    /**
-     * 获取activity中的content view,其id为android.R.id.content
-     */
-    protected ViewGroup getContentView() {
-        Activity activity = getActivity();
-        if (activity == null) return null;
-        return activity.findViewById(android.R.id.content);
-    }
-
-    /**
-     * 获取Activity，优先通过Controller去获取Activity
-     */
-    protected Activity getActivity() {
-        Activity activity;
-        if (mVideoController != null) {
-            activity = PlayerUtils.scanForActivity(mVideoController.getContext());
-            if (activity == null) {
-                activity = PlayerUtils.scanForActivity(getContext());
-            }
-        } else {
-            activity = PlayerUtils.scanForActivity(getContext());
-        }
-        return activity;
-    }
 
     /**
      * 判断是否处于全屏状态
@@ -864,7 +840,7 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
      */
     public void startTinyScreen() {
         if (mIsTinyScreen) return;
-        ViewGroup contentView = getContentView();
+        ViewGroup contentView = VideoPlayerHelper.instance().getContentView(mContext,mVideoController);
         if (contentView == null) return;
         this.removeView(mPlayerContainer);
         int width = mTinyScreenSize[0];
@@ -888,7 +864,7 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     public void stopTinyScreen() {
         if (!mIsTinyScreen) return;
 
-        ViewGroup contentView = getContentView();
+        ViewGroup contentView = VideoPlayerHelper.instance().getContentView(mContext,mVideoController);
         if (contentView == null) return;
         contentView.removeView(mPlayerContainer);
         LayoutParams params = new LayoutParams(
@@ -994,13 +970,13 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     /**
      * 向Controller设置播放状态，用于控制Controller的ui展示
      */
-    protected void setPlayState(int playState) {
+    protected void setPlayState(@ConstantKeys.CurrentStateType int playState) {
         mCurrentPlayState = playState;
         if (mVideoController != null) {
             mVideoController.setPlayState(playState);
         }
         if (mOnStateChangeListeners != null) {
-            for (OnStateChangeListener l : PlayerUtils.getSnapshot(mOnStateChangeListeners)) {
+            for (OnVideoStateListener l : PlayerUtils.getSnapshot(mOnStateChangeListeners)) {
                 if (l != null) {
                     l.onPlayStateChanged(playState);
                 }
@@ -1011,13 +987,13 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     /**
      * 向Controller设置播放器状态，包含全屏状态和非全屏状态
      */
-    protected void setPlayerState(int playerState) {
+    protected void setPlayerState(@ConstantKeys.PlayModeType int playerState) {
         mCurrentPlayerState = playerState;
         if (mVideoController != null) {
             mVideoController.setPlayerState(playerState);
         }
         if (mOnStateChangeListeners != null) {
-            for (OnStateChangeListener l : PlayerUtils.getSnapshot(mOnStateChangeListeners)) {
+            for (OnVideoStateListener l : PlayerUtils.getSnapshot(mOnStateChangeListeners)) {
                 if (l != null) {
                     l.onPlayerStateChanged(playerState);
                 }
@@ -1026,19 +1002,11 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     }
 
     /**
-     * 播放状态改变监听器
-     */
-    public interface OnStateChangeListener {
-        void onPlayerStateChanged(int playerState);
-        void onPlayStateChanged(int playState);
-    }
-
-    /**
      * OnStateChangeListener的空实现。用的时候只需要重写需要的方法
      */
-    public static class SimpleOnStateChangeListener implements OnStateChangeListener {
+    public static class SimpleOnStateChangeListener implements OnVideoStateListener {
         @Override
-        public void onPlayerStateChanged(int playerState) {}
+        public void onPlayerStateChanged(@ConstantKeys.PlayModeType int playerState) {}
         @Override
         public void onPlayStateChanged(int playState) {}
     }
@@ -1046,7 +1014,7 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     /**
      * 添加一个播放状态监听器，播放状态发生变化时将会调用。
      */
-    public void addOnStateChangeListener(@NonNull OnStateChangeListener listener) {
+    public void addOnStateChangeListener(@NonNull OnVideoStateListener listener) {
         if (mOnStateChangeListeners == null) {
             mOnStateChangeListeners = new ArrayList<>();
         }
@@ -1056,7 +1024,7 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     /**
      * 移除某个播放状态监听
      */
-    public void removeOnStateChangeListener(@NonNull OnStateChangeListener listener) {
+    public void removeOnStateChangeListener(@NonNull OnVideoStateListener listener) {
         if (mOnStateChangeListeners != null) {
             mOnStateChangeListeners.remove(listener);
         }
@@ -1064,9 +1032,9 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
 
     /**
      * 设置一个播放状态监听器，播放状态发生变化时将会调用，
-     * 如果你想同时设置多个监听器，推荐 {@link #addOnStateChangeListener(OnStateChangeListener)}。
+     * 如果你想同时设置多个监听器，推荐 {@link #addOnStateChangeListener(OnVideoStateListener)}。
      */
-    public void setOnStateChangeListener(@NonNull OnStateChangeListener listener) {
+    public void setOnStateChangeListener(@NonNull OnVideoStateListener listener) {
         if (mOnStateChangeListeners == null) {
             mOnStateChangeListeners = new ArrayList<>();
         } else {

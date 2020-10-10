@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.view.controller.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener2;
 import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
 
@@ -65,7 +65,7 @@ public class TestTinyActivity extends BaseActivity implements View.OnClickListen
         controller.setTopPadding(24);
         //设置横屏播放时，tv和audio图标是否显示
         controller.setTvAndAudioVisibility(true,true);
-        controller.setOnVideoControlListener(new OnVideoControlListener() {
+        controller.setOnVideoControlListener(new OnVideoControlListener2() {
             @Override
             public void onVideoControlClick(int type) {
                 switch (type){

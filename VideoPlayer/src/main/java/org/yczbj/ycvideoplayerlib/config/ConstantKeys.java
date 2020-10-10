@@ -79,7 +79,7 @@ public final class ConstantKeys {
     public @interface VideoControlType{}
 
     /**
-     * 播放模式，主要是指播放器的各种状态
+     * 播放状态，主要是指播放器的各种状态
      * -1               播放错误
      * 0                播放未开始
      * 1                播放准备中
@@ -105,18 +105,12 @@ public final class ConstantKeys {
         int STATE_START_ABORT = 8;
     }
 
-    /**
-     * 播放模式，普通模式，小窗口模式，正常模式三种其中一种
-     */
+    @IntDef({CurrentState.STATE_ERROR,CurrentState.STATE_IDLE,CurrentState.STATE_PREPARING,
+            CurrentState.STATE_PREPARED,CurrentState.STATE_PLAYING,CurrentState.STATE_PAUSED,
+            CurrentState.STATE_BUFFERING_PLAYING,CurrentState.STATE_BUFFERING_PAUSED,
+            CurrentState.STATE_COMPLETED,CurrentState.STATE_START_ABORT})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface PlayMode {
-        //普通模式
-        int MODE_NORMAL = 1001;
-        //全屏模式
-        int MODE_FULL_SCREEN = 1002;
-        //小屏模式
-        int MODE_TINY_WINDOW = 1003;
-    }
+    public @interface CurrentStateType{}
 
     /**
      * 通过注解限定类型
@@ -164,17 +158,25 @@ public final class ConstantKeys {
     }
 
     /**
-     * 播放模式状态
+     * 播放模式
+     * 普通模式，小窗口模式，正常模式三种其中一种
+     * MODE_NORMAL              普通模式
+     * MODE_FULL_SCREEN         全屏模式
+     * MODE_TINY_WINDOW         小屏模式
      */
     @Retention(RetentionPolicy.SOURCE)
-    public @interface PlayerPatternType {
-        //切换到全屏播放监听
-        int FULL_SCREEN = 101;
-        //切换到小窗口播放监听
-        int TINY_WINDOW = 102;
-        //切换到正常播放监听
-        int NORMAL = 103;
+    public @interface PlayMode {
+        //普通模式
+        int MODE_NORMAL = 1001;
+        //全屏模式
+        int MODE_FULL_SCREEN = 1002;
+        //小屏模式
+        int MODE_TINY_WINDOW = 1003;
     }
+
+    @IntDef({PlayMode.MODE_NORMAL,PlayMode.MODE_FULL_SCREEN,PlayMode.MODE_TINY_WINDOW})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface PlayModeType{}
 
     /**
      * 播放视频缩放类型
