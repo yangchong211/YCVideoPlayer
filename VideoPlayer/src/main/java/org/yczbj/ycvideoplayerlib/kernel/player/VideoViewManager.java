@@ -132,7 +132,9 @@ public class VideoViewManager {
 
     public boolean onBackPress(String tag) {
         VideoView videoView = get(tag);
-        if (videoView == null) return false;
+        if (videoView == null) {
+            return false;
+        }
         return videoView.onBackPressed();
     }
 

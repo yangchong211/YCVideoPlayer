@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 
 import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
-import org.yczbj.ycvideoplayerlib.tool.utils.CutoutUtil;
+import org.yczbj.ycvideoplayerlib.tool.utils.CutoutUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.NetworkUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
@@ -330,7 +330,7 @@ public abstract class BaseVideoController extends FrameLayout implements IVideoC
     private void checkCutout() {
         if (!mAdaptCutout) return;
         if (mActivity != null && mHasCutout == null) {
-            mHasCutout = CutoutUtil.allowDisplayToCutout(mActivity);
+            mHasCutout = CutoutUtils.allowDisplayToCutout(mActivity);
             if (mHasCutout) {
                 //竖屏下的状态栏高度可认为是刘海的高度
                 mCutoutHeight = (int) PlayerUtils.getStatusBarHeightPortrait(mActivity);
@@ -595,14 +595,14 @@ public abstract class BaseVideoController extends FrameLayout implements IVideoC
                     mOrientationHelper.disable();
                 }
                 if (hasCutout()) {
-                    CutoutUtil.adaptCutoutAboveAndroidP(getContext(), false);
+                    CutoutUtils.adaptCutoutAboveAndroidP(getContext(), false);
                 }
                 break;
             case VideoView.PLAYER_FULL_SCREEN:
                 //在全屏时强制监听设备方向
                 mOrientationHelper.enable();
                 if (hasCutout()) {
-                    CutoutUtil.adaptCutoutAboveAndroidP(getContext(), true);
+                    CutoutUtils.adaptCutoutAboveAndroidP(getContext(), true);
                 }
                 break;
             case VideoView.PLAYER_TINY_SCREEN:

@@ -16,9 +16,10 @@ import java.util.List;
 /**
  * 刘海屏工具
  */
-public final class CutoutUtil {
+public final class CutoutUtils {
 
-    private CutoutUtil() {
+    private CutoutUtils() {
+
     }
 
     /**

@@ -27,6 +27,7 @@ import org.yczbj.ycvideoplayerlib.kernel.player.PlayerFactory;
 import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewConfig;
 import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
+import org.yczbj.ycvideoplayerlib.tool.utils.Utils;
 
 import java.lang.reflect.Field;
 
@@ -54,13 +55,26 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTv111;
     private TextView mTv131;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initFindViewById();
         initListener();
-        setChangeVideoType(ConstantKeys.VideoPlayerType.TYPE_IJK);
+
+        //检测当前是用的哪个播放器
+        Object factory = Utils.getCurrentPlayerFactory();
+        if (factory instanceof ExoMediaPlayerFactory) {
+            mTvTitle.setText("视频内核：" + " (ExoPlayer)");
+            setTitle(getResources().getString(R.string.app_name) + " (ExoPlayer)");
+        } else if (factory instanceof IjkPlayerFactory) {
+            mTvTitle.setText("视频内核：" + " (IjkPlayer)");
+        } else if (factory instanceof AndroidMediaPlayerFactory) {
+            mTvTitle.setText("视频内核：" + " (MediaPlayer)");
+        } else {
+            mTvTitle.setText("视频内核：" + " (unknown)");
+        }
     }
 
     private void initFindViewById() {
