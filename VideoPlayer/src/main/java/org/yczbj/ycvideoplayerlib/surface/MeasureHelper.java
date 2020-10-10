@@ -1,7 +1,8 @@
-package org.yczbj.ycvideoplayerlib.player.render;
+package org.yczbj.ycvideoplayerlib.surface;
 
 import android.view.View;
 
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 
 
@@ -47,7 +48,7 @@ public class MeasureHelper {
 
         //如果设置了比例
         switch (mCurrentScreenScale) {
-            case VideoPlayer.SCREEN_SCALE_DEFAULT:
+            case ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_DEFAULT:
             default:
                 if (mVideoWidth * height < width * mVideoHeight) {
                     width = height * mVideoWidth / mVideoHeight;
@@ -55,29 +56,29 @@ public class MeasureHelper {
                     height = width * mVideoHeight / mVideoWidth;
                 }
                 break;
-            case VideoPlayer.SCREEN_SCALE_ORIGINAL:
+            case ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_ORIGINAL:
                 width = mVideoWidth;
                 height = mVideoHeight;
                 break;
-            case VideoPlayer.SCREEN_SCALE_16_9:
+            case ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_16_9:
                 if (height > width / 16 * 9) {
                     height = width / 16 * 9;
                 } else {
                     width = height / 9 * 16;
                 }
                 break;
-            case VideoPlayer.SCREEN_SCALE_4_3:
+            case ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_4_3:
                 if (height > width / 4 * 3) {
                     height = width / 4 * 3;
                 } else {
                     width = height / 3 * 4;
                 }
                 break;
-            case VideoPlayer.SCREEN_SCALE_MATCH_PARENT:
+            case ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_MATCH_PARENT:
                 width = widthMeasureSpec;
                 height = heightMeasureSpec;
                 break;
-            case VideoPlayer.SCREEN_SCALE_CENTER_CROP:
+            case ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_CENTER_CROP:
                 if (mVideoWidth * height > width * mVideoHeight) {
                     width = height * mVideoWidth / mVideoHeight;
                 } else {

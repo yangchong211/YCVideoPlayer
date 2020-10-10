@@ -121,11 +121,11 @@ public class ListVideoActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         if (v == mBtnScale169){
-            mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_16_9);
+            mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_16_9);
         } else if (v == mBtnScaleNormal){
-            mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_DEFAULT);
+            mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_DEFAULT);
         }else if (v == mBtnScale43){
-            mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_4_3);
+            mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_4_3);
         } else if (v == mBtnCrop){
 
         } else if (v == mBtnGif){

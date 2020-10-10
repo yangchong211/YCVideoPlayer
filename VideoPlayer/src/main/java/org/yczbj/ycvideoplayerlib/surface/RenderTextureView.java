@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.player.render;
+package org.yczbj.ycvideoplayerlib.surface;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,7 +15,7 @@ import com.yc.kernel.inter.AbstractPlayer;
 
 
 @SuppressLint("ViewConstructor")
-public class TextureRenderView extends TextureView implements IRenderView, TextureView.SurfaceTextureListener {
+public class RenderTextureView extends TextureView implements ISurfaceView, TextureView.SurfaceTextureListener {
 
     private MeasureHelper mMeasureHelper;
     private SurfaceTexture mSurfaceTexture;
@@ -24,7 +24,7 @@ public class TextureRenderView extends TextureView implements IRenderView, Textu
     private AbstractPlayer mMediaPlayer;
     private Surface mSurface;
 
-    public TextureRenderView(Context context) {
+    public RenderTextureView(Context context) {
         super(context);
         init(context);
     }

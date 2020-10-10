@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayer.R;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
@@ -127,11 +128,11 @@ public class ClarityActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (v == mBtnScale169){
-            mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_16_9);
+            mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_16_9);
         } else if (v == mBtnScaleNormal){
-            mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_DEFAULT);
+            mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_DEFAULT);
         }else if (v == mBtnScale43){
-            mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_4_3);
+            mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_4_3);
         } else if (v == mBtnCrop){
 
         } else if (v == mBtnGif){

@@ -176,4 +176,22 @@ public final class ConstantKeys {
         int NORMAL = 103;
     }
 
+    /**
+     * 播放视频缩放类型
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface PlayerScreenScaleType {
+        int SCREEN_SCALE_DEFAULT = 0;
+        int SCREEN_SCALE_16_9 = 1;
+        int SCREEN_SCALE_4_3 = 2;
+        int SCREEN_SCALE_MATCH_PARENT = 3;
+        int SCREEN_SCALE_ORIGINAL = 4;
+        int SCREEN_SCALE_CENTER_CROP = 5;
+    }
+
+    @IntDef({PlayerScreenScaleType.SCREEN_SCALE_DEFAULT,PlayerScreenScaleType.SCREEN_SCALE_16_9,
+            PlayerScreenScaleType.SCREEN_SCALE_4_3,PlayerScreenScaleType.SCREEN_SCALE_MATCH_PARENT,
+            PlayerScreenScaleType.SCREEN_SCALE_ORIGINAL,PlayerScreenScaleType.SCREEN_SCALE_CENTER_CROP})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ScreenScaleType{}
 }

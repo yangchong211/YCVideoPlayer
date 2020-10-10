@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.player.render;
+package org.yczbj.ycvideoplayerlib.surface;
 
 import android.graphics.Bitmap;
 import android.view.View;
@@ -16,7 +16,7 @@ import com.yc.kernel.inter.AbstractPlayer;
  *     revise:
  * </pre>
  */
-public interface IRenderView {
+public interface ISurfaceView {
 
     /**
      * 关联AbstractPlayer

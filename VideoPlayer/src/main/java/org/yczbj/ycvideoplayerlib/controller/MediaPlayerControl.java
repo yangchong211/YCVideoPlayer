@@ -2,6 +2,8 @@ package org.yczbj.ycvideoplayerlib.controller;
 
 import android.graphics.Bitmap;
 
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+
 public interface MediaPlayerControl {
 
     void start();
@@ -28,7 +30,7 @@ public interface MediaPlayerControl {
 
     boolean isMute();
 
-    void setScreenScaleType(int screenScaleType);
+    void setScreenScaleType(@ConstantKeys.ScreenScaleType int screenScaleType);
 
     void setSpeed(float speed);
 

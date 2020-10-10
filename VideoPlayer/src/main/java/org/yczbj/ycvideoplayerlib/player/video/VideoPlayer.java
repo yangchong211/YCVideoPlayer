@@ -29,8 +29,8 @@ import com.yc.kernel.factory.PlayerFactory;
 import org.yczbj.ycvideoplayerlib.player.manager.ProgressManager;
 import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
 import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
-import org.yczbj.ycvideoplayerlib.player.render.IRenderView;
-import org.yczbj.ycvideoplayerlib.player.render.RenderViewFactory;
+import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
+import org.yczbj.ycvideoplayerlib.surface.RenderViewFactory;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import com.yc.kernel.utils.VideoLogUtils;
 
@@ -71,15 +71,8 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
      */
     protected FrameLayout mPlayerContainer;
 
-    protected IRenderView mRenderView;
+    protected ISurfaceView mRenderView;
     protected RenderViewFactory mRenderViewFactory;
-
-    public static final int SCREEN_SCALE_DEFAULT = 0;
-    public static final int SCREEN_SCALE_16_9 = 1;
-    public static final int SCREEN_SCALE_4_3 = 2;
-    public static final int SCREEN_SCALE_MATCH_PARENT = 3;
-    public static final int SCREEN_SCALE_ORIGINAL = 4;
-    public static final int SCREEN_SCALE_CENTER_CROP = 5;
     protected int mCurrentScreenScaleType;
 
     protected int[] mVideoSize = {0, 0};
@@ -906,7 +899,7 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
      * 设置视频比例
      */
     @Override
-    public void setScreenScaleType(int screenScaleType) {
+    public void setScreenScaleType(@ConstantKeys.ScreenScaleType int screenScaleType) {
         mCurrentScreenScaleType = screenScaleType;
         if (mRenderView != null) {
             mRenderView.setScaleType(screenScaleType);

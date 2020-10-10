@@ -6,7 +6,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.yc.kernel.inter.AbstractPlayer;
-import org.yczbj.ycvideoplayerlib.player.render.IRenderView;
+
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
 import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 
 
@@ -14,11 +16,11 @@ import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
  * TikTok专用RenderView，横屏视频默认显示，竖屏视频居中裁剪
  * 使用代理模式实现
  */
-public class TikTokRenderView implements IRenderView {
+public class TikTokRenderView implements ISurfaceView {
 
-    private IRenderView mProxyRenderView;
+    private ISurfaceView mProxyRenderView;
 
-    TikTokRenderView(@NonNull IRenderView renderView) {
+    TikTokRenderView(@NonNull ISurfaceView renderView) {
         this.mProxyRenderView = renderView;
     }
 
@@ -33,10 +35,10 @@ public class TikTokRenderView implements IRenderView {
             mProxyRenderView.setVideoSize(videoWidth, videoHeight);
             if (videoHeight > videoWidth) {
                 //竖屏视频，使用居中裁剪
-                mProxyRenderView.setScaleType(VideoPlayer.SCREEN_SCALE_CENTER_CROP);
+                mProxyRenderView.setScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_CENTER_CROP);
             } else {
                 //横屏视频，使用默认模式
-                mProxyRenderView.setScaleType(VideoPlayer.SCREEN_SCALE_DEFAULT);
+                mProxyRenderView.setScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_DEFAULT);
             }
         }
     }

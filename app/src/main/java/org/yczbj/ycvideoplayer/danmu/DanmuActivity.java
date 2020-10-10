@@ -84,7 +84,7 @@ public class DanmuActivity extends BaseActivity implements View.OnClickListener 
         //设置控制器
         mVideoPlayer.setVideoController(controller);
         mVideoPlayer.setUrl(ConstantVideo.VideoPlayerList[0]);
-        mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_16_9);
+        mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_16_9);
         mVideoPlayer.start();
         mVideoPlayer.addOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
             @Override

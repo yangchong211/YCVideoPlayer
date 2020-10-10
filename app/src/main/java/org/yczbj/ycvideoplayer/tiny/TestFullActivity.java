@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import org.yczbj.ycvideoplayer.BaseActivity;
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
@@ -76,7 +77,7 @@ public class TestFullActivity extends BaseActivity implements View.OnClickListen
         //设置控制器
         mVideoPlayer.setVideoController(controller);
         mVideoPlayer.setUrl(ConstantVideo.VideoPlayerList[0]);
-        mVideoPlayer.setScreenScaleType(VideoPlayer.SCREEN_SCALE_16_9);
+        mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_16_9);
         mVideoPlayer.start();
     }
 

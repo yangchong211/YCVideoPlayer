@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.player.render;
+package org.yczbj.ycvideoplayerlib.surface;
 
 import android.content.Context;
 
@@ -9,7 +9,7 @@ public class TextureRenderViewFactory extends RenderViewFactory {
     }
 
     @Override
-    public IRenderView createRenderView(Context context) {
-        return new TextureRenderView(context);
+    public ISurfaceView createRenderView(Context context) {
+        return new RenderTextureView(context);
     }
 }
