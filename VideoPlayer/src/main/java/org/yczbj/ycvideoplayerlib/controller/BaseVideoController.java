@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.player.InterVideoPlayer;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.StatesCutoutUtils;
@@ -116,7 +117,7 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
      * 重要：此方法用于将{@link VideoPlayer} 和控制器绑定
      */
     @CallSuper
-    public void setMediaPlayer(MediaPlayerControl mediaPlayer) {
+    public void setMediaPlayer(InterVideoPlayer mediaPlayer) {
         mControlWrapper = new ControlWrapper(mediaPlayer, this);
         //绑定ControlComponent和Controller
         for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {

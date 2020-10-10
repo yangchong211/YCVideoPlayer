@@ -24,7 +24,6 @@ import android.widget.FrameLayout;
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.BaseVideoController;
-import org.yczbj.ycvideoplayerlib.controller.MediaPlayerControl;
 
 import com.yc.kernel.inter.AbstractPlayer;
 import com.yc.kernel.factory.PlayerFactory;
@@ -52,7 +51,7 @@ import java.util.Map;
  * </pre>
  */
 public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
-        implements MediaPlayerControl, AbstractPlayer.PlayerEventListener {
+        implements InterVideoPlayer, AbstractPlayer.PlayerEventListener {
 
     private Context mContext;
     /**

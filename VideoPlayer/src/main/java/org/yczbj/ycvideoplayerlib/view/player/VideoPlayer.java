@@ -31,8 +31,8 @@ import android.widget.FrameLayout;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.inter.player.InterVideoPlayer2;
 import org.yczbj.ycvideoplayerlib.view.controller.AbsVideoPlayerController;
-import org.yczbj.ycvideoplayerlib.inter.player.InterPropertyVideoPlayer;
 import org.yczbj.ycvideoplayerlib.inter.player.InterScreenVideoPlayer;
 import org.yczbj.ycvideoplayerlib.inter.player.InterStateVideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
@@ -56,7 +56,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  *             android:screenOrientation="portrait"
  * </pre>
  */
-public class VideoPlayer extends FrameLayout implements InterPropertyVideoPlayer,
+public class VideoPlayer extends FrameLayout implements InterVideoPlayer2,
         InterScreenVideoPlayer ,InterStateVideoPlayer {
 
     /**

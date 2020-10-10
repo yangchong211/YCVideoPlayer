@@ -24,7 +24,7 @@ package org.yczbj.ycvideoplayerlib.inter.player;
  *     revise: 播放器基础属性获取和设置属性接口
  * </pre>
  */
-public interface InterPropertyVideoPlayer {
+public interface InterVideoPlayer2 {
 
     /**
      * seek到制定的位置继续播放

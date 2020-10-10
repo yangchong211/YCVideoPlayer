@@ -6,138 +6,140 @@ import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 
+import org.yczbj.ycvideoplayerlib.player.InterVideoPlayer;
+
 /**
  * 此类的目的是为了在ControlComponent中既能调用VideoView的api又能调用BaseVideoController的api，
  * 并对部分api做了封装，方便使用
  */
-public class ControlWrapper implements MediaPlayerControl, InterVideoController {
+public class ControlWrapper implements InterVideoPlayer, InterVideoController {
     
-    private MediaPlayerControl mPlayerControl;
+    private InterVideoPlayer mVideoPlayer;
     private InterVideoController mController;
     
-    public ControlWrapper(@NonNull MediaPlayerControl playerControl, @NonNull InterVideoController controller) {
-        mPlayerControl = playerControl;
+    public ControlWrapper(@NonNull InterVideoPlayer videoPlayer, @NonNull InterVideoController controller) {
+        mVideoPlayer = videoPlayer;
         mController = controller;
     }
     
     @Override
     public void start() {
-        mPlayerControl.start();
+        mVideoPlayer.start();
     }
 
     @Override
     public void pause() {
-        mPlayerControl.pause();
+        mVideoPlayer.pause();
     }
 
     @Override
     public long getDuration() {
-        return mPlayerControl.getDuration();
+        return mVideoPlayer.getDuration();
     }
 
     @Override
     public long getCurrentPosition() {
-        return mPlayerControl.getCurrentPosition();
+        return mVideoPlayer.getCurrentPosition();
     }
 
     @Override
     public void seekTo(long pos) {
-        mPlayerControl.seekTo(pos);
+        mVideoPlayer.seekTo(pos);
     }
 
     @Override
     public boolean isPlaying() {
-        return mPlayerControl.isPlaying();
+        return mVideoPlayer.isPlaying();
     }
 
     @Override
     public int getBufferedPercentage() {
-        return mPlayerControl.getBufferedPercentage();
+        return mVideoPlayer.getBufferedPercentage();
     }
 
     @Override
     public void startFullScreen() {
-        mPlayerControl.startFullScreen();
+        mVideoPlayer.startFullScreen();
     }
 
     @Override
     public void stopFullScreen() {
-        mPlayerControl.stopFullScreen();
+        mVideoPlayer.stopFullScreen();
     }
 
     @Override
     public boolean isFullScreen() {
-        return mPlayerControl.isFullScreen();
+        return mVideoPlayer.isFullScreen();
     }
 
     @Override
     public void setMute(boolean isMute) {
-        mPlayerControl.setMute(isMute);
+        mVideoPlayer.setMute(isMute);
     }
 
     @Override
     public boolean isMute() {
-        return mPlayerControl.isMute();
+        return mVideoPlayer.isMute();
     }
 
     @Override
     public void setScreenScaleType(int screenScaleType) {
-        mPlayerControl.setScreenScaleType(screenScaleType);
+        mVideoPlayer.setScreenScaleType(screenScaleType);
     }
 
     @Override
     public void setSpeed(float speed) {
-        mPlayerControl.setSpeed(speed);
+        mVideoPlayer.setSpeed(speed);
     }
 
     @Override
     public float getSpeed() {
-        return mPlayerControl.getSpeed();
+        return mVideoPlayer.getSpeed();
     }
 
     @Override
     public long getTcpSpeed() {
-        return mPlayerControl.getTcpSpeed();
+        return mVideoPlayer.getTcpSpeed();
     }
 
     @Override
     public void replay(boolean resetPosition) {
-        mPlayerControl.replay(resetPosition);
+        mVideoPlayer.replay(resetPosition);
     }
 
     @Override
     public void setMirrorRotation(boolean enable) {
-        mPlayerControl.setMirrorRotation(enable);
+        mVideoPlayer.setMirrorRotation(enable);
     }
 
     @Override
     public Bitmap doScreenShot() {
-        return mPlayerControl.doScreenShot();
+        return mVideoPlayer.doScreenShot();
     }
 
     @Override
     public int[] getVideoSize() {
-        return mPlayerControl.getVideoSize();
+        return mVideoPlayer.getVideoSize();
     }
 
     @Override
     public void setRotation(float rotation) {
-        mPlayerControl.setRotation(rotation);
+        mVideoPlayer.setRotation(rotation);
     }
 
     @Override
     public void startTinyScreen() {
-        mPlayerControl.startTinyScreen();
+        mVideoPlayer.startTinyScreen();
     }
 
     @Override
     public void stopTinyScreen() {
-        mPlayerControl.stopTinyScreen();
+        mVideoPlayer.stopTinyScreen();
     }
 
     @Override
     public boolean isTinyScreen() {
-        return mPlayerControl.isTinyScreen();
+        return mVideoPlayer.isTinyScreen();
     }
 
     /**
