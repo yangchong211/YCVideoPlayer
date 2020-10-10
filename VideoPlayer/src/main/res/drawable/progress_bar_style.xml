@@ -5,6 +5,13 @@
             <solid android:color="@android:color/transparent" />
         </shape>
     </item>
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <solid android:color="@android:color/white"/>
+            </shape>
+        </clip>
+    </item>
     <item android:id="@android:id/progress">
         <clip>
             <shape>
