@@ -34,7 +34,7 @@ import org.yczbj.ycvideoplayerlib.view.controller.AbsVideoPlayerController;
 import org.yczbj.ycvideoplayerlib.inter.player.InterPropertyVideoPlayer;
 import org.yczbj.ycvideoplayerlib.inter.player.InterScreenVideoPlayer;
 import org.yczbj.ycvideoplayerlib.inter.player.InterStateVideoPlayer;
-import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 

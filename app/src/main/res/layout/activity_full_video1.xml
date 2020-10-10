@@ -8,7 +8,7 @@
     android:background="@color/whiteBg">
 
 
-    <org.yczbj.ycvideoplayerlib.kernel.view.VideoView
+    <org.yczbj.ycvideoplayerlib.player.video.VideoView
         android:id="@+id/video_player"
         android:layout_width="match_parent"
         android:layout_height="240dp"/>

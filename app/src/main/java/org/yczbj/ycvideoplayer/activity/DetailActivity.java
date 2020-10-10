@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewManager;
-import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
+import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
+import org.yczbj.ycvideoplayerlib.player.video.VideoView;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 

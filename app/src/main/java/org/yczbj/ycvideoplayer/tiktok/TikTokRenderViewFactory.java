@@ -2,9 +2,9 @@ package org.yczbj.ycvideoplayer.tiktok;
 
 import android.content.Context;
 
-import org.yczbj.ycvideoplayerlib.kernel.render.IRenderView;
-import org.yczbj.ycvideoplayerlib.kernel.render.RenderViewFactory;
-import org.yczbj.ycvideoplayerlib.kernel.render.TextureRenderView;
+import org.yczbj.ycvideoplayerlib.player.render.IRenderView;
+import org.yczbj.ycvideoplayerlib.player.render.RenderViewFactory;
+import org.yczbj.ycvideoplayerlib.player.render.TextureRenderView;
 
 
 public class TikTokRenderViewFactory extends RenderViewFactory {

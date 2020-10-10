@@ -20,12 +20,12 @@ import org.yczbj.ycvideoplayer.surface.TestSurfaceActivity;
 import org.yczbj.ycvideoplayer.tiny.TestFullActivity;
 import org.yczbj.ycvideoplayer.tiny.TinyScreenActivity;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.kernel.impl.exo.ExoMediaPlayerFactory;
-import org.yczbj.ycvideoplayerlib.kernel.impl.ijk.IjkPlayerFactory;
-import org.yczbj.ycvideoplayerlib.kernel.impl.media.AndroidMediaPlayerFactory;
-import org.yczbj.ycvideoplayerlib.kernel.player.PlayerFactory;
-import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewConfig;
-import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewManager;
+import org.yczbj.ycvideoplayerlib.player.impl.exo.ExoMediaPlayerFactory;
+import org.yczbj.ycvideoplayerlib.player.impl.ijk.IjkPlayerFactory;
+import org.yczbj.ycvideoplayerlib.player.impl.media.MediaPlayerFactory;
+import org.yczbj.ycvideoplayerlib.player.factory.PlayerFactory;
+import org.yczbj.ycvideoplayerlib.player.config.VideoViewConfig;
+import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
@@ -70,7 +70,7 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
             setTitle(getResources().getString(R.string.app_name) + " (ExoPlayer)");
         } else if (factory instanceof IjkPlayerFactory) {
             mTvTitle.setText("视频内核：" + " (IjkPlayer)");
-        } else if (factory instanceof AndroidMediaPlayerFactory) {
+        } else if (factory instanceof MediaPlayerFactory) {
             mTvTitle.setText("视频内核：" + " (MediaPlayer)");
         } else {
             mTvTitle.setText("视频内核：" + " (unknown)");
@@ -195,7 +195,7 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
                     mTvTitle.setText("视频内核：" + " (ExoPlayer)");
                     break;
                 case ConstantKeys.VideoPlayerType.TYPE_NATIVE:
-                    playerFactory = AndroidMediaPlayerFactory.create();
+                    playerFactory = MediaPlayerFactory.create();
                     mTvTitle.setText("视频内核：" + " (MediaPlayer)");
                     break;
                 case ConstantKeys.VideoPlayerType.TYPE_RTC:

@@ -11,7 +11,7 @@ import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.view.controller.VideoPlayerController;
 import org.yczbj.ycvideoplayerlib.inter.dev.OnPlayerStatesListener;
-import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 

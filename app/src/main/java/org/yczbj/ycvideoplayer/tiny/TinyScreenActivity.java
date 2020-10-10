@@ -15,7 +15,7 @@ import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.list.OnItemChildClickListener;
 import org.yczbj.ycvideoplayer.list.VideoRecyclerViewAdapter;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
-import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoView;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 

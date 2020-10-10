@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.view.controller.VideoPlayerController;
 import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener;
-import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;

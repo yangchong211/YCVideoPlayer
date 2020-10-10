@@ -2,9 +2,8 @@ package org.yczbj.ycvideoplayer.list;
 
 import org.yczbj.ycvideoplayer.BaseActivity;
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.TestListFragment;
 import org.yczbj.ycvideoplayer.tiktok.TikTokListFragment;
-import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
 
 
 /**

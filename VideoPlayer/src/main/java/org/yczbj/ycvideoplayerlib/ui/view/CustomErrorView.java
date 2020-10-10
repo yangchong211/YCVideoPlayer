@@ -28,9 +28,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.yczbj.ycvideoplayerlib.R;
-import org.yczbj.ycvideoplayerlib.kernel.controller.ControlWrapper;
-import org.yczbj.ycvideoplayerlib.kernel.controller.IControlComponent;
-import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
+import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
+import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
+import org.yczbj.ycvideoplayerlib.player.video.VideoView;
 
 
 /**

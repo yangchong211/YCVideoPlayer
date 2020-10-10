@@ -5,8 +5,8 @@ import android.view.animation.Animation;
 
 import androidx.annotation.NonNull;
 
-import org.yczbj.ycvideoplayerlib.kernel.controller.ControlWrapper;
-import org.yczbj.ycvideoplayerlib.kernel.controller.IControlComponent;
+import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
+import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 

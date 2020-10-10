@@ -14,7 +14,7 @@ import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.cache.PreloadManager;
 import org.yczbj.ycvideoplayer.cache.ProxyVideoCacheManager;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
-import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoView;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;

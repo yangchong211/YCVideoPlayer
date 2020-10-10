@@ -1,6 +1,6 @@
 package org.yczbj.ycvideoplayer;
 
-import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
 
 
 /**

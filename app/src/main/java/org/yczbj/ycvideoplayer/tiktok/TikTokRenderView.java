@@ -5,9 +5,9 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import org.yczbj.ycvideoplayerlib.kernel.inter.AbstractPlayer;
-import org.yczbj.ycvideoplayerlib.kernel.render.IRenderView;
-import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
+import org.yczbj.ycvideoplayerlib.player.inter.AbstractPlayer;
+import org.yczbj.ycvideoplayerlib.player.render.IRenderView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoView;
 
 
 /**

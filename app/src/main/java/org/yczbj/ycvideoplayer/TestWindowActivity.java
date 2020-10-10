@@ -11,7 +11,7 @@ import android.widget.Button;
 import androidx.annotation.RequiresApi;
 
 import org.yczbj.ycvideoplayer.tiny.TestFullActivity;
-import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.ui.window.FloatPlayerView;
 import org.yczbj.ycvideoplayerlib.ui.window.FloatWindow;

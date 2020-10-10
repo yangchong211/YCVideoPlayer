@@ -6,9 +6,9 @@ import android.content.res.Configuration;
 import android.util.Log;
 
 
-import org.yczbj.ycvideoplayerlib.kernel.impl.ijk.IjkPlayerFactory;
-import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewConfig;
-import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewManager;
+import org.yczbj.ycvideoplayerlib.player.impl.ijk.IjkPlayerFactory;
+import org.yczbj.ycvideoplayerlib.player.config.VideoViewConfig;
+import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 

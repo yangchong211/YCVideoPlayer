@@ -13,7 +13,7 @@ import com.yc.videocache.HttpProxyCacheServer;
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.cache.ProxyVideoCacheManager;
-import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoView;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 

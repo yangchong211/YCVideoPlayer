@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
+import org.yczbj.ycvideoplayerlib.player.video.VideoView;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 public class NormalActivity extends AppCompatActivity implements View.OnClickListener {
