@@ -6,8 +6,8 @@ import androidx.annotation.Nullable;
 import com.yc.kernel.factory.PlayerFactory;
 import com.yc.kernel.impl.media.MediaPlayerFactory;
 import org.yczbj.ycvideoplayerlib.player.manager.ProgressManager;
-import org.yczbj.ycvideoplayerlib.surface.RenderViewFactory;
-import org.yczbj.ycvideoplayerlib.surface.TextureRenderViewFactory;
+import org.yczbj.ycvideoplayerlib.surface.SurfaceViewFactory;
+import org.yczbj.ycvideoplayerlib.surface.TextureViewFactory;
 
 
 
@@ -40,7 +40,7 @@ public class PlayerConfig {
 
     public final int mScreenScaleType;
 
-    public final RenderViewFactory mRenderViewFactory;
+    public final SurfaceViewFactory mRenderViewFactory;
 
     public final boolean mAdaptCutout;
 
@@ -53,7 +53,7 @@ public class PlayerConfig {
         private ProgressManager mProgressManager;
         private PlayerFactory mPlayerFactory;
         private int mScreenScaleType;
-        private RenderViewFactory mRenderViewFactory;
+        private SurfaceViewFactory mRenderViewFactory;
         private boolean mAdaptCutout = true;
 
         /**
@@ -115,7 +115,7 @@ public class PlayerConfig {
         /**
          * 自定义RenderView
          */
-        public Builder setRenderViewFactory(RenderViewFactory renderViewFactory) {
+        public Builder setRenderViewFactory(SurfaceViewFactory renderViewFactory) {
             mRenderViewFactory = renderViewFactory;
             return this;
         }
@@ -151,7 +151,7 @@ public class PlayerConfig {
         }
         if (builder.mRenderViewFactory == null) {
             //默认使用TextureView渲染视频
-            mRenderViewFactory = TextureRenderViewFactory.create();
+            mRenderViewFactory = TextureViewFactory.create();
         } else {
             mRenderViewFactory = builder.mRenderViewFactory;
         }

@@ -30,7 +30,8 @@ import org.yczbj.ycvideoplayerlib.player.manager.ProgressManager;
 import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
 import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
-import org.yczbj.ycvideoplayerlib.surface.RenderViewFactory;
+import org.yczbj.ycvideoplayerlib.surface.SurfaceViewFactory;
+import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import com.yc.kernel.utils.VideoLogUtils;
 
@@ -52,6 +53,7 @@ import java.util.Map;
 public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
         implements MediaPlayerControl, AbstractPlayer.PlayerEventListener {
 
+    private Context mContext;
     /**
      * 播放器
      */
@@ -65,14 +67,13 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
      */
     @Nullable
     protected BaseVideoController mVideoController;
-
     /**
      * 真正承载播放器视图的容器
      */
     protected FrameLayout mPlayerContainer;
 
     protected ISurfaceView mRenderView;
-    protected RenderViewFactory mRenderViewFactory;
+    protected SurfaceViewFactory mRenderViewFactory;
     protected int mCurrentScreenScaleType;
 
     protected int[] mVideoSize = {0, 0};
@@ -87,19 +88,25 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
      * 当前正在播放视频的位置
      */
     protected long mCurrentPosition;
-
     /**
      * 当前播放器的状态
+     * 比如：错误，开始播放，暂停播放，缓存中等等状态
      */
     protected int mCurrentPlayState = ConstantKeys.CurrentState.STATE_IDLE;
-
+    /**
+     * 播放模式，普通模式，小窗口模式，正常模式等等
+     * 存在局限性：比如小窗口下的正在播放模式，那么mCurrentMode就是STATE_PLAYING，而不是MODE_TINY_WINDOW并存
+     **/
     protected int mCurrentPlayerState = ConstantKeys.PlayMode.MODE_NORMAL;
-
-    protected boolean mIsFullScreen;//是否处于全屏状态
-
-    protected boolean mIsTinyScreen;//是否处于小屏状态
+    /**
+     * 是否处于全屏状态
+     */
+    protected boolean mIsFullScreen;
+    /**
+     * 是否处于小屏状态
+     */
+    protected boolean mIsTinyScreen;
     protected int[] mTinyScreenSize = {0, 0};
-
     /**
      * 监听系统中音频焦点改变，见{@link #setEnableAudioFocus(boolean)}
      */
@@ -138,6 +145,12 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
 
     public VideoPlayer(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mContext = context;
+        init(attrs);
+    }
+
+    private void init(AttributeSet attrs) {
+        BaseToast.init(mContext.getApplicationContext());
 
         //读取全局配置
         PlayerConfig config = VideoViewManager.getConfig();
@@ -148,12 +161,13 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
         mRenderViewFactory = config.mRenderViewFactory;
 
         //读取xml中的配置，并综合全局配置
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.VideoPlayer);
+        TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.VideoPlayer);
         mEnableAudioFocus = a.getBoolean(R.styleable.VideoPlayer_enableAudioFocus, mEnableAudioFocus);
         mIsLooping = a.getBoolean(R.styleable.VideoPlayer_looping, false);
         mCurrentScreenScaleType = a.getInt(R.styleable.VideoPlayer_screenScaleType, mCurrentScreenScaleType);
         mPlayerBackgroundColor = a.getColor(R.styleable.VideoPlayer_playerBackgroundColor, Color.BLACK);
         a.recycle();
+
         initView();
     }
 
@@ -692,9 +706,9 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     }
 
     /**
-     * 自定义RenderView，继承{@link RenderViewFactory}实现自己的RenderView
+     * 自定义RenderView，继承{@link SurfaceViewFactory}实现自己的RenderView
      */
-    public void setRenderViewFactory(RenderViewFactory renderViewFactory) {
+    public void setRenderViewFactory(SurfaceViewFactory renderViewFactory) {
         if (renderViewFactory == null) {
             throw new IllegalArgumentException("RenderViewFactory can not be null!");
         }

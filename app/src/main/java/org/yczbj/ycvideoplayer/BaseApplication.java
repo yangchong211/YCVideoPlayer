@@ -60,8 +60,6 @@ public class BaseApplication extends Application {
         }else {
             VideoLogUtils.setIsLog(false);
         }
-
-        BaseToast.init(this);
         //播放器配置，注意：此为全局配置，按需开启
         VideoViewManager.setConfig(PlayerConfig.newBuilder()
                 .setLogEnabled(BuildConfig.DEBUG)//调试的时候请打开日志，方便排错

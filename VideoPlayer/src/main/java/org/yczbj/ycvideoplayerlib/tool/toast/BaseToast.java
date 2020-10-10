@@ -38,6 +38,8 @@ import android.widget.Toast;
 
 import org.yczbj.ycvideoplayerlib.R;
 
+import java.lang.ref.SoftReference;
+
 
 /**
  * <pre>
@@ -54,14 +56,17 @@ public final class BaseToast {
     @SuppressLint("StaticFieldLeak")
     private static Context mApp;
     private static int toastBackColor;
+    private static SoftReference<Toast> mToast;
 
     /**
      * 初始化吐司工具类
      * @param app 应用
      */
     public static void init(@NonNull final Context app) {
-        mApp = app;
-        toastBackColor = Color.BLACK;
+        if (mApp==null){
+            mApp = app;
+            toastBackColor = Color.BLACK;
+        }
     }
 
     public static void setToastBackColor(@ColorInt int color){
@@ -81,7 +86,7 @@ public final class BaseToast {
      */
     private static void checkContext(){
         if(mApp==null){
-            throw new NullPointerException("BaseToast context is not null，please first init");
+            throw new NullPointerException("ToastUtils context is not null，please first init");
         }
     }
 
@@ -96,21 +101,20 @@ public final class BaseToast {
     public static void showToast(String content) {
         checkMainThread();
         checkContext();
-        if (toast == null) {
-            //toast = Toast.makeText(mApp, content, Toast.LENGTH_SHORT);
-            toast = Toast.makeText(mApp, "", Toast.LENGTH_SHORT);
-            toast.setText(content);
-        } else {
-            toast.setText(content);
+        if (!checkNull(mToast)) {
+            mToast.get().cancel();
         }
+        Toast toast = Toast.makeText(mApp, "", Toast.LENGTH_SHORT);
+        toast.setText(content);
         toast.show();
+        mToast = new SoftReference<>(toast);
     }
 
 
     /**
      * 某些系统可能屏蔽通知
      * 1:检查 SystemUtils.isEnableNotification(BaseApplication.getApplication());
-     * 2:替代方案 BaseSnackBar.showSnack(topActivity, noticeStr);
+     * 2:替代方案 SnackBarUtils.showSnack(topActivity, noticeStr);
      * 圆角
      * 屏幕中间
      * @param notice                        内容
@@ -252,9 +256,11 @@ public final class BaseToast {
         }
 
         public Toast build() {
-            if(toast==null){
-                toast = new Toast(context);
+            if (!checkNull(mToast)) {
+                mToast.get().cancel();
             }
+            Toast toast = new Toast(context);
+            HookToast.hook(toast);
             if (isFill) {
                 toast.setGravity(gravity | Gravity.FILL_HORIZONTAL, 0, yOffset);
             } else {
@@ -263,8 +269,7 @@ public final class BaseToast {
             toast.setDuration(duration);
             toast.setMargin(0, 0);
             if(layout==0){
-                CardView rootView = (CardView) LayoutInflater.from(context)
-                        .inflate(R.layout.view_toast_custom, null);
+                CardView rootView = (CardView) LayoutInflater.from(context).inflate(R.layout.view_toast_custom, null);
                 TextView textView = rootView.findViewById(R.id.toastTextView);
                 TextView descTv = rootView.findViewById(R.id.desc);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -287,25 +292,35 @@ public final class BaseToast {
                 View view = LayoutInflater.from(context).inflate(layout, null);
                 toast.setView(view);
             }
+            mToast = new SoftReference<>(toast);
             return toast;
         }
     }
 
-    private static int dip2px(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
+    public static boolean checkNull(SoftReference softReference) {
+        if (softReference == null || softReference.get() == null) {
+            return true;
+        }
+        return false;
     }
 
 
-    private static void checkMainThread(){
+    public static void checkMainThread(){
         if (!isMainThread()){
             throw new IllegalStateException("请不要在子线程中做弹窗操作");
         }
     }
 
     private static boolean isMainThread(){
-        //是否是主线程
+        //判断是否是主线程
         return Looper.getMainLooper() == Looper.myLooper();
     }
+
+
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
 
 }
