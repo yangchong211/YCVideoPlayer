@@ -15,9 +15,9 @@ limitations under the License.
 */
 package org.yczbj.ycvideoplayerlib.inter.player;
 
-import androidx.annotation.DrawableRes;
-
 import android.widget.ImageView;
+
+import androidx.annotation.DrawableRes;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 
@@ -30,7 +30,7 @@ import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
  *     revise: 定义一些设置视图属性接口
  * </pre>
  */
-public interface InterVideoController {
+public interface InterVideoController2 {
 
 
     /**
@@ -44,7 +44,7 @@ public interface InterVideoController {
      * @param isVisibility1                 tv图标是否显示
      * @param isVisibility2                 audio图标是否显示
      */
-    void setTvAndAudioVisibility(boolean isVisibility1 , boolean isVisibility2);
+    void setTvAndAudioVisibility(boolean isVisibility1, boolean isVisibility2);
 
     /**
      * 视频底图

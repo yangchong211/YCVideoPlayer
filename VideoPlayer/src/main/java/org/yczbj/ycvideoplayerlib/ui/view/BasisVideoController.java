@@ -275,4 +275,9 @@ public class BasisVideoController extends GestureVideoController implements View
     public ImageView getThumb() {
         return thumb;
     }
+
+    @Override
+    public void destroy() {
+
+    }
 }

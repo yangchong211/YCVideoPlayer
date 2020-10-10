@@ -1,5 +1,6 @@
 package org.yczbj.ycvideoplayer.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -107,4 +108,11 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
 
         }
     }
+
+    private void test(){
+        //VideoPlayer相关
+        //设置视频播放器的背景色
+        mVideoPlayer.setPlayerBackgroundColor(Color.BLACK);
+    }
+
 }

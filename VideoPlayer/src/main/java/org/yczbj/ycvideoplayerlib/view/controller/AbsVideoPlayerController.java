@@ -20,8 +20,7 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-
-import org.yczbj.ycvideoplayerlib.inter.player.InterVideoController;
+import org.yczbj.ycvideoplayerlib.inter.player.InterVideoController2;
 import org.yczbj.ycvideoplayerlib.inter.player.VideoControllerView;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
@@ -40,7 +39,7 @@ import java.util.TimerTask;
  * </pre>
  */
 public abstract class AbsVideoPlayerController extends VideoControllerView implements
-        View.OnTouchListener, InterVideoController {
+        View.OnTouchListener, InterVideoController2 {
 
     private Context mContext;
     protected VideoPlayer mVideoPlayer;

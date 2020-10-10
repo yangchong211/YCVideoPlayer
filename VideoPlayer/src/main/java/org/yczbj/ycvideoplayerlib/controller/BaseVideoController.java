@@ -38,7 +38,7 @@ import java.util.Map;
  * 5.锁定状态改变: {@link #handleLockStateChanged(boolean)}
  * 6.设备方向监听: {@link #onOrientationChanged(int)}
  */
-public abstract class BaseVideoController extends FrameLayout implements IVideoController,
+public abstract class BaseVideoController extends FrameLayout implements InterVideoController,
         OrientationHelper.OnOrientationChangeListener {
 
     //播放器包装类，集合了MediaPlayerControl的api和IVideoController的api

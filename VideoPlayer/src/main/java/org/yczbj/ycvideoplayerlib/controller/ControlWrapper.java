@@ -10,12 +10,12 @@ import androidx.annotation.NonNull;
  * 此类的目的是为了在ControlComponent中既能调用VideoView的api又能调用BaseVideoController的api，
  * 并对部分api做了封装，方便使用
  */
-public class ControlWrapper implements MediaPlayerControl, IVideoController {
+public class ControlWrapper implements MediaPlayerControl, InterVideoController {
     
     private MediaPlayerControl mPlayerControl;
-    private IVideoController mController;
+    private InterVideoController mController;
     
-    public ControlWrapper(@NonNull MediaPlayerControl playerControl, @NonNull IVideoController controller) {
+    public ControlWrapper(@NonNull MediaPlayerControl playerControl, @NonNull InterVideoController controller) {
         mPlayerControl = playerControl;
         mController = controller;
     }
@@ -252,6 +252,11 @@ public class ControlWrapper implements MediaPlayerControl, IVideoController {
     @Override
     public int getCutoutHeight() {
         return mController.getCutoutHeight();
+    }
+
+    @Override
+    public void destroy() {
+        mController.destroy();
     }
 
     /**

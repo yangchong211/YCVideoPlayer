@@ -10,6 +10,9 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Parcelable;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
@@ -171,23 +174,41 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
         initView();
     }
 
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        VideoLogUtils.d("onAttachedToWindow");
+        //init();
+        //在构造函数初始化时addView
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        VideoLogUtils.d("onDetachedFromWindow");
+        if (mVideoController!=null){
+            mVideoController.destroy();
+        }
+        //onDetachedFromWindow方法是在Activity destroy的时候被调用的，也就是act对应的window被删除的时候，
+        //且每个view只会被调用一次，父view的调用在后，也不论view的visibility状态都会被调用，适合做最后的清理操作
+        //防止开发者没有在onDestroy中没有做销毁视频的优化
+        release();
+    }
+
+
     /**
      * 初始化播放器视图
      */
     protected void initView() {
         mPlayerContainer = new FrameLayout(getContext());
+        //设置背景颜色，目前设置为纯黑色
         mPlayerContainer.setBackgroundColor(mPlayerBackgroundColor);
         LayoutParams params = new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
+        //将布局添加到该视图中
         this.addView(mPlayerContainer, params);
-    }
-
-    /**
-     * 设置{@link #mPlayerContainer}的背景色
-     */
-    public void setPlayerBackgroundColor(int color) {
-        mPlayerContainer.setBackgroundColor(color);
     }
 
     /**
@@ -204,8 +225,9 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
         }
         if (isStarted) {
             mPlayerContainer.setKeepScreenOn(true);
-            if (mAudioFocusHelper != null)
+            if (mAudioFocusHelper != null){
                 mAudioFocusHelper.requestFocus();
+            }
         }
     }
 
@@ -239,7 +261,9 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
      */
     protected boolean showNetWarning() {
         //播放本地数据源时不检测网络
-        if (isLocalDataSource()) return false;
+        if (isLocalDataSource()){
+            return false;
+        }
         return mVideoController != null && mVideoController.showNetWarning();
     }
 
@@ -1077,4 +1101,22 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
         saveProgress();
         return super.onSaveInstanceState();
     }
+
+
+    /**-----------------------------暴露api方法--------------------------------------**/
+    /**-----------------------------暴露api方法--------------------------------------**/
+
+    /**
+     * 设置视频播放器的背景色
+     */
+    public void setPlayerBackgroundColor(@ColorInt int color) {
+        //使用注解限定福
+        if (color==0){
+            mPlayerContainer.setBackgroundColor(Color.BLACK);
+        } else {
+            mPlayerContainer.setBackgroundColor(color);
+        }
+    }
+
+
 }
