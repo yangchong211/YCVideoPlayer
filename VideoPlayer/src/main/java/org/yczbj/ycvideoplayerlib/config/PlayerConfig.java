@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 
 import com.yc.kernel.factory.PlayerFactory;
 import com.yc.kernel.impl.media.MediaPlayerFactory;
-import org.yczbj.ycvideoplayerlib.player.manager.ProgressManager;
+import org.yczbj.ycvideoplayerlib.player.ProgressManager;
 import org.yczbj.ycvideoplayerlib.surface.SurfaceViewFactory;
 import org.yczbj.ycvideoplayerlib.surface.TextureViewFactory;
 

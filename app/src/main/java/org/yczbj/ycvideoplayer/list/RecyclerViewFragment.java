@@ -17,8 +17,8 @@ import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
-import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
-import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 

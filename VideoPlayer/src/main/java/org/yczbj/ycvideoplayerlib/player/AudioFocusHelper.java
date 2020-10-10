@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.player.audio;
+package org.yczbj.ycvideoplayerlib.player;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -7,7 +7,7 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 
-import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 
 import java.lang.ref.WeakReference;
 
@@ -55,24 +55,30 @@ public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeLi
             return;
         }
         switch (focusChange) {
-            case AudioManager.AUDIOFOCUS_GAIN://获得焦点
-            case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT://暂时获得焦点
+            case AudioManager.AUDIOFOCUS_GAIN:
+                //获得焦点
+            case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT:
+                //暂时获得焦点
                 if (mStartRequested || mPausedForLoss) {
                     videoView.start();
                     mStartRequested = false;
                     mPausedForLoss = false;
                 }
-                if (!videoView.isMute())//恢复音量
+                if (!videoView.isMute())
+                    //恢复音量
                     videoView.setVolume(1.0f, 1.0f);
                 break;
-            case AudioManager.AUDIOFOCUS_LOSS://焦点丢失
-            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT://焦点暂时丢失
+            case AudioManager.AUDIOFOCUS_LOSS:
+                //焦点丢失
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                //焦点暂时丢失
                 if (videoView.isPlaying()) {
                     mPausedForLoss = true;
                     videoView.pause();
                 }
                 break;
-            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK://此时需降低音量
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                //此时需降低音量
                 if (videoView.isPlaying() && !videoView.isMute()) {
                     videoView.setVolume(0.1f, 0.1f);
                 }

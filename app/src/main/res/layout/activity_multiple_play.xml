@@ -4,13 +4,13 @@
     android:layout_height="match_parent">
 
 
-    <org.yczbj.ycvideoplayerlib.player.video.VideoPlayer
+    <org.yczbj.ycvideoplayerlib.player.VideoPlayer
         android:id="@+id/video_player1"
         android:layout_width="match_parent"
         android:layout_height="240dp"/>
 
 
-    <org.yczbj.ycvideoplayerlib.player.video.VideoPlayer
+    <org.yczbj.ycvideoplayerlib.player.VideoPlayer
         android:id="@+id/video_player2"
         android:layout_width="match_parent"
         android:layout_height="180dp"/>

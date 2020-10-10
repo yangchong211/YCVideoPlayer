@@ -32,7 +32,6 @@ import androidx.annotation.Nullable;
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.GestureVideoController;
-import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 

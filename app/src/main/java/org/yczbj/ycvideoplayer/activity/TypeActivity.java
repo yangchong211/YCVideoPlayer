@@ -25,7 +25,7 @@ import com.yc.kernel.impl.ijk.IjkPlayerFactory;
 import com.yc.kernel.impl.media.MediaPlayerFactory;
 import com.yc.kernel.factory.PlayerFactory;
 import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
-import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
+import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 

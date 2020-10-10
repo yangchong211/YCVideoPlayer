@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.player.manager;
+package org.yczbj.ycvideoplayerlib.player;
 
 /**
  * 播放进度管理器，继承此接口实现自己的进度管理器。

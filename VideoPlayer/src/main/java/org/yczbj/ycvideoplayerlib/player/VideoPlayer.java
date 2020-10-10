@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.player.video;
+package org.yczbj.ycvideoplayerlib.player;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -12,7 +12,6 @@ import android.os.Build;
 import android.os.Parcelable;
 
 import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
@@ -26,12 +25,11 @@ import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.BaseVideoController;
 import org.yczbj.ycvideoplayerlib.controller.MediaPlayerControl;
-import org.yczbj.ycvideoplayerlib.player.audio.AudioFocusHelper;
+
 import com.yc.kernel.inter.AbstractPlayer;
 import com.yc.kernel.factory.PlayerFactory;
-import org.yczbj.ycvideoplayerlib.player.manager.ProgressManager;
+
 import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
-import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
 import org.yczbj.ycvideoplayerlib.surface.SurfaceViewFactory;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;

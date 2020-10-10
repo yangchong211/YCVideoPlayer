@@ -21,7 +21,6 @@ import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
-import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
 import master.flame.danmaku.controller.DrawHandler;

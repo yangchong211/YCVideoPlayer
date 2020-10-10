@@ -9,7 +9,6 @@ import com.yc.kernel.inter.AbstractPlayer;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
-import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 
 
 /**

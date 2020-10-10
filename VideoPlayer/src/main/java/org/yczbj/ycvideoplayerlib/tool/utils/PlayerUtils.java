@@ -44,7 +44,7 @@ import androidx.appcompat.view.ContextThemeWrapper;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
-import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
+import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;

@@ -1,9 +1,9 @@
-package org.yczbj.ycvideoplayerlib.player.manager;
+package org.yczbj.ycvideoplayerlib.player;
 
 import android.app.Application;
 
 import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
-import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
+
 import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.LinkedHashMap;

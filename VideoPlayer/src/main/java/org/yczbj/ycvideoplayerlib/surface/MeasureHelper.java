@@ -3,7 +3,6 @@ package org.yczbj.ycvideoplayerlib.surface;
 import android.view.View;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.player.video.VideoPlayer;
 
 
 public class MeasureHelper {

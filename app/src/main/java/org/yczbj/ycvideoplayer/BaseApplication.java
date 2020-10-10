@@ -10,8 +10,7 @@ import com.yc.kernel.impl.ijk.IjkPlayerFactory;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
-import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
-import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
+import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 
 /**
  * ================================================
