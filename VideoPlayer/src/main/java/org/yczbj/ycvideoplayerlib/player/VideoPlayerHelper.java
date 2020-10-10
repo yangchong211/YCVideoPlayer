@@ -1,8 +1,16 @@
 package org.yczbj.ycvideoplayerlib.player;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.net.Uri;
+import android.os.Build;
+import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+
 import org.yczbj.ycvideoplayerlib.controller.BaseVideoController;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
@@ -79,6 +87,65 @@ public class VideoPlayerHelper {
         }
         return activity;
     }
+
+    /**
+     * 显示NavigationBar和StatusBar
+     * @param decorView                             decorView
+     * @param context                               上下文
+     * @param videoController                       controller
+     */
+    protected void showSysBar(ViewGroup decorView,Context context , BaseVideoController videoController) {
+        int uiOptions = decorView.getSystemUiVisibility();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            uiOptions &= ~View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            uiOptions &= ~View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        }
+        decorView.setSystemUiVisibility(uiOptions);
+        VideoPlayerHelper.instance().getActivity(context,videoController)
+                .getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    /**
+     * 隐藏NavigationBar和StatusBar
+     * @param decorView                             decorView
+     * @param context                               上下文
+     * @param videoController                       controller
+     */
+    protected void hideSysBar(ViewGroup decorView,Context context , BaseVideoController videoController) {
+        int uiOptions = decorView.getSystemUiVisibility();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            uiOptions |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            uiOptions |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        }
+        decorView.setSystemUiVisibility(uiOptions);
+        VideoPlayerHelper.instance().getActivity(context,videoController).getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+
+    /**
+     * 判断是否为本地数据源，包括 本地文件、Asset、raw
+     * @param url                                   url地址
+     * @param assetFileDescriptor                   assets文件
+     * @return                                      是否为本地数据源
+     */
+    protected boolean isLocalDataSource(String url, AssetFileDescriptor assetFileDescriptor) {
+        if (assetFileDescriptor != null) {
+            return true;
+        } else if (!TextUtils.isEmpty(url)) {
+            Uri uri = Uri.parse(url);
+            return ContentResolver.SCHEME_ANDROID_RESOURCE.equals(uri.getScheme())
+                    || ContentResolver.SCHEME_FILE.equals(uri.getScheme())
+                    || "rawresource".equals(uri.getScheme());
+        }
+        return false;
+    }
+
 
 
 }

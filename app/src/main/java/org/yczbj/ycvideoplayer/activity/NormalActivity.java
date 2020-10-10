@@ -14,6 +14,7 @@ import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayerBuilder;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 public class NormalActivity extends AppCompatActivity implements View.OnClickListener {
@@ -111,8 +112,14 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
 
     private void test(){
         //VideoPlayer相关
+        VideoPlayerBuilder.Builder builder = VideoPlayerBuilder.newBuilder();
+        VideoPlayerBuilder videoPlayerBuilder = new VideoPlayerBuilder(builder);
         //设置视频播放器的背景色
-        mVideoPlayer.setPlayerBackgroundColor(Color.BLACK);
+        builder.setPlayerBackgroundColor(Color.BLACK);
+        //设置小屏的宽高
+        int[] mTinyScreenSize = {0, 0};
+        builder.setTinyScreenSize(mTinyScreenSize);
+        mVideoPlayer.setVideoBuilder(videoPlayerBuilder);
     }
 
 }

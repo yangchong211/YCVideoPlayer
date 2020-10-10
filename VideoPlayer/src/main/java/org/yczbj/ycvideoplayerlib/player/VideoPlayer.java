@@ -201,6 +201,16 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
         release();
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
+        if (hasWindowFocus && mIsFullScreen) {
+            //重新获得焦点时保持全屏状态
+            ViewGroup decorView = VideoPlayerHelper.instance().getDecorView(mContext, mVideoController);
+            VideoPlayerHelper.instance().hideSysBar(decorView,mContext,mVideoController);
+        }
+    }
+
 
     /**
      * 初始化播放器视图
@@ -266,25 +276,10 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
      */
     protected boolean showNetWarning() {
         //播放本地数据源时不检测网络
-        if (isLocalDataSource()){
+        if (VideoPlayerHelper.instance().isLocalDataSource(mUrl,mAssetFileDescriptor)){
             return false;
         }
         return mVideoController != null && mVideoController.showNetWarning();
-    }
-
-    /**
-     * 判断是否为本地数据源，包括 本地文件、Asset、raw
-     */
-    protected boolean isLocalDataSource() {
-        if (mAssetFileDescriptor != null) {
-            return true;
-        } else if (!TextUtils.isEmpty(mUrl)) {
-            Uri uri = Uri.parse(mUrl);
-            return ContentResolver.SCHEME_ANDROID_RESOURCE.equals(uri.getScheme())
-                    || ContentResolver.SCHEME_FILE.equals(uri.getScheme())
-                    || "rawresource".equals(uri.getScheme());
-        }
-        return false;
     }
 
     /**
@@ -302,6 +297,7 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
      * 初始化之前的配置项
      */
     protected void setInitOptions() {
+
     }
 
     /**
@@ -681,13 +677,6 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     }
 
     /**
-     * 一开始播放就seek到预先设置好的位置
-     */
-    public void skipPositionWhenPlay(int position) {
-        this.mCurrentPosition = position;
-    }
-
-    /**
      * 设置音量 0.0f-1.0f 之间
      *
      * @param v1 左声道音量
@@ -758,35 +747,12 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
         }
         mIsFullScreen = true;
         //隐藏NavigationBar和StatusBar
-        hideSysBar(decorView);
+        VideoPlayerHelper.instance().hideSysBar(decorView,mContext,mVideoController);
         //从当前FrameLayout中移除播放器视图
         this.removeView(mPlayerContainer);
         //将播放器视图添加到DecorView中即实现了全屏
         decorView.addView(mPlayerContainer);
         setPlayerState(ConstantKeys.PlayMode.MODE_FULL_SCREEN);
-    }
-
-    private void hideSysBar(ViewGroup decorView) {
-        int uiOptions = decorView.getSystemUiVisibility();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            uiOptions |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            uiOptions |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        }
-        decorView.setSystemUiVisibility(uiOptions);
-        VideoPlayerHelper.instance().getActivity(mContext,mVideoController).getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
-        if (hasWindowFocus && mIsFullScreen) {
-            //重新获得焦点时保持全屏状态
-            hideSysBar(VideoPlayerHelper.instance().getDecorView(mContext,mVideoController));
-        }
     }
 
     /**
@@ -798,13 +764,12 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
             return;
         }
         ViewGroup decorView = VideoPlayerHelper.instance().getDecorView(mContext,mVideoController);
-        if (decorView == null)
+        if (decorView == null){
             return;
-
+        }
         mIsFullScreen = false;
-
         //显示NavigationBar和StatusBar
-        showSysBar(decorView);
+        VideoPlayerHelper.instance().showSysBar(decorView,mContext,mVideoController);
 
         //把播放器视图从DecorView中移除并添加到当前FrameLayout中即退出了全屏
         decorView.removeView(mPlayerContainer);
@@ -813,18 +778,6 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
         setPlayerState(ConstantKeys.PlayMode.MODE_NORMAL);
     }
 
-    private void showSysBar(ViewGroup decorView) {
-        int uiOptions = decorView.getSystemUiVisibility();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            uiOptions &= ~View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            uiOptions &= ~View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        }
-        decorView.setSystemUiVisibility(uiOptions);
-        VideoPlayerHelper.instance().getActivity(mContext,mVideoController)
-                .getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
 
 
     /**
@@ -959,15 +912,6 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     }
 
     /**
-     * 设置小屏的宽高
-     *
-     * @param tinyScreenSize 其中tinyScreenSize[0]是宽，tinyScreenSize[1]是高
-     */
-    public void setTinyScreenSize(int[] tinyScreenSize) {
-        this.mTinyScreenSize = tinyScreenSize;
-    }
-
-    /**
      * 向Controller设置播放状态，用于控制Controller的ui展示
      */
     protected void setPlayState(@ConstantKeys.CurrentStateType int playState) {
@@ -1071,17 +1015,23 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     /**-----------------------------暴露api方法--------------------------------------**/
     /**-----------------------------暴露api方法--------------------------------------**/
 
-    /**
-     * 设置视频播放器的背景色
-     */
-    public void setPlayerBackgroundColor(@ColorInt int color) {
-        //使用注解限定福
-        if (color==0){
-            mPlayerContainer.setBackgroundColor(Color.BLACK);
-        } else {
-            mPlayerContainer.setBackgroundColor(color);
+
+    public void setVideoBuilder(VideoPlayerBuilder videoBuilder){
+        if (mPlayerContainer==null){
+            return;
+        }
+        //设置视频播放器的背景色
+        mPlayerContainer.setBackgroundColor(videoBuilder.mColor);
+        //设置小屏的宽高
+        if (videoBuilder.mTinyScreenSize.length>0){
+            mTinyScreenSize = videoBuilder.mTinyScreenSize;
+        }
+        //一开始播放就seek到预先设置好的位置
+        if (videoBuilder.mCurrentPosition>0){
+            this.mCurrentPosition = videoBuilder.mCurrentPosition;
         }
     }
+
 
 
 }
