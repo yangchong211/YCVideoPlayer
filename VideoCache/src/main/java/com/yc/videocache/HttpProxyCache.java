@@ -14,8 +14,6 @@ import static com.yc.videocache.ProxyCacheUtils.DEFAULT_BUFFER_SIZE;
 
 /**
  * {@link ProxyCache} that read http url and writes data to {@link Socket}
- *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 class HttpProxyCache extends ProxyCache {
 

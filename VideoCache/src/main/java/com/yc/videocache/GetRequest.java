@@ -14,7 +14,6 @@ import static com.yc.videocache.Preconditions.checkNotNull;
 /**
  * Model for Http GET request.
  *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 class GetRequest {
 

@@ -46,7 +46,6 @@ import static com.yc.videocache.Preconditions.checkNotNull;
  * }
  * </code></pre>
  *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 public class HttpProxyCacheServer {
 

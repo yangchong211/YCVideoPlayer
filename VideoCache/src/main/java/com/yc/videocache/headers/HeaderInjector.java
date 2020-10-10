@@ -5,7 +5,6 @@ import java.util.Map;
 /**
  * Allows to add custom headers to server's requests.
  *
- * @author Lucas Nelaupe (https://github.com/lucas34).
  */
 public interface HeaderInjector {
 

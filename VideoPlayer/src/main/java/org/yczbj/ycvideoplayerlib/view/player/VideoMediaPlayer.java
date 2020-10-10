@@ -9,9 +9,10 @@ import android.view.Surface;
 
 import androidx.annotation.RequiresApi;
 
+import com.yc.kernel.utils.VideoLogUtils;
+
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnTextureListener;
-import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.ui.surface.VideoTextureView;

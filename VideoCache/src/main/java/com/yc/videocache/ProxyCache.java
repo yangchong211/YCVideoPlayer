@@ -10,8 +10,6 @@ import static com.yc.videocache.Preconditions.checkNotNull;
  * Can be used only for sources with persistent data (that doesn't change with time).
  * Method {@link #read(byte[], long, int)} will be blocked while fetching data from source.
  * Useful for streaming something with caching e.g. streaming video/audio etc.
- *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 class ProxyCache {
 

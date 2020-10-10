@@ -18,7 +18,6 @@ import static com.yc.videocache.Preconditions.checkNotNull;
 /**
  * Client for {@link HttpProxyCacheServer}
  *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 final class HttpProxyCacheServerClients {
 

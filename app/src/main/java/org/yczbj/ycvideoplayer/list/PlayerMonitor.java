@@ -5,10 +5,11 @@ import android.view.animation.Animation;
 
 import androidx.annotation.NonNull;
 
+import com.yc.kernel.utils.VideoLogUtils;
+
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
-import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 
 
 public class PlayerMonitor implements IControlComponent {

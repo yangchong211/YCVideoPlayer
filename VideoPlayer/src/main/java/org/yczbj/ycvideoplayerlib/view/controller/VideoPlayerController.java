@@ -35,6 +35,8 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntRange;
 
+import com.yc.kernel.utils.VideoLogUtils;
+
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.ui.dialog.ChangeClarityDialog;
 import org.yczbj.ycvideoplayerlib.R;
@@ -43,7 +45,6 @@ import org.yczbj.ycvideoplayerlib.inter.dev.OnPlayerTypeListener;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.receiver.BatterReceiver;
 import org.yczbj.ycvideoplayerlib.tool.receiver.NetChangedReceiver;
-import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnClarityChangedListener;

@@ -15,7 +15,6 @@ import java.util.List;
 /**
  * Utils for work with files.
  *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 class Files {
 

@@ -23,8 +23,6 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * Pings {@link HttpProxyCacheServer} to make sure it works.
- *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 
 class Pinger {

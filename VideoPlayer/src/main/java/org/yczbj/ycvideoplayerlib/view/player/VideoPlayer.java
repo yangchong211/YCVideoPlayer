@@ -28,8 +28,9 @@ import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.yc.kernel.utils.VideoLogUtils;
+
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 import org.yczbj.ycvideoplayerlib.view.controller.AbsVideoPlayerController;
 import org.yczbj.ycvideoplayerlib.inter.player.InterPropertyVideoPlayer;
 import org.yczbj.ycvideoplayerlib.inter.player.InterScreenVideoPlayer;

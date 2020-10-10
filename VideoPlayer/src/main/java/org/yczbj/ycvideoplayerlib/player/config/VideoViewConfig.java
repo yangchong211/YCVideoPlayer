@@ -3,8 +3,8 @@ package org.yczbj.ycvideoplayerlib.player.config;
 
 import androidx.annotation.Nullable;
 
-import org.yczbj.ycvideoplayerlib.player.factory.PlayerFactory;
-import org.yczbj.ycvideoplayerlib.player.impl.media.MediaPlayerFactory;
+import com.yc.kernel.factory.PlayerFactory;
+import com.yc.kernel.impl.media.MediaPlayerFactory;
 import org.yczbj.ycvideoplayerlib.player.manager.ProgressManager;
 import org.yczbj.ycvideoplayerlib.player.render.RenderViewFactory;
 import org.yczbj.ycvideoplayerlib.player.render.TextureRenderViewFactory;

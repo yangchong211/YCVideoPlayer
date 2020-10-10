@@ -2,8 +2,6 @@ package com.yc.videocache;
 
 /**
  * Indicates interruption error in work of {@link ProxyCache} fired by user.
- *
- * @author Alexey Danilov
  */
 public class InterruptedProxyCacheException extends ProxyCacheException {
 

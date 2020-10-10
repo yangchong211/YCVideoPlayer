@@ -14,11 +14,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.yc.kernel.utils.VideoLogUtils;
+
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
 import org.yczbj.ycvideoplayerlib.player.video.VideoView;
-import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 
 public class TikTokView extends FrameLayout implements IControlComponent {
 

@@ -2,16 +2,13 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    buildToolsVersion "29.0.0"
 
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -24,6 +21,23 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    //这两个是必须要加的，其它的可供选择
+    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
+    //其他库文件
+    //implementation 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.8'
+    //implementation 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'
+    //implementation 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.8'
+    //implementation 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.8.8'
+
+
+    //谷歌播放器
+    implementation  "com.google.android.exoplayer:exoplayer:2.11.3"
+    implementation "com.google.android.exoplayer:exoplayer-core:2.11.3"
+    implementation "com.google.android.exoplayer:exoplayer-dash:2.11.3"
+    implementation "com.google.android.exoplayer:exoplayer-hls:2.11.3"
+    implementation "com.google.android.exoplayer:exoplayer-smoothstreaming:2.11.3"
+    implementation "com.google.android.exoplayer:extension-rtmp:2.11.3"
 }
 
 
@@ -39,10 +53,10 @@ def gitUrl = 'https://github.com/yangchong211/YCVideoPlayer.git' // project git
 //发布到组织名称名字，必须填写
 group = "cn.yc"
 //发布到JCenter上的项目名字，必须填写
-def libName = "YCVideoCacheLib"
+def libName = "YCVideoKernelLib"
 // 版本号，下次更新是只需要更改版本号即可
-version = "1.0.1"
-/**  上面配置后上传至jcenter后的编译路径是这样的： compile 'cn.yc:YCVideoCacheLib:1.0.0'  **/
+version = "1.0.0"
+/**  上面配置后上传至jcenter后的编译路径是这样的： compile 'cn.yc:YCVideoKernelLib:1.0.0'  **/
 
 //生成源文件
 task sourcesJar(type: Jar) {
@@ -86,7 +100,7 @@ install {
             project {
                 packaging 'aar'
                 //项目描述，自由填写
-                name 'This is video cache lib'
+                name 'This is video kernel lib'
                 url siteUrl
                 licenses {
                     license {
@@ -123,7 +137,7 @@ bintray {
     pkg {
         repo = "maven"
         name = libName    //发布到JCenter上的项目名字，必须填写
-        desc = 'android video cache'    //项目描述
+        desc = 'android video kernel'    //项目描述
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]

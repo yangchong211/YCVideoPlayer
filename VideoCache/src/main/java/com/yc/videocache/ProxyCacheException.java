@@ -2,8 +2,6 @@ package com.yc.videocache;
 
 /**
  * Indicates any error in work of {@link ProxyCache}.
- *
- * @author Alexey Danilov
  */
 public class ProxyCacheException extends Exception {
 

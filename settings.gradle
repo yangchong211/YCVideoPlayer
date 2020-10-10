@@ -1,4 +1,3 @@
-include ':VideoBarrage'
-include ':VideoUi'
+include ':VideoKernel'
 include ':VideoCache'
 include ':app', ':VideoPlayer'

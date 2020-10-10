@@ -4,8 +4,6 @@ import com.yc.videocache.SourceInfo;
 
 /**
  * Storage for {@link SourceInfo}.
- *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 public interface SourceInfoStorage {
 

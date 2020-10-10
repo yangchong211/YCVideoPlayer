@@ -26,7 +26,6 @@ import static java.net.HttpURLConnection.HTTP_SEE_OTHER;
 /**
  * {@link Source} that uses http resource as source for {@link ProxyCache}.
  *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 public class HttpUrlSource implements Source {
 

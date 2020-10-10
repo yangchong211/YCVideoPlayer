@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.player.impl.exo;
+package com.yc.kernel.impl.exo;
 
 import android.app.Application;
 import android.content.Context;
@@ -15,7 +15,6 @@ import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.RenderersFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.analytics.AnalyticsCollector;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.MediaSourceEventListener;
@@ -27,9 +26,8 @@ import com.google.android.exoplayer2.util.Clock;
 import com.google.android.exoplayer2.util.EventLogger;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoListener;
-import org.yczbj.ycvideoplayerlib.player.inter.AbstractPlayer;
-import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
-import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
+import com.yc.kernel.inter.AbstractPlayer;
+import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.Map;
 
@@ -83,7 +81,7 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
         setOptions();
 
         //播放器日志
-        if (VideoViewManager.getConfig().mIsEnableLog && mTrackSelector instanceof MappingTrackSelector) {
+        if (VideoLogUtils.isIsLog() && mTrackSelector instanceof MappingTrackSelector) {
             mInternalPlayer.addAnalyticsListener(new EventLogger((MappingTrackSelector) mTrackSelector, "ExoPlayer"));
         }
         initListener();
@@ -119,7 +117,9 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
     public void setDataSource(String path, Map<String, String> headers) {
         // 设置dataSource
         if(path==null || path.length()==0){
-            BaseToast.showRoundRectToast("视频链接不能为空");
+            if (mPlayerEventListener!=null){
+                mPlayerEventListener.onInfo(MEDIA_INFO_URL_NULL, 0);
+            }
             return;
         }
         mMediaSource = mMediaSourceHelper.getMediaSource(path, headers);

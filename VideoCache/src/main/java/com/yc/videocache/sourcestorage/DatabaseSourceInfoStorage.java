@@ -14,7 +14,6 @@ import static com.yc.videocache.Preconditions.checkNotNull;
 /**
  * Database based {@link SourceInfoStorage}.
  *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 class DatabaseSourceInfoStorage extends SQLiteOpenHelper implements SourceInfoStorage {
 

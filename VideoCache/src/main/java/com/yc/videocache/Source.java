@@ -2,8 +2,6 @@ package com.yc.videocache;
 
 /**
  * Source for proxy.
- *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 public interface Source {
 

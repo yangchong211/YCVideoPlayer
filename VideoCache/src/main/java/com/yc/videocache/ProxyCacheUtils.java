@@ -17,8 +17,6 @@ import static com.yc.videocache.Preconditions.checkNotNull;
 
 /**
  * Just simple utils.
- *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 public class ProxyCacheUtils {
 

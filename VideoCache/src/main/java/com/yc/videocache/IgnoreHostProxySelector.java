@@ -15,7 +15,6 @@ import static com.yc.videocache.Preconditions.checkNotNull;
  * <p>
  * It is important to <a href="https://github.com/danikula/AndroidVideoCache/issues/28">ignore system proxy</a> for localhost connection.
  *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 class IgnoreHostProxySelector extends ProxySelector {
 

@@ -25,7 +25,7 @@ import org.yczbj.ycvideoplayerlib.view.controller.AbsVideoPlayerController;
 import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.utils.NetworkUtils;
-import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
+import com.yc.kernel.utils.VideoLogUtils;
 
 /**
  * <pre>

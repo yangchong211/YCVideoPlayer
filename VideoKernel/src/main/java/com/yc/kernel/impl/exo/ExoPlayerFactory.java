@@ -1,8 +1,8 @@
-package org.yczbj.ycvideoplayerlib.player.impl.exo;
+package com.yc.kernel.impl.exo;
 
 import android.content.Context;
 
-import org.yczbj.ycvideoplayerlib.player.factory.PlayerFactory;
+import com.yc.kernel.factory.PlayerFactory;
 
 /**
  * <pre>

@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+# 播放器视频内核
+-keep class com.yc.kernel.** { *; }
+-keepnames class com.yc.kernel.** { *; }

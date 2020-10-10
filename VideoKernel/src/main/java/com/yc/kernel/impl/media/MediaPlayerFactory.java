@@ -13,9 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package org.yczbj.ycvideoplayerlib.player.impl.ijk;
+package com.yc.kernel.impl.media;
+
 import android.content.Context;
-import org.yczbj.ycvideoplayerlib.player.factory.PlayerFactory;
+
+import com.yc.kernel.factory.PlayerFactory;
 
 
 /**
@@ -23,18 +25,18 @@ import org.yczbj.ycvideoplayerlib.player.factory.PlayerFactory;
  *     @author yangchong
  *     blog  : https://github.com/yangchong211
  *     time  : 2018/11/9
- *     desc  : ijk视频播放器Factory
+ *     desc  : 不推荐，系统的MediaPlayer兼容性较差，建议使用IjkPlayer或者ExoPlayer
  *     revise:
  * </pre>
  */
-public class IjkPlayerFactory extends PlayerFactory<IjkVideoPlayer> {
+public class MediaPlayerFactory extends PlayerFactory<AndroidMediaPlayer> {
 
-    public static IjkPlayerFactory create() {
-        return new IjkPlayerFactory();
+    public static MediaPlayerFactory create() {
+        return new MediaPlayerFactory();
     }
 
     @Override
-    public IjkVideoPlayer createPlayer(Context context) {
-        return new IjkVideoPlayer(context);
+    public AndroidMediaPlayer createPlayer(Context context) {
+        return new AndroidMediaPlayer(context);
     }
 }

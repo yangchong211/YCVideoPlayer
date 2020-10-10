@@ -5,9 +5,17 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import org.yczbj.ycvideoplayerlib.player.inter.AbstractPlayer;
+import com.yc.kernel.inter.AbstractPlayer;
 
-
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/11/9
+ *     desc  : 自定义渲染view接口
+ *     revise:
+ * </pre>
+ */
 public interface IRenderView {
 
     /**

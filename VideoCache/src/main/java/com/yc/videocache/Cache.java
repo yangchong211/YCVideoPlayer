@@ -3,7 +3,6 @@ package com.yc.videocache;
 /**
  * Cache for proxy.
  *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 public interface Cache {
 

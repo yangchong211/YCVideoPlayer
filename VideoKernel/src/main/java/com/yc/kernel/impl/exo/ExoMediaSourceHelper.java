@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.player.impl.exo;
+package com.yc.kernel.impl.exo;
 
 import android.app.Application;
 import android.content.Context;

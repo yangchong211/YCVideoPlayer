@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package org.yczbj.ycvideoplayerlib.tool.utils;
+package com.yc.kernel.utils;
 
 import android.util.Log;
 
@@ -37,6 +37,10 @@ public final class VideoLogUtils {
      */
     public static void setIsLog(boolean isLog) {
         VideoLogUtils.isLog = isLog;
+    }
+
+    public static boolean isIsLog() {
+        return isLog;
     }
 
     public static void d(String message) {

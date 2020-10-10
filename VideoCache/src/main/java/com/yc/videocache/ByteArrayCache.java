@@ -6,7 +6,6 @@ import java.util.Arrays;
 /**
  * Simple memory based {@link Cache} implementation.
  *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 public class ByteArrayCache implements Cache {
 

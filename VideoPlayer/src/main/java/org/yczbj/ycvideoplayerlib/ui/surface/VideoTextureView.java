@@ -24,8 +24,9 @@ import android.view.TextureView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.yc.kernel.utils.VideoLogUtils;
+
 import org.yczbj.ycvideoplayerlib.inter.listener.OnTextureListener;
-import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 
 
 /**

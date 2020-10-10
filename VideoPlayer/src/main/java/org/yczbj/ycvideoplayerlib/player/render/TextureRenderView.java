@@ -11,7 +11,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.yczbj.ycvideoplayerlib.player.inter.AbstractPlayer;
+import com.yc.kernel.inter.AbstractPlayer;
 
 
 @SuppressLint("ViewConstructor")

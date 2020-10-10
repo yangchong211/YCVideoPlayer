@@ -2,8 +2,6 @@ package com.yc.videocache;
 
 /**
  * Stores source's info.
- *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 public class SourceInfo {
 

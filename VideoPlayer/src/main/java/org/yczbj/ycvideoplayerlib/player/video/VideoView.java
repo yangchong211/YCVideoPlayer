@@ -24,32 +24,47 @@ import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.BaseVideoController;
 import org.yczbj.ycvideoplayerlib.controller.MediaPlayerControl;
 import org.yczbj.ycvideoplayerlib.player.audio.AudioFocusHelper;
-import org.yczbj.ycvideoplayerlib.player.inter.AbstractPlayer;
-import org.yczbj.ycvideoplayerlib.player.factory.PlayerFactory;
+import com.yc.kernel.inter.AbstractPlayer;
+import com.yc.kernel.factory.PlayerFactory;
 import org.yczbj.ycvideoplayerlib.player.manager.ProgressManager;
 import org.yczbj.ycvideoplayerlib.player.config.VideoViewConfig;
 import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.player.render.IRenderView;
 import org.yczbj.ycvideoplayerlib.player.render.RenderViewFactory;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
-import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
+import com.yc.kernel.utils.VideoLogUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 播放器
- */
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/11/9
+ *     desc  : 播放器具体实现类
+ *     revise:
+ * </pre>
+ */
 public class VideoView<P extends AbstractPlayer> extends FrameLayout
         implements MediaPlayerControl, AbstractPlayer.PlayerEventListener {
 
-    protected P mMediaPlayer;//播放器
-    protected PlayerFactory<P> mPlayerFactory;//工厂类，用于实例化播放核心
+    /**
+     * 播放器
+     */
+    protected P mMediaPlayer;
+    /**
+     * 实例化播放核心
+     */
+    protected PlayerFactory<P> mPlayerFactory;
+    /**
+     * 控制器
+     */
     @Nullable
-    protected BaseVideoController mVideoController;//控制器
+    protected BaseVideoController mVideoController;
 
     /**
      * 真正承载播放器视图的容器

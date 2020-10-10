@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package org.yczbj.ycvideoplayerlib.player.impl.media;
+package com.yc.kernel.impl.media;
 
 import android.app.Application;
 import android.content.Context;
@@ -24,9 +24,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-import org.yczbj.ycvideoplayerlib.player.inter.AbstractPlayer;
-import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
-
+import com.yc.kernel.inter.AbstractPlayer;
 import java.util.Map;
 
 
@@ -84,7 +82,9 @@ public class AndroidMediaPlayer extends AbstractPlayer {
     public void setDataSource(String path, Map<String, String> headers) {
         // 设置dataSource
         if(path==null || path.length()==0){
-            BaseToast.showRoundRectToast("视频链接不能为空");
+            if (mPlayerEventListener!=null){
+                mPlayerEventListener.onInfo(MEDIA_INFO_URL_NULL, 0);
+            }
             return;
         }
         try {

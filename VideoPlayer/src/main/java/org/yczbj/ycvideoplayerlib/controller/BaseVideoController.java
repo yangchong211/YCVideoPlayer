@@ -22,7 +22,7 @@ import org.yczbj.ycvideoplayerlib.player.video.VideoView;
 import org.yczbj.ycvideoplayerlib.tool.utils.StatesCutoutUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.NetworkUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
-import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
+import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;

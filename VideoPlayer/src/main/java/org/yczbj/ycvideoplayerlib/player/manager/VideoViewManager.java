@@ -4,7 +4,7 @@ import android.app.Application;
 
 import org.yczbj.ycvideoplayerlib.player.config.VideoViewConfig;
 import org.yczbj.ycvideoplayerlib.player.video.VideoView;
-import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
+import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.LinkedHashMap;
 

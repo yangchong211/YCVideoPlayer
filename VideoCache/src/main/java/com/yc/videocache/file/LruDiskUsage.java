@@ -12,7 +12,6 @@ import java.util.concurrent.Executors;
 /**
  * {@link DiskUsage} that uses LRU (Least Recently Used) strategy to trim cache.
  *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 public abstract class LruDiskUsage implements DiskUsage {
 

@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package org.yczbj.ycvideoplayerlib.player.impl.ijk;
+package com.yc.kernel.impl.ijk;
 
 import android.app.Application;
 import android.content.ContentResolver;
@@ -25,10 +25,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-import org.yczbj.ycvideoplayerlib.player.inter.AbstractPlayer;
-import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
-import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
-import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
+import com.yc.kernel.inter.AbstractPlayer;
+import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.Map;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
@@ -62,7 +60,7 @@ public class IjkVideoPlayer extends AbstractPlayer {
     public void initPlayer() {
         mMediaPlayer = new IjkMediaPlayer();
         //native日志
-        IjkMediaPlayer.native_setLogLevel(VideoViewManager.getConfig().mIsEnableLog
+        IjkMediaPlayer.native_setLogLevel(VideoLogUtils.isIsLog()
                 ? IjkMediaPlayer.IJK_LOG_INFO : IjkMediaPlayer.IJK_LOG_SILENT);
         setOptions();
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -154,7 +152,9 @@ public class IjkVideoPlayer extends AbstractPlayer {
     public void setDataSource(String path, Map<String, String> headers) {
         // 设置dataSource
         if(path==null || path.length()==0){
-            BaseToast.showRoundRectToast("视频链接不能为空");
+            if (mPlayerEventListener!=null){
+                mPlayerEventListener.onInfo(MEDIA_INFO_URL_NULL, 0);
+            }
             return;
         }
         try {

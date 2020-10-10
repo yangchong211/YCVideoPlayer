@@ -5,7 +5,6 @@ import android.content.Context;
 /**
  * Simple factory for {@link SourceInfoStorage}.
  *
- * @author Alexey Danilov (danikula@gmail.com).
  */
 public class SourceInfoStorageFactory {
 
