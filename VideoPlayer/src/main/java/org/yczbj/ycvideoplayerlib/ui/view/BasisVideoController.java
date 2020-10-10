@@ -98,28 +98,34 @@ public class BasisVideoController extends GestureVideoController implements View
         setEnableInNormal(true);
         //滑动调节亮度，音量，进度，默认开启
         setGestureEnabled(true);
+
         //添加与加载视图界面view，准备播放界面
         CustomPrepareView prepareView = new CustomPrepareView(mContext);
         thumb = prepareView.getThumb();
         prepareView.setClickStart();
         this.addControlComponent(prepareView);
+
         //添加自动完成播放界面view
         CustomCompleteView completeView = new CustomCompleteView(mContext);
         completeView.setVisibility(GONE);
         this.addControlComponent(completeView);
+
         //添加错误界面view
         CustomErrorView errorView = new CustomErrorView(mContext);
         errorView.setVisibility(GONE);
         this.addControlComponent(errorView);
+
         //添加标题栏
         CustomTitleView titleView = new CustomTitleView(mContext);
         titleView.setVisibility(VISIBLE);
         this.addControlComponent(titleView);
+
         //添加底部播放控制条
         CustomBottomView vodControlView = new CustomBottomView(mContext);
         //是否显示底部进度条。默认显示
         vodControlView.showBottomProgress(true);
         this.addControlComponent(vodControlView);
+
         //添加滑动控制视图
         CustomGestureView gestureControlView = new CustomGestureView(mContext);
         this.addControlComponent(gestureControlView);

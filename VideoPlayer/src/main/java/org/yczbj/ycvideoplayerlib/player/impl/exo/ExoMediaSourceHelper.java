@@ -1,5 +1,6 @@
 package org.yczbj.ycvideoplayerlib.player.impl.exo;
 
+import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -28,17 +29,29 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/11/9
+ *     desc  : exo视频播放器帮助类
+ *     revise:
+ * </pre>
+ */
 public final class ExoMediaSourceHelper {
 
     private static ExoMediaSourceHelper sInstance;
-
     private final String mUserAgent;
     private Context mAppContext;
     private HttpDataSource.Factory mHttpDataSourceFactory;
     private Cache mCache;
 
     private ExoMediaSourceHelper(Context context) {
-        mAppContext = context.getApplicationContext();
+        if (context instanceof Application){
+            mAppContext = context;
+        } else {
+            mAppContext = context.getApplicationContext();
+        }
         mUserAgent = Util.getUserAgent(mAppContext, mAppContext.getApplicationInfo().name);
     }
 
@@ -68,8 +81,8 @@ public final class ExoMediaSourceHelper {
     public MediaSource getMediaSource(String uri, Map<String, String> headers, boolean isCache) {
         Uri contentUri = Uri.parse(uri);
         if ("rtmp".equals(contentUri.getScheme())) {
-            return new ProgressiveMediaSource.Factory(new RtmpDataSourceFactory(null))
-                    .createMediaSource(contentUri);
+            RtmpDataSourceFactory rtmpDataSourceFactory = new RtmpDataSourceFactory(null);
+            return new ProgressiveMediaSource.Factory(rtmpDataSourceFactory).createMediaSource(contentUri);
         }
         int contentType = inferContentType(uri);
         DataSource.Factory factory;
@@ -119,8 +132,10 @@ public final class ExoMediaSourceHelper {
 
     private Cache newCache() {
         return new SimpleCache(
-                new File(mAppContext.getExternalCacheDir(), "exo-video-cache"),//缓存目录
-                new LeastRecentlyUsedCacheEvictor(512 * 1024 * 1024),//缓存大小，默认512M，使用LRU算法实现
+                //缓存目录
+                new File(mAppContext.getExternalCacheDir(), "exo-video-cache"),
+                //缓存大小，默认512M，使用LRU算法实现
+                new LeastRecentlyUsedCacheEvictor(512 * 1024 * 1024),
                 new ExoDatabaseProvider(mAppContext));
     }
 

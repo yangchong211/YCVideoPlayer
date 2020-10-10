@@ -20,7 +20,7 @@ import org.yczbj.ycvideoplayer.surface.TestSurfaceActivity;
 import org.yczbj.ycvideoplayer.tiny.TestFullActivity;
 import org.yczbj.ycvideoplayer.tiny.TinyScreenActivity;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.player.impl.exo.ExoMediaPlayerFactory;
+import org.yczbj.ycvideoplayerlib.player.impl.exo.ExoPlayerFactory;
 import org.yczbj.ycvideoplayerlib.player.impl.ijk.IjkPlayerFactory;
 import org.yczbj.ycvideoplayerlib.player.impl.media.MediaPlayerFactory;
 import org.yczbj.ycvideoplayerlib.player.factory.PlayerFactory;
@@ -65,7 +65,7 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
 
         //检测当前是用的哪个播放器
         Object factory = PlayerUtils.getCurrentPlayerFactory();
-        if (factory instanceof ExoMediaPlayerFactory) {
+        if (factory instanceof ExoPlayerFactory) {
             mTvTitle.setText("视频内核：" + " (ExoPlayer)");
             setTitle(getResources().getString(R.string.app_name) + " (ExoPlayer)");
         } else if (factory instanceof IjkPlayerFactory) {
@@ -191,7 +191,7 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
                     mTvTitle.setText("视频内核：" + " (IjkPlayer)");
                     break;
                 case ConstantKeys.VideoPlayerType.TYPE_EXO:
-                    playerFactory = ExoMediaPlayerFactory.create();
+                    playerFactory = ExoPlayerFactory.create();
                     mTvTitle.setText("视频内核：" + " (ExoPlayer)");
                     break;
                 case ConstantKeys.VideoPlayerType.TYPE_NATIVE:

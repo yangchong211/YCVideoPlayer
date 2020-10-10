@@ -1,5 +1,6 @@
 package org.yczbj.ycvideoplayerlib.player.impl.exo;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.RenderersFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.analytics.AnalyticsCollector;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.MediaSourceEventListener;
@@ -27,19 +29,26 @@ import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoListener;
 import org.yczbj.ycvideoplayerlib.player.inter.AbstractPlayer;
 import org.yczbj.ycvideoplayerlib.player.manager.VideoViewManager;
+import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 
 import java.util.Map;
 
-
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/11/9
+ *     desc  : exo视频播放器实现类
+ *     revise:
+ * </pre>
+ */
 public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Player.EventListener {
 
     protected Context mAppContext;
     protected SimpleExoPlayer mInternalPlayer;
     protected MediaSource mMediaSource;
     protected ExoMediaSourceHelper mMediaSourceHelper;
-
     private PlaybackParameters mSpeedPlaybackParameters;
-
     private int mLastReportedPlaybackState = Player.STATE_IDLE;
     private boolean mLastReportedPlayWhenReady = false;
     private boolean mIsPreparing;
@@ -50,7 +59,11 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
     private TrackSelector mTrackSelector;
 
     public ExoMediaPlayer(Context context) {
-        mAppContext = context.getApplicationContext();
+        if (context instanceof Application){
+            mAppContext = context;
+        } else {
+            mAppContext = context.getApplicationContext();
+        }
         mMediaSourceHelper = ExoMediaSourceHelper.getInstance(context);
     }
 
@@ -73,7 +86,13 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
         if (VideoViewManager.getConfig().mIsEnableLog && mTrackSelector instanceof MappingTrackSelector) {
             mInternalPlayer.addAnalyticsListener(new EventLogger((MappingTrackSelector) mTrackSelector, "ExoPlayer"));
         }
+        initListener();
+    }
 
+    /**
+     * exo视频播放器监听listener
+     */
+    private void initListener() {
         mInternalPlayer.addListener(this);
         mInternalPlayer.addVideoListener(this);
     }
@@ -90,8 +109,19 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
         mLoadControl = loadControl;
     }
 
+    /**
+     * 设置播放地址
+     *
+     * @param path    播放地址
+     * @param headers 播放地址请求头
+     */
     @Override
     public void setDataSource(String path, Map<String, String> headers) {
+        // 设置dataSource
+        if(path==null || path.length()==0){
+            BaseToast.showRoundRectToast("视频链接不能为空");
+            return;
+        }
         mMediaSource = mMediaSourceHelper.getMediaSource(path, headers);
     }
 
@@ -100,38 +130,56 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
         //no support
     }
 
-    @Override
-    public void start() {
-        if (mInternalPlayer == null)
-            return;
-        mInternalPlayer.setPlayWhenReady(true);
-    }
-
-    @Override
-    public void pause() {
-        if (mInternalPlayer == null)
-            return;
-        mInternalPlayer.setPlayWhenReady(false);
-    }
-
-    @Override
-    public void stop() {
-        if (mInternalPlayer == null)
-            return;
-        mInternalPlayer.stop();
-    }
-
+    /**
+     * 准备开始播放（异步）
+     */
     @Override
     public void prepareAsync() {
-        if (mInternalPlayer == null)
+        if (mInternalPlayer == null){
             return;
-        if (mMediaSource == null) return;
+        }
+        if (mMediaSource == null){
+            return;
+        }
         if (mSpeedPlaybackParameters != null) {
             mInternalPlayer.setPlaybackParameters(mSpeedPlaybackParameters);
         }
         mIsPreparing = true;
         mMediaSource.addEventListener(new Handler(), mMediaSourceEventListener);
         mInternalPlayer.prepare(mMediaSource);
+    }
+
+    /**
+     * 播放
+     */
+    @Override
+    public void start() {
+        if (mInternalPlayer == null){
+            return;
+        }
+        mInternalPlayer.setPlayWhenReady(true);
+    }
+
+    /**
+     * 暂停
+     */
+    @Override
+    public void pause() {
+        if (mInternalPlayer == null){
+            return;
+        }
+        mInternalPlayer.setPlayWhenReady(false);
+    }
+
+    /**
+     * 停止
+     */
+    @Override
+    public void stop() {
+        if (mInternalPlayer == null){
+            return;
+        }
+        mInternalPlayer.stop();
     }
 
     private MediaSourceEventListener mMediaSourceEventListener = new MediaSourceEventListener() {
@@ -143,6 +191,9 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
         }
     };
 
+    /**
+     * 重置播放器
+     */
     @Override
     public void reset() {
         if (mInternalPlayer != null) {
@@ -155,10 +206,14 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
         }
     }
 
+    /**
+     * 是否正在播放
+     */
     @Override
     public boolean isPlaying() {
-        if (mInternalPlayer == null)
+        if (mInternalPlayer == null){
             return false;
+        }
         int state = mInternalPlayer.getPlaybackState();
         switch (state) {
             case Player.STATE_BUFFERING:
@@ -171,13 +226,20 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
         }
     }
 
+    /**
+     * 调整进度
+     */
     @Override
     public void seekTo(long time) {
-        if (mInternalPlayer == null)
+        if (mInternalPlayer == null){
             return;
+        }
         mInternalPlayer.seekTo(time);
     }
 
+    /**
+     * 释放播放器
+     */
     @Override
     public void release() {
         if (mInternalPlayer != null) {
@@ -201,25 +263,39 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
         mSpeedPlaybackParameters = null;
     }
 
+    /**
+     * 获取当前播放的位置
+     */
     @Override
     public long getCurrentPosition() {
-        if (mInternalPlayer == null)
+        if (mInternalPlayer == null){
             return 0;
+        }
         return mInternalPlayer.getCurrentPosition();
     }
 
+    /**
+     * 获取视频总时长
+     */
     @Override
     public long getDuration() {
-        if (mInternalPlayer == null)
+        if (mInternalPlayer == null){
             return 0;
+        }
         return mInternalPlayer.getDuration();
     }
 
+    /**
+     * 获取缓冲百分比
+     */
     @Override
     public int getBufferedPercentage() {
         return mInternalPlayer == null ? 0 : mInternalPlayer.getBufferedPercentage();
     }
 
+    /**
+     * 设置渲染视频的View,主要用于SurfaceView
+     */
     @Override
     public void setSurface(Surface surface) {
         if (mInternalPlayer != null) {
@@ -229,22 +305,31 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
 
     @Override
     public void setDisplay(SurfaceHolder holder) {
-        if (holder == null)
+        if (holder == null){
             setSurface(null);
-        else
+        } else{
             setSurface(holder.getSurface());
+        }
     }
 
+    /**
+     * 设置音量
+     */
     @Override
     public void setVolume(float leftVolume, float rightVolume) {
-        if (mInternalPlayer != null)
+        if (mInternalPlayer != null){
             mInternalPlayer.setVolume((leftVolume + rightVolume) / 2);
+        }
     }
 
+    /**
+     * 设置是否循环播放
+     */
     @Override
     public void setLooping(boolean isLooping) {
-        if (mInternalPlayer != null)
+        if (mInternalPlayer != null){
             mInternalPlayer.setRepeatMode(isLooping ? Player.REPEAT_MODE_ALL : Player.REPEAT_MODE_OFF);
+        }
     }
 
     @Override
@@ -253,6 +338,9 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
         mInternalPlayer.setPlayWhenReady(true);
     }
 
+    /**
+     * 设置播放速度
+     */
     @Override
     public void setSpeed(float speed) {
         PlaybackParameters playbackParameters = new PlaybackParameters(speed);
@@ -262,6 +350,9 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
         }
     }
 
+    /**
+     * 获取播放速度
+     */
     @Override
     public float getSpeed() {
         if (mSpeedPlaybackParameters != null) {
@@ -270,6 +361,9 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
         return 1f;
     }
 
+    /**
+     * 获取当前缓冲的网速
+     */
     @Override
     public long getTcpSpeed() {
         // no support
@@ -278,8 +372,12 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        if (mPlayerEventListener == null) return;
-        if (mIsPreparing) return;
+        if (mPlayerEventListener == null){
+            return;
+        }
+        if (mIsPreparing){
+            return;
+        }
         if (mLastReportedPlayWhenReady != playWhenReady || mLastReportedPlaybackState != playbackState) {
             switch (playbackState) {
                 case Player.STATE_BUFFERING:
@@ -294,6 +392,8 @@ public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Pla
                     break;
                 case Player.STATE_ENDED:
                     mPlayerEventListener.onCompletion();
+                    break;
+                default:
                     break;
             }
             mLastReportedPlaybackState = playbackState;

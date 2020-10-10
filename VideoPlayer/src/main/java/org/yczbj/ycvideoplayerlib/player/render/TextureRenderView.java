@@ -26,9 +26,10 @@ public class TextureRenderView extends TextureView implements IRenderView, Textu
 
     public TextureRenderView(Context context) {
         super(context);
+        init(context);
     }
 
-    {
+    private void init(Context context){
         mMeasureHelper = new MeasureHelper();
         setSurfaceTextureListener(this);
     }
