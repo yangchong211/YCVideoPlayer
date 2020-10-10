@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@android:color/black">
-        <org.yczbj.ycvideoplayerlib.ui.PrepareView
+        <org.yczbj.ycvideoplayerlib.ui.view.CustomPrepareView
             android:id="@+id/prepare_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

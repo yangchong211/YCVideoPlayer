@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.yczbj.ycvideoplayer.R;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.kernel.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.kernel.controller.IControlComponent;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
@@ -95,11 +96,11 @@ public class AdControlView extends FrameLayout implements IControlComponent, Vie
     @Override
     public void onPlayerStateChanged(int playerState) {
         switch (playerState) {
-            case VideoView.PLAYER_NORMAL:
+            case ConstantKeys.PlayMode.MODE_NORMAL:
                 mBack.setVisibility(GONE);
                 mFullScreen.setSelected(false);
                 break;
-            case VideoView.PLAYER_FULL_SCREEN:
+            case ConstantKeys.PlayMode.MODE_FULL_SCREEN:
                 mBack.setVisibility(VISIBLE);
                 mFullScreen.setSelected(true);
                 break;
@@ -137,7 +138,7 @@ public class AdControlView extends FrameLayout implements IControlComponent, Vie
 
     private void doMute() {
         mControlWrapper.setMute(!mControlWrapper.isMute());
-        mVolume.setImageResource(mControlWrapper.isMute() ? R.drawable.dkplayer_ic_action_volume_up : R.drawable.dkplayer_ic_action_volume_off);
+        mVolume.setImageResource(mControlWrapper.isMute() ? R.drawable.ic_player_volume_up : R.drawable.ic_player_volume_off);
     }
 
     /**

@@ -16,9 +16,10 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
-import org.yczbj.ycvideoplayerlib.tool.utils.CutoutUtils;
+import org.yczbj.ycvideoplayerlib.tool.utils.StatesCutoutUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.NetworkUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
@@ -330,7 +331,7 @@ public abstract class BaseVideoController extends FrameLayout implements IVideoC
     private void checkCutout() {
         if (!mAdaptCutout) return;
         if (mActivity != null && mHasCutout == null) {
-            mHasCutout = CutoutUtils.allowDisplayToCutout(mActivity);
+            mHasCutout = StatesCutoutUtils.allowDisplayToCutout(mActivity);
             if (mHasCutout) {
                 //竖屏下的状态栏高度可认为是刘海的高度
                 mCutoutHeight = (int) PlayerUtils.getStatusBarHeightPortrait(mActivity);
@@ -500,7 +501,7 @@ public abstract class BaseVideoController extends FrameLayout implements IVideoC
     protected void onOrientationLandscape(Activity activity) {
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         if (mControlWrapper.isFullScreen()) {
-            handlePlayerStateChanged(VideoView.PLAYER_FULL_SCREEN);
+            handlePlayerStateChanged(ConstantKeys.PlayMode.MODE_FULL_SCREEN);
         } else {
             mControlWrapper.startFullScreen();
         }
@@ -512,7 +513,7 @@ public abstract class BaseVideoController extends FrameLayout implements IVideoC
     protected void onOrientationReverseLandscape(Activity activity) {
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
         if (mControlWrapper.isFullScreen()) {
-            handlePlayerStateChanged(VideoView.PLAYER_FULL_SCREEN);
+            handlePlayerStateChanged(ConstantKeys.PlayMode.MODE_FULL_SCREEN);
         } else {
             mControlWrapper.startFullScreen();
         }
@@ -574,8 +575,7 @@ public abstract class BaseVideoController extends FrameLayout implements IVideoC
     }
 
     private void handlePlayerStateChanged(int playerState) {
-        for (Map.Entry<IControlComponent, Boolean> next
-                : mControlComponents.entrySet()) {
+        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
             IControlComponent component = next.getKey();
             component.onPlayerStateChanged(playerState);
         }
@@ -588,24 +588,24 @@ public abstract class BaseVideoController extends FrameLayout implements IVideoC
     @CallSuper
     protected void onPlayerStateChanged(int playerState) {
         switch (playerState) {
-            case VideoView.PLAYER_NORMAL:
+            case ConstantKeys.PlayMode.MODE_NORMAL:
                 if (mEnableOrientation) {
                     mOrientationHelper.enable();
                 } else {
                     mOrientationHelper.disable();
                 }
                 if (hasCutout()) {
-                    CutoutUtils.adaptCutoutAboveAndroidP(getContext(), false);
+                    StatesCutoutUtils.adaptCutoutAboveAndroidP(getContext(), false);
                 }
                 break;
-            case VideoView.PLAYER_FULL_SCREEN:
+            case ConstantKeys.PlayMode.MODE_FULL_SCREEN:
                 //在全屏时强制监听设备方向
                 mOrientationHelper.enable();
                 if (hasCutout()) {
-                    CutoutUtils.adaptCutoutAboveAndroidP(getContext(), true);
+                    StatesCutoutUtils.adaptCutoutAboveAndroidP(getContext(), true);
                 }
                 break;
-            case VideoView.PLAYER_TINY_SCREEN:
+            case ConstantKeys.PlayMode.MODE_TINY_WINDOW:
                 mOrientationHelper.disable();
                 break;
         }

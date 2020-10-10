@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import org.yczbj.ycvideoplayerlib.R;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.kernel.controller.BaseVideoController;
 import org.yczbj.ycvideoplayerlib.kernel.controller.MediaPlayerControl;
 import org.yczbj.ycvideoplayerlib.kernel.helper.AudioFocusHelper;
@@ -74,7 +75,6 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
     protected String mUrl;//当前播放视频的地址
     protected Map<String, String> mHeaders;//当前视频地址的请求头
     protected AssetFileDescriptor mAssetFileDescriptor;//assets文件
-
     protected long mCurrentPosition;//当前正在播放视频的位置
 
     //播放器的各种状态
@@ -90,10 +90,7 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
     public static final int STATE_START_ABORT = 8;//开始播放中止
     protected int mCurrentPlayState = STATE_IDLE;//当前播放器的状态
 
-    public static final int PLAYER_NORMAL = 10;        // 普通播放器
-    public static final int PLAYER_FULL_SCREEN = 11;   // 全屏播放器
-    public static final int PLAYER_TINY_SCREEN = 12;   // 小屏播放器
-    protected int mCurrentPlayerState = PLAYER_NORMAL;
+    protected int mCurrentPlayerState = ConstantKeys.PlayMode.MODE_NORMAL;
 
     protected boolean mIsFullScreen;//是否处于全屏状态
 
@@ -298,7 +295,8 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
         if (prepareDataSource()) {
             mMediaPlayer.prepareAsync();
             setPlayState(STATE_PREPARING);
-            setPlayerState(isFullScreen() ? PLAYER_FULL_SCREEN : isTinyScreen() ? PLAYER_TINY_SCREEN : PLAYER_NORMAL);
+            setPlayerState(isFullScreen() ? ConstantKeys.PlayMode.MODE_FULL_SCREEN :
+                    isTinyScreen() ? ConstantKeys.PlayMode.MODE_TINY_WINDOW : ConstantKeys.PlayMode.MODE_NORMAL);
         }
     }
 
@@ -722,7 +720,7 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
         this.removeView(mPlayerContainer);
         //将播放器视图添加到DecorView中即实现了全屏
         decorView.addView(mPlayerContainer);
-        setPlayerState(PLAYER_FULL_SCREEN);
+        setPlayerState(ConstantKeys.PlayMode.MODE_FULL_SCREEN);
     }
 
     private void hideSysBar(ViewGroup decorView) {
@@ -769,7 +767,7 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
         decorView.removeView(mPlayerContainer);
         this.addView(mPlayerContainer);
 
-        setPlayerState(PLAYER_NORMAL);
+        setPlayerState(ConstantKeys.PlayMode.MODE_NORMAL);
     }
 
     private void showSysBar(ViewGroup decorView) {
@@ -846,7 +844,7 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
         params.gravity = Gravity.BOTTOM | Gravity.END;
         contentView.addView(mPlayerContainer, params);
         mIsTinyScreen = true;
-        setPlayerState(PLAYER_TINY_SCREEN);
+        setPlayerState(ConstantKeys.PlayMode.MODE_TINY_WINDOW);
     }
 
     /**
@@ -864,7 +862,7 @@ public class VideoView<P extends AbstractPlayer> extends FrameLayout
         this.addView(mPlayerContainer, params);
 
         mIsTinyScreen = false;
-        setPlayerState(PLAYER_NORMAL);
+        setPlayerState(ConstantKeys.PlayMode.MODE_NORMAL);
     }
 
     public boolean isTinyScreen() {

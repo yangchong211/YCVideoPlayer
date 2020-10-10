@@ -15,8 +15,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="5dp"
-            android:background="@drawable/dkplayer_shape_back_bg"
-            android:src="@drawable/dkplayer_ic_action_arrow_back" />
+            android:background="@drawable/shape_back_bg"
+            android:src="@drawable/ic_player_back" />
 
 
         <TextView
@@ -47,8 +47,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="5dp"
-            android:background="@drawable/dkplayer_shape_back_bg"
-            android:src="@drawable/dkplayer_selector_play_button" />
+            android:background="@drawable/shape_back_bg"
+            android:src="@drawable/selector_play_button" />
 
         <View
             android:layout_width="0dp"
@@ -76,8 +76,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="5dp"
-            android:background="@drawable/dkplayer_shape_back_bg"
-            android:src="@drawable/dkplayer_ic_action_volume_off" />
+            android:background="@drawable/shape_back_bg"
+            android:src="@drawable/ic_player_volume_off" />
 
         <ImageView
             android:id="@+id/fullscreen"
@@ -85,7 +85,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="5dp"
-            android:background="@drawable/dkplayer_shape_back_bg"
-            android:src="@drawable/dkplayer_selector_full_screen_button" />
+            android:background="@drawable/shape_back_bg"
+            android:src="@drawable/selector_full_screen_button" />
     </LinearLayout>
 </FrameLayout>

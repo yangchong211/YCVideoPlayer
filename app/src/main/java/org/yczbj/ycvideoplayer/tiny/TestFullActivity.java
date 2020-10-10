@@ -11,7 +11,7 @@ import org.yczbj.ycvideoplayer.BaseActivity;
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
-import org.yczbj.ycvideoplayerlib.ui.StandardVideoController;
+import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
@@ -70,7 +70,7 @@ public class TestFullActivity extends BaseActivity implements View.OnClickListen
         mBtnTiny1 = (Button) findViewById(R.id.btn_tiny_1);
         mBtnTiny2 = (Button) findViewById(R.id.btn_tiny_2);
 
-        StandardVideoController controller = new StandardVideoController(this);
+        BasisVideoController controller = new BasisVideoController(this);
         //设置视频背景图
         Glide.with(this).load(R.drawable.image_default).into(controller.getThumb());
         //设置控制器

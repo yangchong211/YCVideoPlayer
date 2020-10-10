@@ -15,9 +15,9 @@
         android:layout_width="@dimen/dkplayer_play_btn_size"
         android:layout_height="@dimen/dkplayer_play_btn_size"
         android:layout_gravity="center"
-        android:background="@drawable/dkplayer_shape_play_bg"
+        android:background="@drawable/shape_play_bg"
         android:padding="@dimen/dkplayer_default_spacing"
-        android:src="@drawable/dkplayer_selector_play_button"
+        android:src="@drawable/selector_play_button"
         android:visibility="gone"
         tools:visibility="visible"/>
 

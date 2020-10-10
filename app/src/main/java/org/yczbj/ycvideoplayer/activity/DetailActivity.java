@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Transition;
-import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
@@ -15,8 +14,8 @@ import androidx.core.view.ViewCompat;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
-import org.yczbj.ycvideoplayerlib.tool.utils.Utils;
-import org.yczbj.ycvideoplayerlib.ui.StandardVideoController;
+import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -44,11 +43,11 @@ public class DetailActivity extends AppCompatActivity {
         //拿到VideoView实例
         VideoView mVideoView = VideoViewManager.instance().get("seamless");
         //如果已经添加到某个父容器，就将其移除
-        Utils.removeViewFormParent(mVideoView);
+        PlayerUtils.removeViewFormParent(mVideoView);
         //把播放器添加到页面的容器中
         mPlayerContainer.addView(mVideoView);
         //设置新的控制器
-        StandardVideoController controller = new StandardVideoController(DetailActivity.this);
+        BasisVideoController controller = new BasisVideoController(DetailActivity.this);
         mVideoView.setVideoController(controller);
 
         Intent intent = getIntent();

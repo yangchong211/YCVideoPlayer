@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 
 import org.yczbj.ycvideoplayerlib.kernel.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.kernel.controller.IControlComponent;
-import org.yczbj.ycvideoplayerlib.tool.utils.Utils;
+import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 
 
@@ -32,12 +32,12 @@ public class PlayerMonitor implements IControlComponent {
 
     @Override
     public void onPlayStateChanged(int playState) {
-        VideoLogUtils.d("onPlayStateChanged: " + Utils.playState2str(playState));
+        VideoLogUtils.d("onPlayStateChanged: " + PlayerUtils.playState2str(playState));
     }
 
     @Override
     public void onPlayerStateChanged(int playerState) {
-        VideoLogUtils.d("onPlayerStateChanged: " + Utils.playerState2str(playerState));
+        VideoLogUtils.d("onPlayerStateChanged: " + PlayerUtils.playerState2str(playerState));
     }
 
     @Override

@@ -18,6 +18,7 @@ import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.kernel.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.kernel.controller.IControlComponent;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
+import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 
 public class TikTokView extends FrameLayout implements IControlComponent {
@@ -114,7 +115,7 @@ public class TikTokView extends FrameLayout implements IControlComponent {
                 break;
             case VideoView.STATE_ERROR:
                 VideoLogUtils.e("STATE_ERROR " + hashCode());
-                Toast.makeText(getContext(), R.string.dkplayer_error_message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.error_message, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

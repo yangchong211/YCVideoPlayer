@@ -18,8 +18,8 @@ import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
-import org.yczbj.ycvideoplayerlib.tool.utils.Utils;
-import org.yczbj.ycvideoplayerlib.ui.StandardVideoController;
+import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
     protected LinearLayoutManager mLinearLayoutManager;
 
     protected VideoView mVideoView;
-    protected StandardVideoController mController;
+    protected BasisVideoController mController;
 
     /**
      * 当前播放的位置
@@ -94,13 +94,13 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
             public void onPlayStateChanged(int playState) {
                 //监听VideoViewManager释放，重置状态
                 if (playState == VideoView.STATE_IDLE) {
-                    Utils.removeViewFormParent(mVideoView);
+                    PlayerUtils.removeViewFormParent(mVideoView);
                     mLastPos = mCurPos;
                     mCurPos = -1;
                 }
             }
         });
-        mController = new StandardVideoController(getActivity());
+        mController = new BasisVideoController(getActivity());
         mVideoView.setVideoController(mController);
     }
 
@@ -169,7 +169,7 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
         VideoRecyclerViewAdapter.VideoHolder viewHolder = (VideoRecyclerViewAdapter.VideoHolder) itemView.getTag();
         //把列表中预置的PrepareView添加到控制器中，注意isPrivate此处只能为true。
         mController.addControlComponent(viewHolder.mPrepareView, true);
-        Utils.removeViewFormParent(mVideoView);
+        PlayerUtils.removeViewFormParent(mVideoView);
         viewHolder.mPlayerContainer.addView(mVideoView, 0);
         //播放之前将VideoView添加到VideoViewManager以便在别的页面也能操作它
         VideoViewManager.instance().add(mVideoView, "list");

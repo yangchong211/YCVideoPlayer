@@ -22,13 +22,13 @@
     <!--改变声音-->
     <include layout="@layout/custom_video_player_change_volume"/>
     <!--播放完成，你也可以自定义-->
-    <include layout="@layout/custom_video_player_completed"/>
+    <include layout="@layout/custom_video_player_completed2"/>
     <!--播放错误-->
-    <include layout="@layout/custom_video_player_error"/>
+    <include layout="@layout/custom_video_player_error2"/>
     <!--顶部控制区-->
-    <include layout="@layout/custom_video_player_top"/>
+    <include layout="@layout/custom_video_player_top2"/>
     <!--底部控制区-->
-    <include layout="@layout/custom_video_player_bottom"/>
+    <include layout="@layout/custom_video_player_bottom2"/>
     <!--右下角初始显示的总时长-->
     <TextView
         android:id="@+id/length"
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/player_unlock_btn"/>
+            android:src="@drawable/selector_lock_button"/>
     </FrameLayout>
 
     <!--底部视频播放进度条-->

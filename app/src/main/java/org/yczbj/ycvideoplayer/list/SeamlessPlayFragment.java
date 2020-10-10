@@ -16,7 +16,7 @@ import org.yczbj.ycvideoplayer.activity.IntentKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
-import org.yczbj.ycvideoplayerlib.tool.utils.Utils;
+import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
 /**
  * 无缝播放
@@ -129,7 +129,7 @@ public class SeamlessPlayFragment extends RecyclerViewAutoPlayFragment {
         View itemView = mLinearLayoutManager.findViewByPosition(mCurPos);
         VideoRecyclerViewAdapter.VideoHolder viewHolder = (VideoRecyclerViewAdapter.VideoHolder) itemView.getTag();
         mVideoView = VideoViewManager.instance().get("seamless");
-        Utils.removeViewFormParent(mVideoView);
+        PlayerUtils.removeViewFormParent(mVideoView);
         viewHolder.mPlayerContainer.addView(mVideoView, 0);
 
         mController.addControlComponent(viewHolder.mPrepareView, true);

@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
@@ -88,9 +89,9 @@ public abstract class GestureVideoController extends BaseVideoController impleme
     @Override
     public void setPlayerState(int playerState) {
         super.setPlayerState(playerState);
-        if (playerState == VideoView.PLAYER_NORMAL) {
+        if (playerState == ConstantKeys.PlayMode.MODE_NORMAL) {
             mCanSlide = mEnableInNormal;
-        } else if (playerState == VideoView.PLAYER_FULL_SCREEN) {
+        } else if (playerState == ConstantKeys.PlayMode.MODE_FULL_SCREEN) {
             mCanSlide = true;
         }
     }

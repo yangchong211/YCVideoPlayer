@@ -27,7 +27,7 @@ import org.yczbj.ycvideoplayerlib.kernel.player.PlayerFactory;
 import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewConfig;
 import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
-import org.yczbj.ycvideoplayerlib.tool.utils.Utils;
+import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 
 import java.lang.reflect.Field;
 
@@ -64,7 +64,7 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
         initListener();
 
         //检测当前是用的哪个播放器
-        Object factory = Utils.getCurrentPlayerFactory();
+        Object factory = PlayerUtils.getCurrentPlayerFactory();
         if (factory instanceof ExoMediaPlayerFactory) {
             mTvTitle.setText("视频内核：" + " (ExoPlayer)");
             setTitle(getResources().getString(R.string.app_name) + " (ExoPlayer)");

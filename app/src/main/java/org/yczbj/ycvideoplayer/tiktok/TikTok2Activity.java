@@ -15,9 +15,9 @@ import org.yczbj.ycvideoplayer.cache.PreloadManager;
 import org.yczbj.ycvideoplayer.cache.ProxyVideoCacheManager;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
-import org.yczbj.ycvideoplayerlib.tool.utils.Utils;
+import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
-import org.yczbj.ycvideoplayerlib.ui.StandardVideoController;
+import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class TikTok2Activity extends AppCompatActivity {
     private VerticalViewPager mViewPager;
     private PreloadManager mPreloadManager;
     private VideoView mVideoPlayer;
-    private StandardVideoController mController;
+    private BasisVideoController mController;
 
     private static final String KEY_INDEX = "index";
 
@@ -124,7 +124,7 @@ public class TikTok2Activity extends AppCompatActivity {
         mVideoPlayer.setLooping(true);
         //以下只能二选一，看你的需求
         mVideoPlayer.setRenderViewFactory(TikTokRenderViewFactory.create());
-        mController = new StandardVideoController(this);
+        mController = new BasisVideoController(this);
         mVideoPlayer.setVideoController(mController);
     }
 
@@ -182,7 +182,7 @@ public class TikTok2Activity extends AppCompatActivity {
             Tiktok2Adapter.ViewHolder viewHolder = (Tiktok2Adapter.ViewHolder) itemView.getTag();
             if (viewHolder.mPosition == position) {
                 mVideoPlayer.release();
-                Utils.removeViewFormParent(mVideoPlayer);
+                PlayerUtils.removeViewFormParent(mVideoPlayer);
 
                 VideoInfoBean tiktokBean = mVideoList.get(position);
                 String playUrl = mPreloadManager.getPlayUrl(tiktokBean.getVideoUrl());

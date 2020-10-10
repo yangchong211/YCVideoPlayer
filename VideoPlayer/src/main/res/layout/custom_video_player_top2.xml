@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/top"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/player_mask_top"
+    android:gravity="center_vertical"
+    android:paddingTop="10dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp">
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/ic_player_back"
+        android:visibility="visible"/>
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:maxLength="10"
+        android:text="视频标题"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp" />
+
+    <!--竖屏的时候需要展现的布局，定制的-->
+    <LinearLayout
+        android:id="@+id/ll_top_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        android:layout_marginRight="8dp">
+        <ImageView
+            android:id="@+id/iv_audio"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_player_audio"/>
+        <ImageView
+            android:id="@+id/iv_download"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_player_dl"
+            android:layout_marginLeft="15dp" />
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_player_share"
+            android:layout_marginLeft="15dp" />
+        <ImageView
+            android:id="@+id/iv_menu"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_player_menu"
+            android:layout_marginLeft="15dp" />
+    </LinearLayout>
+
+
+    <!--横屏的时候展现的布局-->
+    <LinearLayout
+        android:id="@+id/ll_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_marginRight="8dp">
+
+        <ImageView
+            android:id="@+id/iv_hor_audio"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_player_audio"
+            android:layout_marginLeft="15dp" />
+
+        <ImageView
+            android:id="@+id/iv_hor_tv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_player_tv"
+            android:layout_marginLeft="15dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:layout_marginLeft="15dp">
+            <ImageView
+                android:id="@+id/battery"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/battery_100"/>
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

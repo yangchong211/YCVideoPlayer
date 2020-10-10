@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
-import org.yczbj.ycvideoplayerlib.ui.StandardVideoController;
+import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -78,7 +78,7 @@ public class ClarityActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initVideoPlayer() {
-        StandardVideoController controller = new StandardVideoController(this);
+        BasisVideoController controller = new BasisVideoController(this);
         DefinitionControlView mDefinitionControlView = new DefinitionControlView(this);
         mDefinitionControlView.setOnRateSwitchListener(new DefinitionControlView.OnRateSwitchListener() {
             @Override

@@ -9,6 +9,7 @@ import android.util.Log;
 import org.yczbj.ycvideoplayerlib.kernel.impl.ijk.IjkPlayerFactory;
 import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewConfig;
 import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewManager;
+import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 
 /**
@@ -59,7 +60,7 @@ public class BaseApplication extends Application {
             VideoLogUtils.setIsLog(false);
         }
 
-
+        BaseToast.init(this);
         //播放器配置，注意：此为全局配置，按需开启
         VideoViewManager.setConfig(VideoViewConfig.newBuilder()
                 .setLogEnabled(BuildConfig.DEBUG)//调试的时候请打开日志，方便排错

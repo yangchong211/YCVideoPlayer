@@ -929,7 +929,7 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
             if (mVideoPlayer.isNormal() || mVideoPlayer.isTinyWindow()) {
                 mFlLock.setVisibility(VISIBLE);
                 mIsLock = false;
-                mIvLock.setImageResource(R.drawable.player_unlock_btn);
+                mIvLock.setImageResource(R.drawable.ic_player_lock_close);
                 mVideoPlayer.enterFullScreen();
             } else if (mVideoPlayer.isFullScreen()) {
                 mFlLock.setVisibility(GONE);
@@ -1141,10 +1141,10 @@ public class VideoPlayerController extends AbsVideoPlayerController implements V
     private void setLock(boolean isLock){
         if(isLock){
             mIsLock = false;
-            mIvLock.setImageResource(R.drawable.player_unlock_btn);
+            mIvLock.setImageResource(R.drawable.ic_player_lock_open);
         }else {
             mIsLock = true;
-            mIvLock.setImageResource(R.drawable.player_locked_btn);
+            mIvLock.setImageResource(R.drawable.ic_player_lock_close);
         }
         /*
          * 设置锁屏时的布局

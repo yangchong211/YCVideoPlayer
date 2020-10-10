@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
-import org.yczbj.ycvideoplayerlib.ui.PrepareView;
+import org.yczbj.ycvideoplayerlib.ui.view.CustomPrepareView;
 
 import java.util.List;
 
@@ -69,14 +69,14 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<VideoRecycler
         public FrameLayout mPlayerContainer;
         public TextView mTitle;
         public ImageView mThumb;
-        public PrepareView mPrepareView;
+        public CustomPrepareView mPrepareView;
 
         VideoHolder(View itemView) {
             super(itemView);
             mPlayerContainer = itemView.findViewById(R.id.player_container);
             mTitle = itemView.findViewById(R.id.tv_title);
             mPrepareView = itemView.findViewById(R.id.prepare_view);
-            mThumb = mPrepareView.findViewById(R.id.thumb);
+            mThumb = mPrepareView.getThumb();
             if (mOnItemChildClickListener != null) {
                 mPlayerContainer.setOnClickListener(this);
             }

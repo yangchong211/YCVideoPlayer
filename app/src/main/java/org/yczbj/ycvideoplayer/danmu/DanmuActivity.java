@@ -1,9 +1,7 @@
 package org.yczbj.ycvideoplayer.danmu;
 
-import android.os.Build;
 import android.os.Handler;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -12,9 +10,8 @@ import com.bumptech.glide.Glide;
 import org.yczbj.ycvideoplayer.BaseActivity;
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.danmu.MyDanmakuView;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
-import org.yczbj.ycvideoplayerlib.ui.StandardVideoController;
+import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
@@ -78,7 +75,7 @@ public class DanmuActivity extends BaseActivity implements View.OnClickListener 
         StateAppBar.translucentStatusBar(this, true);
         initFindViewById();
 
-        StandardVideoController controller = new StandardVideoController(this);
+        BasisVideoController controller = new BasisVideoController(this);
         mMyDanmakuView = new MyDanmakuView(this);
         controller.addControlComponent(mMyDanmakuView);
         //设置视频背景图

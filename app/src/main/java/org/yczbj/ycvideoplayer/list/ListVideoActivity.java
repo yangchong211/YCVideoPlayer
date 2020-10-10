@@ -13,7 +13,7 @@ import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
-import org.yczbj.ycvideoplayerlib.ui.StandardVideoController;
+import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import java.util.List;
 
@@ -78,7 +78,7 @@ public class ListVideoActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initVideoPlayer() {
-        StandardVideoController controller = new StandardVideoController(this);
+        BasisVideoController controller = new BasisVideoController(this);
         //设置视频背景图
         Glide.with(this).load(R.drawable.image_default).into(controller.getThumb());
         //设置控制器

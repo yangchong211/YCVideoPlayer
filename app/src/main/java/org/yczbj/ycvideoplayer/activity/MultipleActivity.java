@@ -3,13 +3,12 @@ package org.yczbj.ycvideoplayer.activity;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
-import org.yczbj.ycvideoplayerlib.ui.StandardVideoController;
+import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +40,14 @@ public class MultipleActivity extends AppCompatActivity {
         player1.setUrl(VOD_URL_1);
         //必须设置
         player1.setEnableAudioFocus(false);
-        StandardVideoController controller1 = new StandardVideoController(this);
+        BasisVideoController controller1 = new BasisVideoController(this);
         player1.setVideoController(controller1);
         mVideoViews.add(player1);
 
         player2.setUrl(VOD_URL_2);
         //必须设置
         player2.setEnableAudioFocus(false);
-        StandardVideoController controller2 = new StandardVideoController(this);
+        BasisVideoController controller2 = new BasisVideoController(this);
         player2.setVideoController(controller2);
         mVideoViews.add(player2);
     }

@@ -16,8 +16,8 @@ import org.yczbj.ycvideoplayer.list.OnItemChildClickListener;
 import org.yczbj.ycvideoplayer.list.VideoRecyclerViewAdapter;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
-import org.yczbj.ycvideoplayerlib.tool.utils.Utils;
-import org.yczbj.ycvideoplayerlib.ui.StandardVideoController;
+import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class TinyScreenActivity extends AppCompatActivity implements OnItemChildClickListener {
 
-    private StandardVideoController mController;
+    private BasisVideoController mController;
     private List<VideoInfoBean> mVideos;
     private LinearLayoutManager mLinearLayoutManager;
     private VideoView mVideoPlayer;
@@ -86,7 +86,7 @@ public class TinyScreenActivity extends AppCompatActivity implements OnItemChild
                 }
             }
         });
-        mController = new StandardVideoController(this);
+        mController = new BasisVideoController(this);
         initRecyclerView();
     }
 
@@ -149,7 +149,7 @@ public class TinyScreenActivity extends AppCompatActivity implements OnItemChild
         VideoRecyclerViewAdapter.VideoHolder viewHolder = (VideoRecyclerViewAdapter.VideoHolder) itemView.getTag();
         //把列表中预置的PrepareView添加到控制器中，注意isPrivate此处只能为true。
         mController.addControlComponent(viewHolder.mPrepareView, true);
-        Utils.removeViewFormParent(mVideoPlayer);
+        PlayerUtils.removeViewFormParent(mVideoPlayer);
         viewHolder.mPlayerContainer.addView(mVideoPlayer, 0);
         mVideoPlayer.start();
         mCurPos = position;

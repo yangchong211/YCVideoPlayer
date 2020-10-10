@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_alignParentBottom="true"
+    android:background="@drawable/player_mask_bottom"
+    android:gravity="center_vertical"
+    android:paddingBottom="5dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp">
+
+    <ImageView
+        android:id="@+id/restart_or_pause"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_player_start"/>
+    <TextView
+        android:id="@+id/position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="00:00"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:layout_marginLeft="8dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" / "
+        android:textColor="@android:color/white"
+        android:textSize="12sp"/>
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="00:00"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:layout_marginRight="8dp" />
+    <SeekBar
+        android:id="@+id/seek"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@null"
+        android:max="100"
+        android:maxHeight="1.5dp"
+        android:minHeight="1.5dp"
+        android:progressDrawable="@drawable/seek_progress"
+        android:thumb="@drawable/seek_thumb"/>
+    <TextView
+        android:id="@+id/clarity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="1dp"
+        android:paddingEnd="4dp"
+        android:text="超清"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:paddingLeft="1dp"
+        android:paddingRight="4dp" />
+    <ImageView
+        android:id="@+id/full_screen"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_player_open"/>
+
+</LinearLayout>

@@ -30,8 +30,11 @@ import android.view.Display;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewParent;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,6 +42,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewConfig;
+import org.yczbj.ycvideoplayerlib.kernel.player.VideoViewManager;
+import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
+
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -493,5 +502,84 @@ public final class PlayerUtils {
         return sb.toString();
     }
 
+
+    /**
+     * 获取当前的播放核心
+     */
+    public static Object getCurrentPlayerFactory() {
+        VideoViewConfig config = VideoViewManager.getConfig();
+        Object playerFactory = null;
+        try {
+            Field mPlayerFactoryField = config.getClass().getDeclaredField("mPlayerFactory");
+            mPlayerFactoryField.setAccessible(true);
+            playerFactory = mPlayerFactoryField.get(config);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return playerFactory;
+    }
+
+    /**
+     * 将View从父控件中移除
+     */
+    public static void removeViewFormParent(View v) {
+        if (v == null) return;
+        ViewParent parent = v.getParent();
+        if (parent instanceof FrameLayout) {
+            ((FrameLayout) parent).removeView(v);
+        }
+    }
+
+    public static String playState2str(int state) {
+        String playStateString;
+        switch (state) {
+            default:
+            case VideoView.STATE_IDLE:
+                playStateString = "idle";
+                break;
+            case VideoView.STATE_PREPARING:
+                playStateString = "preparing";
+                break;
+            case VideoView.STATE_PREPARED:
+                playStateString = "prepared";
+                break;
+            case VideoView.STATE_PLAYING:
+                playStateString = "playing";
+                break;
+            case VideoView.STATE_PAUSED:
+                playStateString = "pause";
+                break;
+            case VideoView.STATE_BUFFERING:
+                playStateString = "buffering";
+                break;
+            case VideoView.STATE_BUFFERED:
+                playStateString = "buffered";
+                break;
+            case VideoView.STATE_PLAYBACK_COMPLETED:
+                playStateString = "playback completed";
+                break;
+            case VideoView.STATE_ERROR:
+                playStateString = "error";
+                break;
+        }
+        return String.format("playState: %s", playStateString);
+    }
+
+    public static String playerState2str(int state) {
+        String playerStateString;
+        switch (state) {
+            default:
+            case ConstantKeys.PlayMode.MODE_NORMAL:
+                playerStateString = "normal";
+                break;
+            case ConstantKeys.PlayMode.MODE_FULL_SCREEN:
+                playerStateString = "full screen";
+                break;
+            case ConstantKeys.PlayMode.MODE_TINY_WINDOW:
+                playerStateString = "tiny screen";
+                break;
+        }
+        return String.format("playerState: %s", playerStateString);
+    }
 
 }

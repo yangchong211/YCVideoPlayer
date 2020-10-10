@@ -18,9 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayerlib.kernel.view.VideoView;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
-import org.yczbj.ycvideoplayerlib.ui.VodControlView;
+import org.yczbj.ycvideoplayerlib.ui.view.CustomBottomView;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-public class DefinitionControlView extends VodControlView {
+public class DefinitionControlView extends CustomBottomView {
 
     private TextView mDefinition;
 
@@ -92,7 +92,7 @@ public class DefinitionControlView extends VodControlView {
     @Override
     public void onPlayerStateChanged(int playerState) {
         super.onPlayerStateChanged(playerState);
-        if (playerState == VideoView.PLAYER_FULL_SCREEN) {
+        if (playerState == ConstantKeys.PlayMode.MODE_FULL_SCREEN) {
             mDefinition.setVisibility(VISIBLE);
         } else {
             mDefinition.setVisibility(GONE);
