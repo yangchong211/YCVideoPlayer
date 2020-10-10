@@ -1,12 +1,13 @@
 package org.yczbj.ycvideoplayer;
 
+import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConstantVideo {
 
 
-    /**
-     * 由于之前，我把视频文章发到七牛云上，有众多限制。
-     * 所有有时导致视频无法播放，流量过高，一个星期竟然用了20多个G。
-     */
     public static String[] VideoPlayerList = {
             "http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4",
             "http://jzvd.nathen.cn/c494b340ff704015bb6682ffde3cd302/64929c369124497593205a4190d7d128-5287d2089db37e62345123a1be272f8b.mp4",
@@ -31,6 +32,68 @@ public class ConstantVideo {
             "依次输入命令上传代码",
             "逗比逗比把本地项目代码复制到拷贝的仓库",
     };
+
+
+    public static List<VideoInfoBean> getVideoList() {
+        List<VideoInfoBean> videoList = new ArrayList<>();
+        videoList.add(new VideoInfoBean("大家好，我是潇湘剑雨",
+                "https://cms-bucket.nosdn.127.net/eb411c2810f04ffa8aaafc42052b233820180418095416.jpeg",
+                "http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4"));
+
+        videoList.add(new VideoInfoBean("如果项目可以，可以给个star",
+                "https://cms-bucket.nosdn.127.net/cb37178af1584c1588f4a01e5ecf323120180418133127.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4"));
+
+        videoList.add(new VideoInfoBean("把本地项目代码复制到拷贝的仓库",
+                "https://cms-bucket.nosdn.127.net/eb411c2810f04ffa8aaafc42052b233820180418095416.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/19/mp4/190319222227698228.mp4"));
+
+        videoList.add(new VideoInfoBean("有bug，可以直接提出来，欢迎一起探讨",
+                "https://cms-bucket.nosdn.127.net/cb37178af1584c1588f4a01e5ecf323120180418133127.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/19/mp4/190319212559089721.mp4"));
+
+        videoList.add(new VideoInfoBean("逗比逗比把本地项目代码复制到拷贝的仓库",
+                "https://cms-bucket.nosdn.127.net/eb411c2810f04ffa8aaafc42052b233820180418095416.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4"));
+
+        videoList.add(new VideoInfoBean("预告片6",
+                "https://cms-bucket.nosdn.127.net/cb37178af1584c1588f4a01e5ecf323120180418133127.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/18/mp4/190318214226685784.mp4"));
+
+        videoList.add(new VideoInfoBean("预告片7",
+                "https://cms-bucket.nosdn.127.net/eb411c2810f04ffa8aaafc42052b233820180418095416.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/19/mp4/190319104618910544.mp4"));
+
+        videoList.add(new VideoInfoBean("大家好，我是潇湘剑雨逗比",
+                "https://cms-bucket.nosdn.127.net/cb37178af1584c1588f4a01e5ecf323120180418133127.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/19/mp4/190319125415785691.mp4"));
+
+        videoList.add(new VideoInfoBean("依次输入命令上传代码",
+                "https://cms-bucket.nosdn.127.net/eb411c2810f04ffa8aaafc42052b233820180418095416.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/17/mp4/190317150237409904.mp4"));
+
+        videoList.add(new VideoInfoBean("依次输入命令上传代码",
+                "https://cms-bucket.nosdn.127.net/cb37178af1584c1588f4a01e5ecf323120180418133127.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/14/mp4/190314223540373995.mp4"));
+
+        videoList.add(new VideoInfoBean("预告片11",
+                "https://cms-bucket.nosdn.127.net/eb411c2810f04ffa8aaafc42052b233820180418095416.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/14/mp4/190314102306987969.mp4"));
+
+        videoList.add(new VideoInfoBean("依次输入命令上传代码",
+                "https://cms-bucket.nosdn.127.net/cb37178af1584c1588f4a01e5ecf323120180418133127.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/13/mp4/190313094901111138.mp4"));
+
+        videoList.add(new VideoInfoBean("如果项目可以，可以给个star",
+                "https://cms-bucket.nosdn.127.net/eb411c2810f04ffa8aaafc42052b233820180418095416.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/12/mp4/190312143927981075.mp4"));
+
+        videoList.add(new VideoInfoBean("预告片14",
+                "https://cms-bucket.nosdn.127.net/cb37178af1584c1588f4a01e5ecf323120180418133127.jpeg",
+                "http://vfx.mtime.cn/Video/2019/03/12/mp4/190312083533415853.mp4"));
+
+        return videoList;
+    }
 
 
 }

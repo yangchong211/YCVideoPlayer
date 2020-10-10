@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.0'
     defaultConfig {
         applicationId "org.yczbj.ycvideoplayer"
         minSdkVersion 17
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 28
         versionName "2.8.0"
         // dex突破65535的限制
@@ -39,28 +39,26 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //官方库
-    implementation ('com.android.support:appcompat-v7:28.0.0'){
-        exclude module: 'support-v4'
-    }
-    implementation ('com.android.support:recyclerview-v7:28.0.0'){
-        exclude module: 'support-v4'
-    }
-    implementation ('com.android.support:design:28.0.0'){
-        exclude module: 'support-v4'
-    }
-    implementation ('com.android.support:cardview-v7:28.0.0'){
-        exclude module: 'support-v4'
-    }
-    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
 
     //其他库
     implementation 'com.github.bumptech.glide:glide:4.9.0'                 //谷歌图片加载库
     implementation 'jp.wasabeef:glide-transformations:2.0.1'
 
+    //弹幕
+    implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
+    implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
+
     //自己封装的库，都有对应的案例项目【欢迎star】：https://github.com/yangchong211
     implementation 'cn.yc:YCStateLib:1.1'                                  //状态管理
-    implementation 'cn.yc:YCVideoPlayerLib:2.6.6'                            //播放器
-//    implementation project(':YCVideoPlayerLib')
-    implementation 'cn.yc:YCStatusBarLib:1.4.0'                              //状态栏
+//    implementation 'cn.yc:YCVideoPlayerLib:2.6.6'                            //播放器
+    implementation project(':VideoCache')
+    implementation project(':VideoPlayer')
+    implementation 'cn.yc:YCStatusBarLib:1.4.0'
+ //状态栏
 }

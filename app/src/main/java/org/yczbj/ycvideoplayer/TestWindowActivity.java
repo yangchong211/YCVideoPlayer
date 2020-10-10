@@ -4,18 +4,20 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 
+import androidx.annotation.RequiresApi;
+
+import org.yczbj.ycvideoplayer.tiny.TestFullActivity;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.window.FloatPlayerView;
-import org.yczbj.ycvideoplayerlib.window.FloatWindow;
-import org.yczbj.ycvideoplayerlib.window.MoveType;
-import org.yczbj.ycvideoplayerlib.window.WindowScreen;
-import org.yczbj.ycvideoplayerlib.window.WindowUtil;
+import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.ui.window.FloatPlayerView;
+import org.yczbj.ycvideoplayerlib.ui.window.FloatWindow;
+import org.yczbj.ycvideoplayerlib.ui.window.MoveType;
+import org.yczbj.ycvideoplayerlib.ui.window.WindowScreen;
+import org.yczbj.ycvideoplayerlib.ui.window.WindowUtil;
 
 
 /**
@@ -108,8 +110,8 @@ public class TestWindowActivity extends BaseActivity implements View.OnClickList
                 //.setWidth(WindowScreen.WIDTH, 0.4f)
                 //.setHeight(WindowScreen.WIDTH, 0.3f)
                 //这个是设置位置
-                .setX(WindowScreen.width, 0.8f)
-                .setY(WindowScreen.height, 0.3f)
+                .setX(WindowScreen.WIDTH, 0.8f)
+                .setY(WindowScreen.HEIGHT, 0.3f)
                 .setMoveType(MoveType.slide)
                 .setFilter(false)
                 //.setFilter(true, WindowActivity.class, EmptyActivity.class)

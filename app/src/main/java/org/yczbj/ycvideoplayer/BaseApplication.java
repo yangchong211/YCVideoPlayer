@@ -3,11 +3,10 @@ package org.yczbj.ycvideoplayer;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.support.multidex.MultiDex;
 import android.util.Log;
 
 
-import org.yczbj.ycvideoplayerlib.utils.VideoLogUtil;
+import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 
 /**
  * ================================================
@@ -37,7 +36,6 @@ public class BaseApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
     }
 
 
@@ -53,9 +51,9 @@ public class BaseApplication extends Application {
         ScreenDensityUtils.register(this,375.0f,
                 ScreenDensityUtils.MATCH_BASE_WIDTH,ScreenDensityUtils.MATCH_UNIT_DP);
         if(BuildConfig.DEBUG){
-            VideoLogUtil.setIsLog(true);
+            VideoLogUtils.setIsLog(true);
         }else {
-            VideoLogUtil.setIsLog(false);
+            VideoLogUtils.setIsLog(false);
         }
     }
 

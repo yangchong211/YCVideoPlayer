@@ -1,1 +1,4 @@
-include ':app', ':YCVideoPlayerLib'
+include ':VideoBarrage'
+include ':VideoUi'
+include ':VideoCache'
+include ':app', ':VideoPlayer'

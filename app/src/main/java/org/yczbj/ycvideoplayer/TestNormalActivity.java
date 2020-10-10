@@ -2,14 +2,11 @@ package org.yczbj.ycvideoplayer;
 
 import android.widget.ImageView;
 
-import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.inter.listener.OnCompletedListener;
-import org.yczbj.ycvideoplayerlib.inter.listener.OnPlayOrPauseListener;
-import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoBackListener;
-import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.view.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
@@ -54,15 +51,15 @@ public class TestNormalActivity extends BaseActivity  {
 
     @Override
     public int getContentView() {
-        return R.layout.activity_test_video1;
+        return R.layout.activity_full_video2;
     }
 
     @Override
     public void initView() {
         StateAppBar.translucentStatusBar(this, true);
-        videoPlayer = findViewById(R.id.video_player);
+        videoPlayer = (VideoPlayer) findViewById(R.id.video_player);
         //必须关键的4步，播放视频最简单的方式
-        videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
+        videoPlayer.setPlayerType(ConstantKeys.VideoPlayerType.TYPE_IJK);
         videoPlayer.setUp(ConstantVideo.VideoPlayerList[0], null);
         controller = new VideoPlayerController(this);
         controller.setTopPadding(24.0f);
@@ -140,7 +137,7 @@ public class TestNormalActivity extends BaseActivity  {
 
         //设置播放器类型，必须设置
         //输入值：ConstantKeys.IjkPlayerType.TYPE_IJK   或者  ConstantKeys.IjkPlayerType.TYPE_NATIVE
-        videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
+        videoPlayer.setPlayerType(ConstantKeys.VideoPlayerType.TYPE_IJK);
         //设置播放位置
         videoPlayer.seekTo(100);
         //设置播放速度，不必须
@@ -184,27 +181,7 @@ public class TestNormalActivity extends BaseActivity  {
         boolean lock = controller.getLock();
         //设置横屏播放时，tv和audio图标是否显示
         controller.setTvAndAudioVisibility(true,true);
-        //让用户自己处理返回键事件的逻辑
-        controller.setOnVideoBackListener(new OnVideoBackListener() {
-            @Override
-            public void onBackClick() {
 
-            }
-        });
-        //播放暂停监听事件
-        controller.setOnPlayOrPauseListener(new OnPlayOrPauseListener() {
-            @Override
-            public void onPlayOrPauseClick(boolean isPlaying) {
-
-            }
-        });
-        //监听视频播放完成事件
-        controller.setOnCompletedListener(new OnCompletedListener() {
-            @Override
-            public void onCompleted() {
-
-            }
-        });
         //设置视频分享，下载，音视频转化点击事件
         controller.setOnVideoControlListener(new OnVideoControlListener() {
             @Override

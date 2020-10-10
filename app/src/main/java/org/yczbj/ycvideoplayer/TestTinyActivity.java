@@ -1,17 +1,16 @@
 package org.yczbj.ycvideoplayer;
 
-import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import org.yczbj.ycvideoplayerlib.constant.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.controller.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.inter.listener.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.view.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
@@ -52,7 +51,7 @@ public class TestTinyActivity extends BaseActivity implements View.OnClickListen
         mBtnTiny2 = (Button) findViewById(R.id.btn_tiny_2);
 
 
-        videoPlayer.setPlayerType(ConstantKeys.IjkPlayerType.TYPE_IJK);
+        videoPlayer.setPlayerType(ConstantKeys.VideoPlayerType.TYPE_IJK);
         videoPlayer.setUp(ConstantVideo.VideoPlayerList[0], null);
         VideoPlayerController controller = new VideoPlayerController(this);
         controller.setLoadingType(ConstantKeys.Loading.LOADING_RING);

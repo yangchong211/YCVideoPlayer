@@ -3,10 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GitHub-YCVideoPlayer.iml" filepath="$PROJECT_DIR$/GitHub-YCVideoPlayer.iml" group="YCVideoPlayer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoBarrage/VideoBarrage.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoBarrage/VideoBarrage.iml" group="YCVideoPlayer/VideoBarrage" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoCache/VideoCache.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoCache/VideoCache.iml" group="YCVideoPlayer/VideoCache" />
+      <module fileurl="file://$PROJECT_DIR$/VideoPlayer/VideoPlayer.iml" filepath="$PROJECT_DIR$/VideoPlayer/VideoPlayer.iml" group="YCVideoPlayer/VideoPlayer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoUi/VideoUi.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoUi/VideoUi.iml" group="YCVideoPlayer/VideoUi" />
       <module fileurl="file://$PROJECT_DIR$/.idea/YCVideoPlayer.iml" filepath="$PROJECT_DIR$/.idea/YCVideoPlayer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/YCVideoPlayerLib/YCVideoPlayer-YCVideoPlayerLib.iml" filepath="$PROJECT_DIR$/YCVideoPlayerLib/YCVideoPlayer-YCVideoPlayerLib.iml" group="YCVideoPlayer/YCVideoPlayerLib" />
       <module fileurl="file://$PROJECT_DIR$/app/YCVideoPlayer-app.iml" filepath="$PROJECT_DIR$/app/YCVideoPlayer-app.iml" group="YCVideoPlayer/app" />
-      <module fileurl="file://$PROJECT_DIR$/YCVideoPlayerLib/YCVideoPlayerLib.iml" filepath="$PROJECT_DIR$/YCVideoPlayerLib/YCVideoPlayerLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VideoPlayer/YCVideoPlayerLib.iml" filepath="$PROJECT_DIR$/VideoPlayer/YCVideoPlayerLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

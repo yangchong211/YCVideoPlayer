@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#252525</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#d9d9d9</color>
     <!--<color name="colorAccent">#ffffff</color>-->
 
     <!--主题颜色-->

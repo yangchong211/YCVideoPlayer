@@ -5,21 +5,25 @@
 - 04.视频视图层级示意图
 - 05.整体架构思路分析流程
 - 06.如何创建不同播放器
-- 07.
+- 07.如何友好处理状态控制器
 - 08.交互交给外部开发者
+- 09.关于优先级视图展示
+- 12.开发者使用方法介绍
 
 
 
 ### 01.视频常见的布局视图
 - 视频底图(用于显示初始化视频时的封面图)
 - 视频状态视图
-    - 加载loading动画视图
+    - 加载loading动画视图(有的会显示加载网速)
     - 加载或者播放网络异常视图
     - 加载或者播放视频失败视图
     - 视频播放完成视图(重播提示对话框，播放结束的时候会显示这个界面)
 - 改变亮度和声音
     - 改变声音视图(手势滑动的音量提示框)
     - 改变亮度视图(手势滑动的亮度提示框)
+- 改变视频快进和快退
+    - 左右滑动快进和快退视图(手势滑动的快进快退提示框)
 - 顶部控制区视图(包含返回健，title等)
 - 底部控制区视图(包含进度条，播放暂停，时间，切换全屏等)
 - 锁屏布局视图(全屏时展示，其他隐藏)
@@ -40,33 +44,98 @@
 - 展示更多视图(下载，分享，切换音频等)
 - 倍速播放界面(用于控制倍速)
 - 底部视频列表缩略图视图
-- 投屏视频
+- 投屏视频视图界面
+- 视频直播间刷礼物界面
+- 老师开课界面
+
 
 
 ### 03.需要达到的目的和效果
-- ExoPlayer、MediaPlayer，声网视频播放器内核可以自由切换
+- 基础封装视频播放器player，可以在ExoPlayer、MediaPlayer，声网视频播放器内核可以自由切换
 - 对于视图状态切换和后期维护拓展，避免功能和业务出现耦合
 - 针对视频播放，视频投屏，音频播放，播放回放
 
 
+
 ### 04.视频视图层级示意图
+#### 4.1 视频层级示意图
+
+
+#### 4.2 部分视图优先级考虑
+
 
 
 
 ### 05.整体架构思路分析流程
 #### 5.1 视频分层
--
+- BasisMediaPlayer基础播放器
+    - 可以切换ExoPlayer、MediaPlayer，声网视频播放器
+    - 可以使用适配器设计模式，定义接口，子类不同实现来创建不同对象
+    - 针对不同视频播放器，可能存在api不同，所以这个类需要统一封装
+- VideoPlayer播放器
+    - 创建BasisMediaPlayer对象，可以自由切换视频内核
+    - 视频播放监听事件
+    - 播放暂停，开始，播放进度，获取视频属性
+- StatesPlayerController
+    - 负责视频各个不同视图view的切换。尽量保证功能单一性
+    - 以及将VideoPlayer添加进来，以及各种自定义视图view添加进来
+    - 负责给外部开发者xml里
+- 各种自定义视图view
+    - 各种自定义视图View
+    - 比如，添加视频，图片等广告，主要是负责UI操作的逻辑处理
+    - 比如，基础视频播放器view
+        - top，bottom
+    - 比如播放状态视图view
+        - 播放loading，失败，异常，完成
+- VideoPlayerManager
+    - 视频播放器统一管理者
+
+
+### 5.2 类架构图
 
 
 ### 06.如何创建不同播放器
-- https://www.runoob.com/design-pattern/adapter-pattern.html
+- 目标要求
+    - 基础播放器封装了包含ExoPlayer、MediaPlayer，ijkPlayer，声网视频播放器等
+    - 可以自由切换初始化任何一种视频播放器，比如通过构造传入类型参数来创建不同的视频播放器
+    ```
+    //创建rtc播放器
+    BasisMediaPlayer trcMediaPlayer = new BasisMediaPlayer(ConstantKeys.IjkPlayerType.TYPE_RTC);
+    //创建谷歌播放器
+    BasisMediaPlayer exoMediaPlayer = new BasisMediaPlayer(ConstantKeys.IjkPlayerType.TYPE_EXO);
+    //创建ijk播放器
+    BasisMediaPlayer ijkMediaPlayer = new BasisMediaPlayer(ConstantKeys.IjkPlayerType.TYPE_IJK);
+    ```
+- 使用那种形式创建播放器
+    - 工厂模式
+    - 适配器模式
+        - https://www.runoob.com/design-pattern/adapter-pattern.html
+- 遇到问题
+    
 
+
+### 07.如何友好处理状态控制器
+- 状态控制器职责
+    - 负责所有视图(自定义view视频视图)的状态管理切换
+- n中状态视图显示规则
+    - 初始化是gone
 
 
 ### 08.交互交给外部开发者
 
 
 
+### 09.关于优先级视图展示
+
+
+
+### 12.开发者使用方法介绍
+
+
+
+
+### 参考文章
+- https://blog.csdn.net/weixin_38753262/article/details/105445850
 
 
 

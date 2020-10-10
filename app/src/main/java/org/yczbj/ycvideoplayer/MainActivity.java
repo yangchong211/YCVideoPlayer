@@ -3,13 +3,17 @@ package org.yczbj.ycvideoplayer;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import org.yczbj.ycvideoplayer.activity.TypeActivity;
+import org.yczbj.ycvideoplayer.list.TestListActivity;
+import org.yczbj.ycvideoplayer.surface.TestSurfaceActivity;
 import org.yczbj.ycvideoplayerlib.manager.VideoPlayerManager;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
@@ -48,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main1);
         StateAppBar.setStatusBarLightMode(this, Color.WHITE);
         initView();
     }
@@ -94,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTv15 = (TextView) findViewById(R.id.tv_15);
         mTv16 = (TextView) findViewById(R.id.tv_16);
 
+        mTv0.setOnClickListener(this);
         mTv1.setOnClickListener(this);
         mTv2.setOnClickListener(this);
         mTv3.setOnClickListener(this);
@@ -115,11 +120,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_0:
+                startActivity(TypeActivity.class);
+                break;
             case R.id.tv_1:
                 startActivity(TestNormalActivity.class);
                 break;
             case R.id.tv_2:
-                startActivity(TestFullActivity.class);
+                startActivity(TestFullActivity2.class);
                 break;
             case R.id.tv_3:
                 startActivity(TestTinyActivity.class);

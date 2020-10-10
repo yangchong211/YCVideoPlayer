@@ -5,8 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.yczbj.ycvideoplayer.list.TestListActivity;
+import org.yczbj.ycvideoplayer.tiny.TestFullActivity;
+import org.yczbj.ycvideoplayerlib.tool.utils.VideoLogUtils;
 
 import java.util.List;
 
@@ -49,28 +54,28 @@ public class SchemeActivity extends AppCompatActivity {
         if (uri != null) {
             // 完整的url信息
             String url = uri.toString();
-            LogUtils.i("SchemeActivity---" + "url: " + uri);
+            VideoLogUtils.i("SchemeActivity---" + "url: " + uri);
             // scheme部分
             String scheme = uri.getScheme();
-            LogUtils.i("SchemeActivity---" + "scheme: " + scheme);
+            VideoLogUtils.i("SchemeActivity---" + "scheme: " + scheme);
             // host部分
             String host = uri.getHost();
-            LogUtils.i("SchemeActivity---" + "host: " + host);
+            VideoLogUtils.i("SchemeActivity---" + "host: " + host);
             //port部分
             int port = uri.getPort();
-            LogUtils.i("SchemeActivity---" + "host: " + port);
+            VideoLogUtils.i("SchemeActivity---" + "host: " + port);
             // 访问路劲
             String path = uri.getPath();
-            LogUtils.i("SchemeActivity---" + "path: " + path);
+            VideoLogUtils.i("SchemeActivity---" + "path: " + path);
             // 获取参数
             List<String> pathSegments = uri.getPathSegments();
-            LogUtils.i("SchemeActivity---" + "pathSegments: " + pathSegments.size());
+            VideoLogUtils.i("SchemeActivity---" + "pathSegments: " + pathSegments.size());
             // Query部分
             String query = uri.getQuery();
-            LogUtils.i("SchemeActivity---" + "query: " + query);
+            VideoLogUtils.i("SchemeActivity---" + "query: " + query);
             //获取指定参数值
             String page = uri.getQueryParameter("page");
-            LogUtils.i("SchemeActivity---" + "page: " + page);
+            VideoLogUtils.i("SchemeActivity---" + "page: " + page);
 
             //获取指定参数值，该方法获取值一直是空
             //String level = uri.getQueryParameter("level");
