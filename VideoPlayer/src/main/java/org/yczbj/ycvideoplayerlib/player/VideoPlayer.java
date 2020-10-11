@@ -156,7 +156,6 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
 
     private void init(AttributeSet attrs) {
         BaseToast.init(mContext.getApplicationContext());
-
         //读取全局配置
         PlayerConfig config = VideoViewManager.getConfig();
         mEnableAudioFocus = config.mEnableAudioFocus;
@@ -164,18 +163,10 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         mPlayerFactory = config.mPlayerFactory;
         mCurrentScreenScaleType = config.mScreenScaleType;
         mRenderViewFactory = config.mRenderViewFactory;
-
         //读取xml中的配置，并综合全局配置
-        TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.VideoPlayer);
-        mEnableAudioFocus = a.getBoolean(R.styleable.VideoPlayer_enableAudioFocus, mEnableAudioFocus);
-        mIsLooping = a.getBoolean(R.styleable.VideoPlayer_looping, false);
-        mCurrentScreenScaleType = a.getInt(R.styleable.VideoPlayer_screenScaleType, mCurrentScreenScaleType);
-        mPlayerBackgroundColor = a.getColor(R.styleable.VideoPlayer_playerBackgroundColor, Color.BLACK);
-        a.recycle();
-
+        initAttrs(attrs);
         initView();
     }
-
 
     @Override
     protected void onAttachedToWindow() {
@@ -214,6 +205,15 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         //activity切到后台后可能被系统回收，故在此处进行进度保存
         saveProgress();
         return super.onSaveInstanceState();
+    }
+
+    private void initAttrs(AttributeSet attrs) {
+        TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.VideoPlayer);
+        mEnableAudioFocus = a.getBoolean(R.styleable.VideoPlayer_enableAudioFocus, mEnableAudioFocus);
+        mIsLooping = a.getBoolean(R.styleable.VideoPlayer_looping, false);
+        mCurrentScreenScaleType = a.getInt(R.styleable.VideoPlayer_screenScaleType, mCurrentScreenScaleType);
+        mPlayerBackgroundColor = a.getColor(R.styleable.VideoPlayer_playerBackgroundColor, Color.BLACK);
+        a.recycle();
     }
 
     /**

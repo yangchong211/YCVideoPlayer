@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <org.yczbj.ycvideoplayer.tiktok.TikTokView
+    <org.yczbj.ycvideoplayer.newPlayer.tiktok.TikTokView
         android:id="@+id/tiktok_View"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
