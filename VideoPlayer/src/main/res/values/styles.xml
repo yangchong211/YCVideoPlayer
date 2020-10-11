@@ -7,4 +7,11 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowBackground">@color/dialog_bg</item>
     </style>
+
+
+    <style name="FloatWindowAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_window_enter</item>
+        <item name="android:windowExitAnimation">@anim/anim_window_exit</item>
+    </style>
+
 </resources>

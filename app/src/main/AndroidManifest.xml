@@ -95,6 +95,9 @@
         <activity android:name=".oldPlayer.OldActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
+        <activity android:name="org.yczbj.ycvideoplayer.newPlayer.pip.PipActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

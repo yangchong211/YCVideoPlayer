@@ -16,6 +16,7 @@ import org.yczbj.ycvideoplayer.newPlayer.clarity.ClarityActivity;
 import org.yczbj.ycvideoplayer.newPlayer.danmu.DanmuActivity;
 import org.yczbj.ycvideoplayer.newPlayer.list.ListVideoActivity;
 import org.yczbj.ycvideoplayer.newPlayer.list.TestListActivity;
+import org.yczbj.ycvideoplayer.newPlayer.pip.PipActivity;
 import org.yczbj.ycvideoplayer.newPlayer.surface.TestSurfaceActivity;
 import org.yczbj.ycvideoplayer.newPlayer.tiny.TestFullActivity;
 import org.yczbj.ycvideoplayer.newPlayer.tiny.TinyScreenActivity;
@@ -44,6 +45,8 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTv31;
     private TextView mTv32;
     private TextView mTv33;
+    private TextView mTv41;
+    private TextView mTv42;
     private TextView mTv43;
     private TextView mTv61;
     private TextView mTv62;
@@ -89,6 +92,8 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
         mTv31 = findViewById(R.id.tv_3_1);
         mTv32 = findViewById(R.id.tv_3_2);
         mTv33 = findViewById(R.id.tv_3_3);
+        mTv41 = findViewById(R.id.tv_4_1);
+        mTv42 = findViewById(R.id.tv_4_2);
         mTv43 = findViewById(R.id.tv_4_3);
         mTv61 = findViewById(R.id.tv_6_1);
         mTv62 = findViewById(R.id.tv_6_2);
@@ -111,6 +116,8 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
         mTv31.setOnClickListener(this);
         mTv32.setOnClickListener(this);
         mTv33.setOnClickListener(this);
+        mTv41.setOnClickListener(this);
+        mTv42.setOnClickListener(this);
         mTv43.setOnClickListener(this);
         mTv61.setOnClickListener(this);
         mTv62.setOnClickListener(this);
@@ -146,7 +153,9 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this, TestFullActivity.class));
         } else if (v == mTv33){
             startActivity(new Intent(this,MultipleActivity.class));
-        } else if (v == mTv43){
+        } else if (v == mTv41){
+            startActivity(new Intent(this, PipActivity.class));
+        }  else if (v == mTv43){
             startActivity(new Intent(this, TinyScreenActivity.class));
         } else if (v == mTv61){
             Intent intent = new Intent(this, TestListActivity.class);
