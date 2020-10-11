@@ -69,7 +69,7 @@ public class IjkVideoPlayer extends AbstractPlayer {
 
     @Override
     public void setOptions() {
-        int player = IjkMediaPlayer.OPT_CATEGORY_PLAYER;
+        /*int player = IjkMediaPlayer.OPT_CATEGORY_PLAYER;
         int codec = IjkMediaPlayer.OPT_CATEGORY_CODEC;
         int format = IjkMediaPlayer.OPT_CATEGORY_FORMAT;
 
@@ -110,7 +110,7 @@ public class IjkVideoPlayer extends AbstractPlayer {
         //或者开启硬解硬解码，不过硬解码容易造成黑屏无声（硬件兼容问题），下面是设置硬解码相关的代码
         mMediaPlayer.setOption(player, "mediacodec", 0);
         mMediaPlayer.setOption(player, "mediacodec-auto-rotate", 1);
-        mMediaPlayer.setOption(player, "mediacodec-handle-resolution-change", 1);
+        mMediaPlayer.setOption(player, "mediacodec-handle-resolution-change", 1);*/
     }
 
     /**

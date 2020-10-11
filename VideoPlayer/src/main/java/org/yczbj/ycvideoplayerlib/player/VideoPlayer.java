@@ -706,14 +706,6 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     }
 
     /**
-     * 是否开启AudioFocus监听， 默认开启，用于监听其它地方是否获取音频焦点，如果有其它地方获取了
-     * 音频焦点，此播放器将做出相应反应，具体实现见{@link AudioFocusHelper}
-     */
-    public void setEnableAudioFocus(boolean enableAudioFocus) {
-        mEnableAudioFocus = enableAudioFocus;
-    }
-
-    /**
      * 自定义播放核心，继承{@link PlayerFactory}实现自己的播放核心
      */
     public void setPlayerFactory(PlayerFactory<P> playerFactory) {
@@ -1030,6 +1022,8 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
         if (videoBuilder.mCurrentPosition>0){
             this.mCurrentPosition = videoBuilder.mCurrentPosition;
         }
+        //是否开启AudioFocus监听， 默认开启
+        this.mEnableAudioFocus = videoBuilder.mEnableAudioFocus;
     }
 
 

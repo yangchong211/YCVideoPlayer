@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayerBuilder;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import java.util.ArrayList;
@@ -39,14 +40,21 @@ public class MultipleActivity extends AppCompatActivity {
     private void initVideoPlayer() {
         player1.setUrl(VOD_URL_1);
         //必须设置
-        player1.setEnableAudioFocus(false);
+        VideoPlayerBuilder.Builder builder = VideoPlayerBuilder.newBuilder();
+        builder.setEnableAudioFocus(false);
+        VideoPlayerBuilder videoPlayerBuilder = new VideoPlayerBuilder(builder);
+        player1.setVideoBuilder(videoPlayerBuilder);
+
         BasisVideoController controller1 = new BasisVideoController(this);
         player1.setVideoController(controller1);
         mVideoViews.add(player1);
 
         player2.setUrl(VOD_URL_2);
         //必须设置
-        player2.setEnableAudioFocus(false);
+        VideoPlayerBuilder.Builder builder2 = VideoPlayerBuilder.newBuilder();
+        builder.setEnableAudioFocus(false);
+        VideoPlayerBuilder videoPlayerBuilder2 = new VideoPlayerBuilder(builder2);
+        player2.setVideoBuilder(videoPlayerBuilder2);
         BasisVideoController controller2 = new BasisVideoController(this);
         player2.setVideoController(controller2);
         mVideoViews.add(player2);

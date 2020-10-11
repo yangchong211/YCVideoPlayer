@@ -4,11 +4,6 @@ import android.graphics.Color;
 
 import androidx.annotation.ColorInt;
 
-import com.yc.kernel.impl.media.MediaPlayerFactory;
-
-import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
-import org.yczbj.ycvideoplayerlib.surface.TextureViewFactory;
-
 public class VideoPlayerBuilder {
 
     public static Builder newBuilder() {
@@ -20,6 +15,7 @@ public class VideoPlayerBuilder {
         private int mColor = 0;
         private int[] mTinyScreenSize;
         private int mCurrentPosition = -1;
+        private boolean mEnableAudioFocus = true;
 
         /**
          * 设置视频播放器的背景色
@@ -57,6 +53,18 @@ public class VideoPlayerBuilder {
         }
 
 
+        /**
+         * 是否开启AudioFocus监听， 默认开启，用于监听其它地方是否获取音频焦点，如果有其它地方获取了
+         * 音频焦点，此播放器将做出相应反应，具体实现见{@link AudioFocusHelper}
+         * @param enableAudioFocus              是否开启
+         * @return                              Builder
+         */
+        public Builder setEnableAudioFocus(boolean enableAudioFocus) {
+            this.mEnableAudioFocus = enableAudioFocus;
+            return this;
+        }
+
+
         public VideoPlayerBuilder build() {
             //创建builder对象
             return new VideoPlayerBuilder(this);
@@ -67,11 +75,13 @@ public class VideoPlayerBuilder {
     public final int mColor;
     public final int[] mTinyScreenSize;
     public final int mCurrentPosition;
+    public final boolean mEnableAudioFocus;
 
     public VideoPlayerBuilder(Builder builder) {
         mColor = builder.mColor;
         mTinyScreenSize = builder.mTinyScreenSize;
         mCurrentPosition = builder.mCurrentPosition;
+        mEnableAudioFocus = builder.mEnableAudioFocus;
     }
 
 

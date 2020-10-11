@@ -119,6 +119,8 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
         //设置小屏的宽高
         int[] mTinyScreenSize = {0, 0};
         builder.setTinyScreenSize(mTinyScreenSize);
+        //是否开启AudioFocus监听， 默认开启
+        builder.setEnableAudioFocus(false);
         mVideoPlayer.setVideoBuilder(videoPlayerBuilder);
     }
 
