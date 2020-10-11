@@ -28,7 +28,8 @@ public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeLi
 
     public AudioFocusHelper(@NonNull VideoPlayer videoView) {
         mWeakVideoView = new WeakReference<>(videoView);
-        mAudioManager = (AudioManager) videoView.getContext().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager = (AudioManager) videoView.getContext().getApplicationContext()
+                .getSystemService(Context.AUDIO_SERVICE);
     }
 
     @Override
@@ -45,7 +46,6 @@ public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeLi
                 handleAudioFocusChange(focusChange);
             }
         });
-
         mCurrentFocus = focusChange;
     }
 
@@ -96,7 +96,8 @@ public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeLi
         if (mAudioManager == null) {
             return;
         }
-        int status = mAudioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        int status = mAudioManager.requestAudioFocus(this,
+                AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
         if (AudioManager.AUDIOFOCUS_REQUEST_GRANTED == status) {
             mCurrentFocus = AudioManager.AUDIOFOCUS_GAIN;
             return;
@@ -114,4 +115,13 @@ public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeLi
         mStartRequested = false;
         mAudioManager.abandonAudioFocus(this);
     }
+
+    public void release(){
+        abandonFocus();
+        if (mHandler!=null){
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler = null;
+        }
+    }
+
 }
