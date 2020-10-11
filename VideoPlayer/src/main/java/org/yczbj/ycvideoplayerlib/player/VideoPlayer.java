@@ -448,6 +448,7 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
             //关闭AudioFocus监听
             if (mAudioFocusHelper != null) {
                 mAudioFocusHelper.abandonFocus();
+                mAudioFocusHelper.release();
                 mAudioFocusHelper = null;
             }
             //关闭屏幕常亮
