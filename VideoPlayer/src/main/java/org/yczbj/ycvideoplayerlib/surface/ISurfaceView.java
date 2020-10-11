@@ -5,7 +5,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.yc.kernel.inter.AbstractPlayer;
+import com.yc.kernel.inter.AbstractVideoPlayer;
 
 /**
  * <pre>
@@ -21,7 +21,7 @@ public interface ISurfaceView {
     /**
      * 关联AbstractPlayer
      */
-    void attachToPlayer(@NonNull AbstractPlayer player);
+    void attachToPlayer(@NonNull AbstractVideoPlayer player);
 
     /**
      * 设置视频宽高

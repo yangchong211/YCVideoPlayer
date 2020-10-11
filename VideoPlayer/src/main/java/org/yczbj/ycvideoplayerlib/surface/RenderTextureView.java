@@ -11,7 +11,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.yc.kernel.inter.AbstractPlayer;
+import com.yc.kernel.inter.AbstractVideoPlayer;
 
 
 @SuppressLint("ViewConstructor")
@@ -21,7 +21,7 @@ public class RenderTextureView extends TextureView implements ISurfaceView, Text
     private SurfaceTexture mSurfaceTexture;
 
     @Nullable
-    private AbstractPlayer mMediaPlayer;
+    private AbstractVideoPlayer mMediaPlayer;
     private Surface mSurface;
 
     public RenderTextureView(Context context) {
@@ -35,7 +35,7 @@ public class RenderTextureView extends TextureView implements ISurfaceView, Text
     }
 
     @Override
-    public void attachToPlayer(@NonNull AbstractPlayer player) {
+    public void attachToPlayer(@NonNull AbstractVideoPlayer player) {
         this.mMediaPlayer = player;
     }
 

@@ -24,7 +24,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-import com.yc.kernel.inter.AbstractPlayer;
+import com.yc.kernel.inter.AbstractVideoPlayer;
 import java.util.Map;
 
 
@@ -37,7 +37,7 @@ import java.util.Map;
  *     revise:
  * </pre>
  */
-public class AndroidMediaPlayer extends AbstractPlayer {
+public class AndroidMediaPlayer extends AbstractVideoPlayer {
 
     protected MediaPlayer mMediaPlayer;
     private int mBufferedPercent;
@@ -351,7 +351,7 @@ public class AndroidMediaPlayer extends AbstractPlayer {
         @Override
         public boolean onInfo(MediaPlayer mp, int what, int extra) {
             //解决MEDIA_INFO_VIDEO_RENDERING_START多次回调问题
-            if (what == AbstractPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+            if (what == AbstractVideoPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
                 if (mIsPreparing) {
                     mPlayerEventListener.onInfo(what, extra);
                     mIsPreparing = false;

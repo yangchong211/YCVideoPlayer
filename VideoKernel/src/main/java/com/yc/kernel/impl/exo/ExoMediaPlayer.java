@@ -26,7 +26,7 @@ import com.google.android.exoplayer2.util.Clock;
 import com.google.android.exoplayer2.util.EventLogger;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoListener;
-import com.yc.kernel.inter.AbstractPlayer;
+import com.yc.kernel.inter.AbstractVideoPlayer;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.Map;
@@ -40,7 +40,7 @@ import java.util.Map;
  *     revise:
  * </pre>
  */
-public class ExoMediaPlayer extends AbstractPlayer implements VideoListener, Player.EventListener {
+public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener, Player.EventListener {
 
     protected Context mAppContext;
     protected SimpleExoPlayer mInternalPlayer;

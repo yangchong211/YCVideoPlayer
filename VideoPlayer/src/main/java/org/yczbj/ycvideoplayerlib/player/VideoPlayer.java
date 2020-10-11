@@ -1,30 +1,24 @@
 package org.yczbj.ycvideoplayerlib.player;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Parcelable;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.BaseVideoController;
 
-import com.yc.kernel.inter.AbstractPlayer;
+import com.yc.kernel.inter.AbstractVideoPlayer;
 import com.yc.kernel.factory.PlayerFactory;
 
 import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
@@ -32,6 +26,8 @@ import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
 import org.yczbj.ycvideoplayerlib.surface.SurfaceViewFactory;
 import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
+
+import com.yc.kernel.inter.VideoPlayerListener;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import java.io.IOException;
@@ -49,8 +45,8 @@ import java.util.Map;
  *     revise:
  * </pre>
  */
-public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
-        implements InterVideoPlayer, AbstractPlayer.PlayerEventListener {
+public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
+        implements InterVideoPlayer, VideoPlayerListener {
 
     private Context mContext;
     /**
@@ -209,6 +205,14 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
             ViewGroup decorView = VideoPlayerHelper.instance().getDecorView(mContext, mVideoController);
             VideoPlayerHelper.instance().hideSysBar(decorView,mContext,mVideoController);
         }
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        VideoLogUtils.d("onSaveInstanceState: " + mCurrentPosition);
+        //activity切到后台后可能被系统回收，故在此处进行进度保存
+        saveProgress();
+        return super.onSaveInstanceState();
     }
 
 
@@ -579,19 +583,19 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
     @Override
     public void onInfo(int what, int extra) {
         switch (what) {
-            case AbstractPlayer.MEDIA_INFO_BUFFERING_START:
+            case AbstractVideoPlayer.MEDIA_INFO_BUFFERING_START:
                 setPlayState(ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED);
                 break;
-            case AbstractPlayer.MEDIA_INFO_BUFFERING_END:
+            case AbstractVideoPlayer.MEDIA_INFO_BUFFERING_END:
                 setPlayState(ConstantKeys.CurrentState.STATE_COMPLETED);
                 break;
-            case AbstractPlayer.MEDIA_INFO_VIDEO_RENDERING_START: // 视频开始渲染
+            case AbstractVideoPlayer.MEDIA_INFO_VIDEO_RENDERING_START: // 视频开始渲染
                 setPlayState(ConstantKeys.CurrentState.STATE_PLAYING);
                 if (mPlayerContainer.getWindowVisibility() != VISIBLE) {
                     pause();
                 }
                 break;
-            case AbstractPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED:
+            case AbstractVideoPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED:
                 if (mRenderView != null)
                     mRenderView.setVideoRotation(extra);
                 break;
@@ -993,14 +997,6 @@ public class VideoPlayer<P extends AbstractPlayer> extends FrameLayout
      */
     public boolean onBackPressed() {
         return mVideoController != null && mVideoController.onBackPressed();
-    }
-
-    @Override
-    protected Parcelable onSaveInstanceState() {
-        VideoLogUtils.d("onSaveInstanceState: " + mCurrentPosition);
-        //activity切到后台后可能被系统回收，故在此处进行进度保存
-        saveProgress();
-        return super.onSaveInstanceState();
     }
 
 

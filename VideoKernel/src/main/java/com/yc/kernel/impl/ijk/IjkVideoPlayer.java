@@ -25,7 +25,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-import com.yc.kernel.inter.AbstractPlayer;
+import com.yc.kernel.inter.AbstractVideoPlayer;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.Map;
@@ -42,7 +42,7 @@ import tv.danmaku.ijk.media.player.IjkTimedText;
  *     revise:
  * </pre>
  */
-public class IjkVideoPlayer extends AbstractPlayer {
+public class IjkVideoPlayer extends AbstractVideoPlayer {
 
     protected IjkMediaPlayer mMediaPlayer;
     private int mBufferedPercent;

@@ -5,7 +5,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.yc.kernel.inter.AbstractPlayer;
+import com.yc.kernel.inter.AbstractVideoPlayer;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
@@ -24,7 +24,7 @@ public class TikTokRenderView implements ISurfaceView {
     }
 
     @Override
-    public void attachToPlayer(@NonNull AbstractPlayer player) {
+    public void attachToPlayer(@NonNull AbstractVideoPlayer player) {
         mProxyRenderView.attachToPlayer(player);
     }
 

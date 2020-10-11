@@ -31,7 +31,7 @@ import java.util.Map;
  *     revise:
  * </pre>
  */
-public abstract class AbstractPlayer {
+public abstract class AbstractVideoPlayer {
 
     /**
      * 视频传入url为空
@@ -61,7 +61,7 @@ public abstract class AbstractPlayer {
     /**
      * 播放器事件回调
      */
-    protected PlayerEventListener mPlayerEventListener;
+    protected VideoPlayerListener mPlayerEventListener;
 
     /**
      * 初始化播放器实例
@@ -194,39 +194,8 @@ public abstract class AbstractPlayer {
     /**
      * 绑定VideoView
      */
-    public void setPlayerEventListener(PlayerEventListener playerEventListener) {
+    public void setPlayerEventListener(VideoPlayerListener playerEventListener) {
         this.mPlayerEventListener = playerEventListener;
-    }
-
-    public interface PlayerEventListener {
-
-        /**
-         * 异常
-         */
-        void onError();
-
-        /**
-         * 完成
-         */
-        void onCompletion();
-
-        /**
-         * 视频信息
-         * @param what                          what
-         * @param extra                         extra
-         */
-        void onInfo(int what, int extra);
-
-        /**
-         * 准备
-         */
-        void onPrepared();
-
-        /**
-         * 视频size变化监听
-         */
-        void onVideoSizeChanged(int width, int height);
-
     }
 
 }
