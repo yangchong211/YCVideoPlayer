@@ -24,8 +24,8 @@ import com.yc.kernel.factory.PlayerFactory;
 import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
 import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
 import org.yczbj.ycvideoplayerlib.surface.SurfaceViewFactory;
-import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
-import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.tool.BaseToast;
+import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 
 import com.yc.kernel.inter.VideoPlayerListener;
 import com.yc.kernel.utils.VideoLogUtils;
@@ -112,7 +112,7 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
     protected boolean mIsTinyScreen;
     protected int[] mTinyScreenSize = {0, 0};
     /**
-     * 监听系统中音频焦点改变，见{@link #setEnableAudioFocus(boolean)}
+     * 监听系统中音频焦点改变
      */
     protected boolean mEnableAudioFocus;
     @Nullable
@@ -215,7 +215,6 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         return super.onSaveInstanceState();
     }
 
-
     /**
      * 初始化播放器视图
      */
@@ -228,6 +227,21 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
                 ViewGroup.LayoutParams.MATCH_PARENT);
         //将布局添加到该视图中
         this.addView(mPlayerContainer, params);
+    }
+
+    /**
+     * 设置控制器，传null表示移除控制器
+     * @param mediaController                           controller
+     */
+    public void setVideoController(@Nullable BaseVideoController mediaController) {
+        mPlayerContainer.removeView(mVideoController);
+        mVideoController = mediaController;
+        if (mediaController != null) {
+            mediaController.setMediaPlayer(this);
+            LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT);
+            mPlayerContainer.addView(mVideoController, params);
+        }
     }
 
     /**
@@ -837,21 +851,6 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         if (mRenderView != null) {
             mRenderView.setScaleType(mCurrentScreenScaleType);
             mRenderView.setVideoSize(videoWidth, videoHeight);
-        }
-    }
-
-    /**
-     * 设置控制器，传null表示移除控制器
-     */
-    public void setVideoController(@Nullable BaseVideoController mediaController) {
-        mPlayerContainer.removeView(mVideoController);
-        mVideoController = mediaController;
-        if (mediaController != null) {
-            mediaController.setMediaPlayer(this);
-            LayoutParams params = new LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT);
-            mPlayerContainer.addView(mVideoController, params);
         }
     }
 

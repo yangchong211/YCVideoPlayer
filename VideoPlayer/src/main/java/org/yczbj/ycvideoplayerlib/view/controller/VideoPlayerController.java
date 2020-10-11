@@ -43,13 +43,13 @@ import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.inter.dev.OnPlayerStatesListener;
 import org.yczbj.ycvideoplayerlib.inter.dev.OnPlayerTypeListener;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.tool.receiver.BatterReceiver;
-import org.yczbj.ycvideoplayerlib.tool.receiver.NetChangedReceiver;
-import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.tool.BatterReceiver;
+import org.yczbj.ycvideoplayerlib.tool.NetChangedReceiver;
+import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnClarityChangedListener;
 import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener2;
-import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
+import org.yczbj.ycvideoplayerlib.tool.BaseToast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

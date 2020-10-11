@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.tool.timer;
+package org.yczbj.ycvideoplayerlib.tool;
 
 import android.annotation.SuppressLint;
 import android.os.Handler;

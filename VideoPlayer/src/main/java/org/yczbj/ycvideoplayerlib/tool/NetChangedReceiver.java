@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package org.yczbj.ycvideoplayerlib.tool.receiver;
+package org.yczbj.ycvideoplayerlib.tool;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -22,9 +22,8 @@ import android.content.Intent;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.view.controller.AbsVideoPlayerController;
-import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.tool.utils.NetworkUtils;
+
 import com.yc.kernel.utils.VideoLogUtils;
 
 /**

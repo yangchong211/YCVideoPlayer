@@ -23,7 +23,7 @@ import android.view.WindowManager;
 import org.yczbj.ycvideoplayerlib.inter.player.InterVideoController2;
 import org.yczbj.ycvideoplayerlib.inter.player.VideoControllerView;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 
 import java.util.Timer;

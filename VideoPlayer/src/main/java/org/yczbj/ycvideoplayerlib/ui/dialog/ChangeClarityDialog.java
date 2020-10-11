@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.inter.listener.OnClarityChangedListener;
-import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 
 import java.util.List;
 

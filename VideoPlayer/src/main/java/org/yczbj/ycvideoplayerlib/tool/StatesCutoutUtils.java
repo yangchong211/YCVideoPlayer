@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.tool.utils;
+package org.yczbj.ycvideoplayerlib.tool;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -9,6 +9,8 @@ import android.view.DisplayCutout;
 import android.view.Window;
 import android.view.WindowInsets;
 import android.view.WindowManager;
+
+import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 
 import java.lang.reflect.Method;
 import java.util.List;

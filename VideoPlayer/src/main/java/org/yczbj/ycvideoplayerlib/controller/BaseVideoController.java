@@ -20,9 +20,9 @@ import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.player.InterVideoPlayer;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.tool.utils.StatesCutoutUtils;
-import org.yczbj.ycvideoplayerlib.tool.utils.NetworkUtils;
-import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.tool.StatesCutoutUtils;
+import org.yczbj.ycvideoplayerlib.tool.NetworkUtils;
+import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.Iterator;

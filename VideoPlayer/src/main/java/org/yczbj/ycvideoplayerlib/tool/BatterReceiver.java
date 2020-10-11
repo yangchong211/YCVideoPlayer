@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package org.yczbj.ycvideoplayerlib.tool.receiver;
+package org.yczbj.ycvideoplayerlib.tool;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -23,7 +23,6 @@ import android.os.BatteryManager;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.view.controller.AbsVideoPlayerController;
-import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
 import com.yc.kernel.utils.VideoLogUtils;
 

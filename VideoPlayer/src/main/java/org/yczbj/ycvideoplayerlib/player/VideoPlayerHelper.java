@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import org.yczbj.ycvideoplayerlib.controller.BaseVideoController;
-import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 
 public class VideoPlayerHelper {
 

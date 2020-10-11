@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.tool.utils;
+package org.yczbj.ycvideoplayerlib.tool;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

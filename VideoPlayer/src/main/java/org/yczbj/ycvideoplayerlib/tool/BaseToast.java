@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package org.yczbj.ycvideoplayerlib.tool.toast;
+package org.yczbj.ycvideoplayerlib.tool;
 
 import android.annotation.SuppressLint;
 import android.app.Application;

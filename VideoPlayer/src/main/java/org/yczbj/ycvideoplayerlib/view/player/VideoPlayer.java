@@ -35,9 +35,9 @@ import org.yczbj.ycvideoplayerlib.inter.player.InterVideoPlayer2;
 import org.yczbj.ycvideoplayerlib.view.controller.AbsVideoPlayerController;
 import org.yczbj.ycvideoplayerlib.inter.player.InterScreenVideoPlayer;
 import org.yczbj.ycvideoplayerlib.inter.player.InterStateVideoPlayer;
-import org.yczbj.ycvideoplayerlib.tool.manager.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
-import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
+import org.yczbj.ycvideoplayerlib.tool.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.tool.BaseToast;
 
 import java.util.Map;
 

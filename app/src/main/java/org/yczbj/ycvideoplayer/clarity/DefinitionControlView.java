@@ -19,7 +19,7 @@ import androidx.core.content.ContextCompat;
 
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.ui.view.CustomBottomView;
 
 import java.util.ArrayList;

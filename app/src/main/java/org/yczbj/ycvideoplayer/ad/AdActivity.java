@@ -15,7 +15,7 @@ import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayer.cache.ProxyVideoCacheManager;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
-import org.yczbj.ycvideoplayerlib.tool.toast.BaseToast;
+import org.yczbj.ycvideoplayerlib.tool.BaseToast;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 public class AdActivity extends AppCompatActivity implements View.OnClickListener {

@@ -17,7 +17,7 @@ import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
 import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
-import org.yczbj.ycvideoplayerlib.tool.utils.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 
 
 public class AdControlView extends FrameLayout implements IControlComponent, View.OnClickListener {
