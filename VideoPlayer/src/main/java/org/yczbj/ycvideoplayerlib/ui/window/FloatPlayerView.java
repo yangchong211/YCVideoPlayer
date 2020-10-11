@@ -11,10 +11,10 @@ import com.yc.kernel.utils.VideoLogUtils;
 
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.view.controller.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.inter.dev.OnPlayerStatesListener;
-import org.yczbj.ycvideoplayerlib.tool.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.old.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.old.listener.OnPlayerStatesListener;
+import org.yczbj.ycvideoplayerlib.old.other.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.old.player.OldVideoPlayer;
 
 
 /**
@@ -28,7 +28,7 @@ import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
  */
 public class FloatPlayerView extends FrameLayout {
 
-    private VideoPlayer mVideoPlayer;
+    private OldVideoPlayer mVideoPlayer;
 
     public FloatPlayerView(Context context) {
         super(context);
@@ -50,7 +50,7 @@ public class FloatPlayerView extends FrameLayout {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view ;
         if (inflater != null) {
-            view = inflater.inflate(R.layout.view_window_dialog, this);
+            view = inflater.inflate(R.layout.old_view_window_dialog, this);
             mVideoPlayer = view.findViewById(R.id.video_player);
             mVideoPlayer.setUp(path,null);
             mVideoPlayer.setPlayerType(ConstantKeys.VideoPlayerType.TYPE_IJK);

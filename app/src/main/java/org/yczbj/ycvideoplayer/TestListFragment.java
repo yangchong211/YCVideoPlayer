@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.yczbj.ycvideoplayerlib.tool.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.old.other.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.old.player.OldVideoPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class TestListFragment extends Fragment {
         mRecyclerView.setRecyclerListener(new RecyclerView.RecyclerListener() {
             @Override
             public void onViewRecycled(RecyclerView.ViewHolder holder) {
-                VideoPlayer niceVideoPlayer = ((VideoAdapter.VideoViewHolder) holder).mVideoPlayer;
+                OldVideoPlayer niceVideoPlayer = ((VideoAdapter.VideoViewHolder) holder).mVideoPlayer;
                 if (niceVideoPlayer == VideoPlayerManager.instance().getCurrentVideoPlayer()) {
                     VideoPlayerManager.instance().releaseVideoPlayer();
                 }

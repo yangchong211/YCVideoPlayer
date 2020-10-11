@@ -7,9 +7,9 @@ import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.view.controller.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.tool.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.old.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.old.other.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.old.player.OldVideoPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class TestClarityActivity extends BaseActivity implements View.OnClickLis
 
 
 
-    private VideoPlayer videoPlayer;
+    private OldVideoPlayer videoPlayer;
     private Button mBtnTiny1;
     private Button mBtnTiny2;
 
@@ -49,7 +49,7 @@ public class TestClarityActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void initView() {
         StateAppBar.translucentStatusBar(this, true);
-        videoPlayer = (VideoPlayer) findViewById(R.id.nice_video_player);
+        videoPlayer = (OldVideoPlayer) findViewById(R.id.nice_video_player);
         mBtnTiny1 = (Button) findViewById(R.id.btn_tiny_1);
         mBtnTiny2 = (Button) findViewById(R.id.btn_tiny_2);
 

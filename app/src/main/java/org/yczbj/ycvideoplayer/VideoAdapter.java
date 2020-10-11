@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.view.controller.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.old.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.old.player.OldVideoPlayer;
 
 import java.util.List;
 
@@ -47,11 +47,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     public class VideoViewHolder extends RecyclerView.ViewHolder {
 
         public VideoPlayerController mController;
-        public VideoPlayer mVideoPlayer;
+        public OldVideoPlayer mVideoPlayer;
 
         VideoViewHolder(View itemView) {
             super(itemView);
-            mVideoPlayer = (VideoPlayer) itemView.findViewById(R.id.nice_video_player);
+            mVideoPlayer = (OldVideoPlayer) itemView.findViewById(R.id.nice_video_player);
             // 将列表中的每个视频设置为默认16:9的比例
             ViewGroup.LayoutParams params = mVideoPlayer.getLayoutParams();
             // 宽度为屏幕宽度

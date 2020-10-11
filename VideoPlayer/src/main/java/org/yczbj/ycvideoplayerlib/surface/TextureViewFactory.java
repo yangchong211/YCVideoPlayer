@@ -11,7 +11,7 @@ import android.content.Context;
  *     revise:
  * </pre>
  */
-public class TextureViewFactory extends SurfaceViewFactory {
+public class TextureViewFactory extends SurfaceFactory {
 
     public static TextureViewFactory create() {
         return new TextureViewFactory();

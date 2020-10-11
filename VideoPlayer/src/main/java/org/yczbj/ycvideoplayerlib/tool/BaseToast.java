@@ -17,7 +17,6 @@ limitations under the License.
 package org.yczbj.ycvideoplayerlib.tool;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -27,7 +26,6 @@ import android.os.Looper;
 import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
 import android.os.Message;
@@ -272,7 +270,7 @@ public final class BaseToast {
             toast.setDuration(duration);
             toast.setMargin(0, 0);
             if(layout==0){
-                CardView rootView = (CardView) LayoutInflater.from(context).inflate(R.layout.view_toast_custom, null);
+                CardView rootView = (CardView) LayoutInflater.from(context).inflate(R.layout.custom_toast_view, null);
                 TextView textView = rootView.findViewById(R.id.toastTextView);
                 TextView descTv = rootView.findViewById(R.id.desc);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

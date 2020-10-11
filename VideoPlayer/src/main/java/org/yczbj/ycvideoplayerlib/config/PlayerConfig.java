@@ -6,7 +6,7 @@ import androidx.annotation.Nullable;
 import com.yc.kernel.factory.PlayerFactory;
 import com.yc.kernel.impl.media.MediaPlayerFactory;
 import org.yczbj.ycvideoplayerlib.player.ProgressManager;
-import org.yczbj.ycvideoplayerlib.surface.SurfaceViewFactory;
+import org.yczbj.ycvideoplayerlib.surface.SurfaceFactory;
 import org.yczbj.ycvideoplayerlib.surface.TextureViewFactory;
 
 
@@ -40,7 +40,7 @@ public class PlayerConfig {
 
     public final int mScreenScaleType;
 
-    public final SurfaceViewFactory mRenderViewFactory;
+    public final SurfaceFactory mRenderViewFactory;
 
     public final boolean mAdaptCutout;
 
@@ -53,7 +53,7 @@ public class PlayerConfig {
         private ProgressManager mProgressManager;
         private PlayerFactory mPlayerFactory;
         private int mScreenScaleType;
-        private SurfaceViewFactory mRenderViewFactory;
+        private SurfaceFactory mRenderViewFactory;
         private boolean mAdaptCutout = true;
 
         /**
@@ -115,7 +115,7 @@ public class PlayerConfig {
         /**
          * 自定义RenderView
          */
-        public Builder setRenderViewFactory(SurfaceViewFactory renderViewFactory) {
+        public Builder setRenderViewFactory(SurfaceFactory renderViewFactory) {
             mRenderViewFactory = renderViewFactory;
             return this;
         }

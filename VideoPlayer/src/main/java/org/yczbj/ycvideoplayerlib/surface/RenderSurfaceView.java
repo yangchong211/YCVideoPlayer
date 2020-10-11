@@ -1,11 +1,26 @@
+/*
+Copyright 2017 yangchong211（github.com/yangchong211）
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 package org.yczbj.ycvideoplayerlib.surface;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.SurfaceTexture;
 import android.view.Surface;
-import android.view.TextureView;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -13,26 +28,44 @@ import androidx.annotation.Nullable;
 
 import com.yc.kernel.inter.AbstractVideoPlayer;
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/9/21
+ *     desc  : 重写SurfaceView，适配视频的宽高和旋转
+ *     revise:
+ * </pre>
+ */
+public class RenderSurfaceView extends SurfaceView implements ISurfaceView{
 
-@SuppressLint("ViewConstructor")
-public class RenderTextureView extends TextureView implements ISurfaceView,
-        TextureView.SurfaceTextureListener {
+    /**
+     * 优点：可以在一个独立的线程中进行绘制，不会影响主线程；使用双缓冲机制，播放视频时画面更流畅
+     * 缺点：Surface不在View hierachy中，它的显示也不受View的属性控制，所以不能进行平移，缩放等变换，
+     *      也不能放在其它ViewGroup中。SurfaceView 不能嵌套使用。
+     */
 
     private MeasureHelper mMeasureHelper;
-    private SurfaceTexture mSurfaceTexture;
-
     @Nullable
     private AbstractVideoPlayer mMediaPlayer;
-    private Surface mSurface;
 
-    public RenderTextureView(Context context) {
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (callback!=null){
+            getHolder().removeCallback(callback);
+        }
+    }
+
+    public RenderSurfaceView(Context context) {
         super(context);
         init(context);
     }
 
     private void init(Context context){
         mMeasureHelper = new MeasureHelper();
-        setSurfaceTextureListener(this);
+        getHolder().addCallback(callback);
     }
 
     /**
@@ -92,7 +125,7 @@ public class RenderTextureView extends TextureView implements ISurfaceView,
      */
     @Override
     public Bitmap doScreenShot() {
-        return getBitmap();
+        return getDrawingCache();
     }
 
     /**
@@ -100,38 +133,15 @@ public class RenderTextureView extends TextureView implements ISurfaceView,
      */
     @Override
     public void release() {
-        if (mSurface != null){
-            mSurface.release();
+        if (callback!=null){
+            getHolder().removeCallback(callback);
         }
-        if (mSurfaceTexture != null){
-            mSurfaceTexture.release();
-        }
-
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int[] measuredSize = mMeasureHelper.doMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(measuredSize[0], measuredSize[1]);
-    }
-
-    /**
-     * SurfaceTexture准备就绪
-     * @param surfaceTexture            surface
-     * @param width                     WIDTH
-     * @param height                    HEIGHT
-     */
-    @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
-        if (mSurfaceTexture != null) {
-            setSurfaceTexture(mSurfaceTexture);
-        } else {
-            mSurfaceTexture = surfaceTexture;
-            mSurface = new Surface(surfaceTexture);
-            if (mMediaPlayer != null) {
-                mMediaPlayer.setSurface(mSurface);
-            }
-        }
     }
 
     /**
@@ -148,32 +158,41 @@ public class RenderTextureView extends TextureView implements ISurfaceView,
     }
 
 
-    /**
-     * SurfaceTexture缓冲大小变化
-     * @param surface                   surface
-     * @param width                     WIDTH
-     * @param height                    HEIGHT
-     */
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+    private SurfaceHolder.Callback callback = new SurfaceHolder.Callback(){
+        /**
+         * 创建的时候调用该方法
+         * @param holder                        holder
+         */
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            if (mMediaPlayer != null) {
+                Surface surface = holder.getSurface();
+                mMediaPlayer.setSurface(surface);
+            }
+        }
 
-    }
+        /**
+         * 视图改变的时候调用方法
+         * @param holder
+         * @param format
+         * @param width
+         * @param height
+         */
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
-    /**
-     * SurfaceTexture即将被销毁
-     * @param surface                   surface
-     */
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        return false;
-    }
+        }
 
-    /**
-     * SurfaceTexture通过updateImage更新
-     * @param surface                   surface
-     */
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+        /**
+         * 销毁的时候调用该方法
+         * @param holder
+         */
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
 
-    }
+        }
+    };
+
+
+
 }

@@ -4,6 +4,15 @@ import android.graphics.Color;
 
 import androidx.annotation.ColorInt;
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/11/9
+ *     desc  : 播放器设置属性builder类
+ *     revise:
+ * </pre>
+ */
 public class VideoPlayerBuilder {
 
     public static Builder newBuilder() {

@@ -7,8 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application>
-        <receiver android:name=".tool.BatterReceiver"/>
-        <receiver android:name=".tool.NetChangedReceiver">
+        <receiver android:name=".old.other.BatterReceiver"/>
+        <receiver android:name=".old.other.NetChangedReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--https://github.com/yangchong211-->
+    <!--如果你觉得好，请给个star，让更多人使用，避免重复造轮子-->
+    <!--底图，主要是显示视频缩略图-->
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:visibility="visible"/>
+    <!--加载动画view-->
+    <include layout="@layout/custom_video_player_loading"/>
+    <!--改变播放位置-->
+    <include layout="@layout/custom_video_player_change_position"/>
+    <!--改变亮度-->
+    <include layout="@layout/custom_video_player_change_brightness"/>
+    <!--改变声音-->
+    <include layout="@layout/custom_video_player_change_volume"/>
+    <!--播放完成，你也可以自定义-->
+    <include layout="@layout/old_video_player_completed"/>
+    <!--播放错误-->
+    <include layout="@layout/old_video_player_error"/>
+    <!--顶部控制区-->
+    <include layout="@layout/old_video_player_top"/>
+    <!--底部控制区-->
+    <include layout="@layout/old_video_player_bottom"/>
+    <!--右下角初始显示的总时长-->
+    <TextView
+        android:id="@+id/length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:padding="4dp"
+        android:visibility="visible"
+        android:text="00:00"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp" />
+    <!--中间开始播放按钮-->
+    <ImageView
+        android:id="@+id/center_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_player_center_start"
+        android:visibility="visible"/>
+    <!--锁屏布局，全屏时展示，其他隐藏-->
+    <FrameLayout
+        android:id="@+id/fl_lock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/shape_lock_bg"
+        android:layout_marginLeft="15dp">
+        <ImageView
+            android:id="@+id/iv_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/selector_lock_button"/>
+    </FrameLayout>
+
+    <!--底部视频播放进度条-->
+    <include layout="@layout/old_video_player_line"/>
+
+</RelativeLayout>

@@ -23,9 +23,10 @@ import com.yc.kernel.factory.PlayerFactory;
 
 import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
 import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
-import org.yczbj.ycvideoplayerlib.surface.SurfaceViewFactory;
+import org.yczbj.ycvideoplayerlib.surface.SurfaceFactory;
 import org.yczbj.ycvideoplayerlib.tool.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.tool.VideoException;
 
 import com.yc.kernel.inter.VideoPlayerListener;
 import com.yc.kernel.utils.VideoLogUtils;
@@ -68,7 +69,7 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
     protected FrameLayout mPlayerContainer;
 
     protected ISurfaceView mRenderView;
-    protected SurfaceViewFactory mRenderViewFactory;
+    protected SurfaceFactory mRenderViewFactory;
     protected int mCurrentScreenScaleType;
     protected int[] mVideoSize = {0, 0};
     /**
@@ -249,6 +250,11 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      */
     @Override
     public void start() {
+        if (mVideoController==null){
+            //在调用start方法前，请先初始化视频控制器，调用setController方法
+            throw new VideoException(VideoException.CODE_NOT_SET_CONTROLLER,
+                    "Controller must not be null , please setController first");
+        }
         boolean isStarted = false;
         if (isInIdleState() || isInStartAbortState()) {
             isStarted = startPlay();
@@ -289,6 +295,19 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         return true;
     }
 
+
+    /**
+     * 初始化播放器
+     */
+    protected void initPlayer() {
+        //通过工厂模式创建对象
+        mMediaPlayer = mPlayerFactory.createPlayer(mContext);
+        mMediaPlayer.setPlayerEventListener(this);
+        setInitOptions();
+        mMediaPlayer.initPlayer();
+        setOptions();
+    }
+
     /**
      * 是否显示移动网络提示，可在Controller中配置
      */
@@ -300,16 +319,6 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         return mVideoController != null && mVideoController.showNetWarning();
     }
 
-    /**
-     * 初始化播放器
-     */
-    protected void initPlayer() {
-        mMediaPlayer = mPlayerFactory.createPlayer(getContext());
-        mMediaPlayer.setPlayerEventListener(this);
-        setInitOptions();
-        mMediaPlayer.initPlayer();
-        setOptions();
-    }
 
     /**
      * 初始化之前的配置项
@@ -322,6 +331,7 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      * 初始化之后的配置项
      */
     protected void setOptions() {
+        //设置是否循环播放
         mMediaPlayer.setLooping(mIsLooping);
     }
 
@@ -333,12 +343,12 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
             mPlayerContainer.removeView(mRenderView.getView());
             mRenderView.release();
         }
-        mRenderView = mRenderViewFactory.createRenderView(getContext());
+        //创建TextureView对象
+        mRenderView = mRenderViewFactory.createRenderView(mContext);
+        //绑定mMediaPlayer对象
         mRenderView.attachToPlayer(mMediaPlayer);
-        LayoutParams params = new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                Gravity.CENTER);
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
         mPlayerContainer.addView(mRenderView.getView(), 0, params);
     }
 
@@ -734,9 +744,9 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
     }
 
     /**
-     * 自定义RenderView，继承{@link SurfaceViewFactory}实现自己的RenderView
+     * 自定义RenderView，继承{@link SurfaceFactory}实现自己的RenderView
      */
-    public void setRenderViewFactory(SurfaceViewFactory renderViewFactory) {
+    public void setRenderViewFactory(SurfaceFactory renderViewFactory) {
         if (renderViewFactory == null) {
             throw new IllegalArgumentException("RenderViewFactory can not be null!");
         }

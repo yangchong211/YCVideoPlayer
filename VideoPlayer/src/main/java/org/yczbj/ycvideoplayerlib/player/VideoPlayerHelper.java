@@ -13,7 +13,15 @@ import android.view.WindowManager;
 
 import org.yczbj.ycvideoplayerlib.controller.BaseVideoController;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
-
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/11/9
+ *     desc  : 播放器帮助类
+ *     revise:
+ * </pre>
+ */
 public class VideoPlayerHelper {
 
     private static VideoPlayerHelper sInstance;

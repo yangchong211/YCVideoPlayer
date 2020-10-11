@@ -3,10 +3,10 @@ package org.yczbj.ycvideoplayer;
 import android.widget.ImageView;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.view.controller.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener2;
-import org.yczbj.ycvideoplayerlib.tool.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.old.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.old.listener.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.old.other.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.old.player.OldVideoPlayer;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
@@ -17,7 +17,7 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 public class TestSavePosActivity extends BaseActivity  {
 
 
-    VideoPlayer videoPlayer;
+    OldVideoPlayer videoPlayer;
     private VideoPlayerController controller;
 
 
@@ -57,7 +57,7 @@ public class TestSavePosActivity extends BaseActivity  {
     @Override
     public void initView() {
         StateAppBar.translucentStatusBar(this, true);
-        videoPlayer = (VideoPlayer) findViewById(R.id.video_player);
+        videoPlayer = (OldVideoPlayer) findViewById(R.id.video_player);
         //必须关键的4步，播放视频最简单的方式
         videoPlayer.setPlayerType(ConstantKeys.VideoPlayerType.TYPE_IJK);
         videoPlayer.setUp(ConstantVideo.VideoPlayerList[0], null);
@@ -182,7 +182,7 @@ public class TestSavePosActivity extends BaseActivity  {
         //设置横屏播放时，tv和audio图标是否显示
         controller.setTvAndAudioVisibility(true,true);
         //设置视频分享，下载，音视频转化点击事件
-        controller.setOnVideoControlListener(new OnVideoControlListener2() {
+        controller.setOnVideoControlListener(new OnVideoControlListener() {
             @Override
             public void onVideoControlClick(int type) {
 
@@ -202,7 +202,7 @@ public class TestSavePosActivity extends BaseActivity  {
         //如果是小窗口，则退出小窗口
         instance.onBackPressed();
         //获取对象
-        VideoPlayer currentVideoPlayer = instance.getCurrentVideoPlayer();
+        OldVideoPlayer currentVideoPlayer = instance.getCurrentVideoPlayer();
         //设置VideoPlayer
         instance.setCurrentVideoPlayer(videoPlayer);
     }

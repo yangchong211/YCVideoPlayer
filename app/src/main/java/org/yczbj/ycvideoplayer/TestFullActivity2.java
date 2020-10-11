@@ -6,10 +6,10 @@ import android.widget.Button;
 import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.inter.dev.OnVideoControlListener2;
-import org.yczbj.ycvideoplayerlib.tool.VideoPlayerManager;
-import org.yczbj.ycvideoplayerlib.view.controller.VideoPlayerController;
-import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.old.listener.OnVideoControlListener;
+import org.yczbj.ycvideoplayerlib.old.other.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.old.controller.VideoPlayerController;
+import org.yczbj.ycvideoplayerlib.old.player.OldVideoPlayer;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
@@ -19,7 +19,7 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
  */
 public class TestFullActivity2 extends BaseActivity implements View.OnClickListener {
 
-    private VideoPlayer videoPlayer;
+    private OldVideoPlayer videoPlayer;
     private Button mBtnTiny1;
     private Button mBtnTiny2;
 
@@ -59,7 +59,7 @@ public class TestFullActivity2 extends BaseActivity implements View.OnClickListe
     @Override
     public void initView() {
         StateAppBar.translucentStatusBar(this, true);
-        videoPlayer = (VideoPlayer) findViewById(R.id.nice_video_player);
+        videoPlayer = (OldVideoPlayer) findViewById(R.id.nice_video_player);
         mBtnTiny1 = (Button) findViewById(R.id.btn_tiny_1);
         mBtnTiny2 = (Button) findViewById(R.id.btn_tiny_2);
 
@@ -75,7 +75,7 @@ public class TestFullActivity2 extends BaseActivity implements View.OnClickListe
         //设置中间播放按钮是否显示
         controller.setTopPadding(24.0f);
         controller.setTopVisibility(true);
-        controller.setOnVideoControlListener(new OnVideoControlListener2() {
+        controller.setOnVideoControlListener(new OnVideoControlListener() {
             @Override
             public void onVideoControlClick(int type) {
                 switch (type){

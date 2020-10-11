@@ -15,10 +15,10 @@
         android:visibility="visible" />
     <ProgressBar
         android:id="@+id/pb_loading_qq"
-        android:layout_width="27dp"
-        android:layout_height="10dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:visibility="gone"
-        android:indeterminateDrawable="@drawable/loading"/>
+        android:indeterminateDrawable="@drawable/pb_loading_bg"/>
     <TextView
         android:id="@+id/load_text"
         android:layout_width="wrap_content"

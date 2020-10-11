@@ -11,9 +11,9 @@ import android.widget.Button;
 import androidx.annotation.RequiresApi;
 
 import org.yczbj.ycvideoplayer.tiny.TestFullActivity;
-import org.yczbj.ycvideoplayerlib.tool.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.old.other.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.ui.window.FloatPlayerView;
-import org.yczbj.ycvideoplayerlib.view.player.VideoPlayer;
+import org.yczbj.ycvideoplayerlib.old.player.OldVideoPlayer;
 import org.yczbj.ycvideoplayerlib.ui.window.FloatWindow;
 import org.yczbj.ycvideoplayerlib.ui.window.MoveType;
 import org.yczbj.ycvideoplayerlib.ui.window.WindowScreen;
@@ -25,7 +25,7 @@ import org.yczbj.ycvideoplayerlib.ui.window.WindowUtil;
  */
 public class TestWindowActivity extends BaseActivity implements View.OnClickListener {
 
-    private VideoPlayer mVideoPlayer;
+    private OldVideoPlayer mVideoPlayer;
     private Button mBtn1;
     private Button mBtn2;
 
@@ -56,7 +56,7 @@ public class TestWindowActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void initView() {
-        mVideoPlayer = (VideoPlayer) findViewById(R.id.video_player);
+        mVideoPlayer = (OldVideoPlayer) findViewById(R.id.video_player);
         mBtn1 = (Button) findViewById(R.id.btn_1);
         mBtn1.setOnClickListener(this);
         mBtn2 = (Button) findViewById(R.id.btn_2);

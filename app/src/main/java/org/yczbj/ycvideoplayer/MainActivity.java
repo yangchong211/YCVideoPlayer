@@ -14,7 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import org.yczbj.ycvideoplayer.activity.TypeActivity;
 import org.yczbj.ycvideoplayer.list.TestListActivity;
 import org.yczbj.ycvideoplayer.surface.TestSurfaceActivity;
-import org.yczbj.ycvideoplayerlib.tool.VideoPlayerManager;
+import org.yczbj.ycvideoplayerlib.old.other.VideoPlayerManager;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 

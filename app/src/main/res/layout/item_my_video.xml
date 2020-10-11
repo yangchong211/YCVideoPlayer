@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
 
-    <org.yczbj.ycvideoplayerlib.view.player.VideoPlayer
+    <org.yczbj.ycvideoplayerlib.old.player.OldVideoPlayer
         android:id="@+id/nice_video_player"
         android:layout_width="match_parent"
         android:layout_height="240dp"/>
