@@ -541,8 +541,15 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      */
     @Override
     public void seekTo(long pos) {
+        long seek;
+        if (pos<0){
+            VideoLogUtils.d("设置参数-------设置开始跳转播放位置不能小于0");
+            seek = 0;
+        } else {
+            seek = pos;
+        }
         if (isInPlaybackState()) {
-            mMediaPlayer.seekTo(pos);
+            mMediaPlayer.seekTo(seek);
         }
     }
 
@@ -739,7 +746,7 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      */
     public void setPlayerFactory(PlayerFactory<P> playerFactory) {
         if (playerFactory == null) {
-            throw new IllegalArgumentException("PlayerFactory can not be null!");
+            throw new VideoException(VideoException.CODE_NOT_PLAYER_FACTORY,"PlayerFactory can not be null!");
         }
         mPlayerFactory = playerFactory;
     }
@@ -749,7 +756,7 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      */
     public void setRenderViewFactory(SurfaceFactory renderViewFactory) {
         if (renderViewFactory == null) {
-            throw new IllegalArgumentException("RenderViewFactory can not be null!");
+            throw new VideoException(VideoException.CODE_NOT_RENDER_FACTORY,"RenderViewFactory can not be null!");
         }
         mRenderViewFactory = renderViewFactory;
     }
