@@ -683,6 +683,10 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         }
     }
 
+    /**
+     * 获取倍速速度
+     * @return                              速度
+     */
     @Override
     public float getSpeed() {
         if (isInPlaybackState()) {
@@ -826,9 +830,13 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      * 开启小屏
      */
     public void startTinyScreen() {
-        if (mIsTinyScreen) return;
+        if (mIsTinyScreen) {
+            return;
+        }
         ViewGroup contentView = VideoPlayerHelper.instance().getContentView(mContext,mVideoController);
-        if (contentView == null) return;
+        if (contentView == null) {
+            return;
+        }
         this.removeView(mPlayerContainer);
         int width = mTinyScreenSize[0];
         if (width <= 0) {
@@ -849,20 +857,24 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      * 退出小屏
      */
     public void stopTinyScreen() {
-        if (!mIsTinyScreen) return;
-
+        if (!mIsTinyScreen) {
+            return;
+        }
         ViewGroup contentView = VideoPlayerHelper.instance().getContentView(mContext,mVideoController);
-        if (contentView == null) return;
+        if (contentView == null) {
+            return;
+        }
         contentView.removeView(mPlayerContainer);
-        LayoutParams params = new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         this.addView(mPlayerContainer, params);
-
         mIsTinyScreen = false;
         setPlayerState(ConstantKeys.PlayMode.MODE_NORMAL);
     }
 
+    /**
+     * 是否是小窗口模式
+     * @return                              是否是小窗口模式
+     */
     public boolean isTinyScreen() {
         return mIsTinyScreen;
     }

@@ -16,12 +16,14 @@ import androidx.annotation.Nullable;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
+import org.yczbj.ycvideoplayerlib.ui.view.CustomTitleView;
 import org.yczbj.ycvideoplayerlib.ui.view.InterControlView;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 
 
 public class AdControlView extends FrameLayout implements InterControlView, View.OnClickListener {
 
+    private Context mContext;
     protected TextView mAdTime, mAdDetail;
     protected ImageView mBack, mVolume, mFullScreen, mPlayButton;
     protected AdControlListener mListener;
@@ -30,17 +32,21 @@ public class AdControlView extends FrameLayout implements InterControlView, View
 
     public AdControlView(@NonNull Context context) {
         super(context);
+        init(context);
     }
 
     public AdControlView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        init(context);
     }
 
     public AdControlView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(context);
     }
 
-    {
+    private void init(Context context){
+        this.mContext = context;
         LayoutInflater.from(getContext()).inflate(R.layout.layout_ad_control_view, this, true);
         mAdTime = findViewById(R.id.ad_time);
         mAdDetail = findViewById(R.id.ad_detail);

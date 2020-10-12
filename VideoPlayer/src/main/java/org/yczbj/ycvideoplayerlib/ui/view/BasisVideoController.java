@@ -52,6 +52,7 @@ public class BasisVideoController extends GestureVideoController implements View
     private ImageView mLockButton;
     private ProgressBar mLoadingProgress;
     private ImageView thumb;
+    private CustomTitleView titleView;
 
     public BasisVideoController(@NonNull Context context) {
         this(context, null);
@@ -98,11 +99,6 @@ public class BasisVideoController extends GestureVideoController implements View
         //滑动调节亮度，音量，进度，默认开启
         setGestureEnabled(true);
 
-        //添加与加载视图界面view，准备播放界面
-        CustomPrepareView prepareView = new CustomPrepareView(mContext);
-        thumb = prepareView.getThumb();
-        prepareView.setClickStart();
-        this.addControlComponent(prepareView);
         addDefaultControlComponent("",false);
     }
 
@@ -132,7 +128,7 @@ public class BasisVideoController extends GestureVideoController implements View
         this.addControlComponent(prepareView);
 
         //添加标题栏
-        CustomTitleView titleView = new CustomTitleView(mContext);
+        titleView = new CustomTitleView(mContext);
         titleView.setTitle(title);
         titleView.setVisibility(VISIBLE);
         this.addControlComponent(titleView);
@@ -271,12 +267,18 @@ public class BasisVideoController extends GestureVideoController implements View
         return super.onBackPressed();
     }
 
+    @Override
+    public void destroy() {
+
+    }
+
     public ImageView getThumb() {
         return thumb;
     }
 
-    @Override
-    public void destroy() {
-
+    public void setTitle(String title) {
+        if (titleView!=null){
+            titleView.setTitle(title);
+        }
     }
 }

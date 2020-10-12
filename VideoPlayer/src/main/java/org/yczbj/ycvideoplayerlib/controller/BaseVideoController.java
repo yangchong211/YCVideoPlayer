@@ -214,6 +214,9 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
         mControlComponents.remove(component);
     }
 
+    /**
+     * 移除所有的组件
+     */
     public void removeAllControlComponent() {
         for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
             removeView(next.getKey().getView());
@@ -253,6 +256,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     public void setDismissTimeout(int timeout) {
         if (timeout > 0) {
             mDefaultTimeout = timeout;
+        } else {
+            mDefaultTimeout = 5000;
         }
     }
 
@@ -300,7 +305,9 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
      */
     @Override
     public void stopFadeOut() {
-        removeCallbacks(mFadeOut);
+        if (mFadeOut!=null){
+            removeCallbacks(mFadeOut);
+        }
     }
 
     /**
@@ -313,12 +320,20 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
         }
     };
 
+    /**
+     * 设置是否锁屏
+     * @param locked                        是否锁定
+     */
     @Override
     public void setLocked(boolean locked) {
         mIsLocked = locked;
         handleLockStateChanged(locked);
     }
 
+    /**
+     * 判断是否锁屏
+     * @return                              返回是否锁屏
+     */
     @Override
     public boolean isLocked() {
         return mIsLocked;
@@ -341,7 +356,9 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
      */
     @Override
     public void stopProgress() {
-        if (!mIsStartProgress) return;
+        if (!mIsStartProgress) {
+            return;
+        }
         removeCallbacks(mShowProgress);
         mIsStartProgress = false;
     }

@@ -22,10 +22,16 @@ import org.yczbj.ycvideoplayer.newPlayer.surface.TestSurfaceActivity;
 import org.yczbj.ycvideoplayer.newPlayer.tiny.TestFullActivity;
 import org.yczbj.ycvideoplayer.newPlayer.tiny.TinyScreenActivity;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+
+import com.yc.kernel.impl.exo.ExoMediaPlayer;
 import com.yc.kernel.impl.exo.ExoPlayerFactory;
 import com.yc.kernel.impl.ijk.IjkPlayerFactory;
+import com.yc.kernel.impl.ijk.IjkVideoPlayer;
+import com.yc.kernel.impl.media.AndroidMediaPlayer;
 import com.yc.kernel.impl.media.MediaPlayerFactory;
 import com.yc.kernel.factory.PlayerFactory;
+import com.yc.kernel.inter.AbstractVideoPlayer;
+
 import org.yczbj.ycvideoplayerlib.player.VideoPlayerConfig;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.tool.BaseToast;
@@ -200,14 +206,17 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
             switch (type) {
                 case ConstantKeys.VideoPlayerType.TYPE_IJK:
                     playerFactory = IjkPlayerFactory.create();
+                    IjkVideoPlayer ijkVideoPlayer = (IjkVideoPlayer) playerFactory.createPlayer(this);
                     mTvTitle.setText("视频内核：" + " (IjkPlayer)");
                     break;
                 case ConstantKeys.VideoPlayerType.TYPE_EXO:
                     playerFactory = ExoPlayerFactory.create();
+                    ExoMediaPlayer exoMediaPlayer = (ExoMediaPlayer) playerFactory.createPlayer(this);
                     mTvTitle.setText("视频内核：" + " (ExoPlayer)");
                     break;
                 case ConstantKeys.VideoPlayerType.TYPE_NATIVE:
                     playerFactory = MediaPlayerFactory.create();
+                    AndroidMediaPlayer androidMediaPlayer = (AndroidMediaPlayer) playerFactory.createPlayer(this);
                     mTvTitle.setText("视频内核：" + " (MediaPlayer)");
                     break;
                 case ConstantKeys.VideoPlayerType.TYPE_RTC:
