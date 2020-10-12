@@ -12,16 +12,19 @@ import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import java.lang.ref.WeakReference;
 
 /**
- * 音频焦点改变监听
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/11/9
+ *     desc  : 音频焦点改变监听
+ *     revise:
+ * </pre>
  */
 public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeListener {
 
     private Handler mHandler = new Handler(Looper.getMainLooper());
-
     private WeakReference<VideoPlayer> mWeakVideoView;
-
     private AudioManager mAudioManager;
-
     private boolean mStartRequested = false;
     private boolean mPausedForLoss = false;
     private int mCurrentFocus = 0;
@@ -43,6 +46,7 @@ public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeLi
         mHandler.post(new Runnable() {
             @Override
             public void run() {
+                //处理音频焦点抢占
                 handleAudioFocusChange(focusChange);
             }
         });
@@ -116,6 +120,9 @@ public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeLi
         mAudioManager.abandonAudioFocus(this);
     }
 
+    /**
+     * 销毁资源
+     */
     public void release(){
         abandonFocus();
         if (mHandler!=null){

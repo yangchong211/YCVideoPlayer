@@ -1,5 +1,6 @@
 package org.yczbj.ycvideoplayer.newPlayer.list;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * RecyclerView demo
  */
-public class RecyclerViewFragment extends Fragment implements OnItemChildClickListener {
+public class RecyclerViewFragment extends Fragment {
 
     protected List<VideoInfoBean> mVideos = new ArrayList<>();
     protected VideoRecyclerViewAdapter mAdapter;
@@ -46,7 +47,13 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
      * 上次播放的位置，用于页面切回来之后恢复播放
      */
     protected int mLastPos = mCurPos;
+    private Context context;
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,14 +69,16 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
 
     protected void initView(View view) {
         initVideoView();
-        //保存进度
-//        mVideoView.setProgressManager(new ProgressManagerImpl());
-
         mRecyclerView = view.findViewById(R.id.recyclerView);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mAdapter = new VideoRecyclerViewAdapter(mVideos);
-        mAdapter.setOnItemChildClickListener(this);
+        mAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(int position) {
+                startPlay(position);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
@@ -89,7 +98,7 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
     }
 
     protected void initVideoView() {
-        mVideoView = new VideoPlayer(getActivity());
+        mVideoView = new VideoPlayer(context);
         mVideoView.setOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
             @Override
             public void onPlayStateChanged(int playState) {
@@ -101,7 +110,7 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
                 }
             }
         });
-        mController = new BasisVideoController(getActivity());
+        mController = new BasisVideoController(context);
         mVideoView.setController(mController);
     }
 
@@ -143,14 +152,6 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
     }
 
     /**
-     * PrepareView被点击
-     */
-    @Override
-    public void onItemChildClick(int position) {
-        startPlay(position);
-    }
-
-    /**
      * 开始播放
      * @param position 列表位置
      */
@@ -160,10 +161,6 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
             releaseVideoView();
         }
         VideoInfoBean videoBean = mVideos.get(position);
-        //边播边存
-//        String proxyUrl = ProxyVideoCacheManager.getProxy(getActivity()).getProxyUrl(videoBean.getUrl());
-//        mVideoView.setUrl(proxyUrl);
-
         mVideoView.setUrl(videoBean.getVideoUrl());
         View itemView = mLinearLayoutManager.findViewByPosition(position);
         if (itemView == null) return;
@@ -176,7 +173,6 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
         VideoViewManager.instance().add(mVideoView, "list");
         mVideoView.start();
         mCurPos = position;
-
     }
 
     private void releaseVideoView() {
