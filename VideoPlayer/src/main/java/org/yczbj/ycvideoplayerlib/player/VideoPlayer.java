@@ -1039,13 +1039,13 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
 
 
     public void setVideoBuilder(VideoPlayerBuilder videoBuilder){
-        if (mPlayerContainer==null){
+        if (mPlayerContainer==null || videoBuilder==null){
             return;
         }
         //设置视频播放器的背景色
         mPlayerContainer.setBackgroundColor(videoBuilder.mColor);
         //设置小屏的宽高
-        if (videoBuilder.mTinyScreenSize.length>0){
+        if (videoBuilder.mTinyScreenSize!=null && videoBuilder.mTinyScreenSize.length>0){
             mTinyScreenSize = videoBuilder.mTinyScreenSize;
         }
         //一开始播放就seek到预先设置好的位置
