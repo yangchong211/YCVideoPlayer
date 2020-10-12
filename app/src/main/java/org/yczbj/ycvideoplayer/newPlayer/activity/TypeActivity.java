@@ -17,6 +17,7 @@ import org.yczbj.ycvideoplayer.newPlayer.danmu.DanmuActivity;
 import org.yczbj.ycvideoplayer.newPlayer.list.ListVideoActivity;
 import org.yczbj.ycvideoplayer.newPlayer.list.TestListActivity;
 import org.yczbj.ycvideoplayer.newPlayer.pip.PipActivity;
+import org.yczbj.ycvideoplayer.newPlayer.pip.PipListActivity;
 import org.yczbj.ycvideoplayer.newPlayer.surface.TestSurfaceActivity;
 import org.yczbj.ycvideoplayer.newPlayer.tiny.TestFullActivity;
 import org.yczbj.ycvideoplayer.newPlayer.tiny.TinyScreenActivity;
@@ -155,7 +156,9 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this,MultipleActivity.class));
         } else if (v == mTv41){
             startActivity(new Intent(this, PipActivity.class));
-        }  else if (v == mTv43){
+        } else if (v == mTv42){
+            startActivity(new Intent(this, PipListActivity.class));
+        }   else if (v == mTv43){
             startActivity(new Intent(this, TinyScreenActivity.class));
         } else if (v == mTv61){
             Intent intent = new Intent(this, TestListActivity.class);

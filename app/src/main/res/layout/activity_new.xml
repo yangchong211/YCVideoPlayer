@@ -140,7 +140,7 @@
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:background="@color/colorAccent"
-                android:text="4.2 全局视频悬浮窗，可以拖动"/>
+                android:text="4.2 视频列表中自动悬浮播放视频"/>
             <TextView
                 android:id="@+id/tv_4_3"
                 android:layout_width="match_parent"
