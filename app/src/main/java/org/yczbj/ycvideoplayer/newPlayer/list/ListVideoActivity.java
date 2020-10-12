@@ -83,7 +83,7 @@ public class ListVideoActivity extends AppCompatActivity implements View.OnClick
         //设置视频背景图
         Glide.with(this).load(R.drawable.image_default).into(controller.getThumb());
         //设置控制器
-        mVideoPlayer.setVideoController(controller);
+        mVideoPlayer.setController(controller);
         mVideoPlayer.setUrl(ConstantVideo.VideoPlayerList[0]);
         mVideoPlayer.start();
 
@@ -100,7 +100,7 @@ public class ListVideoActivity extends AppCompatActivity implements View.OnClick
                         //重新设置数据
                         VideoInfoBean videoBean = data.get(mCurrentVideoPosition);
                         mVideoPlayer.setUrl(videoBean.getVideoUrl());
-                        mVideoPlayer.setVideoController(controller);
+                        mVideoPlayer.setController(controller);
                         //开始播放
                         mVideoPlayer.start();
                     }

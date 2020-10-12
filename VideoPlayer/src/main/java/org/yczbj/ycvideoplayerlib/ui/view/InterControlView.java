@@ -32,7 +32,7 @@ import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
  *     revise:
  * </pre>
  */
-public interface IControlComponent {
+public interface InterControlView {
 
     /**
      * 这个是绑定视图操作

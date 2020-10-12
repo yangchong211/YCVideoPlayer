@@ -28,7 +28,7 @@ import androidx.annotation.Nullable;
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
-import org.yczbj.ycvideoplayerlib.ui.view.IControlComponent;
+import org.yczbj.ycvideoplayerlib.ui.view.InterControlView;
 
 /**
  * <pre>
@@ -39,7 +39,7 @@ import org.yczbj.ycvideoplayerlib.ui.view.IControlComponent;
  *     revise:
  * </pre>
  */
-public class CustomFloatView extends FrameLayout implements IControlComponent, View.OnClickListener {
+public class CustomFloatView extends FrameLayout implements InterControlView, View.OnClickListener {
 
     private ControlWrapper mControlWrapper;
     private Context mContext;

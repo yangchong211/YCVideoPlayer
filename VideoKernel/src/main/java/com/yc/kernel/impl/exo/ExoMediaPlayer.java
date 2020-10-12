@@ -27,6 +27,7 @@ import com.google.android.exoplayer2.util.EventLogger;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoListener;
 import com.yc.kernel.inter.AbstractVideoPlayer;
+import com.yc.kernel.utils.PlayerConstant;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.Map;
@@ -118,7 +119,7 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
         // 设置dataSource
         if(path==null || path.length()==0){
             if (mPlayerEventListener!=null){
-                mPlayerEventListener.onInfo(MEDIA_INFO_URL_NULL, 0);
+                mPlayerEventListener.onInfo(PlayerConstant.MEDIA_INFO_URL_NULL, 0);
             }
             return;
         }
@@ -381,12 +382,12 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
         if (mLastReportedPlayWhenReady != playWhenReady || mLastReportedPlaybackState != playbackState) {
             switch (playbackState) {
                 case Player.STATE_BUFFERING:
-                    mPlayerEventListener.onInfo(MEDIA_INFO_BUFFERING_START, getBufferedPercentage());
+                    mPlayerEventListener.onInfo(PlayerConstant.MEDIA_INFO_BUFFERING_START, getBufferedPercentage());
                     mIsBuffering = true;
                     break;
                 case Player.STATE_READY:
                     if (mIsBuffering) {
-                        mPlayerEventListener.onInfo(MEDIA_INFO_BUFFERING_END, getBufferedPercentage());
+                        mPlayerEventListener.onInfo(PlayerConstant.MEDIA_INFO_BUFFERING_END, getBufferedPercentage());
                         mIsBuffering = false;
                     }
                     break;
@@ -413,7 +414,7 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
         if (mPlayerEventListener != null) {
             mPlayerEventListener.onVideoSizeChanged(width, height);
             if (unappliedRotationDegrees > 0) {
-                mPlayerEventListener.onInfo(MEDIA_INFO_VIDEO_ROTATION_CHANGED, unappliedRotationDegrees);
+                mPlayerEventListener.onInfo(PlayerConstant.MEDIA_INFO_VIDEO_ROTATION_CHANGED, unappliedRotationDegrees);
             }
         }
     }
@@ -421,7 +422,7 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
     @Override
     public void onRenderedFirstFrame() {
         if (mPlayerEventListener != null && mIsPreparing) {
-            mPlayerEventListener.onInfo(MEDIA_INFO_VIDEO_RENDERING_START, 0);
+            mPlayerEventListener.onInfo(PlayerConstant.MEDIA_INFO_VIDEO_RENDERING_START, 0);
             mIsPreparing = false;
         }
     }

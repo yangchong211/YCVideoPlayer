@@ -8,11 +8,11 @@ import androidx.annotation.NonNull;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
-import org.yczbj.ycvideoplayerlib.ui.view.IControlComponent;
+import org.yczbj.ycvideoplayerlib.ui.view.InterControlView;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 
 
-public class PlayerMonitor implements IControlComponent {
+public class PlayerMonitor implements InterControlView {
 
     private ControlWrapper mControlWrapper;
 

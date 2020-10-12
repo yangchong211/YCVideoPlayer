@@ -29,7 +29,7 @@ import android.util.Log;
 public final class VideoLogUtils {
 
     private static final String TAG = "YCVideoPlayer";
-    private static boolean isLog = true;
+    private static boolean isLog = false;
 
     /**
      * 设置是否开启日志

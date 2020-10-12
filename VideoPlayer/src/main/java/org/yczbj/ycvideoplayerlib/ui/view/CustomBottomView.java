@@ -50,7 +50,7 @@ import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
  *     revise: 用于普通播放器
  * </pre>
  */
-public class CustomBottomView extends FrameLayout implements IControlComponent,
+public class CustomBottomView extends FrameLayout implements InterControlView,
         View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     private Context mContext;
@@ -102,7 +102,6 @@ public class CustomBottomView extends FrameLayout implements IControlComponent,
         mTvClarity = view.findViewById(R.id.tv_clarity);
         mIvFullscreen = view.findViewById(R.id.iv_fullscreen);
         mPbBottomProgress = view.findViewById(R.id.pb_bottom_progress);
-
     }
 
     private void initListener() {

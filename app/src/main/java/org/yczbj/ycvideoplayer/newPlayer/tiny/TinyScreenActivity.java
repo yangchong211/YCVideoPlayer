@@ -116,7 +116,7 @@ public class TinyScreenActivity extends AppCompatActivity implements OnItemChild
                 int position = holder.mPosition;
                 if (position == mCurPos && !mVideoPlayer.isFullScreen()) {
                     mVideoPlayer.startTinyScreen();
-                    mVideoPlayer.setVideoController(null);
+                    mVideoPlayer.setController(null);
                     mController.setPlayState(ConstantKeys.CurrentState.STATE_IDLE);
                 }
             }
@@ -144,7 +144,7 @@ public class TinyScreenActivity extends AppCompatActivity implements OnItemChild
         View itemView = mLinearLayoutManager.findViewByPosition(position);
         if (itemView == null) return;
         //注意：要先设置控制才能去设置控制器的状态。
-        mVideoPlayer.setVideoController(mController);
+        mVideoPlayer.setController(mController);
         mController.setPlayState(mVideoPlayer.getCurrentPlayState());
 
         VideoRecyclerViewAdapter.VideoHolder viewHolder = (VideoRecyclerViewAdapter.VideoHolder) itemView.getTag();

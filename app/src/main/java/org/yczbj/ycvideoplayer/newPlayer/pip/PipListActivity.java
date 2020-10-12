@@ -130,7 +130,7 @@ public class PipListActivity extends AppCompatActivity implements OnItemChildCli
         View itemView = mLinearLayoutManager.findViewByPosition(position);
         if (itemView == null) return;
         //注意：要先设置控制才能去设置控制器的状态。
-        mVideoView.setVideoController(mController);
+        mVideoView.setController(mController);
         mController.setPlayState(mVideoView.getCurrentPlayState());
 
         VideoRecyclerViewAdapter.VideoHolder viewHolder = (VideoRecyclerViewAdapter.VideoHolder) itemView.getTag();

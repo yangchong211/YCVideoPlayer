@@ -30,7 +30,7 @@ import androidx.annotation.Nullable;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
-import org.yczbj.ycvideoplayerlib.ui.view.IControlComponent;
+import org.yczbj.ycvideoplayerlib.ui.view.InterControlView;
 
 import java.util.Map;
 
@@ -213,8 +213,8 @@ public abstract class GestureVideoController extends BaseVideoController impleme
             }
 
             if (mChangePosition || mChangeBrightness || mChangeVolume) {
-                for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
-                    IControlComponent component = next.getKey();
+                for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
+                    InterControlView component = next.getKey();
                     if (component instanceof IGestureComponent) {
                         ((IGestureComponent) component).onStartSlide();
                     }
@@ -240,8 +240,8 @@ public abstract class GestureVideoController extends BaseVideoController impleme
         int position = (int) (deltaX / width * 120000 + currentPosition);
         if (position > duration) position = duration;
         if (position < 0) position = 0;
-        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
-            IControlComponent component = next.getKey();
+        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
+            InterControlView component = next.getKey();
             if (component instanceof IGestureComponent) {
                 ((IGestureComponent) component).onPositionChange(position, currentPosition, duration);
             }
@@ -264,8 +264,8 @@ public abstract class GestureVideoController extends BaseVideoController impleme
         int percent = (int) (brightness * 100);
         attributes.screenBrightness = brightness;
         window.setAttributes(attributes);
-        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
-            IControlComponent component = next.getKey();
+        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
+            InterControlView component = next.getKey();
             if (component instanceof IGestureComponent) {
                 ((IGestureComponent) component).onBrightnessChange(percent);
             }
@@ -281,8 +281,8 @@ public abstract class GestureVideoController extends BaseVideoController impleme
         if (index < 0) index = 0;
         int percent = (int) (index / streamMaxVolume * 100);
         mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int) index, 0);
-        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
-            IControlComponent component = next.getKey();
+        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
+            InterControlView component = next.getKey();
             if (component instanceof IGestureComponent) {
                 ((IGestureComponent) component).onVolumeChange(percent);
             }
@@ -312,8 +312,8 @@ public abstract class GestureVideoController extends BaseVideoController impleme
     }
 
     private void stopSlide() {
-        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
-            IControlComponent component = next.getKey();
+        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
+            InterControlView component = next.getKey();
             if (component instanceof IGestureComponent) {
                 ((IGestureComponent) component).onStopSlide();
             }

@@ -62,7 +62,7 @@ public class SeamlessPlayFragment extends RecyclerViewAutoPlayFragment {
 
     @Override
     protected void startPlay(int position) {
-        mVideoView.setVideoController(mController);
+        mVideoView.setController(mController);
         super.startPlay(position);
     }
 
@@ -139,7 +139,7 @@ public class SeamlessPlayFragment extends RecyclerViewAutoPlayFragment {
         mRecyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mVideoView.setVideoController(mController);
+                mVideoView.setController(mController);
             }
         }, 100);
     }

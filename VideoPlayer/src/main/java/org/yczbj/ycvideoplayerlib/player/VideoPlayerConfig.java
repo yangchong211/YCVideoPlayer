@@ -28,7 +28,10 @@ public class VideoPlayerConfig {
 
     public final static class Builder {
 
-        private boolean mIsEnableLog;
+        /**
+         * 默认是关闭日志的
+         */
+        private boolean mIsEnableLog = false;
         private boolean mPlayOnMobileNetwork;
         private boolean mEnableOrientation;
         private boolean mEnableAudioFocus = true;

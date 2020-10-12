@@ -102,7 +102,7 @@ public class RecyclerViewFragment extends Fragment implements OnItemChildClickLi
             }
         });
         mController = new BasisVideoController(getActivity());
-        mVideoView.setVideoController(mController);
+        mVideoView.setController(mController);
     }
 
     protected void initData() {

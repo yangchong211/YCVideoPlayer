@@ -67,7 +67,7 @@ public class PipActivity extends AppCompatActivity{
         mPIPManager = FloatVideoManager.getInstance(this);
         VideoPlayer videoView = VideoViewManager.instance().get(FloatVideoManager.PIP);
         BasisVideoController controller = new BasisVideoController(this);
-        videoView.setVideoController(controller);
+        videoView.setController(controller);
         if (mPIPManager.isStartFloatWindow()) {
             mPIPManager.stopFloatWindow();
             controller.setPlayerState(videoView.getCurrentPlayerState());

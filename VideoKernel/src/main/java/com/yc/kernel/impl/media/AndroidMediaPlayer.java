@@ -25,6 +25,8 @@ import android.os.Build;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import com.yc.kernel.inter.AbstractVideoPlayer;
+import com.yc.kernel.utils.PlayerConstant;
+
 import java.util.Map;
 
 
@@ -83,7 +85,7 @@ public class AndroidMediaPlayer extends AbstractVideoPlayer {
         // 设置dataSource
         if(path==null || path.length()==0){
             if (mPlayerEventListener!=null){
-                mPlayerEventListener.onInfo(MEDIA_INFO_URL_NULL, 0);
+                mPlayerEventListener.onInfo(PlayerConstant.MEDIA_INFO_URL_NULL, 0);
             }
             return;
         }
@@ -351,7 +353,7 @@ public class AndroidMediaPlayer extends AbstractVideoPlayer {
         @Override
         public boolean onInfo(MediaPlayer mp, int what, int extra) {
             //解决MEDIA_INFO_VIDEO_RENDERING_START多次回调问题
-            if (what == AbstractVideoPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+            if (what == PlayerConstant.MEDIA_INFO_VIDEO_RENDERING_START) {
                 if (mIsPreparing) {
                     mPlayerEventListener.onInfo(what, extra);
                     mIsPreparing = false;

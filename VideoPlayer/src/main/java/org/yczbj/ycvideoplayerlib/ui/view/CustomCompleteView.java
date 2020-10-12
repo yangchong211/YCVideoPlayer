@@ -46,7 +46,7 @@ import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
  *     revise:
  * </pre>
  */
-public class CustomCompleteView extends FrameLayout implements IControlComponent, View.OnClickListener {
+public class CustomCompleteView extends FrameLayout implements InterControlView, View.OnClickListener {
 
     private Context mContext;
     private ControlWrapper mControlWrapper;

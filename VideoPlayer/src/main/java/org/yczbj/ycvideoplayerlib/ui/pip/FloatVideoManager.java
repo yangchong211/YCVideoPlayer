@@ -67,7 +67,7 @@ public class FloatVideoManager {
             return;
         }
         PlayerUtils.removeViewFormParent(mVideoPlayer);
-        mVideoPlayer.setVideoController(mFloatController);
+        mVideoPlayer.setController(mFloatController);
         mFloatController.setPlayState(mVideoPlayer.getCurrentPlayState());
         mFloatController.setPlayerState(mVideoPlayer.getCurrentPlayerState());
         mFloatView.addView(mVideoPlayer);
@@ -112,7 +112,7 @@ public class FloatVideoManager {
         }
         PlayerUtils.removeViewFormParent(mVideoPlayer);
         mVideoPlayer.release();
-        mVideoPlayer.setVideoController(null);
+        mVideoPlayer.setController(null);
         mPlayingPosition = -1;
         mActClass = null;
     }

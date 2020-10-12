@@ -28,6 +28,7 @@ import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.tool.VideoException;
 
 import com.yc.kernel.inter.VideoPlayerListener;
+import com.yc.kernel.utils.PlayerConstant;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import java.io.IOException;
@@ -156,15 +157,21 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
     private void init(AttributeSet attrs) {
         BaseToast.init(mContext.getApplicationContext());
         //读取全局配置
+        initConfig();
+        //读取xml中的配置，并综合全局配置
+        initAttrs(attrs);
+        initView();
+    }
+
+    private void initConfig() {
         VideoPlayerConfig config = VideoViewManager.getConfig();
         mEnableAudioFocus = config.mEnableAudioFocus;
         mProgressManager = config.mProgressManager;
         mPlayerFactory = config.mPlayerFactory;
         mCurrentScreenScaleType = config.mScreenScaleType;
         mRenderViewFactory = config.mRenderViewFactory;
-        //读取xml中的配置，并综合全局配置
-        initAttrs(attrs);
-        initView();
+        //设置是否打印日志
+        VideoLogUtils.setIsLog(config.mIsEnableLog);
     }
 
     @Override
@@ -233,7 +240,7 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      * 设置控制器，传null表示移除控制器
      * @param mediaController                           controller
      */
-    public void setVideoController(@Nullable BaseVideoController mediaController) {
+    public void setController(@Nullable BaseVideoController mediaController) {
         mPlayerContainer.removeView(mVideoController);
         mVideoController = mediaController;
         if (mediaController != null) {
@@ -614,19 +621,19 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
     @Override
     public void onInfo(int what, int extra) {
         switch (what) {
-            case AbstractVideoPlayer.MEDIA_INFO_BUFFERING_START:
+            case PlayerConstant.MEDIA_INFO_BUFFERING_START:
                 setPlayState(ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED);
                 break;
-            case AbstractVideoPlayer.MEDIA_INFO_BUFFERING_END:
+            case PlayerConstant.MEDIA_INFO_BUFFERING_END:
                 setPlayState(ConstantKeys.CurrentState.STATE_COMPLETED);
                 break;
-            case AbstractVideoPlayer.MEDIA_INFO_VIDEO_RENDERING_START: // 视频开始渲染
+            case PlayerConstant.MEDIA_INFO_VIDEO_RENDERING_START: // 视频开始渲染
                 setPlayState(ConstantKeys.CurrentState.STATE_PLAYING);
                 if (mPlayerContainer.getWindowVisibility() != VISIBLE) {
                     pause();
                 }
                 break;
-            case AbstractVideoPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED:
+            case PlayerConstant.MEDIA_INFO_VIDEO_ROTATION_CHANGED:
                 if (mRenderView != null)
                     mRenderView.setVideoRotation(extra);
                 break;
@@ -864,7 +871,6 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
     public void onVideoSizeChanged(int videoWidth, int videoHeight) {
         mVideoSize[0] = videoWidth;
         mVideoSize[1] = videoHeight;
-
         if (mRenderView != null) {
             mRenderView.setScaleType(mCurrentScreenScaleType);
             mRenderView.setVideoSize(videoWidth, videoHeight);

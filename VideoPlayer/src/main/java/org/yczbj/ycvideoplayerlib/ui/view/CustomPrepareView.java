@@ -43,7 +43,7 @@ import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
  *     revise:
  * </pre>
  */
-public class CustomPrepareView extends FrameLayout implements IControlComponent {
+public class CustomPrepareView extends FrameLayout implements InterControlView {
 
     private Context mContext;
     private ControlWrapper mControlWrapper;

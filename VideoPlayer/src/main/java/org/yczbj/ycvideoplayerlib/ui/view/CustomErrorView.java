@@ -41,7 +41,7 @@ import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
  *     revise:
  * </pre>
  */
-public class CustomErrorView extends LinearLayout implements IControlComponent {
+public class CustomErrorView extends LinearLayout implements InterControlView {
 
     private Context mContext;
     private float mDownX;

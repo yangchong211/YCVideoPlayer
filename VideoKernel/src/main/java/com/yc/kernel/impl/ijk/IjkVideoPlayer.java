@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import com.yc.kernel.inter.AbstractVideoPlayer;
+import com.yc.kernel.utils.PlayerConstant;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.Map;
@@ -153,7 +154,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
         // 设置dataSource
         if(path==null || path.length()==0){
             if (mPlayerEventListener!=null){
-                mPlayerEventListener.onInfo(MEDIA_INFO_URL_NULL, 0);
+                mPlayerEventListener.onInfo(PlayerConstant.MEDIA_INFO_URL_NULL, 0);
             }
             return;
         }

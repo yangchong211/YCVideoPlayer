@@ -47,7 +47,7 @@ import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
  *     revise:
  * </pre>
  */
-public class CustomTitleView extends FrameLayout implements IControlComponent, View.OnClickListener {
+public class CustomTitleView extends FrameLayout implements InterControlView, View.OnClickListener {
 
     private Context mContext;
     private ControlWrapper mControlWrapper;

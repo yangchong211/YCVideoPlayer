@@ -48,7 +48,7 @@ public class DetailActivity extends AppCompatActivity {
         mPlayerContainer.addView(mVideoView);
         //设置新的控制器
         BasisVideoController controller = new BasisVideoController(DetailActivity.this);
-        mVideoView.setVideoController(controller);
+        mVideoView.setController(controller);
 
         Intent intent = getIntent();
         boolean seamlessPlay = intent.getBooleanExtra(IntentKeys.SEAMLESS_PLAY, false);
@@ -104,7 +104,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onPause() {
         if (isFinishing()) {
             //移除Controller
-            mVideoView.setVideoController(null);
+            mVideoView.setController(null);
             //将VideoView置空，其目的是不执行 super.onPause(); 和 super.onDestroy(); 中的代码
             mVideoView = null;
         }

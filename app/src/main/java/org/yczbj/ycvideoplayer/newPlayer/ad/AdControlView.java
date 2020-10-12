@@ -16,11 +16,11 @@ import androidx.annotation.Nullable;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
-import org.yczbj.ycvideoplayerlib.ui.view.IControlComponent;
+import org.yczbj.ycvideoplayerlib.ui.view.InterControlView;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 
 
-public class AdControlView extends FrameLayout implements IControlComponent, View.OnClickListener {
+public class AdControlView extends FrameLayout implements InterControlView, View.OnClickListener {
 
     protected TextView mAdTime, mAdDetail;
     protected ImageView mBack, mVolume, mFullScreen, mPlayButton;

@@ -82,7 +82,7 @@ public class DanmuActivity extends BaseActivity implements View.OnClickListener 
         //设置视频背景图
         Glide.with(this).load(R.drawable.image_default).into(controller.getThumb());
         //设置控制器
-        mVideoPlayer.setVideoController(controller);
+        mVideoPlayer.setController(controller);
         mVideoPlayer.setUrl(ConstantVideo.VideoPlayerList[0]);
         mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_16_9);
         mVideoPlayer.start();

@@ -125,7 +125,7 @@ public class TikTok2Activity extends AppCompatActivity {
         //以下只能二选一，看你的需求
         mVideoPlayer.setRenderViewFactory(TikTokRenderViewFactory.create());
         mController = new BasisVideoController(this);
-        mVideoPlayer.setVideoController(mController);
+        mVideoPlayer.setController(mController);
     }
 
     private void initViewPager() {

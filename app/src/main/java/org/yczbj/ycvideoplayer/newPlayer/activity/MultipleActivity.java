@@ -46,7 +46,7 @@ public class MultipleActivity extends AppCompatActivity {
         player1.setVideoBuilder(videoPlayerBuilder);
 
         BasisVideoController controller1 = new BasisVideoController(this);
-        player1.setVideoController(controller1);
+        player1.setController(controller1);
         mVideoViews.add(player1);
 
         player2.setUrl(VOD_URL_2);
@@ -56,7 +56,7 @@ public class MultipleActivity extends AppCompatActivity {
         VideoPlayerBuilder videoPlayerBuilder2 = new VideoPlayerBuilder(builder2);
         player2.setVideoBuilder(videoPlayerBuilder2);
         BasisVideoController controller2 = new BasisVideoController(this);
-        player2.setVideoController(controller2);
+        player2.setController(controller2);
         mVideoViews.add(player2);
     }
 

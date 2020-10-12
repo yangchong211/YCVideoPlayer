@@ -77,13 +77,17 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initVideoPlayer() {
+        String url = ConstantVideo.VideoPlayerList[0];
+        //创建基础视频播放器，一般播放器的功能
         BasisVideoController controller = new BasisVideoController(this);
+        //设置控制器
+        mVideoPlayer.setController(controller);
+        //设置视频播放链接地址
+        mVideoPlayer.setUrl(url);
+        //开始播放
+        mVideoPlayer.start();
         //设置视频背景图
         Glide.with(this).load(R.drawable.image_default).into(controller.getThumb());
-        //设置控制器
-        mVideoPlayer.setVideoController(controller);
-        mVideoPlayer.setUrl(ConstantVideo.VideoPlayerList[0]);
-        mVideoPlayer.start();
     }
 
     private void initListener() {

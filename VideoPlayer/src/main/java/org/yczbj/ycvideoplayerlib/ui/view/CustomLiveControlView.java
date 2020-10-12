@@ -43,7 +43,7 @@ import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
  *     revise: 用于直播
  * </pre>
  */
-public class CustomLiveControlView extends FrameLayout implements IControlComponent, View.OnClickListener {
+public class CustomLiveControlView extends FrameLayout implements InterControlView, View.OnClickListener {
 
     private Context mContext;
     private ControlWrapper mControlWrapper;

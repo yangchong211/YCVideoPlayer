@@ -38,7 +38,7 @@ import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.StatesCutoutUtils;
 import org.yczbj.ycvideoplayerlib.tool.NetworkUtils;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
-import org.yczbj.ycvideoplayerlib.ui.view.IControlComponent;
+import org.yczbj.ycvideoplayerlib.ui.view.InterControlView;
 
 import com.yc.kernel.utils.VideoLogUtils;
 
@@ -97,23 +97,54 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     private boolean mIsStartProgress;
 
     //保存了所有的控制组件
-    protected LinkedHashMap<IControlComponent, Boolean> mControlComponents = new LinkedHashMap<>();
+    protected LinkedHashMap<InterControlView, Boolean> mControlComponents = new LinkedHashMap<>();
 
     private Animation mShowAnim;
     private Animation mHideAnim;
 
     public BaseVideoController(@NonNull Context context) {
+        //创建
         this(context, null);
     }
 
     public BaseVideoController(@NonNull Context context, @Nullable AttributeSet attrs) {
+        //创建
         this(context, attrs, 0);
-
     }
 
     public BaseVideoController(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mShowAnim != null){
+            mShowAnim.cancel();
+            mShowAnim = null;
+        }
+        if (mHideAnim != null){
+            mHideAnim.cancel();
+            mHideAnim = null;
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
+        if (mControlWrapper.isPlaying() && (mEnableOrientation || mControlWrapper.isFullScreen())) {
+            if (hasWindowFocus) {
+                postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mOrientationHelper.enable();
+                    }
+                }, 800);
+            } else {
+                mOrientationHelper.disable();
+            }
+        }
     }
 
     protected void initView(Context context) {
@@ -123,12 +154,10 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
         mOrientationHelper = new OrientationHelper(context.getApplicationContext());
         mEnableOrientation = VideoViewManager.getConfig().mEnableOrientation;
         mAdaptCutout = VideoViewManager.getConfig().mAdaptCutout;
-
         mShowAnim = new AlphaAnimation(0f, 1f);
         mShowAnim.setDuration(300);
         mHideAnim = new AlphaAnimation(1f, 0f);
         mHideAnim.setDuration(300);
-
         mActivity = PlayerUtils.scanForActivity(context);
     }
 
@@ -144,8 +173,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     public void setMediaPlayer(InterVideoPlayer mediaPlayer) {
         mControlWrapper = new ControlWrapper(mediaPlayer, this);
         //绑定ControlComponent和Controller
-        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
-            IControlComponent component = next.getKey();
+        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
+            InterControlView component = next.getKey();
             component.attach(mControlWrapper);
         }
         //开始监听设备方向
@@ -155,8 +184,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     /**
      * 添加控制组件，最后面添加的在最下面，合理组织添加顺序，可让ControlComponent位于不同的层级
      */
-    public void addControlComponent(IControlComponent... component) {
-        for (IControlComponent item : component) {
+    public void addControlComponent(InterControlView... component) {
+        for (InterControlView item : component) {
             addControlComponent(item, false);
         }
     }
@@ -166,7 +195,7 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
      *
      * @param isPrivate 是否为独有的组件，如果是就不添加到控制器中
      */
-    public void addControlComponent(IControlComponent component, boolean isPrivate) {
+    public void addControlComponent(InterControlView component, boolean isPrivate) {
         mControlComponents.put(component, isPrivate);
         if (mControlWrapper != null) {
             component.attach(mControlWrapper);
@@ -180,22 +209,22 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     /**
      * 移除控制组件
      */
-    public void removeControlComponent(IControlComponent component) {
+    public void removeControlComponent(InterControlView component) {
         removeView(component.getView());
         mControlComponents.remove(component);
     }
 
     public void removeAllControlComponent() {
-        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
+        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
             removeView(next.getKey().getView());
         }
         mControlComponents.clear();
     }
 
     public void removeAllPrivateComponents() {
-        Iterator<Map.Entry<IControlComponent, Boolean>> it = mControlComponents.entrySet().iterator();
+        Iterator<Map.Entry<InterControlView, Boolean>> it = mControlComponents.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<IControlComponent, Boolean> next = it.next();
+            Map.Entry<InterControlView, Boolean> next = it.next();
             if (next.getValue()) {
                 it.remove();
             }
@@ -300,7 +329,9 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
      */
     @Override
     public void startProgress() {
-        if (mIsStartProgress) return;
+        if (mIsStartProgress) {
+            return;
+        }
         post(mShowProgress);
         mIsStartProgress = true;
     }
@@ -437,24 +468,6 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
         return false;
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
-        if (mControlWrapper.isPlaying()
-                && (mEnableOrientation || mControlWrapper.isFullScreen())) {
-            if (hasWindowFocus) {
-                postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mOrientationHelper.enable();
-                    }
-                }, 800);
-            } else {
-                mOrientationHelper.disable();
-            }
-        }
-    }
-
     /**
      * 是否自动旋转， 默认不自动旋转
      */
@@ -549,8 +562,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     private void handleVisibilityChanged(boolean isVisible, Animation anim) {
         if (!mIsLocked) {
             //没锁住时才向ControlComponent下发此事件
-            for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
-                IControlComponent component = next.getKey();
+            for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
+                InterControlView component = next.getKey();
                 component.onVisibilityChanged(isVisible, anim);
             }
         }
@@ -568,8 +581,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     }
 
     private void handlePlayStateChanged(int playState) {
-        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
-            IControlComponent component = next.getKey();
+        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
+            InterControlView component = next.getKey();
             component.onPlayStateChanged(playState);
         }
         onPlayStateChanged(playState);
@@ -598,9 +611,13 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
         }
     }
 
+    /**
+     * 播放器状态改变
+     * @param playerState                       播放器状态
+     */
     private void handlePlayerStateChanged(int playerState) {
-        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
-            IControlComponent component = next.getKey();
+        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
+            InterControlView component = next.getKey();
             component.onPlayerStateChanged(playerState);
         }
         onPlayerStateChanged(playerState);
@@ -636,8 +653,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     }
 
     private void handleSetProgress(int duration, int position) {
-        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
-            IControlComponent component = next.getKey();
+        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
+            InterControlView component = next.getKey();
             component.setProgress(duration, position);
         }
         setProgress(duration, position);
@@ -654,8 +671,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     }
 
     private void handleLockStateChanged(boolean isLocked) {
-        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
-            IControlComponent component = next.getKey();
+        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
+            InterControlView component = next.getKey();
             component.onLockStateChanged(isLocked);
         }
         onLockStateChanged(isLocked);

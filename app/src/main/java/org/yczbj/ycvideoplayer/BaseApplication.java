@@ -54,23 +54,10 @@ public class BaseApplication extends Application {
         ScreenDensityUtils.setup(this);
         ScreenDensityUtils.register(this,375.0f,
                 ScreenDensityUtils.MATCH_BASE_WIDTH,ScreenDensityUtils.MATCH_UNIT_DP);
-        if(BuildConfig.DEBUG){
-            VideoLogUtils.setIsLog(true);
-        }else {
-            VideoLogUtils.setIsLog(false);
-        }
         //播放器配置，注意：此为全局配置，按需开启
         VideoViewManager.setConfig(VideoPlayerConfig.newBuilder()
-                .setLogEnabled(BuildConfig.DEBUG)//调试的时候请打开日志，方便排错
+                .setLogEnabled(true)//调试的时候请打开日志，方便排错
                 .setPlayerFactory(IjkPlayerFactory.create())
-//                .setPlayerFactory(ExoMediaPlayerFactory.create())
-//                .setRenderViewFactory(SurfaceRenderViewFactory.create())
-//                .setEnableOrientation(true)
-//                .setEnableAudioFocus(false)
-//                .setScreenScaleType(VideoView.SCREEN_SCALE_MATCH_PARENT)
-//                .setAdaptCutout(false)
-//                .setPlayOnMobileNetwork(true)
-//                .setProgressManager(new ProgressManagerImpl())
                 .build());
     }
 

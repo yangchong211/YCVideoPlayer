@@ -99,7 +99,7 @@ public class ClarityActivity extends AppCompatActivity implements View.OnClickLi
         //设置视频背景图
         Glide.with(this).load(R.drawable.image_default).into(controller.getThumb());
         //设置控制器
-        mVideoPlayer.setVideoController(controller);
+        mVideoPlayer.setController(controller);
         mVideoPlayer.setUrl(clarites.get(0).getVideoUrl());
         mVideoPlayer.start();
     }

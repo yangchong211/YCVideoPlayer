@@ -15,9 +15,9 @@ limitations under the License.
 */
 package org.yczbj.ycvideoplayerlib.controller;
 
-import org.yczbj.ycvideoplayerlib.ui.view.IControlComponent;
+import org.yczbj.ycvideoplayerlib.ui.view.InterControlView;
 
-public interface IGestureComponent extends IControlComponent {
+public interface IGestureComponent extends InterControlView {
     /**
      * 开始滑动
      */

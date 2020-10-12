@@ -97,7 +97,7 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
         //设置视频背景图
         Glide.with(this).load(R.drawable.image_default).into(controller.getThumb());
         //设置控制器
-        mVideoPlayer.setVideoController(controller);
+        mVideoPlayer.setController(controller);
         HttpProxyCacheServer cacheServer = ProxyVideoCacheManager.getProxy(this);
         String proxyUrl = cacheServer.getProxyUrl(URL_AD);
         mVideoPlayer.setUrl(proxyUrl);
