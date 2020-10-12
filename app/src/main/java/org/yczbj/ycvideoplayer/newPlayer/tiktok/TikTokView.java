@@ -19,7 +19,7 @@ import com.yc.kernel.utils.VideoLogUtils;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
-import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
+import org.yczbj.ycvideoplayerlib.ui.view.IControlComponent;
 
 public class TikTokView extends FrameLayout implements IControlComponent {
 

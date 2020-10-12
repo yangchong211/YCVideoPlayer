@@ -1,11 +1,11 @@
-package org.yczbj.ycvideoplayerlib.config;
+package org.yczbj.ycvideoplayerlib.player;
 
 
 import androidx.annotation.Nullable;
 
 import com.yc.kernel.factory.PlayerFactory;
 import com.yc.kernel.impl.media.MediaPlayerFactory;
-import org.yczbj.ycvideoplayerlib.player.ProgressManager;
+
 import org.yczbj.ycvideoplayerlib.surface.SurfaceFactory;
 import org.yczbj.ycvideoplayerlib.surface.TextureViewFactory;
 
@@ -20,29 +20,11 @@ import org.yczbj.ycvideoplayerlib.surface.TextureViewFactory;
  *     revise:
  * </pre>
  */
-public class PlayerConfig {
+public class VideoPlayerConfig {
 
     public static Builder newBuilder() {
         return new Builder();
     }
-
-    public final boolean mPlayOnMobileNetwork;
-
-    public final boolean mEnableOrientation;
-
-    public final boolean mEnableAudioFocus;
-
-    public final boolean mIsEnableLog;
-
-    public final ProgressManager mProgressManager;
-
-    public final PlayerFactory mPlayerFactory;
-
-    public final int mScreenScaleType;
-
-    public final SurfaceFactory mRenderViewFactory;
-
-    public final boolean mAdaptCutout;
 
     public final static class Builder {
 
@@ -128,15 +110,23 @@ public class PlayerConfig {
             return this;
         }
 
-        public PlayerConfig build() {
+        public VideoPlayerConfig build() {
             //创建builder对象
-            return new PlayerConfig(this);
+            return new VideoPlayerConfig(this);
         }
     }
 
+    public final boolean mPlayOnMobileNetwork;
+    public final boolean mEnableOrientation;
+    public final boolean mEnableAudioFocus;
+    public final boolean mIsEnableLog;
+    public final ProgressManager mProgressManager;
+    public final PlayerFactory mPlayerFactory;
+    public final int mScreenScaleType;
+    public final SurfaceFactory mRenderViewFactory;
+    public final boolean mAdaptCutout;
 
-
-    private PlayerConfig(Builder builder) {
+    private VideoPlayerConfig(Builder builder) {
         mIsEnableLog = builder.mIsEnableLog;
         mEnableOrientation = builder.mEnableOrientation;
         mPlayOnMobileNetwork = builder.mPlayOnMobileNetwork;

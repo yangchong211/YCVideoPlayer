@@ -21,7 +21,6 @@ import org.yczbj.ycvideoplayerlib.controller.BaseVideoController;
 import com.yc.kernel.inter.AbstractVideoPlayer;
 import com.yc.kernel.factory.PlayerFactory;
 
-import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
 import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
 import org.yczbj.ycvideoplayerlib.surface.SurfaceFactory;
 import org.yczbj.ycvideoplayerlib.tool.BaseToast;
@@ -157,7 +156,7 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
     private void init(AttributeSet attrs) {
         BaseToast.init(mContext.getApplicationContext());
         //读取全局配置
-        PlayerConfig config = VideoViewManager.getConfig();
+        VideoPlayerConfig config = VideoViewManager.getConfig();
         mEnableAudioFocus = config.mEnableAudioFocus;
         mProgressManager = config.mProgressManager;
         mPlayerFactory = config.mPlayerFactory;

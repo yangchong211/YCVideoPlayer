@@ -35,7 +35,6 @@ import androidx.annotation.Nullable;
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
-import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 
 
@@ -152,7 +151,6 @@ public class CustomTitleView extends FrameLayout implements IControlComponent, V
     @Override
     public void onVisibilityChanged(boolean isVisible, Animation anim) {
         //只在全屏时才有效
-        if (!mControlWrapper.isFullScreen()) return;
         if (isVisible) {
             if (getVisibility() == GONE) {
                 mTvSysTime.setText(PlayerUtils.getCurrentSystemTime());
@@ -167,6 +165,17 @@ public class CustomTitleView extends FrameLayout implements IControlComponent, V
                 if (anim != null) {
                     startAnimation(anim);
                 }
+            }
+        }
+        if (getVisibility() == VISIBLE) {
+            if (mControlWrapper.isFullScreen()) {
+                //显示电量
+                mIvBattery.setVisibility(VISIBLE);
+                mTvSysTime.setVisibility(VISIBLE);
+            } else {
+                //不显示电量
+                mIvBattery.setVisibility(GONE);
+                mTvSysTime.setVisibility(GONE);
             }
         }
     }
@@ -202,12 +211,19 @@ public class CustomTitleView extends FrameLayout implements IControlComponent, V
         if (activity != null && mControlWrapper.hasCutout()) {
             int orientation = activity.getRequestedOrientation();
             int cutoutHeight = mControlWrapper.getCutoutHeight();
+            //设置屏幕的变化是，标题的值。后期有需要在暴露给开发者设置
             if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-                mLlTitleContainer.setPadding(0, 0, 0, 0);
+                //切换成竖屏的时候调用
+                mLlTitleContainer.setPadding(PlayerUtils.dp2px(mContext,12),
+                        PlayerUtils.dp2px(mContext,10), PlayerUtils.dp2px(mContext,12), 0);
             } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-                mLlTitleContainer.setPadding(cutoutHeight, 0, 0, 0);
+                //切换成横屏的时候调用
+                mLlTitleContainer.setPadding(cutoutHeight, 0, PlayerUtils.dp2px(mContext,12), 0);
             } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
                 mLlTitleContainer.setPadding(0, 0, cutoutHeight, 0);
+            } else {
+                mLlTitleContainer.setPadding(PlayerUtils.dp2px(mContext,12),
+                        PlayerUtils.dp2px(mContext,10), PlayerUtils.dp2px(mContext,12), 0);
             }
         }
     }

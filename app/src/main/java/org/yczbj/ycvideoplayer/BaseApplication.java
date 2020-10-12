@@ -9,7 +9,7 @@ import android.util.Log;
 import com.yc.kernel.impl.ijk.IjkPlayerFactory;
 import com.yc.kernel.utils.VideoLogUtils;
 
-import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayerConfig;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 
 /**
@@ -60,7 +60,7 @@ public class BaseApplication extends Application {
             VideoLogUtils.setIsLog(false);
         }
         //播放器配置，注意：此为全局配置，按需开启
-        VideoViewManager.setConfig(PlayerConfig.newBuilder()
+        VideoViewManager.setConfig(VideoPlayerConfig.newBuilder()
                 .setLogEnabled(BuildConfig.DEBUG)//调试的时候请打开日志，方便排错
                 .setPlayerFactory(IjkPlayerFactory.create())
 //                .setPlayerFactory(ExoMediaPlayerFactory.create())

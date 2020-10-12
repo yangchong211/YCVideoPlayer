@@ -43,7 +43,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayerConfig;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 
 import java.lang.reflect.Field;
@@ -506,7 +506,7 @@ public final class PlayerUtils {
      * 获取当前的播放核心
      */
     public static Object getCurrentPlayerFactory() {
-        PlayerConfig config = VideoViewManager.getConfig();
+        VideoPlayerConfig config = VideoViewManager.getConfig();
         Object playerFactory = null;
         try {
             Field mPlayerFactoryField = config.getClass().getDeclaredField("mPlayerFactory");

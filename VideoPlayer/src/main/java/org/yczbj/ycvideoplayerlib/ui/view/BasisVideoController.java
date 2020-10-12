@@ -103,7 +103,18 @@ public class BasisVideoController extends GestureVideoController implements View
         thumb = prepareView.getThumb();
         prepareView.setClickStart();
         this.addControlComponent(prepareView);
+        addDefaultControlComponent("",false);
+    }
 
+
+
+    /**
+     * 快速添加各个组件
+     * 需要注意各个层级
+     * @param title                             标题
+     * @param isLive                            是否为直播
+     */
+    public void addDefaultControlComponent(String title, boolean isLive) {
         //添加自动完成播放界面view
         CustomCompleteView completeView = new CustomCompleteView(mContext);
         completeView.setVisibility(GONE);
@@ -114,43 +125,32 @@ public class BasisVideoController extends GestureVideoController implements View
         errorView.setVisibility(GONE);
         this.addControlComponent(errorView);
 
+        //添加与加载视图界面view，准备播放界面
+        CustomPrepareView prepareView = new CustomPrepareView(mContext);
+        thumb = prepareView.getThumb();
+        prepareView.setClickStart();
+        this.addControlComponent(prepareView);
+
         //添加标题栏
         CustomTitleView titleView = new CustomTitleView(mContext);
+        titleView.setTitle(title);
         titleView.setVisibility(VISIBLE);
         this.addControlComponent(titleView);
 
-        //添加底部播放控制条
-        CustomBottomView vodControlView = new CustomBottomView(mContext);
-        //是否显示底部进度条。默认显示
-        vodControlView.showBottomProgress(true);
-        this.addControlComponent(vodControlView);
-
+        if (isLive) {
+            //添加底部播放控制条
+            CustomLiveControlView liveControlView = new CustomLiveControlView(mContext);
+            this.addControlComponent(liveControlView);
+        } else {
+            //添加底部播放控制条
+            CustomBottomView vodControlView = new CustomBottomView(mContext);
+            //是否显示底部进度条。默认显示
+            vodControlView.showBottomProgress(true);
+            this.addControlComponent(vodControlView);
+        }
         //添加滑动控制视图
         CustomGestureView gestureControlView = new CustomGestureView(mContext);
         this.addControlComponent(gestureControlView);
-    }
-
-
-
-    /**
-     * 快速添加各个组件
-     * @param title  标题
-     * @param isLive 是否为直播
-     */
-    public void addDefaultControlComponent(String title, boolean isLive) {
-        CustomCompleteView completeView = new CustomCompleteView(getContext());
-        CustomErrorView errorView = new CustomErrorView(getContext());
-        CustomPrepareView prepareView = new CustomPrepareView(getContext());
-        prepareView.setClickStart();
-        CustomTitleView titleView = new CustomTitleView(getContext());
-        titleView.setTitle(title);
-        addControlComponent(completeView, errorView, prepareView, titleView);
-        if (isLive) {
-            addControlComponent(new CustomLiveControlView(getContext()));
-        } else {
-            addControlComponent(new CustomBottomView(getContext()));
-        }
-        addControlComponent(new CustomGestureView(getContext()));
         setCanChangePosition(!isLive);
     }
 

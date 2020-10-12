@@ -2,8 +2,6 @@ package org.yczbj.ycvideoplayerlib.player;
 
 import android.app.Application;
 
-import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
-
 import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.LinkedHashMap;
@@ -33,7 +31,7 @@ public class VideoViewManager {
     /**
      * VideoViewConfig实例
      */
-    private static PlayerConfig sConfig;
+    private static VideoPlayerConfig sConfig;
 
     private VideoViewManager() {
         mPlayOnMobileNetwork = getConfig().mPlayOnMobileNetwork;
@@ -42,11 +40,11 @@ public class VideoViewManager {
     /**
      * 设置VideoViewConfig
      */
-    public static void setConfig(PlayerConfig config) {
+    public static void setConfig(VideoPlayerConfig config) {
         if (sConfig == null) {
-            synchronized (PlayerConfig.class) {
+            synchronized (VideoPlayerConfig.class) {
                 if (sConfig == null) {
-                    sConfig = config == null ? PlayerConfig.newBuilder().build() : config;
+                    sConfig = config == null ? VideoPlayerConfig.newBuilder().build() : config;
                 }
             }
         }
@@ -55,7 +53,7 @@ public class VideoViewManager {
     /**
      * 获取VideoViewConfig
      */
-    public static PlayerConfig getConfig() {
+    public static VideoPlayerConfig getConfig() {
         setConfig(null);
         return sConfig;
     }

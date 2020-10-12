@@ -30,7 +30,6 @@ import android.widget.TextView;
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
-import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
 
 
 /**

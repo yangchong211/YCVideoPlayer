@@ -25,7 +25,7 @@ import com.yc.kernel.impl.exo.ExoPlayerFactory;
 import com.yc.kernel.impl.ijk.IjkPlayerFactory;
 import com.yc.kernel.impl.media.MediaPlayerFactory;
 import com.yc.kernel.factory.PlayerFactory;
-import org.yczbj.ycvideoplayerlib.config.PlayerConfig;
+import org.yczbj.ycvideoplayerlib.player.VideoPlayerConfig;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.tool.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
@@ -189,7 +189,7 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("SetTextI18n")
     private void setChangeVideoType(@ConstantKeys.PlayerType int type){
         //切换播放核心，不推荐这么做，我这么写只是为了方便测试
-        PlayerConfig config = VideoViewManager.getConfig();
+        VideoPlayerConfig config = VideoViewManager.getConfig();
         try {
             Field mPlayerFactoryField = config.getClass().getDeclaredField("mPlayerFactory");
             mPlayerFactoryField.setAccessible(true);

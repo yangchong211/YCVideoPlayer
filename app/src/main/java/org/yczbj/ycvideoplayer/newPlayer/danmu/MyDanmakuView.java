@@ -20,7 +20,7 @@ import androidx.core.content.ContextCompat;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.controller.ControlWrapper;
-import org.yczbj.ycvideoplayerlib.controller.IControlComponent;
+import org.yczbj.ycvideoplayerlib.ui.view.IControlComponent;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 
 import master.flame.danmaku.controller.DrawHandler;

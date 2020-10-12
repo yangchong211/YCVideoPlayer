@@ -1,3 +1,18 @@
+/*
+Copyright 2017 yangchong211（github.com/yangchong211）
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package org.yczbj.ycvideoplayerlib.controller;
 
 import android.app.Activity;
@@ -23,21 +38,30 @@ import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.StatesCutoutUtils;
 import org.yczbj.ycvideoplayerlib.tool.NetworkUtils;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
+import org.yczbj.ycvideoplayerlib.ui.view.IControlComponent;
+
 import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
 /**
- * 控制器基类
- * 此类集成各种事件的处理逻辑，包括
- * 1.播放器状态改变: {@link #handlePlayerStateChanged(int)}
- * 2.播放状态改变: {@link #handlePlayStateChanged(int)}
- * 3.控制视图的显示和隐藏: {@link #handleVisibilityChanged(boolean, Animation)}
- * 4.播放进度改变: {@link #handleSetProgress(int, int)}
- * 5.锁定状态改变: {@link #handleLockStateChanged(boolean)}
- * 6.设备方向监听: {@link #onOrientationChanged(int)}
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/11/9
+ *     desc  : 控制器基类
+ *     revise: 此类集成各种事件的处理逻辑，包括
+ *             1.播放器状态改变: {@link #handlePlayerStateChanged(int)}
+ *             2.播放状态改变: {@link #handlePlayStateChanged(int)}
+ *             3.控制视图的显示和隐藏: {@link #handleVisibilityChanged(boolean, Animation)}
+ *             4.播放进度改变: {@link #handleSetProgress(int, int)}
+ *             5.锁定状态改变: {@link #handleLockStateChanged(boolean)}
+ *             6.设备方向监听: {@link #onOrientationChanged(int)}
+ *
+ * </pre>
  */
 public abstract class BaseVideoController extends FrameLayout implements InterVideoController,
         OrientationHelper.OnOrientationChangeListener {
@@ -523,9 +547,9 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     //------------------------ start handle event change ------------------------//
 
     private void handleVisibilityChanged(boolean isVisible, Animation anim) {
-        if (!mIsLocked) { //没锁住时才向ControlComponent下发此事件
-            for (Map.Entry<IControlComponent, Boolean> next
-                    : mControlComponents.entrySet()) {
+        if (!mIsLocked) {
+            //没锁住时才向ControlComponent下发此事件
+            for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
                 IControlComponent component = next.getKey();
                 component.onVisibilityChanged(isVisible, anim);
             }
@@ -544,8 +568,7 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     }
 
     private void handlePlayStateChanged(int playState) {
-        for (Map.Entry<IControlComponent, Boolean> next
-                : mControlComponents.entrySet()) {
+        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
             IControlComponent component = next.getKey();
             component.onPlayStateChanged(playState);
         }
@@ -613,8 +636,7 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     }
 
     private void handleSetProgress(int duration, int position) {
-        for (Map.Entry<IControlComponent, Boolean> next
-                : mControlComponents.entrySet()) {
+        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
             IControlComponent component = next.getKey();
             component.setProgress(duration, position);
         }
@@ -632,8 +654,7 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     }
 
     private void handleLockStateChanged(boolean isLocked) {
-        for (Map.Entry<IControlComponent, Boolean> next
-                : mControlComponents.entrySet()) {
+        for (Map.Entry<IControlComponent, Boolean> next : mControlComponents.entrySet()) {
             IControlComponent component = next.getKey();
             component.onLockStateChanged(isLocked);
         }

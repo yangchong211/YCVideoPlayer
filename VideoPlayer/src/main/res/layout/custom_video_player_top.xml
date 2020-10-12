@@ -13,8 +13,8 @@
         android:background="@drawable/player_mask_top"
         android:gravity="center_vertical"
         android:paddingTop="10dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -48,9 +48,7 @@
             android:id="@+id/tv_sys_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginRight="14dp"
+            android:layout_marginLeft="12dp"
             android:textColor="@android:color/white"
             tools:text="12:00" />
 
