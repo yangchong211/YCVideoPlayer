@@ -38,6 +38,7 @@ public abstract class AbstractVideoPlayer {
      */
     protected VideoPlayerListener mPlayerEventListener;
 
+    /*----------------------------第一部分：视频初始化实例对象方法----------------------------------*/
     /**
      * 初始化播放器实例
      * 视频播放器第一步：创建视频播放器
@@ -69,6 +70,8 @@ public abstract class AbstractVideoPlayer {
      * 视频播放器第四步：开始加载【异步】
      */
     public abstract void prepareAsync();
+
+    /*----------------------------第二部分：视频播放器状态方法----------------------------------*/
 
     /**
      * 播放
@@ -166,8 +169,10 @@ public abstract class AbstractVideoPlayer {
      */
     public abstract long getTcpSpeed();
 
+    /*----------------------------第三部分：player绑定view后，需要监听播放状态--------------------*/
+
     /**
-     * 绑定VideoView
+     * 绑定VideoView，监听播放异常，完成，开始准备，视频size变化，视频信息等操作
      */
     public void setPlayerEventListener(VideoPlayerListener playerEventListener) {
         this.mPlayerEventListener = playerEventListener;

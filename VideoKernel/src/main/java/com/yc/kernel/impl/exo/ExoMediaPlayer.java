@@ -383,16 +383,22 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
         }
         if (mLastReportedPlayWhenReady != playWhenReady || mLastReportedPlaybackState != playbackState) {
             switch (playbackState) {
+                //最开始调用的状态
+                case Player.STATE_IDLE:
+                    break;
+                //开始缓充
                 case Player.STATE_BUFFERING:
                     mPlayerEventListener.onInfo(PlayerConstant.MEDIA_INFO_BUFFERING_START, getBufferedPercentage());
                     mIsBuffering = true;
                     break;
+                //开始播放
                 case Player.STATE_READY:
                     if (mIsBuffering) {
                         mPlayerEventListener.onInfo(PlayerConstant.MEDIA_INFO_BUFFERING_END, getBufferedPercentage());
                         mIsBuffering = false;
                     }
                     break;
+                //播放器已经播放完了媒体
                 case Player.STATE_ENDED:
                     mPlayerEventListener.onCompletion();
                     break;

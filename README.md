@@ -8,7 +8,7 @@
 - 06.播放器封装思路
 - 07.播放器示例展示图
 - 08.添加自定义视图
-- 09.视频优化处理
+- 09.视频播放器优化处理
 - 10.播放器问题记录说明
 - 11.性能优化和库大小
 - 12.视频缓存原理介绍
@@ -220,6 +220,10 @@
 
 #### 6.4 视频内核lib库介绍
 ![image](https://img-blog.csdnimg.cn/2020101309293329.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
+![image](https://img-blog.csdnimg.cn/2020101321464162.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
+
+
+
 
 #### 6.5视频播放器UI库介绍
 ![image](https://img-blog.csdnimg.cn/20201013094115174.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
@@ -307,7 +311,29 @@
     ```
 
 
-### 09.视频优化处理
+### 09.视频播放器优化处理
+#### 9.1 如何兼容不同内核播放器
+- 提问：针对不同内核播放器，比如谷歌的ExoPlayer，B站的IjkPlayer，还有原生的MediaPlayer，有些api不一样，那使用的时候如何统一api呢？
+    - 比如说，ijk和exo的视频播放listener监听api就完全不同，这个时候需要做兼容处理
+    - 定义接口，然后各个不同内核播放器实现接口，重写抽象方法。调用的时候，获取接口对象调用api，这样就可以统一Api
+- 定义一个接口，这个接口有什么呢？这个接口定义通用视频播放器方法，比如常见的有：视频初始化，设置url，加载，以及播放状态，简单来说可以分为三个部分。
+    - 第一部分：视频初始化实例对象方法，主要包括：initPlayer初始化视频，setDataSource设置视频播放器地址，setSurface设置视频播放器渲染view，prepareAsync开始准备播放操作
+    - 第二部分：视频播放器状态方法，主要包括：播放，暂停，恢复，重制，设置进度，释放资源，获取进度，设置速度，设置音量
+    - 第三部分：player绑定view后，需要监听播放状态，比如播放异常，播放完成，播放准备，播放size变化，还有播放准备
+- 首先定义一个工厂抽象类，然后不同的内核播放器分别创建其具体的工厂实现具体类
+    - PlayerFactory：抽象工厂，担任这个角色的是工厂方法模式的核心，任何在模式中创建对象的工厂类必须实现这个接口
+    - ExoPlayerFactory：具体工厂，具体工厂角色含有与业务密切相关的逻辑，并且受到使用者的调用以创建具体产品对象。
+- 如何使用，分为三步，具体操作如下所示
+    - 1.先调用具体工厂对象中的方法createPlayer方法；2.根据传入产品类型参数获得具体的产品对象；3.返回产品对象并使用。
+    - 简而言之，创建对象的时候只需要传递类型type，而不需要对应的工厂，即可创建具体的产品对象
+- 这种创建对象最大优点
+    - 工厂方法用来创建所需要的产品，同时隐藏了哪种具体产品类将被实例化这一细节，用户只需要关心所需产品对应的工厂，无须关心创建细节，甚至无须知道具体产品类的类名。
+    - 加入新的产品时，比如后期新加一个阿里播放器内核，这个时候就只需要添加一个具体工厂和具体产品就可以。系统的可扩展性也就变得非常好，完全符合“开闭原则”
+
+
+
+
+#### 9.4 代码方面优化措施
 - **如果是在Activity中的话，建议设置下面这段代码**
     ```
     @Override
