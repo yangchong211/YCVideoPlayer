@@ -128,11 +128,11 @@
 - 如下所示
     ```
     //视频UI层，必须要有
-    implementation 'cn.yc:VideoPlayer:3.0.0'
+    implementation 'cn.yc:VideoPlayer:3.0.1'
     //视频缓存，如果不需要则可以不依赖
     implementation 'cn.yc:VideoCache:3.0.0'
     //视频内核层，必须有
-    implementation 'cn.yc:VideoKernel:3.0.0'
+    implementation 'cn.yc:VideoKernel:3.0.1'
     ```
 
 #### 4.2 在xml中添加布局
@@ -367,6 +367,51 @@
 
 
 
+### 17.其他说明
+- ![image](https://upload-images.jianshu.io/upload_images/4432347-7100c8e5a455c3ee.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+#### 17.1 其他推荐说明
+- 其他项目推荐
+    - [1.开源博客汇总](https://github.com/yangchong211/YCBlogs)
+    - [2.降低Crash崩溃库](https://github.com/yangchong211/YCAndroidTool)
+    - [3.视频播放器封装库](https://github.com/yangchong211/YCVideoPlayer)
+    - [4.状态切换管理器封装库](https://github.com/yangchong211/YCStateLayout)
+    - [5.复杂RecyclerView封装库](https://github.com/yangchong211/YCRefreshView)
+    - [6.弹窗封装库](https://github.com/yangchong211/YCDialog)
+    - [7.版本更新封装库](https://github.com/yangchong211/YCUpdateApp)
+    - [8.状态栏封装库](https://github.com/yangchong211/YCStatusBar)
+    - [9.轻量级线程池封装库](https://github.com/yangchong211/YCThreadPool)
+    - [10.轮播图封装库](https://github.com/yangchong211/YCBanner)
+    - [11.音频播放器](https://github.com/yangchong211/YCAudioPlayer)
+    - [12.画廊与图片缩放控件](https://github.com/yangchong211/YCGallery)
+    - [13.Python多渠道打包](https://github.com/yangchong211/YCWalleHelper)
+    - [14.整体侧滑动画封装库](https://github.com/yangchong211/YCSlideView)
+    - [15.Python爬虫妹子图](https://github.com/yangchong211/YCMeiZiTu)
+    - [17.自定义进度条](https://github.com/yangchong211/YCProgress)
+    - [18.自定义折叠和展开布局](https://github.com/yangchong211/YCExpandView)
+    - [19.商品详情页分页加载](https://github.com/yangchong211/YCShopDetailLayout)
+    - [20.在任意View控件上设置红点控件](https://github.com/yangchong211/YCRedDotView)
+    - [21.仿抖音一次滑动一个页面播放视频库](https://github.com/yangchong211/YCScrollPager)
+
+
+
+#### 17.2 关于LICENSE
+```
+Copyright 2017 yangchong211（github.com/yangchong211）
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
 
 
 
