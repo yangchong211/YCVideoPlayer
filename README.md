@@ -47,7 +47,7 @@
 
 
 
-### 1.2 该库功能说明
+#### 1.2 该库功能说明
 |**类型** | 功能说明 |
 |--------   |-----        |
 |**项目结构** | VideoCache缓存lib，VideoKernel视频内核lib，VideoPlayer视频UIlib |
