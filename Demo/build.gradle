@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion '29.0.0'
+    defaultConfig {
+        applicationId "org.yczbj.ycvideoplayer"
+        minSdkVersion 17
+        targetSdkVersion 29
+        versionCode 28
+        versionName "2.8.0"
+        // dex突破65535的限制
+        multiDexEnabled true
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a'
+        }
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    //jdk1.8
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+
+    //其他库
+    implementation 'com.github.bumptech.glide:glide:4.9.0'                 //谷歌图片加载库
+    implementation 'jp.wasabeef:glide-transformations:2.0.1'
+
+    //exo的UI库
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.3'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.3'
+
+    //弹幕
+    implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
+    implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
+
+    //自己封装的库，都有对应的案例项目【欢迎star】：https://github.com/yangchong211
+    implementation 'cn.yc:YCStateLib:1.1'                                  //状态管理
+//    implementation project(':VideoCache')
+//    implementation project(':VideoPlayer')
+//    implementation project(':VideoKernel')
+
+    implementation 'cn.yc:VideoPlayer:3.0.1'
+    implementation 'cn.yc:VideoCache:3.0.0'
+    implementation 'cn.yc:VideoKernel:3.0.1'
+    implementation 'cn.yc:YCStatusBarLib:1.4.0'
+ //状态栏
+}

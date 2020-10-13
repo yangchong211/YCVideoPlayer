@@ -1,0 +1,95 @@
+package org.yczbj.ycvideoplayerlib.surface;
+
+import android.view.View;
+
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+
+
+public class MeasureHelper {
+
+    private int mVideoWidth;
+    private int mVideoHeight;
+    private int mCurrentScreenScale;
+    private int mVideoRotationDegree;
+
+    public void setVideoRotation(int videoRotationDegree) {
+        mVideoRotationDegree = videoRotationDegree;
+    }
+
+    public void setVideoSize(int width, int height) {
+        mVideoWidth = width;
+        mVideoHeight = height;
+    }
+
+    public void setScreenScale(int screenScale) {
+        mCurrentScreenScale = screenScale;
+    }
+
+    /**
+     * 注意：VideoView的宽高一定要定死，否者以下算法不成立
+     * 借鉴于网络
+     */
+    public int[] doMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (mVideoRotationDegree == 90 || mVideoRotationDegree == 270) {
+            // 软解码时处理旋转信息，交换宽高
+            widthMeasureSpec = widthMeasureSpec + heightMeasureSpec;
+            heightMeasureSpec = widthMeasureSpec - heightMeasureSpec;
+            widthMeasureSpec = widthMeasureSpec - heightMeasureSpec;
+        }
+
+        int width = View.MeasureSpec.getSize(widthMeasureSpec);
+        int height = View.MeasureSpec.getSize(heightMeasureSpec);
+
+        if (mVideoHeight == 0 || mVideoWidth == 0) {
+            return new int[]{width, height};
+        }
+
+        //如果设置了比例
+        switch (mCurrentScreenScale) {
+            //默认正常类型
+            case ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_DEFAULT:
+            default:
+                if (mVideoWidth * height < width * mVideoHeight) {
+                    width = height * mVideoWidth / mVideoHeight;
+                } else if (mVideoWidth * height > width * mVideoHeight) {
+                    height = width * mVideoHeight / mVideoWidth;
+                }
+                break;
+            //原始类型，指视频的原始类型
+            case ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_ORIGINAL:
+                width = mVideoWidth;
+                height = mVideoHeight;
+                break;
+            //16：9比例类型，最为常见
+            case ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_16_9:
+                if (height > width / 16 * 9) {
+                    height = width / 16 * 9;
+                } else {
+                    width = height / 9 * 16;
+                }
+                break;
+            //4：3比例类型，也比较常见
+            case ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_4_3:
+                if (height > width / 4 * 3) {
+                    height = width / 4 * 3;
+                } else {
+                    width = height / 3 * 4;
+                }
+                break;
+            //充满整个控件视图
+            case ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_MATCH_PARENT:
+                width = widthMeasureSpec;
+                height = heightMeasureSpec;
+                break;
+            //剧中裁剪类型
+            case ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_CENTER_CROP:
+                if (mVideoWidth * height > width * mVideoHeight) {
+                    width = height * mVideoWidth / mVideoHeight;
+                } else {
+                    height = width * mVideoHeight / mVideoWidth;
+                }
+                break;
+        }
+        return new int[]{width, height};
+    }
+}
