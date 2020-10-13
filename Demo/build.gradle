@@ -52,6 +52,7 @@ dependencies {
 
     //exo的UI库
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.3'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.3'
 
     //弹幕
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'

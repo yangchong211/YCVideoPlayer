@@ -65,7 +65,7 @@
             android:text="超清"
             android:textColor="@android:color/white"
             android:textSize="14sp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:paddingLeft="1dp"
             android:paddingRight="4dp" />
 

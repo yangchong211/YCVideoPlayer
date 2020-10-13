@@ -27,6 +27,9 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
     private Button mBtnScaleNormal;
     private Button mBtnScale169;
     private Button mBtnScale43;
+    private Button mBtnScaleFull;
+    private Button mBtnScaleOriginal;
+    private Button mBtnScaleCrop;
     private Button mBtnCrop;
     private Button mBtnGif;
     private BasisVideoController controller;
@@ -34,7 +37,7 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_normal_video);
+        setContentView(R.layout.activity_video);
         initFindViewById();
         initVideoPlayer();
         initListener();
@@ -81,6 +84,9 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
         mBtnScaleNormal = findViewById(R.id.btn_scale_normal);
         mBtnScale169 = findViewById(R.id.btn_scale_169);
         mBtnScale43 = findViewById(R.id.btn_scale_43);
+        mBtnScaleFull = findViewById(R.id.btn_scale_full);
+        mBtnScaleOriginal = findViewById(R.id.btn_scale_original);
+        mBtnScaleCrop = findViewById(R.id.btn_scale_crop);
         mBtnCrop = findViewById(R.id.btn_crop);
         mBtnGif = findViewById(R.id.btn_gif);
     }
@@ -109,6 +115,9 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
         mBtnScaleNormal.setOnClickListener(this);
         mBtnScale169.setOnClickListener(this);
         mBtnScale43.setOnClickListener(this);
+        mBtnScaleFull.setOnClickListener(this);
+        mBtnScaleOriginal.setOnClickListener(this);
+        mBtnScaleCrop.setOnClickListener(this);
         mBtnCrop.setOnClickListener(this);
         mBtnGif.setOnClickListener(this);
     }
@@ -122,7 +131,13 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
             mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_DEFAULT);
         }else if (v == mBtnScale43){
             mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_4_3);
-        } else if (v == mBtnCrop){
+        } else if (v == mBtnScaleFull){
+            mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_MATCH_PARENT);
+        }else if (v == mBtnScaleOriginal){
+            mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_ORIGINAL);
+        }else if (v == mBtnScaleCrop){
+            mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_CENTER_CROP);
+        }else if (v == mBtnCrop){
 
         } else if (v == mBtnGif){
 
