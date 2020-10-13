@@ -51,7 +51,6 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:2.0.1'
 
     //exo的UI库
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.3'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.3'
 
     //弹幕

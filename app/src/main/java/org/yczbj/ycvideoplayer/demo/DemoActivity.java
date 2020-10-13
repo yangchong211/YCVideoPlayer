@@ -14,7 +14,6 @@ import org.yczbj.ycvideoplayer.oldPlayer.OldActivity;
 
 public class DemoActivity extends AppCompatActivity implements View.OnClickListener {
 
-
     private TextView mTv1;
     private TextView mTv12;
     private TextView mTv2;

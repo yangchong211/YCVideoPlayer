@@ -13,6 +13,7 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.video.VideoListener;
 
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
@@ -20,6 +21,7 @@ import org.yczbj.ycvideoplayer.R;
 public class ExoActivity extends AppCompatActivity {
 
     private PlayerView mVideoView;
+    private SimpleExoPlayer player;
 
     @Override
     protected void onPause() {
@@ -34,18 +36,27 @@ public class ExoActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (player!=null){
+            player.release();
+        }
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exo_player);
         mVideoView = findViewById(R.id.video_view);
 
-        SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(this,new DefaultTrackSelector(),new DefaultLoadControl());
+        SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(this,
+                new DefaultTrackSelector(),new DefaultLoadControl());
         player.setPlayWhenReady(true);
         mVideoView.setPlayer(player);
-
         Uri uri = Uri.parse(ConstantVideo.VideoPlayerList[0]);
         DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("user-agent");
-        ProgressiveMediaSource mediaSource = new ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri);
+        ProgressiveMediaSource mediaSource = new ProgressiveMediaSource.Factory(
+                dataSourceFactory).createMediaSource(uri);
         // 播放
         player.prepare(mediaSource);
     }
