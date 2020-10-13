@@ -253,7 +253,8 @@ public class CustomBottomView extends FrameLayout implements InterControlView,
                 mSeekBar.setEnabled(false);
             }
             int percent = mControlWrapper.getBufferedPercentage();
-            if (percent >= 95) { //解决缓冲进度不能100%问题
+            if (percent >= 95) {
+                //解决缓冲进度不能100%问题
                 mSeekBar.setSecondaryProgress(mSeekBar.getMax());
                 mPbBottomProgress.setSecondaryProgress(mPbBottomProgress.getMax());
             } else {

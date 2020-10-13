@@ -1,6 +1,8 @@
 package org.yczbj.ycvideoplayerlib.player;
 
 
+import android.content.Context;
+
 import androidx.annotation.Nullable;
 
 import com.yc.kernel.factory.PlayerFactory;
@@ -8,7 +10,7 @@ import com.yc.kernel.impl.media.MediaPlayerFactory;
 
 import org.yczbj.ycvideoplayerlib.surface.SurfaceFactory;
 import org.yczbj.ycvideoplayerlib.surface.TextureViewFactory;
-
+import org.yczbj.ycvideoplayerlib.tool.BaseToast;
 
 
 /**
@@ -28,6 +30,7 @@ public class VideoPlayerConfig {
 
     public final static class Builder {
 
+        private Context mContext;
         /**
          * 默认是关闭日志的
          */
@@ -40,6 +43,14 @@ public class VideoPlayerConfig {
         private int mScreenScaleType;
         private SurfaceFactory mRenderViewFactory;
         private boolean mAdaptCutout = true;
+
+        /**
+         * 是否监听设备方向来切换全屏/半屏， 默认不开启
+         */
+        public Builder setContext(Context context) {
+            mContext = context;
+            return this;
+        }
 
         /**
          * 是否监听设备方向来切换全屏/半屏， 默认不开启
@@ -119,6 +130,7 @@ public class VideoPlayerConfig {
         }
     }
 
+    public final Context mContext;
     public final boolean mPlayOnMobileNetwork;
     public final boolean mEnableOrientation;
     public final boolean mEnableAudioFocus;
@@ -149,6 +161,10 @@ public class VideoPlayerConfig {
             mRenderViewFactory = builder.mRenderViewFactory;
         }
         mAdaptCutout = builder.mAdaptCutout;
+        mContext = builder.mContext;
+        if (mContext!=null){
+            BaseToast.init(mContext);
+        }
     }
 
 

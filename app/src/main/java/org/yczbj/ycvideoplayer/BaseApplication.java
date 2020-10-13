@@ -56,6 +56,7 @@ public class BaseApplication extends Application {
                 ScreenDensityUtils.MATCH_BASE_WIDTH,ScreenDensityUtils.MATCH_UNIT_DP);
         //播放器配置，注意：此为全局配置，按需开启
         VideoViewManager.setConfig(VideoPlayerConfig.newBuilder()
+                .setContext(this)
                 .setLogEnabled(true)//调试的时候请打开日志，方便排错
                 .setPlayerFactory(IjkPlayerFactory.create())
                 .build());
