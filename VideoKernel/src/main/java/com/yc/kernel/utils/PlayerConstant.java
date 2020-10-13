@@ -1,5 +1,8 @@
 package com.yc.kernel.utils;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * <pre>
  *     @author yangchong
@@ -37,5 +40,18 @@ public final class PlayerConstant {
      */
     public static final int MEDIA_INFO_VIDEO_ROTATION_CHANGED = 10001;
 
-
+    /**
+     * 通过注解限定类型
+     * TYPE_IJK                 IjkPlayer，基于IjkPlayer封装播放器
+     * TYPE_NATIVE              MediaPlayer，基于原生自带的播放器控件
+     * TYPE_EXO                 基于谷歌视频播放器
+     * TYPE_RTC                 基于RTC视频播放器
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface PlayerType {
+        int TYPE_IJK = 1;
+        int TYPE_NATIVE = 2;
+        int TYPE_EXO = 3;
+        int TYPE_RTC = 4;
+    }
 }

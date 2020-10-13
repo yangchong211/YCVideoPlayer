@@ -68,6 +68,7 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
 
     @Override
     public void initPlayer() {
+        //创建exo播放器
         mInternalPlayer = new SimpleExoPlayer.Builder(
                 mAppContext,
                 mRenderersFactory == null ? mRenderersFactory = new DefaultRenderersFactory(mAppContext) : mRenderersFactory,
@@ -147,6 +148,7 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
         }
         mIsPreparing = true;
         mMediaSource.addEventListener(new Handler(), mMediaSourceEventListener);
+        //准备播放
         mInternalPlayer.prepare(mMediaSource);
     }
 

@@ -6,7 +6,10 @@ import android.content.res.Configuration;
 import android.util.Log;
 
 
+import com.yc.kernel.factory.PlayerFactory;
 import com.yc.kernel.impl.ijk.IjkPlayerFactory;
+import com.yc.kernel.utils.PlayerConstant;
+import com.yc.kernel.utils.PlayerFactoryUtils;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import org.yczbj.ycvideoplayerlib.player.VideoPlayerConfig;
@@ -55,10 +58,11 @@ public class BaseApplication extends Application {
         ScreenDensityUtils.register(this,375.0f,
                 ScreenDensityUtils.MATCH_BASE_WIDTH,ScreenDensityUtils.MATCH_UNIT_DP);
         //播放器配置，注意：此为全局配置，按需开启
+        PlayerFactory player = PlayerFactoryUtils.getPlayer(PlayerConstant.PlayerType.TYPE_IJK);
         VideoViewManager.setConfig(VideoPlayerConfig.newBuilder()
                 .setContext(this)
                 .setLogEnabled(true)//调试的时候请打开日志，方便排错
-                .setPlayerFactory(IjkPlayerFactory.create())
+                .setPlayerFactory(player)
                 .build());
     }
 
