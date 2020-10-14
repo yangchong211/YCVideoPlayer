@@ -212,11 +212,14 @@
 #### 6.1视频层级示例图
 ![image](https://img-blog.csdnimg.cn/20201012215233584.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
 
+
 #### 6.2 视频播放器流程图
 - 待完善
 
+
 #### 6.3 视频播放器lib库
 ![image](https://img-blog.csdnimg.cn/20201013092150588.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
+
 
 #### 6.4 视频内核lib库介绍
 ![image](https://img-blog.csdnimg.cn/2020101309293329.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
@@ -375,6 +378,7 @@
 
 
 ### 10.播放器问题记录说明
+
 
 
 ### 11.性能优化和库大小
