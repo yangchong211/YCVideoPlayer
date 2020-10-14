@@ -24,7 +24,7 @@ import androidx.annotation.NonNull;
 import org.yczbj.ycvideoplayerlib.player.InterVideoPlayer;
 
 /**
- * 此类的目的是为了在ControlComponent中既能调用VideoView的api又能调用BaseVideoController的api，
+ * 此类的目的是为了在InterControlView接口实现类中既能调用VideoPlayer的api又能调用BaseVideoController的api，
  * 并对部分api做了封装，方便使用
  */
 public class ControlWrapper implements InterVideoPlayer, InterVideoController {

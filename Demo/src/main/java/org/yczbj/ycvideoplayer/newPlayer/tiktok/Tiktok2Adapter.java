@@ -15,7 +15,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.bumptech.glide.Glide;
 
 import org.yczbj.ycvideoplayer.R;
-import org.yczbj.ycvideoplayer.newPlayer.cache.PreloadManager;
+import com.yc.videocache.cache.PreloadManager;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 
 import java.util.ArrayList;

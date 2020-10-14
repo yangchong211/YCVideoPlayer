@@ -60,13 +60,13 @@ dependencies {
 
     //自己封装的库，都有对应的案例项目【欢迎star】：https://github.com/yangchong211
     implementation 'cn.yc:YCStateLib:1.1'                                  //状态管理
-//    implementation project(':VideoCache')
-//    implementation project(':VideoPlayer')
-//    implementation project(':VideoKernel')
+    implementation project(':VideoCache')
+    implementation project(':VideoPlayer')
+    implementation project(':VideoKernel')
 
-    implementation 'cn.yc:VideoPlayer:3.0.1'
-    implementation 'cn.yc:VideoCache:3.0.0'
-    implementation 'cn.yc:VideoKernel:3.0.1'
+//    implementation 'cn.yc:VideoPlayer:3.0.1'
+//    implementation 'cn.yc:VideoCache:3.0.0'
+//    implementation 'cn.yc:VideoKernel:3.0.1'
     implementation 'cn.yc:YCStatusBarLib:1.4.0'
  //状态栏
 }

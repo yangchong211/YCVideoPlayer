@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayer.newPlayer.cache;
+package com.yc.videocache.cache;
 
 import android.content.Context;
 
@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * 抖音预加载工具，使用AndroidVideoCache实现
+ * 预加载工具，使用AndroidVideoCache实现
  */
 public class PreloadManager {
 
