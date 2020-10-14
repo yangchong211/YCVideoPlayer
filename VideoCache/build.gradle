@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 30
-        versionName "3.0.0"
+        versionCode 31
+        versionName "3.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -41,7 +41,7 @@ group = "cn.yc"
 //发布到JCenter上的项目名字，必须填写
 def libName = "YCVideoCacheLib"
 // 版本号，下次更新是只需要更改版本号即可
-version = "3.0.0"
+version = "3.0.1"
 /**  上面配置后上传至jcenter后的编译路径是这样的： compile 'cn.yc:YCVideoCacheLib:1.0.0'  **/
 
 //生成源文件
