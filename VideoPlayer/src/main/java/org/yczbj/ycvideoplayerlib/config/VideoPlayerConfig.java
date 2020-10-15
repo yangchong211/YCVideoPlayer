@@ -1,4 +1,4 @@
-package org.yczbj.ycvideoplayerlib.player;
+package org.yczbj.ycvideoplayerlib.config;
 
 
 import android.content.Context;
@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import com.yc.kernel.factory.PlayerFactory;
 import com.yc.kernel.impl.media.MediaPlayerFactory;
 
+import org.yczbj.ycvideoplayerlib.player.ProgressManager;
 import org.yczbj.ycvideoplayerlib.surface.SurfaceFactory;
 import org.yczbj.ycvideoplayerlib.surface.TextureViewFactory;
 import org.yczbj.ycvideoplayerlib.tool.BaseToast;
@@ -40,6 +41,7 @@ public class VideoPlayerConfig {
         private boolean mEnableAudioFocus = true;
         private ProgressManager mProgressManager;
         private PlayerFactory mPlayerFactory;
+        private BuriedPointEvent mBuriedPointEvent;
         private int mScreenScaleType;
         private SurfaceFactory mRenderViewFactory;
         private boolean mAdaptCutout = true;
@@ -101,6 +103,14 @@ public class VideoPlayerConfig {
         }
 
         /**
+         * 自定义视频全局埋点事件
+         */
+        public Builder setBuriedPointEvent(BuriedPointEvent buriedPointEvent) {
+            mBuriedPointEvent = buriedPointEvent;
+            return this;
+        }
+
+        /**
          * 设置视频比例
          */
         public Builder setScreenScaleType(int screenScaleType) {
@@ -137,6 +147,7 @@ public class VideoPlayerConfig {
     public final boolean mIsEnableLog;
     public final ProgressManager mProgressManager;
     public final PlayerFactory mPlayerFactory;
+    public final BuriedPointEvent mBuriedPointEvent;
     public final int mScreenScaleType;
     public final SurfaceFactory mRenderViewFactory;
     public final boolean mAdaptCutout;
@@ -154,6 +165,7 @@ public class VideoPlayerConfig {
         } else {
             mPlayerFactory = builder.mPlayerFactory;
         }
+        mBuriedPointEvent = builder.mBuriedPointEvent;
         if (builder.mRenderViewFactory == null) {
             //默认使用TextureView渲染视频
             mRenderViewFactory = TextureViewFactory.create();

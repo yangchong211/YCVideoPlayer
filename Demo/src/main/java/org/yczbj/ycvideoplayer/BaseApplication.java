@@ -7,12 +7,10 @@ import android.util.Log;
 
 
 import com.yc.kernel.factory.PlayerFactory;
-import com.yc.kernel.impl.ijk.IjkPlayerFactory;
 import com.yc.kernel.utils.PlayerConstant;
 import com.yc.kernel.utils.PlayerFactoryUtils;
-import com.yc.kernel.utils.VideoLogUtils;
 
-import org.yczbj.ycvideoplayerlib.player.VideoPlayerConfig;
+import org.yczbj.ycvideoplayerlib.config.VideoPlayerConfig;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 
 /**
@@ -61,7 +59,11 @@ public class BaseApplication extends Application {
         PlayerFactory player = PlayerFactoryUtils.getPlayer(PlayerConstant.PlayerType.TYPE_IJK);
         VideoViewManager.setConfig(VideoPlayerConfig.newBuilder()
                 .setContext(this)
-                .setLogEnabled(true)//调试的时候请打开日志，方便排错
+                //设置视频全局埋点事件
+                .setBuriedPointEvent(new BuriedPointEventImpl())
+                //调试的时候请打开日志，方便排错
+                .setLogEnabled(true)
+                //设置ijk
                 .setPlayerFactory(player)
                 .build());
     }

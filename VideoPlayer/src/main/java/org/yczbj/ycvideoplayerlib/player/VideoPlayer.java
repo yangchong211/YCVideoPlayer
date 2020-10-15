@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import org.yczbj.ycvideoplayerlib.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.config.VideoPlayerConfig;
 import org.yczbj.ycvideoplayerlib.controller.BaseVideoController;
 
 import com.yc.kernel.inter.AbstractVideoPlayer;
@@ -432,6 +433,17 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      */
     public void release() {
         if (!isInIdleState()) {
+            VideoPlayerConfig config = VideoViewManager.getConfig();
+            if (config!=null && config.mBuriedPointEvent!=null){
+                //退出视频播放
+                config.mBuriedPointEvent.playerDestroy(mUrl);
+
+                //计算退出视频时候的进度
+                long duration = getDuration();
+                long currentPosition = getCurrentPosition();
+                float progress = (currentPosition*1.0f) / (duration*1.0f) ;
+                config.mBuriedPointEvent.playerOutProgress(mUrl,progress);
+            }
             //释放播放器
             if (mMediaPlayer != null) {
                 mMediaPlayer.release();
@@ -602,6 +614,15 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
     public void onError() {
         mPlayerContainer.setKeepScreenOn(false);
         setPlayState(ConstantKeys.CurrentState.STATE_ERROR);
+        VideoPlayerConfig config = VideoViewManager.getConfig();
+        if (config!=null && config.mBuriedPointEvent!=null){
+            //相当于进入了视频页面
+            if (PlayerUtils.isConnected(mContext)){
+                config.mBuriedPointEvent.onError(mUrl,false);
+            } else {
+                config.mBuriedPointEvent.onError(mUrl,true);
+            }
+        }
     }
 
     /**
@@ -616,6 +637,11 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
             mProgressManager.saveProgress(mUrl, 0);
         }
         setPlayState(ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING);
+        VideoPlayerConfig config = VideoViewManager.getConfig();
+        if (config!=null && config.mBuriedPointEvent!=null){
+            //视频播放完成
+            config.mBuriedPointEvent.playerCompletion(mUrl);
+        }
     }
 
     @Override
@@ -712,6 +738,11 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         mAssetFileDescriptor = null;
         mUrl = url;
         mHeaders = headers;
+        VideoPlayerConfig config = VideoViewManager.getConfig();
+        if (config!=null && config.mBuriedPointEvent!=null){
+            //相当于进入了视频页面
+            config.mBuriedPointEvent.playerIn(url);
+        }
     }
 
     /**

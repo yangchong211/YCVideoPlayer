@@ -43,7 +43,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.player.VideoPlayerConfig;
+import org.yczbj.ycvideoplayerlib.config.VideoPlayerConfig;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 
 import java.lang.reflect.Field;

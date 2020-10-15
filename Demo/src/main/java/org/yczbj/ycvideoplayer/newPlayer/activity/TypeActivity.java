@@ -30,9 +30,8 @@ import com.yc.kernel.impl.ijk.IjkVideoPlayer;
 import com.yc.kernel.impl.media.AndroidMediaPlayer;
 import com.yc.kernel.impl.media.MediaPlayerFactory;
 import com.yc.kernel.factory.PlayerFactory;
-import com.yc.kernel.inter.AbstractVideoPlayer;
 
-import org.yczbj.ycvideoplayerlib.player.VideoPlayerConfig;
+import org.yczbj.ycvideoplayerlib.config.VideoPlayerConfig;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.tool.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
