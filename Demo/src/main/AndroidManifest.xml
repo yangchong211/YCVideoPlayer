@@ -74,6 +74,9 @@
         <activity android:name=".newPlayer.tiktok.TikTok2Activity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
+        <activity android:name=".newPlayer.tiktok.TikTok1Activity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
         <activity android:name=".oldPlayer.TestFullActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>

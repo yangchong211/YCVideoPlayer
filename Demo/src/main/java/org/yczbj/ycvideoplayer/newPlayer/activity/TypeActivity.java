@@ -59,6 +59,8 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTv62;
     private TextView mTv63;
     private TextView mTv64;
+    private TextView mTv65;
+    private TextView mTv66;
     private TextView mTv71;
     private TextView mTv81;
     private TextView mTv101;
@@ -106,6 +108,8 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
         mTv62 = findViewById(R.id.tv_6_2);
         mTv63 = findViewById(R.id.tv_6_3);
         mTv64 = findViewById(R.id.tv_6_4);
+        mTv65 = findViewById(R.id.tv_6_5);
+        mTv66 = findViewById(R.id.tv_6_6);
         mTv71 = findViewById(R.id.tv_7_1);
         mTv81 = findViewById(R.id.tv_8_1);
         mTv101 = findViewById(R.id.tv_10_1);
@@ -130,6 +134,8 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
         mTv62.setOnClickListener(this);
         mTv63.setOnClickListener(this);
         mTv64.setOnClickListener(this);
+        mTv65.setOnClickListener(this);
+        mTv66.setOnClickListener(this);
         mTv71.setOnClickListener(this);
         mTv81.setOnClickListener(this);
         mTv101.setOnClickListener(this);
@@ -181,6 +187,14 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v == mTv64){
             Intent intent = new Intent(this, TestListActivity.class);
             intent.putExtra("type",3);
+            startActivity(intent);
+        } else if (v == mTv65){
+            Intent intent = new Intent(this, TestListActivity.class);
+            intent.putExtra("type",4);
+            startActivity(intent);
+        } else if (v == mTv66){
+            Intent intent = new Intent(this, TestListActivity.class);
+            intent.putExtra("type",5);
             startActivity(intent);
         } else if (v == mTv71){
             startActivity(new Intent(this, DanmuActivity.class));

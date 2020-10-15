@@ -2,11 +2,14 @@ package org.yczbj.ycvideoplayer.newPlayer.tiktok;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.yc.kernel.utils.VideoLogUtils;
@@ -15,12 +18,16 @@ import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import com.yc.videocache.cache.PreloadManager;
 import com.yc.videocache.cache.ProxyVideoCacheManager;
+
+import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 
 /**
@@ -88,6 +95,7 @@ public class TikTok2Activity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tiktok2);
+        StateAppBar.translucentStatusBar(this, true);
         initFindViewById();
         initListener();
         initView();
@@ -173,6 +181,36 @@ public class TikTok2Activity extends AppCompatActivity {
                 }
             }
         });
+
+//        RecyclerView recyclerView = new RecyclerView(this);
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            /**
+//             * 是否反向滑动
+//             */
+//            private boolean mIsReverseScroll;
+//
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                if (dy>0){
+//                    //表示下滑
+//                    mIsReverseScroll = false;
+//                } else {
+//                    //表示上滑
+//                    mIsReverseScroll = true;
+//                }
+//            }
+//
+//            @Override
+//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                if (newState == VerticalViewPager.SCROLL_STATE_IDLE) {
+//                    mPreloadManager.resumePreload(mCurPos, mIsReverseScroll);
+//                } else {
+//                    mPreloadManager.pausePreload(mCurPos, mIsReverseScroll);
+//                }
+//            }
+//        });
     }
 
     private void startPlay(int position) {
@@ -188,6 +226,7 @@ public class TikTok2Activity extends AppCompatActivity {
                 String playUrl = mPreloadManager.getPlayUrl(tiktokBean.getVideoUrl());
                 VideoLogUtils.i("startPlay: " + "position: " + position + "  url: " + playUrl);
                 mVideoPlayer.setUrl(playUrl);
+                mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_16_9);
                 mController.addControlComponent(viewHolder.mTikTokView, true);
                 viewHolder.mPlayerContainer.addView(mVideoPlayer, 0);
                 mVideoPlayer.start();

@@ -15,6 +15,7 @@ import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 public class PlayerMonitor implements InterControlView {
 
     private ControlWrapper mControlWrapper;
+    private static final String TAG = "PlayerMonitor";
 
     @Override
     public void attach(@NonNull ControlWrapper controlWrapper) {
@@ -28,27 +29,27 @@ public class PlayerMonitor implements InterControlView {
 
     @Override
     public void onVisibilityChanged(boolean isVisible, Animation anim) {
-        VideoLogUtils.d("onVisibilityChanged: " + isVisible);
+        VideoLogUtils.d(TAG+ "---" +"onVisibilityChanged: " + isVisible);
     }
 
     @Override
     public void onPlayStateChanged(int playState) {
-        VideoLogUtils.d("onPlayStateChanged: " + PlayerUtils.playState2str(playState));
+        VideoLogUtils.d(TAG+ "---" +"onPlayStateChanged: " + PlayerUtils.playState2str(playState));
     }
 
     @Override
     public void onPlayerStateChanged(int playerState) {
-        VideoLogUtils.d("onPlayerStateChanged: " + PlayerUtils.playerState2str(playerState));
+        VideoLogUtils.d(TAG+ "---" +"onPlayerStateChanged: " + PlayerUtils.playerState2str(playerState));
     }
 
     @Override
     public void setProgress(int duration, int position) {
-        VideoLogUtils.d("setProgress: duration: " + duration + " position: " + position + " buffered percent: " + mControlWrapper.getBufferedPercentage());
-        VideoLogUtils.d("network speed: " + mControlWrapper.getTcpSpeed());
+        VideoLogUtils.d(TAG+ "---" +"setProgress: duration: " + duration + " position: " + position + " buffered percent: " + mControlWrapper.getBufferedPercentage());
+        VideoLogUtils.d(TAG+ "---" +"network speed: " + mControlWrapper.getTcpSpeed());
     }
 
     @Override
     public void onLockStateChanged(boolean isLocked) {
-        VideoLogUtils.d("onLockStateChanged: " + isLocked);
+        VideoLogUtils.d(TAG+ "---" +"onLockStateChanged: " + isLocked);
     }
 }

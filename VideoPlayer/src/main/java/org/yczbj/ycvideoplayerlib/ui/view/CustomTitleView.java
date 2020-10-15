@@ -78,7 +78,7 @@ public class CustomTitleView extends FrameLayout implements InterControlView, Vi
     private void init(Context context){
         this.mContext = context;
         setVisibility(GONE);
-        View view = LayoutInflater.from(getContext()).inflate(
+        View view = LayoutInflater.from(mContext).inflate(
                 R.layout.custom_video_player_top, this, true);
         initFindViewById(view);
         initListener();
@@ -107,6 +107,11 @@ public class CustomTitleView extends FrameLayout implements InterControlView, Vi
             if (activity != null && mControlWrapper.isFullScreen()) {
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 mControlWrapper.stopFullScreen();
+                return;
+            }
+            //如果不是全屏模式，则直接关闭页面activity
+            if (PlayerUtils.isActivityLiving(activity)){
+                activity.finish();
             }
         }
     }

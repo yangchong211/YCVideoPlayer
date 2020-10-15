@@ -15,6 +15,7 @@ limitations under the License.
 */
 package org.yczbj.ycvideoplayerlib.ui.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.util.AttributeSet;
@@ -285,6 +286,11 @@ public class BasisVideoController extends GestureVideoController implements View
         }
         if (mControlWrapper.isFullScreen()) {
             return stopFullScreen();
+        }
+        Activity activity = PlayerUtils.scanForActivity(getContext());
+        //如果不是全屏模式，则直接关闭页面activity
+        if (PlayerUtils.isActivityLiving(activity)){
+            activity.finish();
         }
         return super.onBackPressed();
     }

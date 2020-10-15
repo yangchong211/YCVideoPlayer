@@ -45,7 +45,7 @@ public class ConstantVideo {
                 "http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4"));
 
         videoList.add(new VideoInfoBean("把本地项目代码复制到拷贝的仓库",
-                "hhttps://img-blog.csdnimg.cn/2020101309293329.png",
+                "https://img-blog.csdnimg.cn/2020101309293329.png",
                 "http://vfx.mtime.cn/Video/2019/03/19/mp4/190319222227698228.mp4"));
 
         videoList.add(new VideoInfoBean("有bug，可以直接提出来，欢迎一起探讨",

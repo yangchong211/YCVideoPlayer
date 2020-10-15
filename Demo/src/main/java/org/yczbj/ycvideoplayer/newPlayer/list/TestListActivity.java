@@ -2,6 +2,7 @@ package org.yczbj.ycvideoplayer.newPlayer.list;
 
 import org.yczbj.ycvideoplayer.BaseActivity;
 import org.yczbj.ycvideoplayer.R;
+import org.yczbj.ycvideoplayer.newPlayer.tiktok.TikTok1ListFragment;
 import org.yczbj.ycvideoplayer.newPlayer.tiktok.TikTokListFragment;
 import org.yczbj.ycvideoplayerlib.old.other.VideoPlayerManager;
 
@@ -42,10 +43,20 @@ public class TestListActivity extends BaseActivity {
                     .beginTransaction()
                     .add(R.id.container, new TikTokListFragment())
                     .commit();
-        } else {
+        } else if (type==3){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container, new TikTok1ListFragment())
+                    .commit();
+        }else if (type==4){
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.container, new SeamlessPlayFragment())
+                    .commit();
+        }else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container, new RecyclerView2Fragment())
                     .commit();
         }
 
