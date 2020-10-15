@@ -53,6 +53,7 @@ public class BasisVideoController extends GestureVideoController implements View
     private ImageView mLockButton;
     private ProgressBar mLoadingProgress;
     private ImageView thumb;
+    private CustomBottomView bottomView;
     private CustomTitleView titleView;
 
     public BasisVideoController(@NonNull Context context) {
@@ -140,10 +141,10 @@ public class BasisVideoController extends GestureVideoController implements View
             this.addControlComponent(liveControlView);
         } else {
             //添加底部播放控制条
-            CustomBottomView vodControlView = new CustomBottomView(mContext);
+            bottomView = new CustomBottomView(mContext);
             //是否显示底部进度条。默认显示
-            vodControlView.showBottomProgress(true);
-            this.addControlComponent(vodControlView);
+            bottomView.showBottomProgress(true);
+            this.addControlComponent(bottomView);
         }
         //添加滑动控制视图
         CustomGestureView gestureControlView = new CustomGestureView(mContext);
@@ -308,5 +309,9 @@ public class BasisVideoController extends GestureVideoController implements View
         if (titleView!=null){
             titleView.setTitle(title);
         }
+    }
+
+    public CustomBottomView getBottomView() {
+        return bottomView;
     }
 }

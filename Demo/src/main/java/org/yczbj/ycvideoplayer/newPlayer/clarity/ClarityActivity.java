@@ -14,6 +14,7 @@ import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
+import org.yczbj.ycvideoplayerlib.ui.view.CustomBottomView;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -80,6 +81,10 @@ public class ClarityActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initVideoPlayer() {
         BasisVideoController controller = new BasisVideoController(this);
+        CustomBottomView bottomView = controller.getBottomView();
+        if (bottomView!=null){
+            controller.removeControlComponent(bottomView);
+        }
         DefinitionControlView mDefinitionControlView = new DefinitionControlView(this);
         mDefinitionControlView.setOnRateSwitchListener(new DefinitionControlView.OnRateSwitchListener() {
             @Override
