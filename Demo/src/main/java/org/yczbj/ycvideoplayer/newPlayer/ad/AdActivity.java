@@ -14,6 +14,7 @@ import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import com.yc.videocache.cache.ProxyVideoCacheManager;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.player.SimpleStateListener;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.BaseToast;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
@@ -107,7 +108,7 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
         mVideoPlayer.setUrl(proxyUrl);
         mVideoPlayer.start();
         //监听播放结束
-        mVideoPlayer.addOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
+        mVideoPlayer.addOnStateChangeListener(new SimpleStateListener() {
             @Override
             public void onPlayStateChanged(int playState) {
                 if (playState == ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING) {

@@ -43,6 +43,13 @@ public interface BuriedPointEvent {
     void clickAd(String url);
 
     /**
+     * 视频试看点击
+     * @param url                       视频url
+     */
+    void playerAndProved(String url);
+
+
+    /**
      * 退出视频播放时候的播放进度百度分
      * @param url                       视频url
      * @param progress                  视频进度，计算百分比【退出时候进度 / 总进度】

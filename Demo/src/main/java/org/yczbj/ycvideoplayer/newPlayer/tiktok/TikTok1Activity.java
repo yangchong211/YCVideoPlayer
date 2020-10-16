@@ -29,6 +29,7 @@ import org.yczbj.ycvideoplayer.newPlayer.list.OnItemChildClickListener;
 import org.yczbj.ycvideoplayer.newPlayer.list.VideoRecyclerViewAdapter;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
+import org.yczbj.ycvideoplayerlib.player.SimpleStateListener;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
@@ -128,7 +129,7 @@ public class TikTok1Activity extends AppCompatActivity {
 
     protected void initVideoView() {
         mVideoView = new VideoPlayer(this);
-        mVideoView.setOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
+        mVideoView.setOnStateChangeListener(new SimpleStateListener() {
             @Override
             public void onPlayStateChanged(int playState) {
                 //监听VideoViewManager释放，重置状态

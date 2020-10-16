@@ -14,10 +14,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yc.kernel.utils.VideoLogUtils;
+
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
+import org.yczbj.ycvideoplayerlib.player.SimpleStateListener;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
@@ -83,11 +86,17 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(@NonNull View view) {
-
+                VideoLogUtils.i("addOnChildAttachStateChangeListener-----AttachedToWindow---"+view);
             }
 
+            /**
+             * 当适配器创建的view（即列表项view）被窗口分离（即滑动离开了当前窗口界面）就会被调用
+             *
+             * @param view
+             */
             @Override
             public void onChildViewDetachedFromWindow(@NonNull View view) {
+                VideoLogUtils.i("addOnChildAttachStateChangeListener-----DetachedFromWindow---"+view);
                 FrameLayout playerContainer = view.findViewById(R.id.player_container);
                 View v = playerContainer.getChildAt(0);
                 if (v != null && v == mVideoView && !mVideoView.isFullScreen()) {
@@ -99,7 +108,7 @@ public class RecyclerViewFragment extends Fragment {
 
     protected void initVideoView() {
         mVideoView = new VideoPlayer(context);
-        mVideoView.setOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
+        mVideoView.setOnStateChangeListener(new SimpleStateListener() {
             @Override
             public void onPlayStateChanged(int playState) {
                 //监听VideoViewManager释放，重置状态
@@ -176,10 +185,10 @@ public class RecyclerViewFragment extends Fragment {
     }
 
     private void releaseVideoView() {
-        mVideoView.release();
         if (mVideoView.isFullScreen()) {
             mVideoView.stopFullScreen();
         }
+        mVideoView.release();
         if(getActivity().getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }

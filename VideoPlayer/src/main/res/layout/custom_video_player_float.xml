@@ -34,4 +34,14 @@
         android:layout_margin="4dp"
         android:src="@drawable/ic_player_open" />
 
+    <ProgressBar
+        android:id="@+id/pb_bottom_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_gravity="bottom"
+        android:max="1000"
+        android:progressDrawable="@drawable/progress_bar_style"
+        android:visibility="visible" />
+
 </FrameLayout>

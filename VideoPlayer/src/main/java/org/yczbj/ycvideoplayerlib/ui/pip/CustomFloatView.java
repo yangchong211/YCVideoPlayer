@@ -16,9 +16,12 @@ limitations under the License.
 package org.yczbj.ycvideoplayerlib.ui.pip;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -47,6 +50,8 @@ public class CustomFloatView extends FrameLayout implements InterControlView, Vi
     private ProgressBar mPbLoading;
     private ImageView mIvClose;
     private ImageView mIvSkip;
+    private ProgressBar mPbBottomProgress;
+    private boolean mIsShowBottomProgress = true;
 
     public CustomFloatView(@NonNull Context context) {
         super(context);
@@ -69,6 +74,10 @@ public class CustomFloatView extends FrameLayout implements InterControlView, Vi
                 R.layout.custom_video_player_float, this, true);
         initFindViewById(view);
         initListener();
+        //5.1以下系统SeekBar高度需要设置成WRAP_CONTENT
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            mPbBottomProgress.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        }
     }
 
     private void initFindViewById(View view) {
@@ -76,7 +85,7 @@ public class CustomFloatView extends FrameLayout implements InterControlView, Vi
         mPbLoading = view.findViewById(R.id.pb_loading);
         mIvClose = view.findViewById(R.id.iv_close);
         mIvSkip = view.findViewById(R.id.iv_skip);
-
+        mPbBottomProgress = view.findViewById(R.id.pb_bottom_progress);
     }
 
     private void initListener() {
@@ -120,12 +129,21 @@ public class CustomFloatView extends FrameLayout implements InterControlView, Vi
             }
             mIvStartPlay.setVisibility(VISIBLE);
             mIvStartPlay.startAnimation(anim);
+            if (mIsShowBottomProgress) {
+                mPbBottomProgress.setVisibility(GONE);
+            }
         } else {
             if (mIvStartPlay.getVisibility() == GONE){
                 return;
             }
             mIvStartPlay.setVisibility(GONE);
             mIvStartPlay.startAnimation(anim);
+            if (mIsShowBottomProgress) {
+                mPbBottomProgress.setVisibility(VISIBLE);
+                AlphaAnimation animation = new AlphaAnimation(0f, 1f);
+                animation.setDuration(300);
+                mPbBottomProgress.startAnimation(animation);
+            }
         }
     }
 
@@ -141,6 +159,15 @@ public class CustomFloatView extends FrameLayout implements InterControlView, Vi
                 mIvStartPlay.setSelected(true);
                 mIvStartPlay.setVisibility(GONE);
                 mPbLoading.setVisibility(GONE);
+                if (mIsShowBottomProgress) {
+                    if (mControlWrapper.isShowing()) {
+                        mPbBottomProgress.setVisibility(GONE);
+                    } else {
+                        mPbBottomProgress.setVisibility(VISIBLE);
+                    }
+                }
+                //开始刷新进度
+                mControlWrapper.startProgress();
                 break;
             case ConstantKeys.CurrentState.STATE_PAUSED:
                 mIvStartPlay.setSelected(false);
@@ -171,6 +198,8 @@ public class CustomFloatView extends FrameLayout implements InterControlView, Vi
                 break;
             case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
                 bringToFront();
+                mPbBottomProgress.setProgress(0);
+                mPbBottomProgress.setSecondaryProgress(0);
                 break;
         }
     }
@@ -182,8 +211,19 @@ public class CustomFloatView extends FrameLayout implements InterControlView, Vi
 
     @Override
     public void setProgress(int duration, int position) {
-
+        if (duration > 0) {
+            int pos = (int) (position * 1.0 / duration * mPbBottomProgress.getMax());
+            mPbBottomProgress.setProgress(pos);
+        }
+        int percent = mControlWrapper.getBufferedPercentage();
+        if (percent >= 95) {
+            //解决缓冲进度不能100%问题
+            mPbBottomProgress.setSecondaryProgress(mPbBottomProgress.getMax());
+        } else {
+            mPbBottomProgress.setSecondaryProgress(percent * 10);
+        }
     }
+
 
     @Override
     public void onLockStateChanged(boolean isLocked) {

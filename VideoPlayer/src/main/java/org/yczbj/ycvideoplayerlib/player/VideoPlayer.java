@@ -1024,16 +1024,6 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
     }
 
     /**
-     * OnStateChangeListener的空实现。用的时候只需要重写需要的方法
-     */
-    public static class SimpleOnStateChangeListener implements OnVideoStateListener {
-        @Override
-        public void onPlayerStateChanged(@ConstantKeys.PlayModeType int playerState) {}
-        @Override
-        public void onPlayStateChanged(int playState) {}
-    }
-
-    /**
      * 添加一个播放状态监听器，播放状态发生变化时将会调用。
      */
     public void addOnStateChangeListener(@NonNull OnVideoStateListener listener) {

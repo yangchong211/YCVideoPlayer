@@ -16,6 +16,7 @@ import org.yczbj.ycvideoplayer.newPlayer.list.OnItemChildClickListener;
 import org.yczbj.ycvideoplayer.newPlayer.list.VideoRecyclerViewAdapter;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
+import org.yczbj.ycvideoplayerlib.player.SimpleStateListener;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
@@ -76,7 +77,7 @@ public class TinyScreenActivity extends AppCompatActivity implements OnItemChild
 
     protected void initView() {
         mVideoPlayer = new VideoPlayer(this);
-        mVideoPlayer.setOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
+        mVideoPlayer.setOnStateChangeListener(new SimpleStateListener() {
             @Override
             public void onPlayStateChanged(int playState) {
                 if (playState == ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING) {

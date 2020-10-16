@@ -224,6 +224,9 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
         mControlComponents.clear();
     }
 
+    /**
+     * 移除所有独有的组件
+     */
     public void removeAllPrivateComponents() {
         Iterator<Map.Entry<InterControlView, Boolean>> it = mControlComponents.entrySet().iterator();
         while (it.hasNext()) {

@@ -58,6 +58,7 @@ public class BaseApplication extends Application {
         //播放器配置，注意：此为全局配置，按需开启
         PlayerFactory player = PlayerFactoryUtils.getPlayer(PlayerConstant.PlayerType.TYPE_IJK);
         VideoViewManager.setConfig(VideoPlayerConfig.newBuilder()
+                //设置上下文
                 .setContext(this)
                 //设置视频全局埋点事件
                 .setBuriedPointEvent(new BuriedPointEventImpl())

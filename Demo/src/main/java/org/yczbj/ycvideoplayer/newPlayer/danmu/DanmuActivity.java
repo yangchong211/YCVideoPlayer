@@ -11,6 +11,7 @@ import org.yczbj.ycvideoplayer.BaseActivity;
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
+import org.yczbj.ycvideoplayerlib.player.SimpleStateListener;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
@@ -86,7 +87,7 @@ public class DanmuActivity extends BaseActivity implements View.OnClickListener 
         mVideoPlayer.setUrl(ConstantVideo.VideoPlayerList[0]);
         mVideoPlayer.setScreenScaleType(ConstantKeys.PlayerScreenScaleType.SCREEN_SCALE_16_9);
         mVideoPlayer.start();
-        mVideoPlayer.addOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
+        mVideoPlayer.addOnStateChangeListener(new SimpleStateListener() {
             @Override
             public void onPlayStateChanged(int playState) {
                 if (playState == ConstantKeys.CurrentState.STATE_PREPARED) {

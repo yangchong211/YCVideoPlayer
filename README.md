@@ -57,6 +57,7 @@
 |**布局** | 内核和UI分离，和市面GitHub上大多数播放器不一样，方便定制，通过addView添加 |
 |**播放** | 正常播放，小窗播放，列表播放，仿抖音播放 |
 |**自定义** | 可以自定义添加视频UI层，可以说UI和Player高度分离，支持自定义渲染层SurfaceView |
+|**统一视频埋点** | 暴露用户播放视频开始，退出，异常，播放完成，以及退出视频时进度，点击广告，试看等多个统一埋点 |
 
 
 
@@ -243,6 +244,8 @@
 ![image](https://img-blog.csdnimg.cn/20201013091432616.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
 ![image](https://img-blog.csdnimg.cn/20201013091432581.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
 ![image](https://img-blog.csdnimg.cn/20201013091432668.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
+![image](https://img-blog.csdnimg.cn/20201016132752350.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
+![image](https://img-blog.csdnimg.cn/20201016132752342.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
 
 
 
@@ -335,6 +338,51 @@
 
 
 
+#### 9.2 播放器UI抽取封装优化
+- 发展中遇到的问题
+    - 播放器可支持多种场景下的播放，多个产品会用到同一个播放器，这样就会带来一个问题，一个播放业务播放器状态发生变化，其他播放业务必须同步更新播放状态，各个播放业务之间互相交叉，随着播放业务的增多，开发和维护成本会急剧增加, 导致后续开发不可持续。 
+- UI难以自定义或者修改麻烦
+    - 比如常见的视频播放器，会把视频各种视图写到xml中，这种方式在后期代码会很大，而且改动一个小的布局，则会影响大。这样到后期往往只敢加代码，而不敢删除代码……
+    - 有时候难以适应新的场景，比如添加一个播放广告，老师开课，或者视频引导业务需求，则需要到播放器中写一堆业务代码。迭代到后期，违背了开闭原则，视频播放器需要做到和业务分离
+- 视频播放器结构需要清晰
+    - 也就是说视频player和ui操作柔和到了一起，尤其是两者之间的交互。比如播放中需要更新UI进度条，播放异常需要显示异常UI，都比较难处理播放器状态变化更新UI操作
+    - 这个是指该视频播放器能否看了文档后快速上手，知道封装的大概流程。方便后期他人修改和维护，因此需要将视频播放器功能分离。比如切换内核+视频播放器(player+controller+view)
+    - 一定要解耦合，播放器player与视频UI解耦：支持添加自定义视频视图，比如支持添加自定义广告，新手引导，或者视频播放异常等视图，这个需要较强的拓展性
+- 适合多种业务场景
+    - 比如适合播放单个视频，多个视频，以及列表视频，或者类似抖音那种一个页面一个视频，还有小窗口播放视频。也就是适合大多数业务场景
+- 方便播放业务发生变化
+    - 播放状态变化是导致不同播放业务场景之间交叉同步，解除播放业务对播放器的直接操控，采用接口监听进行解耦。比如：player+controller+interface
+- 关于视频播放器
+    - 定义一个视频播放器InterVideoPlayer接口，操作视频播放，暂停，缓冲，进度设置，设置播放模式等多种操作。
+    - 然后写一个播放器接口的具体实现类，在这个里面拿到内核播放器player，然后做相关的实现操作。
+- 关于视频视图View
+    - 定义一个视图InterVideoController接口，主要负责视图显示/隐藏，播放进度，锁屏，状态栏等操作。
+    - 然后写一个播放器视图接口的具体实现类，在这里里面inflate视图操作，然后接口方法实现，为了方便后期开发者自定义view，因此需要addView操作，将添加进来的视图用map集合装起来。
+- 播放器player和controller交互
+    - 在player中创建BaseVideoController对象，这个时候需要把controller添加到播放器中，这个时候有两个要点特别重要，需要把播放器状态监听，和播放模式监听传递给控制器
+    - setPlayState设置视频播放器播放逻辑状态，主要是播放缓冲，加载，播放中，暂停，错误，完成，异常，播放进度等多个状态，方便控制器做UI更新操作
+    - setPlayerState设置视频播放切换模式状态，主要是普通模式，小窗口模式，正常模式三种其中一种，方便控制器做UI更新
+- 播放器player和view交互
+    - 这块非常关键，举个例子，视频播放失败需要显示控制层的异常视图View；播放视频初始化需要显示loading，然后更新UI播放进度条等。都是播放器和视图层交互
+    - 可以定义一个类，同时实现InterVideoPlayer接口和InterVideoController接口，这个时候会重新这两个接口所有的方法。此类的目的是为了在InterControlView接口实现类中既能调用VideoPlayer的api又能调用BaseVideoController的api
+- 如何添加自定义播放器视图
+    - 添加了自定义播放器视图，比如添加视频广告，可以选择跳过，选择播放暂停。那这个视图view，肯定是需要操作player或者获取player的状态的。这个时候就需要暴露监听视频播放的状态接口监听
+    - 首先定义一个InterControlView接口，也就是说所有自定义视频视图view需要实现这个接口，该接口中的核心方法有：绑定视图到播放器，视图显示隐藏变化监听，播放状态监听，播放模式监听，进度监听，锁屏监听等
+    - 在BaseVideoController中的状态监听中，通过InterControlView接口对象就可以把播放器的状态传递到子类中
+
+
+#### 9.3 如何全局监控视频埋点
+- 传统一点的做法
+    - 比如用友盟或者百度统计，或者用其他的统计。之前的做法是，在每个有视频的页面比如说Activity，Fragment等开启时视频播放时埋点一次，页面退出时埋点一次。
+    - 如果app中有多个activity或者fragment页面，那么就每个页面都要进行埋点。比如如果你的app是付费视频，你想知道有多少人试看了，该怎么操作。那么你需要在每一个有视频的activity页面挨个添加埋点，那还有没有更好的办法？
+- 解决方案
+    - 举个例子：例如，你需要来让外部开发者手动去埋点，可是在类中怎么埋点又是由其他人来设计的，你只是需要对外暴露监听的方法。那么该如何做呢？采用接口 + 实现类方式即可实现。
+- 该案例中怎么操作
+    - 定义一个接口，规定其他人设计类，必须继承这个接口。在这个接口中，定义进入视频播放，退出视频播放器，记录播放进度，视频播放完成，播放异常，点击广告，点击试看等操作的抽象方法。具体可以看BuriedPointEvent类代码……
+- 外部开发者如何使用
+    - 定义一个类实现该视频埋点接口，重写里面方法。然后需要在初始化配置视频播放器的时候，将这个实现类的对象传递进来即可。通过这个配置类传进来的对象，播放器就可以处理监听设置逻辑呢。
+    - 这种操作最大的好处就是：在这个类中统一处理视频的埋点，修改快捷，而不用在每一个有视频播放器的页面埋点，方便维护。具体可以看代码案例。
+
 
 #### 9.4 代码方面优化措施
 - **如果是在Activity中的话，建议设置下面这段代码**
@@ -378,6 +426,13 @@
 
 
 ### 10.播放器问题记录说明
+- 关于如何调整视频的播放填充类型。在该库中提供了6中不同类型供你选择，即正常默认类型；16：9类型，4：3类型；充满整个控件视图；剧中裁剪类型等类型，就是模仿了图片设置缩放的方式。其实这个就是设置SurfaceView的宽高……
+    - 这里播放正常视频建议选择16：9类型的，缩放后会有留黑；针对类似快手抖音视频，一个页面一个视频建议选择充满整个控件视图，会裁剪但是会铺满视频。
+- 关于前后台切换视频问题
+    - 从前台切到后台，当视频正在播放或者正在缓冲时，调用该方法暂停视频。从后台切换到前台，当视频暂停时或者缓冲暂停时，调用该方法重新开启视频播放。也可以让用户手动去点击播放视频。
+- 播放器在正常播放和全屏模式切换状态栏问题
+    - 待完善，需要处理刘海
+
 
 
 
@@ -385,18 +440,58 @@
 
 
 ### 12.视频缓存原理介绍
+- 网络上比较好的项目：https://github.com/danikula/AndroidVideoCache
+    - 网络用的HttpURLConnection，文件缓存处理，文件最大限度策略，回调监听处理，断点续传,代理服务等。
+- 但是存在一些问题，比如如下所示
+    - 文件的缓存超过限制后没有按照lru算法删除，
+    - 处理返回给播放器的http响应头消息，响应头消息的获取处理改为head请求（需服务器支持）
+    - 替换网络库为okHttp（因为大部分的项目都是以okHttp为网络请求库的），但是这个改动性比较大
+- 然后看一下怎么使用，超级简单。传入视频url链接，返回一个代理链接，然后就可以呢
+    ```
+    HttpProxyCacheServer cacheServer = ProxyVideoCacheManager.getProxy(this);
+    String proxyUrl = cacheServer.getProxyUrl(URL_AD);
+    mVideoPlayer.setUrl(proxyUrl);
+  
+  
+    public static HttpProxyCacheServer getProxy(Context context) {
+        return sharedProxy == null ? (sharedProxy = newProxy(context)) : sharedProxy;
+    }
+
+    private static HttpProxyCacheServer newProxy(Context context) {
+        return new HttpProxyCacheServer.Builder(context)
+                .maxCacheSize(512 * 1024 * 1024)       // 512MB for cache
+                //缓存路径，不设置默认在sd_card/Android/data/[app_package_name]/cache中
+                //.cacheDirectory()
+                .build();
+    }
+    ```
+- 大概的原理
+    - 原始的方式是直接塞播放地址给播放器，它就可以直接播放。现在我们要在中间加一层本地代理，播放器播放的时候（获取数据）是通过我们的本地代理的地址来播放的，这样我们就可以很好的在中间层（本地代理层）做一些处理，比如：文件缓存，预缓存（秒开处理），监控等。
+- 原理详细一点来说
+    - 1.采用了本地代理服务的方式，通过原始url给播放器返回一个本地代理的一个url ，代理URL类似：http://127.0.0.1:port/视频url；（port端口为系统随机分配的有效端口，真实url是为了真正的下载），然后播放器播放的时候请求到了你本地的代理上了。
+    - 2.本地代理采用ServerSocket监听127.0.0.1的有效端口，这个时候手机就是一个服务器了，客户端就是socket，也就是播放器。
+    - 3.读取客户端就是socket来读取数据（http协议请求）解析http协议。
+    - 4.根据url检查视频文件是否存在，读取文件数据给播放器，也就是往socket里写入数据（socket通信）。同时如果没有下载完成会进行断点下载,当然弱网的话数据需要生产消费同步处理。
+- 如何实现预加载
+    - 其实预加载的思路很简单，在进行一个播放视频后，再返回接下来需要预加载的视频url，启用线程去请求下载数据
+    - 开启一个线程去请求并预加载一部分的数据，可能需要预加载的数据大于>1，利用队列先进入的先进行加载，因此可以采用LinkedHashMap保存正在预加载的task。
+    - 在开始预加载的时候，判断该播放地址是否已经预加载，如果不是那么创建一个线程task，并且把它放到map集合中。然后执行预加载逻辑，也就是执行HttpURLConnection请求
+    - 提供取消对应url加载的任务，因为有可能该url不需要再进行预加载了，比如参考抖音，当用户瞬间下滑几个视频，那么很多视频就需要跳过了不需要再进行预加载
+- 具体直接看项目代码：VideoCache缓冲模块
+
 
 
 ### 13.查看视频播放器日志
 - 统一管理视频播放器封装库日志，方便后期排查问题
     - 比如，视频内核，日志过滤则是：aaa
     - 比如，视频player，日志过滤则是：bbb
+    - 比如，缓存模块，日志过滤则是：VideoCache
 
 
 
 ### 14.该库异常code说明
-- 针对视频封装库，统一处理抛出的异常，为了方便开发者快速知道异常的来由，则可以查询约定的code码。这个在sdk中特别常见，因此该库一定程度是借鉴腾讯播放器……
-
+- 针对视频封装库，统一处理抛出的异常，为了方便开发者快速知道异常的来由，则可以查询约定的code码。
+    - 这个在sdk中特别常见，因此该库一定程度是借鉴腾讯播放器……
 
 
 ### 15.该库系列wiki文档
@@ -433,6 +528,19 @@
     - [19.商品详情页分页加载](https://github.com/yangchong211/YCShopDetailLayout)
     - [20.在任意View控件上设置红点控件](https://github.com/yangchong211/YCRedDotView)
     - [21.仿抖音一次滑动一个页面播放视频库](https://github.com/yangchong211/YCScrollPager)
+
+
+#### 17.2 感谢参考案例和博客
+- exo播放器
+    - https://github.com/google/ExoPlayer
+- ijk播放器
+    - https://github.com/bilibili/ijkplayer
+- 阿里云播放器
+    - https://help.aliyun.com/document_detail/51992.html?spm=a2c4g.11186623.2.24.37131bc7j1PoVK#topic2415
+- GSY播放器
+    - https://github.com/CarGuo/GSYVideoPlayer
+- 饺子播放器
+    - https://github.com/lipangit/JiaoZiVideoPlayer
 
 
 

@@ -22,7 +22,8 @@ public class RecyclerViewAutoPlayFragment extends RecyclerViewFragment {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == SCROLL_STATE_IDLE) { //滚动停止
+                if (newState == SCROLL_STATE_IDLE) {
+                    //滚动停止
                     autoPlayVideo(recyclerView);
                 }
             }
@@ -37,6 +38,7 @@ public class RecyclerViewAutoPlayFragment extends RecyclerViewFragment {
                     VideoRecyclerViewAdapter.VideoHolder holder = (VideoRecyclerViewAdapter.VideoHolder) itemView.getTag();
                     Rect rect = new Rect();
                     holder.mPlayerContainer.getLocalVisibleRect(rect);
+                    //获取item的高度
                     int height = holder.mPlayerContainer.getHeight();
                     if (rect.top == 0 && rect.bottom == height) {
                         startPlay(holder.mPosition);

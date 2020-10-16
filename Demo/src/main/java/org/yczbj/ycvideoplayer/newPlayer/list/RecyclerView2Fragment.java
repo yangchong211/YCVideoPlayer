@@ -21,6 +21,7 @@ import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
+import org.yczbj.ycvideoplayerlib.player.SimpleStateListener;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
@@ -104,7 +105,7 @@ public class RecyclerView2Fragment extends Fragment {
 
     protected void initVideoView() {
         mVideoView = new VideoPlayer(context);
-        mVideoView.setOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
+        mVideoView.setOnStateChangeListener(new SimpleStateListener() {
             @Override
             public void onPlayStateChanged(int playState) {
                 //监听VideoViewManager释放，重置状态

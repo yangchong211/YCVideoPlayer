@@ -13,6 +13,7 @@ import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 import org.yczbj.ycvideoplayerlib.config.VideoInfoBean;
+import org.yczbj.ycvideoplayerlib.player.SimpleStateListener;
 import org.yczbj.ycvideoplayerlib.player.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
@@ -88,7 +89,7 @@ public class ListVideoActivity extends AppCompatActivity implements View.OnClick
         mVideoPlayer.start();
 
         //监听播放结束
-        mVideoPlayer.addOnStateChangeListener(new VideoPlayer.SimpleOnStateChangeListener() {
+        mVideoPlayer.addOnStateChangeListener(new SimpleStateListener() {
             private int mCurrentVideoPosition;
             @Override
             public void onPlayStateChanged(int playState) {
