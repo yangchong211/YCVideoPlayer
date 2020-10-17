@@ -64,7 +64,7 @@ import java.util.Map;
  * </pre>
  */
 public abstract class BaseVideoController extends FrameLayout implements InterVideoController,
-        OrientationHelper.OnOrientationChangeListener {
+        InterViewController,OrientationHelper.OnOrientationChangeListener {
 
     //播放器包装类，集合了MediaPlayerControl的api和IVideoController的api
     protected ControlWrapper mControlWrapper;
@@ -183,24 +183,27 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
 
     /**
      * 添加控制组件，最后面添加的在最下面，合理组织添加顺序，可让ControlComponent位于不同的层级
+     * @param controlViews                         view
      */
-    public void addControlComponent(InterControlView... component) {
-        for (InterControlView item : component) {
+    @Override
+    public void addControlComponent(InterControlView... controlViews) {
+        for (InterControlView item : controlViews) {
             addControlComponent(item, false);
         }
     }
 
     /**
-     * 添加控制组件，最后面添加的在最下面，合理组织添加顺序，可让ControlComponent位于不同的层级
-     *
-     * @param isPrivate 是否为独有的组件，如果是就不添加到控制器中
+     * 添加控制组件，最后面添加的在最下面，合理组织添加顺序，可让InterControlView位于不同的层级
+     * @param controlView                           view
+     * @param isPrivate                             是否为独有的组件，如果是就不添加到控制器中
      */
-    public void addControlComponent(InterControlView component, boolean isPrivate) {
-        mControlComponents.put(component, isPrivate);
+    @Override
+    public void addControlComponent(InterControlView controlView, boolean isPrivate) {
+        mControlComponents.put(controlView, isPrivate);
         if (mControlWrapper != null) {
-            component.attach(mControlWrapper);
+            controlView.attach(mControlWrapper);
         }
-        View view = component.getView();
+        View view = controlView.getView();
         if (view != null && !isPrivate) {
             addView(view, 0);
         }
@@ -208,15 +211,18 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
 
     /**
      * 移除控制组件
+     * @param controlView                           view
      */
-    public void removeControlComponent(InterControlView component) {
-        removeView(component.getView());
-        mControlComponents.remove(component);
+    @Override
+    public void removeControlComponent(InterControlView controlView) {
+        removeView(controlView.getView());
+        mControlComponents.remove(controlView);
     }
 
     /**
      * 移除所有的组件
      */
+    @Override
     public void removeAllControlComponent() {
         for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
             removeView(next.getKey().getView());
@@ -227,6 +233,7 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     /**
      * 移除所有独有的组件
      */
+    @Override
     public void removeAllPrivateComponents() {
         Iterator<Map.Entry<InterControlView, Boolean>> it = mControlComponents.entrySet().iterator();
         while (it.hasNext()) {

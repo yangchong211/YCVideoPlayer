@@ -17,6 +17,11 @@ import com.yc.kernel.inter.AbstractVideoPlayer;
  */
 public abstract class PlayerFactory<T extends AbstractVideoPlayer> {
 
+    /**
+     * 创建具体的内核播放器Player
+     * @param context                       上下文
+     * @return                              具体的player
+     */
     public abstract T createPlayer(Context context);
 
 }
