@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * RecyclerView demo
+ * 普通的列表播放
  */
 public class RecyclerViewFragment extends Fragment {
 

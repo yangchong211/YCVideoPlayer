@@ -18,7 +18,8 @@ public class TextureViewFactory extends SurfaceFactory {
     }
 
     @Override
-    public ISurfaceView createRenderView(Context context) {
+    public InterSurfaceView createRenderView(Context context) {
+        //创建TextureView
         return new RenderTextureView(context);
     }
 }

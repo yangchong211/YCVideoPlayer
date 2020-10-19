@@ -12,6 +12,7 @@ import com.yc.kernel.utils.PlayerFactoryUtils;
 
 import org.yczbj.ycvideoplayerlib.config.VideoPlayerConfig;
 import org.yczbj.ycvideoplayerlib.player.VideoViewManager;
+import org.yczbj.ycvideoplayerlib.surface.SurfaceViewFactory;
 
 /**
  * ================================================
@@ -66,6 +67,8 @@ public class BaseApplication extends Application {
                 .setLogEnabled(true)
                 //设置ijk
                 .setPlayerFactory(player)
+                //创建SurfaceView
+                //.setRenderViewFactory(SurfaceViewFactory.create())
                 .build());
     }
 

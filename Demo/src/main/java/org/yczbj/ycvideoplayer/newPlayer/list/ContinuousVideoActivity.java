@@ -19,7 +19,11 @@ import org.yczbj.ycvideoplayerlib.ui.view.BasisVideoController;
 
 import java.util.List;
 
-public class ListVideoActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * 连续播放列表视频
+ * 意思是说播放完了第一个，接着播放第二个，第三个……
+ */
+public class ContinuousVideoActivity extends AppCompatActivity implements View.OnClickListener {
 
     private VideoPlayer mVideoPlayer;
     private Button mBtnScaleNormal;

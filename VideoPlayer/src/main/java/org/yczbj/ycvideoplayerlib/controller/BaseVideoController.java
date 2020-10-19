@@ -68,31 +68,24 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
 
     //播放器包装类，集合了MediaPlayerControl的api和IVideoController的api
     protected ControlWrapper mControlWrapper;
-
     @Nullable
     protected Activity mActivity;
-
     //控制器是否处于显示状态
     protected boolean mShowing;
-
     //是否处于锁定状态
     protected boolean mIsLocked;
-
     //播放视图隐藏超时
     protected int mDefaultTimeout = 5000;
-
     //是否开启根据屏幕方向进入/退出全屏
     private boolean mEnableOrientation;
     //屏幕方向监听辅助类
     protected OrientationHelper mOrientationHelper;
-
     //用户设置是否适配刘海屏
     private boolean mAdaptCutout;
     //是否有刘海
     private Boolean mHasCutout;
     //刘海的高度
     private int mCutoutHeight;
-
     //是否开始刷新进度
     private boolean mIsStartProgress;
 
@@ -138,10 +131,12 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
                 postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        //检查系统是否开启自动旋转
                         mOrientationHelper.enable();
                     }
                 }, 800);
             } else {
+                //取消监听
                 mOrientationHelper.disable();
             }
         }

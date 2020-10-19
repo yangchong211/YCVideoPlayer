@@ -4,7 +4,15 @@ import android.view.View;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
 
-
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/9/21
+ *     desc  : 帮助类
+ *     revise:
+ * </pre>
+ */
 public class MeasureHelper {
 
     private int mVideoWidth;
@@ -12,10 +20,19 @@ public class MeasureHelper {
     private int mCurrentScreenScale;
     private int mVideoRotationDegree;
 
+    /**
+     * 设置视频旋转角度
+     * @param videoRotationDegree           角度值
+     */
     public void setVideoRotation(int videoRotationDegree) {
         mVideoRotationDegree = videoRotationDegree;
     }
 
+    /**
+     * 设置视频宽高
+     * @param width                         宽
+     * @param height                        高
+     */
     public void setVideoSize(int width, int height) {
         mVideoWidth = width;
         mVideoHeight = height;

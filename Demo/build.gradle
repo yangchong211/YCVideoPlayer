@@ -59,7 +59,7 @@ dependencies {
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
 
     //自己封装的库，都有对应的案例项目【欢迎star】：https://github.com/yangchong211
-    implementation 'com.yc:PagerLib:1.0.1'
+    implementation 'com.yc:PagerLib:1.0.4'
     implementation 'cn.yc:YCStateLib:1.2.2'                                  //状态管理
     implementation project(':VideoCache')
     implementation project(':VideoPlayer')

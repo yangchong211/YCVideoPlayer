@@ -14,9 +14,18 @@ import androidx.annotation.Nullable;
 import com.yc.kernel.inter.AbstractVideoPlayer;
 
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/9/21
+ *     desc  : 重写TextureView，适配视频的宽高和旋转
+ *     revise: 1.继承View，具有view的特性，比如移动，旋转，缩放，动画等变化。支持截图
+ *             8.必须在硬件加速的窗口中使用，占用内存比SurfaceView高，在5.0以前在主线程渲染，5.0以后有单独的渲染线程。
+ * </pre>
+ */
 @SuppressLint("ViewConstructor")
-public class RenderTextureView extends TextureView implements ISurfaceView,
-        TextureView.SurfaceTextureListener {
+public class RenderTextureView extends TextureView implements InterSurfaceView {
 
     private MeasureHelper mMeasureHelper;
     private SurfaceTexture mSurfaceTexture;
@@ -32,7 +41,7 @@ public class RenderTextureView extends TextureView implements ISurfaceView,
 
     private void init(Context context){
         mMeasureHelper = new MeasureHelper();
-        setSurfaceTextureListener(this);
+        setSurfaceTextureListener(listener);
     }
 
     /**
@@ -116,25 +125,6 @@ public class RenderTextureView extends TextureView implements ISurfaceView,
     }
 
     /**
-     * SurfaceTexture准备就绪
-     * @param surfaceTexture            surface
-     * @param width                     WIDTH
-     * @param height                    HEIGHT
-     */
-    @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
-        if (mSurfaceTexture != null) {
-            setSurfaceTexture(mSurfaceTexture);
-        } else {
-            mSurfaceTexture = surfaceTexture;
-            mSurface = new Surface(surfaceTexture);
-            if (mMediaPlayer != null) {
-                mMediaPlayer.setSurface(mSurface);
-            }
-        }
-    }
-
-    /**
      * 记得一定要重新写这个方法，如果角度发生了变化，就重新绘制布局
      * 设置视频旋转角度
      * @param rotation                  角度
@@ -147,33 +137,56 @@ public class RenderTextureView extends TextureView implements ISurfaceView,
         }
     }
 
+    private SurfaceTextureListener listener = new SurfaceTextureListener() {
+        /**
+         * SurfaceTexture准备就绪
+         * @param surfaceTexture            surface
+         * @param width                     WIDTH
+         * @param height                    HEIGHT
+         */
+        @Override
+        public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
+            if (mSurfaceTexture != null) {
+                setSurfaceTexture(mSurfaceTexture);
+            } else {
+                mSurfaceTexture = surfaceTexture;
+                mSurface = new Surface(surfaceTexture);
+                if (mMediaPlayer != null) {
+                    mMediaPlayer.setSurface(mSurface);
+                }
+            }
+        }
 
-    /**
-     * SurfaceTexture缓冲大小变化
-     * @param surface                   surface
-     * @param width                     WIDTH
-     * @param height                    HEIGHT
-     */
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+        /**
+         * SurfaceTexture缓冲大小变化
+         * @param surface                   surface
+         * @param width                     WIDTH
+         * @param height                    HEIGHT
+         */
+        @Override
+        public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
 
-    }
+        }
 
-    /**
-     * SurfaceTexture即将被销毁
-     * @param surface                   surface
-     */
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        return false;
-    }
+        /**
+         * SurfaceTexture即将被销毁
+         * @param surface                   surface
+         */
+        @Override
+        public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+            return false;
+        }
 
-    /**
-     * SurfaceTexture通过updateImage更新
-     * @param surface                   surface
-     */
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+        /**
+         * SurfaceTexture通过updateImage更新
+         * @param surface                   surface
+         */
+        @Override
+        public void onSurfaceTextureUpdated(SurfaceTexture surface) {
 
-    }
+        }
+    };
+
+
+
 }

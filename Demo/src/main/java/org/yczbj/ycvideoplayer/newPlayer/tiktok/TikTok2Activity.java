@@ -16,6 +16,8 @@ import com.yc.kernel.utils.VideoLogUtils;
 
 import org.yczbj.ycvideoplayer.ConstantVideo;
 import org.yczbj.ycvideoplayer.R;
+
+import com.yc.pagerlib.pager.VerticalViewPager;
 import com.yc.videocache.cache.PreloadManager;
 import com.yc.videocache.cache.ProxyVideoCacheManager;
 

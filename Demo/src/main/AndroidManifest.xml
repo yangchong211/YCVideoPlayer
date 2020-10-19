@@ -86,7 +86,7 @@
         <activity android:name=".newPlayer.ad.AdActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".newPlayer.list.ListVideoActivity"
+        <activity android:name=".newPlayer.list.ContinuousVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity android:name=".newPlayer.clarity.ClarityActivity"

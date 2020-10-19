@@ -13,6 +13,6 @@ import android.content.Context;
  */
 public abstract class SurfaceFactory {
 
-    public abstract ISurfaceView createRenderView(Context context);
+    public abstract InterSurfaceView createRenderView(Context context);
 
 }

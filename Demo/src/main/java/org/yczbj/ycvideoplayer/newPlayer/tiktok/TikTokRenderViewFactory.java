@@ -2,7 +2,7 @@ package org.yczbj.ycvideoplayer.newPlayer.tiktok;
 
 import android.content.Context;
 
-import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
+import org.yczbj.ycvideoplayerlib.surface.InterSurfaceView;
 import org.yczbj.ycvideoplayerlib.surface.SurfaceFactory;
 import org.yczbj.ycvideoplayerlib.surface.RenderTextureView;
 
@@ -14,7 +14,7 @@ public class TikTokRenderViewFactory extends SurfaceFactory {
     }
 
     @Override
-    public ISurfaceView createRenderView(Context context) {
+    public InterSurfaceView createRenderView(Context context) {
         return new TikTokRenderView(new RenderTextureView(context));
     }
 }

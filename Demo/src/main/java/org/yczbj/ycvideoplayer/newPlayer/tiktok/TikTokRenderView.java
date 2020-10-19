@@ -8,18 +8,18 @@ import androidx.annotation.NonNull;
 import com.yc.kernel.inter.AbstractVideoPlayer;
 
 import org.yczbj.ycvideoplayerlib.config.ConstantKeys;
-import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
+import org.yczbj.ycvideoplayerlib.surface.InterSurfaceView;
 
 
 /**
  * TikTok专用RenderView，横屏视频默认显示，竖屏视频居中裁剪
  * 使用代理模式实现
  */
-public class TikTokRenderView implements ISurfaceView {
+public class TikTokRenderView implements InterSurfaceView {
 
-    private ISurfaceView mProxyRenderView;
+    private InterSurfaceView mProxyRenderView;
 
-    TikTokRenderView(@NonNull ISurfaceView renderView) {
+    TikTokRenderView(@NonNull InterSurfaceView renderView) {
         this.mProxyRenderView = renderView;
     }
 

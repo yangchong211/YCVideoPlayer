@@ -22,7 +22,7 @@ import org.yczbj.ycvideoplayerlib.controller.BaseVideoController;
 import com.yc.kernel.inter.AbstractVideoPlayer;
 import com.yc.kernel.factory.PlayerFactory;
 
-import org.yczbj.ycvideoplayerlib.surface.ISurfaceView;
+import org.yczbj.ycvideoplayerlib.surface.InterSurfaceView;
 import org.yczbj.ycvideoplayerlib.surface.SurfaceFactory;
 import org.yczbj.ycvideoplayerlib.tool.BaseToast;
 import org.yczbj.ycvideoplayerlib.tool.PlayerUtils;
@@ -69,7 +69,7 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      */
     protected FrameLayout mPlayerContainer;
 
-    protected ISurfaceView mRenderView;
+    protected InterSurfaceView mRenderView;
     protected SurfaceFactory mRenderViewFactory;
     protected int mCurrentScreenScaleType;
     protected int[] mVideoSize = {0, 0};

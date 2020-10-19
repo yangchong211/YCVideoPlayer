@@ -16,7 +16,7 @@ import com.yc.kernel.inter.AbstractVideoPlayer;
  *     revise:
  * </pre>
  */
-public interface ISurfaceView {
+public interface InterSurfaceView {
 
     /**
      * 关联AbstractPlayer

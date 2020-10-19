@@ -37,12 +37,19 @@ import com.yc.kernel.inter.AbstractVideoPlayer;
  *     revise:
  * </pre>
  */
-public class RenderSurfaceView extends SurfaceView implements ISurfaceView{
+public class RenderSurfaceView extends SurfaceView implements InterSurfaceView {
 
     /**
      * 优点：可以在一个独立的线程中进行绘制，不会影响主线程；使用双缓冲机制，播放视频时画面更流畅
      * 缺点：Surface不在View hierachy中，它的显示也不受View的属性控制，所以不能进行平移，缩放等变换，
      *      也不能放在其它ViewGroup中。SurfaceView 不能嵌套使用。
+     *
+     * SurfaceView双缓冲
+     *      1.SurfaceView在更新视图时用到了两张Canvas，一张frontCanvas和一张backCanvas。
+     *      2.每次实际显示的是frontCanvas，backCanvas存储的是上一次更改前的视图，当使用lockCanvas（）获取画布时，
+     *        得到的实际上是backCanvas而不是正在显示的frontCanvas，之后你在获取到的backCanvas上绘制新视图，
+     *        再unlockCanvasAndPost（canvas）此视图，那么上传的这张canvas将替换原来的frontCanvas作为新的frontCanvas，
+     *        原来的frontCanvas将切换到后台作为backCanvas。
      */
 
     private MeasureHelper mMeasureHelper;
@@ -65,7 +72,9 @@ public class RenderSurfaceView extends SurfaceView implements ISurfaceView{
 
     private void init(Context context){
         mMeasureHelper = new MeasureHelper();
-        getHolder().addCallback(callback);
+        SurfaceHolder holder = this.getHolder();
+        //holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        holder.addCallback(callback);
     }
 
     /**
