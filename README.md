@@ -124,11 +124,11 @@
 - 如下所示
     ```
     //视频UI层，必须要有
-    implementation 'cn.yc:VideoPlayer:3.0.1'
+    implementation 'cn.yc:VideoPlayer:3.0.8'
     //视频缓存，如果不需要则可以不依赖
-    implementation 'cn.yc:VideoCache:3.0.0'
+    implementation 'cn.yc:VideoCache:3.0.5'
     //视频内核层，必须有
-    implementation 'cn.yc:VideoKernel:3.0.1'
+    implementation 'cn.yc:VideoKernel:3.0.5'
     ```
 
 #### 4.2 在xml中添加布局

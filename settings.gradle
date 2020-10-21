@@ -1,3 +1,5 @@
+include ':MusicPlayer'
+include ':VideoView'
 include ':VideoKernel'
 include ':VideoCache'
 include ':Demo', ':VideoPlayer'

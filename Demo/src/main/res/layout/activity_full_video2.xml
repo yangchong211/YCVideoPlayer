@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/whiteBg">
 
-    <org.yczbj.ycvideoplayerlib.old.player.OldVideoPlayer
+    <com.yc.video.old.player.OldVideoPlayer
         android:id="@+id/video_player"
         android:layout_width="match_parent"
         android:layout_height="240dp"/>

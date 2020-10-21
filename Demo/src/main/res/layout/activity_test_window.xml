@@ -7,7 +7,7 @@
 
 
     <!--视频播放器-->
-    <org.yczbj.ycvideoplayerlib.old.player.OldVideoPlayer
+    <com.yc.video.old.player.OldVideoPlayer
         android:id="@+id/video_player"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
