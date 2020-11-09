@@ -53,7 +53,7 @@ public class CustomErrorView extends LinearLayout implements InterControlView {
     private ControlWrapper mControlWrapper;
 
     public CustomErrorView(Context context) {
-        this(context, null);
+        super(context);
         init(context);
     }
 

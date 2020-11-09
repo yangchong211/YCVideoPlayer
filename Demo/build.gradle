@@ -65,7 +65,7 @@ dependencies {
 //    implementation project(':VideoPlayer')
 //    implementation project(':VideoKernel')
 
-    implementation 'cn.yc:VideoPlayer:3.0.8'
+    implementation 'cn.yc:VideoPlayer:3.0.9'
     implementation 'cn.yc:VideoCache:3.0.5'
     implementation 'cn.yc:VideoKernel:3.0.5'
     implementation 'cn.yc:YCStatusBarLib:1.5.0'
