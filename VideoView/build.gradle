@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 30
-        versionName "3.0.0"
+        versionCode 35
+        versionName "3.0.5"
     }
 
     buildTypes {
@@ -21,26 +21,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation project(':VideoKernel')
-
-    /*//这两个是必须要加的，其它的可供选择
-    //ijk播放器
-    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
-    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
-    //其他库文件
-    //implementation 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.8'
-    //implementation 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'
-    //implementation 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.8'
-    //implementation 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.8.8'
-    //谷歌播放器
-    implementation  "com.google.android.exoplayer:exoplayer:2.11.3"
-    implementation "com.google.android.exoplayer:exoplayer-core:2.11.3"
-    implementation "com.google.android.exoplayer:exoplayer-dash:2.11.3"
-    implementation "com.google.android.exoplayer:exoplayer-hls:2.11.3"
-    implementation "com.google.android.exoplayer:exoplayer-smoothstreaming:2.11.3"
-    implementation "com.google.android.exoplayer:extension-rtmp:2.11.3"*/
 }
 
 /** 以下开始是将Android Library上传到jcenter的相关配置**/
@@ -55,7 +35,7 @@ def gitUrl = 'https://github.com/yangchong211/YCVideoPlayer.git' // project git
 //发布到组织名称名字，必须填写
 group = "cn.yc"
 //发布到JCenter上的项目名字，必须填写
-def libName = "YCVideoViewLib"
+def libName = "VideoView"
 // 版本号，下次更新是只需要更改版本号即可
 version = "3.0.5"
 
@@ -101,7 +81,7 @@ install {
             project {
                 packaging 'aar'
                 //项目描述，自由填写
-                name 'This is videoPlayer lib'
+                name 'This is video float view lib'
                 url siteUrl
                 licenses {
                     license {
@@ -138,7 +118,7 @@ bintray {
     pkg {
         repo = "maven"
         name = libName    //发布到JCenter上的项目名字，必须填写
-        desc = 'android videoPlayer'    //项目描述
+        desc = 'android video float view'    //项目描述
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]

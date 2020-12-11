@@ -59,6 +59,14 @@
                 android:padding="10dp"
                 android:background="@color/colorAccent"
                 android:text="3.原老播放器案例"/>
+            <TextView
+                android:id="@+id/tv_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:background="@color/colorAccent"
+                android:text="4.音频播放器案例"/>
         </LinearLayout>
     </ScrollView>
 

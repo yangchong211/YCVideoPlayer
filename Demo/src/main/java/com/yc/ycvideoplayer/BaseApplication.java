@@ -10,6 +10,7 @@ import com.yc.kernel.factory.PlayerFactory;
 import com.yc.kernel.utils.PlayerConstant;
 import com.yc.kernel.utils.PlayerFactoryUtils;
 
+import com.yc.music.utils.MusicSpUtils;
 import com.yc.video.config.VideoPlayerConfig;
 import com.yc.video.player.VideoViewManager;
 import com.yc.video.surface.SurfaceViewFactory;
@@ -70,6 +71,7 @@ public class BaseApplication extends Application {
                 //创建SurfaceView
                 //.setRenderViewFactory(SurfaceViewFactory.create())
                 .build());
+        MusicSpUtils.init(this);
     }
 
     /**
