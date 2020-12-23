@@ -32,6 +32,8 @@ import com.yc.kernel.utils.VideoLogUtils;
 
 import java.util.Map;
 
+import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_SOURCE;
+
 /**
  * <pre>
  *     @author yangchong
@@ -301,8 +303,14 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
      */
     @Override
     public void setSurface(Surface surface) {
-        if (mInternalPlayer != null) {
-            mInternalPlayer.setVideoSurface(surface);
+        if (surface!=null){
+            try {
+                if (mInternalPlayer != null) {
+                    mInternalPlayer.setVideoSurface(surface);
+                }
+            } catch (Exception e) {
+                mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_UNEXPECTED,e.getMessage());
+            }
         }
     }
 
@@ -413,7 +421,16 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
     @Override
     public void onPlayerError(ExoPlaybackException error) {
         if (mPlayerEventListener != null) {
-            mPlayerEventListener.onError();
+            int type = error.type;
+            if (type == TYPE_SOURCE){
+                //错误的链接
+                mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_SOURCE,error.getMessage());
+            } else if (type == ExoPlaybackException.TYPE_RENDERER
+                    || type == ExoPlaybackException.TYPE_UNEXPECTED
+                    || type == ExoPlaybackException.TYPE_REMOTE
+                    || type == ExoPlaybackException.TYPE_OUT_OF_MEMORY){
+                mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_UNEXPECTED,error.getMessage());
+            }
         }
     }
 

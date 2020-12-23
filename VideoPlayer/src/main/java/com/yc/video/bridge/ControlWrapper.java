@@ -13,19 +13,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package com.yc.video.controller;
+package com.yc.video.bridge;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-
 import androidx.annotation.NonNull;
-
+import com.yc.video.controller.InterVideoController;
 import com.yc.video.player.InterVideoPlayer;
 
+
 /**
- * 此类的目的是为了在InterControlView接口实现类中既能调用VideoPlayer的api又能调用BaseVideoController的api，
- * 并对部分api做了封装，方便使用
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/11/9
+ *     desc  : 此类的目的是为了在InterControlView接口实现类中既能调用VideoPlayer的api又能调用BaseVideoController的api，
+ *             并对部分api做了封装，方便使用
+ *     revise:
+ * </pre>
  */
 public class ControlWrapper implements InterVideoPlayer, InterVideoController {
     

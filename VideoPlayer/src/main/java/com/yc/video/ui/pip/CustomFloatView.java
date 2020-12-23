@@ -30,7 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.yc.video.config.ConstantKeys;
-import com.yc.video.controller.ControlWrapper;
+import com.yc.video.bridge.ControlWrapper;
 
 import com.yc.video.R;
 

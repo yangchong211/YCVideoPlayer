@@ -42,7 +42,7 @@ public class VideoViewManager {
     /**
      * VideoViewManager实例
      */
-    private static VideoViewManager sInstance;
+    private static volatile VideoViewManager sInstance;
 
     /**
      * VideoViewConfig实例

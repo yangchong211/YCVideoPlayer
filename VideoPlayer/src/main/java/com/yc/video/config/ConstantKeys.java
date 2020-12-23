@@ -80,6 +80,8 @@ public final class ConstantKeys {
 
     /**
      * 播放状态，主要是指播放器的各种状态
+     * -3               解析异常
+     * -2               播放错误，网络异常
      * -1               播放错误
      * 0                播放未开始，即将进行
      * 1                播放准备中
@@ -93,6 +95,8 @@ public final class ConstantKeys {
      */
     @Retention(RetentionPolicy.SOURCE)
     public @interface CurrentState{
+        int STATE_PARSE_ERROR = -3;
+        int STATE_NETWORK_ERROR = -2;
         int STATE_ERROR = -1;
         int STATE_IDLE = 0;
         int STATE_PREPARING = 1;
@@ -108,7 +112,8 @@ public final class ConstantKeys {
     @IntDef({CurrentState.STATE_ERROR,CurrentState.STATE_IDLE,CurrentState.STATE_PREPARING,
             CurrentState.STATE_PREPARED,CurrentState.STATE_PLAYING,CurrentState.STATE_PAUSED,
             CurrentState.STATE_BUFFERING_PLAYING,CurrentState.STATE_BUFFERING_PAUSED,
-            CurrentState.STATE_COMPLETED,CurrentState.STATE_START_ABORT})
+            CurrentState.STATE_COMPLETED,CurrentState.STATE_START_ABORT,CurrentState.STATE_NETWORK_ERROR,
+            CurrentState.STATE_PARSE_ERROR})
     @Retention(RetentionPolicy.SOURCE)
     public @interface CurrentStateType{}
 

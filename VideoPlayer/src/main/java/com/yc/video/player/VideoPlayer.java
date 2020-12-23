@@ -626,8 +626,21 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      * 视频播放出错回调
      */
     @Override
-    public void onError() {
+    public void onError(@PlayerConstant.ErrorType int type , String error) {
         mPlayerContainer.setKeepScreenOn(false);
+        if (PlayerUtils.isConnected(mContext)){
+            if (type == PlayerConstant.ErrorType.TYPE_UNEXPECTED){
+                setPlayState(ConstantKeys.CurrentState.STATE_ERROR);
+            } else if (type == PlayerConstant.ErrorType.TYPE_PARSE){
+                setPlayState(ConstantKeys.CurrentState.STATE_PARSE_ERROR);
+            } else if (type == PlayerConstant.ErrorType.TYPE_SOURCE){
+                setPlayState(ConstantKeys.CurrentState.STATE_ERROR);
+            } else {
+                setPlayState(ConstantKeys.CurrentState.STATE_ERROR);
+            }
+        } else {
+            setPlayState(ConstantKeys.CurrentState.STATE_NETWORK_ERROR);
+        }
         setPlayState(ConstantKeys.CurrentState.STATE_ERROR);
         VideoPlayerConfig config = VideoViewManager.getConfig();
         if (config!=null && config.mBuriedPointEvent!=null){

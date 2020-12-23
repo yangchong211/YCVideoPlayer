@@ -24,7 +24,7 @@ import com.yc.kernel.factory.PlayerFactory;
  *     blog  : https://github.com/yangchong211
  *     time  : 2018/11/9
  *     desc  : ijk视频播放器Factory
- *     revise:
+ *     revise: 抽象工厂具体实现类
  * </pre>
  */
 public class IjkPlayerFactory extends PlayerFactory<IjkVideoPlayer> {

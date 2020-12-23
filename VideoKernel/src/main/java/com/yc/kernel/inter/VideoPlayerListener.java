@@ -15,6 +15,8 @@ limitations under the License.
 */
 package com.yc.kernel.inter;
 
+import com.yc.kernel.utils.PlayerConstant;
+
 /**
  * <pre>
  *     @author yangchong
@@ -28,8 +30,12 @@ public interface VideoPlayerListener {
 
     /**
      * 异常
+     * 1          表示错误的链接
+     * 2          表示解析异常
+     * 3          表示其他的异常
+     * @param type                          错误类型
      */
-    void onError();
+    void onError(@PlayerConstant.ErrorType int type , String error);
 
     /**
      * 完成

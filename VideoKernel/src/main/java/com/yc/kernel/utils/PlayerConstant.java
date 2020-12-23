@@ -54,4 +54,15 @@ public final class PlayerConstant {
         int TYPE_EXO = 3;
         int TYPE_RTC = 4;
     }
+
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ErrorType {
+        //错误的链接
+        int TYPE_SOURCE = 1;
+        //解析异常
+        int TYPE_PARSE = 2;
+        //其他异常
+        int TYPE_UNEXPECTED = 3;
+    }
+
 }

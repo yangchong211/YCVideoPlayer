@@ -31,6 +31,7 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.player.InterVideoPlayer;
 import com.yc.video.player.VideoViewManager;
@@ -90,6 +91,7 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     private boolean mIsStartProgress;
 
     //保存了所有的控制组件
+    //使用LinkedHashMap有序
     protected LinkedHashMap<InterControlView, Boolean> mControlComponents = new LinkedHashMap<>();
 
     private Animation mShowAnim;

@@ -20,7 +20,7 @@ import android.view.animation.Animation;
 
 import androidx.annotation.NonNull;
 
-import com.yc.video.controller.ControlWrapper;
+import com.yc.video.bridge.ControlWrapper;
 
 
 /**
@@ -29,7 +29,9 @@ import com.yc.video.controller.ControlWrapper;
  *     blog  : https://github.com/yangchong211
  *     time  : 2017/11/9
  *     desc  : 自定义控制器接口
- *     revise:
+ *     revise: 如果需要添加自定义播放器视图，则需要继承InterControlView接口
+ *             关于视频播放器播放状态和视图状态，都需要自定义视图去控制view的状态
+ *             举一个例子：比如广告视图，
  * </pre>
  */
 public interface InterControlView {

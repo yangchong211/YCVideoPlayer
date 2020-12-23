@@ -29,10 +29,8 @@ import com.yc.video.ui.view.BasisVideoController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-/**
- * RecyclerView demo
- */
 public class RecyclerView2Fragment extends Fragment {
 
     protected List<VideoInfoBean> mVideos = new ArrayList<>();
@@ -186,7 +184,7 @@ public class RecyclerView2Fragment extends Fragment {
         if (mVideoView.isFullScreen()) {
             mVideoView.stopFullScreen();
         }
-        if(getActivity().getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+        if(Objects.requireNonNull(getActivity()).getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         mCurPos = -1;

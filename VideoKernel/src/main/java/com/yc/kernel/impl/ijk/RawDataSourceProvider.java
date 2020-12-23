@@ -26,10 +26,18 @@ import java.io.InputStream;
 
 import tv.danmaku.ijk.media.player.misc.IMediaDataSource;
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/11/9
+ *     desc  : ijk视频播放器读取本地资源Source实现类
+ *     revise:
+ * </pre>
+ */
 public class RawDataSourceProvider implements IMediaDataSource {
 
     private AssetFileDescriptor mDescriptor;
-
     private byte[] mMediaBytes;
 
     public RawDataSourceProvider(AssetFileDescriptor descriptor) {
@@ -41,19 +49,18 @@ public class RawDataSourceProvider implements IMediaDataSource {
         if (position + 1 >= mMediaBytes.length) {
             return -1;
         }
-
         int length;
         if (position + size < mMediaBytes.length) {
             length = size;
         } else {
             length = (int) (mMediaBytes.length - position);
-            if (length > buffer.length)
+            if (length > buffer.length){
                 length = buffer.length;
-
+            }
             length--;
         }
+        //使用系统集合拷贝
         System.arraycopy(mMediaBytes, (int) position, buffer, offset, length);
-
         return length;
     }
 
@@ -64,39 +71,34 @@ public class RawDataSourceProvider implements IMediaDataSource {
             InputStream inputStream = mDescriptor.createInputStream();
             mMediaBytes = readBytes(inputStream);
         }
-
-
         return length;
     }
 
     @Override
     public void close() throws IOException {
-        if (mDescriptor != null)
+        if (mDescriptor != null){
             mDescriptor.close();
-
+        }
         mDescriptor = null;
         mMediaBytes = null;
     }
 
     private byte[] readBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-
         int bufferSize = 1024;
         byte[] buffer = new byte[bufferSize];
-
         int len;
         while ((len = inputStream.read(buffer)) != -1) {
             byteBuffer.write(buffer, 0, len);
         }
-
         return byteBuffer.toByteArray();
     }
 
     public static RawDataSourceProvider create(Context context, Uri uri) {
         try {
-            AssetFileDescriptor fileDescriptor = context.getContentResolver().openAssetFileDescriptor(uri, "r");
+            AssetFileDescriptor fileDescriptor = context.getContentResolver()
+                    .openAssetFileDescriptor(uri, "r");
             return new RawDataSourceProvider(fileDescriptor);
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

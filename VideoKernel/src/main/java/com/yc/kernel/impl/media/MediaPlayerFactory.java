@@ -26,7 +26,7 @@ import com.yc.kernel.factory.PlayerFactory;
  *     blog  : https://github.com/yangchong211
  *     time  : 2018/11/9
  *     desc  : 不推荐，系统的MediaPlayer兼容性较差，建议使用IjkPlayer或者ExoPlayer
- *     revise:
+ *     revise: 抽象工厂具体实现类
  * </pre>
  */
 public class MediaPlayerFactory extends PlayerFactory<AndroidMediaPlayer> {

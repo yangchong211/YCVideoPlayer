@@ -45,19 +45,47 @@ import com.yc.video.config.ConstantKeys;
  */
 public interface InterVideoPlayer {
 
+    /**
+     * 开始播放
+     */
     void start();
 
+    /**
+     * 暂停播放
+     */
     void pause();
 
+    /**
+     * 获取视频总时长
+     * @return                              long类型
+     */
     long getDuration();
 
+
+    /**
+     * 获取当前播放的位置
+     * @return                              long类型
+     */
     long getCurrentPosition();
 
+    /**
+     * 调整播放进度
+     * @param pos                           位置
+     */
     void seekTo(long pos);
 
+    /**
+     * 是否处于播放状态
+     * @return                              是否处于播放状态
+     */
     boolean isPlaying();
 
+    /**
+     * 获取当前缓冲百分比
+     * @return                              百分比
+     */
     int getBufferedPercentage();
+
 
     void startFullScreen();
 

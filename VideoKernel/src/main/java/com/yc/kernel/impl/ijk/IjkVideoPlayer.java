@@ -175,7 +175,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
                 mMediaPlayer.setDataSource(mAppContext, uri, headers);
             }
         } catch (Exception e) {
-            mPlayerEventListener.onError();
+            mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_PARSE,e.getMessage());
         }
     }
 
@@ -187,7 +187,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
         try {
             mMediaPlayer.setDataSource(new RawDataSourceProvider(fd));
         } catch (Exception e) {
-            mPlayerEventListener.onError();
+            mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_UNEXPECTED,e.getMessage());
         }
     }
 
@@ -197,7 +197,13 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
      */
     @Override
     public void setSurface(Surface surface) {
-        mMediaPlayer.setSurface(surface);
+        if (surface!=null){
+            try {
+                mMediaPlayer.setSurface(surface);
+            } catch (Exception e) {
+                mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_UNEXPECTED,e.getMessage());
+            }
+        }
     }
 
     /**
@@ -208,7 +214,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
         try {
             mMediaPlayer.prepareAsync();
         } catch (IllegalStateException e) {
-            mPlayerEventListener.onError();
+            mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_UNEXPECTED,e.getMessage());
         }
     }
 
@@ -220,7 +226,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
         try {
             mMediaPlayer.pause();
         } catch (IllegalStateException e) {
-            mPlayerEventListener.onError();
+            mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_UNEXPECTED,e.getMessage());
         }
     }
 
@@ -232,7 +238,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
         try {
             mMediaPlayer.start();
         } catch (IllegalStateException e) {
-            mPlayerEventListener.onError();
+            mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_UNEXPECTED,e.getMessage());
         }
     }
 
@@ -244,7 +250,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
         try {
             mMediaPlayer.stop();
         } catch (IllegalStateException e) {
-            mPlayerEventListener.onError();
+            mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_UNEXPECTED,e.getMessage());
         }
     }
 
@@ -275,7 +281,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
         try {
             mMediaPlayer.seekTo((int) time);
         } catch (IllegalStateException e) {
-            mPlayerEventListener.onError();
+            mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_UNEXPECTED,e.getMessage());
         }
     }
 
@@ -387,7 +393,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
     private IMediaPlayer.OnErrorListener onErrorListener = new IMediaPlayer.OnErrorListener() {
         @Override
         public boolean onError(IMediaPlayer iMediaPlayer, int framework_err, int impl_err) {
-            mPlayerEventListener.onError();
+            mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_UNEXPECTED,"监听异常"+ framework_err + ", extra: " + impl_err);
             VideoLogUtils.d("IjkVideoPlayer----listener---------onError ——> STATE_ERROR ———— what：" + framework_err + ", extra: " + impl_err);
             return true;
         }
