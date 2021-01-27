@@ -126,7 +126,7 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
     private void playVideo() {
         mVideoPlayer.release();
         controller.removeAllControlComponent();
-        controller.addDefaultControlComponent("正片", false);
+        controller.addDefaultControlComponent("正片");
         //重新设置数据
         mVideoPlayer.setUrl(ConstantVideo.VideoPlayerList[0]);
         //开始播放

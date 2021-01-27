@@ -14,9 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.yc.ycvideoplayer.R;
+
+import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.config.ConstantKeys;
-import com.yc.video.controller.ControlWrapper;
-import com.yc.video.ui.view.CustomTitleView;
 import com.yc.video.ui.view.InterControlView;
 import com.yc.video.tool.PlayerUtils;
 

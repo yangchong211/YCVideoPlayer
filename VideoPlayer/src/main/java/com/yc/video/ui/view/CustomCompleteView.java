@@ -155,7 +155,7 @@ public class CustomCompleteView extends FrameLayout implements InterControlView,
         if (activity != null && mControlWrapper.hasCutout()) {
             int orientation = activity.getRequestedOrientation();
             int cutoutHeight = mControlWrapper.getCutoutHeight();
-            LayoutParams sflp = (LayoutParams) mIvStopFullscreen.getLayoutParams();
+            LinearLayout.LayoutParams sflp = (LinearLayout.LayoutParams) mIvStopFullscreen.getLayoutParams();
             if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
                 sflp.setMargins(0, 0, 0, 0);
             } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {

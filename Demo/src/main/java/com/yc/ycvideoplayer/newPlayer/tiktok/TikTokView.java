@@ -17,8 +17,9 @@ import androidx.annotation.Nullable;
 import com.yc.kernel.utils.VideoLogUtils;
 
 import org.yc.ycvideoplayer.R;
+
+import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.config.ConstantKeys;
-import com.yc.video.controller.ControlWrapper;
 import com.yc.video.ui.view.InterControlView;
 
 public class TikTokView extends FrameLayout implements InterControlView {

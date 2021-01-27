@@ -53,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         boolean seamlessPlay = intent.getBooleanExtra(IntentKeys.SEAMLESS_PLAY, false);
         String title = intent.getStringExtra(IntentKeys.TITLE);
-        controller.addDefaultControlComponent(title, false);
+        controller.addDefaultControlComponent(title);
         if (seamlessPlay) {
             //无缝播放需还原Controller状态
             controller.setPlayState(mVideoView.getCurrentPlayState());
