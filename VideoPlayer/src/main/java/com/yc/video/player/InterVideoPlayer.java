@@ -46,6 +46,18 @@ import com.yc.video.config.ConstantKeys;
 public interface InterVideoPlayer {
 
     /**
+     * 设置链接
+     * @param url                           url
+     */
+    void setUrl(String url);
+
+    /**
+     * 获取播放链接
+     * @return                              链接
+     */
+    String getUrl();
+
+    /**
      * 开始播放
      */
     void start();

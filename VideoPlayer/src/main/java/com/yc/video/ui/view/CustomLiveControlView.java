@@ -141,6 +141,7 @@ public class CustomLiveControlView extends FrameLayout implements InterControlVi
             case ConstantKeys.CurrentState.STATE_PREPARED:
             case ConstantKeys.CurrentState.STATE_ERROR:
             case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
+            case ConstantKeys.CurrentState.STATE_ONCE_LIVE:
                 setVisibility(GONE);
                 break;
             case ConstantKeys.CurrentState.STATE_PLAYING:

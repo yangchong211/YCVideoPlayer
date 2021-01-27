@@ -142,6 +142,7 @@ public class CustomPrepareView extends FrameLayout implements InterControlView {
             case ConstantKeys.CurrentState.STATE_BUFFERING_PAUSED:
             case ConstantKeys.CurrentState.STATE_COMPLETED:
             case ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING:
+            case ConstantKeys.CurrentState.STATE_ONCE_LIVE:
                 setVisibility(GONE);
                 break;
             case ConstantKeys.CurrentState.STATE_IDLE:

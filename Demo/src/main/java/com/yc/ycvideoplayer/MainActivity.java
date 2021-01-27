@@ -21,6 +21,7 @@ import com.yc.music.model.AudioBean;
 import com.yc.music.service.PlayService;
 import com.yc.music.tool.BaseAppHelper;
 import com.yc.ycvideoplayer.demo.DemoActivity;
+import com.yc.ycvideoplayer.m3u8.M3u8Activity;
 import com.yc.ycvideoplayer.music.MusicPlayerActivity;
 import com.yc.ycvideoplayer.newPlayer.activity.TypeActivity;
 import com.yc.ycvideoplayer.oldPlayer.OldActivity;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTv2;
     private TextView mTv3;
     private TextView mTv4;
+    private TextView mTv5;
     private PlayServiceConnection mPlayServiceConnection;
 
 
@@ -68,11 +70,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTv2 = (TextView) findViewById(R.id.tv_2);
         mTv3 = (TextView) findViewById(R.id.tv_3);
         mTv4 = (TextView) findViewById(R.id.tv_4);
+        mTv5 = (TextView) findViewById(R.id.tv_5);
 
         mTv1.setOnClickListener(this);
         mTv2.setOnClickListener(this);
         mTv3.setOnClickListener(this);
         mTv4.setOnClickListener(this);
+        mTv5.setOnClickListener(this);
     }
 
     @Override
@@ -90,6 +94,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_4:
                 startCheckService();
                 startActivity(MusicPlayerActivity.class);
+                break;
+            case R.id.tv_5:
+                startActivity(M3u8Activity.class);
                 break;
         }
     }

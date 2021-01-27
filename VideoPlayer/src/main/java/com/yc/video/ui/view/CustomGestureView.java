@@ -176,7 +176,8 @@ public class CustomGestureView extends FrameLayout implements IGestureComponent 
                 || playState == ConstantKeys.CurrentState.STATE_PREPARING
                 || playState == ConstantKeys.CurrentState.STATE_PREPARED
                 || playState == ConstantKeys.CurrentState.STATE_ERROR
-                || playState == ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING) {
+                || playState == ConstantKeys.CurrentState.STATE_BUFFERING_PLAYING
+                || playState == ConstantKeys.CurrentState.STATE_ONCE_LIVE) {
             setVisibility(GONE);
         } else {
             setVisibility(VISIBLE);

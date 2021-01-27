@@ -21,7 +21,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
@@ -33,20 +32,16 @@ import com.yc.video.R;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.config.VideoPlayerConfig;
 import com.yc.video.controller.BaseVideoController;
-
 import com.yc.kernel.inter.AbstractVideoPlayer;
 import com.yc.kernel.factory.PlayerFactory;
-
 import com.yc.video.surface.InterSurfaceView;
 import com.yc.video.surface.SurfaceFactory;
 import com.yc.video.tool.BaseToast;
 import com.yc.video.tool.PlayerUtils;
 import com.yc.video.tool.VideoException;
-
 import com.yc.kernel.inter.VideoPlayerListener;
 import com.yc.kernel.utils.PlayerConstant;
 import com.yc.kernel.utils.VideoLogUtils;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -362,13 +357,16 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      */
     protected void addDisplay() {
         if (mRenderView != null) {
+            //从容器中移除渲染view
             mPlayerContainer.removeView(mRenderView.getView());
+            //释放资源
             mRenderView.release();
         }
         //创建TextureView对象
         mRenderView = mRenderViewFactory.createRenderView(mContext);
         //绑定mMediaPlayer对象
         mRenderView.attachToPlayer(mMediaPlayer);
+        //添加渲染view到Container布局中
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
         mPlayerContainer.addView(mRenderView.getView(), 0, params);
@@ -383,9 +381,13 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
             //重新设置option，media player reset之后，option会失效
             setOptions();
         }
+        //播放数据是否设置成功
         if (prepareDataSource()) {
+            //准备开始播放
             mMediaPlayer.prepareAsync();
+            //更改播放器的播放状态
             setPlayState(ConstantKeys.CurrentState.STATE_PREPARING);
+            //更改播放器播放模式状态
             setPlayerState(isFullScreen() ? ConstantKeys.PlayMode.MODE_FULL_SCREEN :
                     isTinyScreen() ? ConstantKeys.PlayMode.MODE_TINY_WINDOW : ConstantKeys.PlayMode.MODE_NORMAL);
         }
@@ -752,8 +754,18 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
     /**
      * 设置视频地址
      */
+    @Override
     public void setUrl(String url) {
         setUrl(url, null);
+    }
+
+    /**
+     * 获取视频地址
+     * @return
+     */
+    @Override
+    public String getUrl(){
+        return this.mUrl;
     }
 
     /**

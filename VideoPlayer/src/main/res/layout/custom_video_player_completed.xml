@@ -5,7 +5,7 @@
     android:id="@+id/complete_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#33000000">
+    android:background="@android:color/black">
 
     <ImageView
         android:id="@+id/iv_stop_fullscreen"

@@ -80,6 +80,7 @@ public final class ConstantKeys {
 
     /**
      * 播放状态，主要是指播放器的各种状态
+     * -4               链接为空
      * -3               解析异常
      * -2               播放错误，网络异常
      * -1               播放错误
@@ -92,9 +93,11 @@ public final class ConstantKeys {
      * 6                暂停缓冲(播放器正在播放时，缓冲区数据不足，进行缓冲，此时暂停播放器，继续缓冲，缓冲区数据足够后恢复暂停
      * 7                播放完成
      * 8                开始播放中止
+     * 9                即将开播
      */
     @Retention(RetentionPolicy.SOURCE)
     public @interface CurrentState{
+        int STATE_URL_NULL = -4;
         int STATE_PARSE_ERROR = -3;
         int STATE_NETWORK_ERROR = -2;
         int STATE_ERROR = -1;
@@ -107,13 +110,14 @@ public final class ConstantKeys {
         int STATE_BUFFERING_PAUSED = 6;
         int STATE_COMPLETED = 7;
         int STATE_START_ABORT = 8;
+        int STATE_ONCE_LIVE = 9;
     }
 
     @IntDef({CurrentState.STATE_ERROR,CurrentState.STATE_IDLE,CurrentState.STATE_PREPARING,
             CurrentState.STATE_PREPARED,CurrentState.STATE_PLAYING,CurrentState.STATE_PAUSED,
             CurrentState.STATE_BUFFERING_PLAYING,CurrentState.STATE_BUFFERING_PAUSED,
             CurrentState.STATE_COMPLETED,CurrentState.STATE_START_ABORT,CurrentState.STATE_NETWORK_ERROR,
-            CurrentState.STATE_PARSE_ERROR})
+            CurrentState.STATE_PARSE_ERROR,CurrentState.STATE_URL_NULL,CurrentState.STATE_ONCE_LIVE})
     @Retention(RetentionPolicy.SOURCE)
     public @interface CurrentStateType{}
 

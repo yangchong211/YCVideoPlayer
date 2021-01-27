@@ -1,3 +1,6 @@
+include ':VideoSqlHelper'
+include ':VideoSqlLite'
+include ':VideoM3u8'
 include ':MusicPlayer'
 include ':VideoView'
 include ':VideoKernel'

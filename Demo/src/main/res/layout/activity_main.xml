@@ -67,6 +67,14 @@
                 android:padding="10dp"
                 android:background="@color/colorAccent"
                 android:text="4.音频播放器案例"/>
+            <TextView
+                android:id="@+id/tv_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:background="@color/colorAccent"
+                android:text="5.m3u8视频下载"/>
         </LinearLayout>
     </ScrollView>
 

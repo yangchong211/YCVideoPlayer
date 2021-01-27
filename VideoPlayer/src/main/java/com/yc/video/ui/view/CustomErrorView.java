@@ -113,7 +113,19 @@ public class CustomErrorView extends LinearLayout implements InterControlView {
         if (playState == ConstantKeys.CurrentState.STATE_ERROR) {
             bringToFront();
             setVisibility(VISIBLE);
+            mTvMessage.setText("视频播放异常");
+        } if (playState == ConstantKeys.CurrentState.STATE_NETWORK_ERROR) {
+            bringToFront();
+            setVisibility(VISIBLE);
+            mTvMessage.setText("无网络，请检查网络设置");
+        } if (playState == ConstantKeys.CurrentState.STATE_PARSE_ERROR) {
+            bringToFront();
+            setVisibility(VISIBLE);
+            //mTvMessage.setText("视频解析异常");
+            mTvMessage.setText("视频加载错误");
         } else if (playState == ConstantKeys.CurrentState.STATE_IDLE) {
+            setVisibility(GONE);
+        } else if (playState == ConstantKeys.CurrentState.STATE_ONCE_LIVE) {
             setVisibility(GONE);
         }
     }

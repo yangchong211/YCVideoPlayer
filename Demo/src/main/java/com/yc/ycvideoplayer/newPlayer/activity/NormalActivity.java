@@ -98,7 +98,10 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initVideoPlayer() {
-        String url = ConstantVideo.VideoPlayerList[0];
+        String url = getIntent().getStringExtra(IntentKeys.URL);
+        if (url==null || url.length()==0){
+            url = ConstantVideo.VideoPlayerList[0];
+        }
         //创建基础视频播放器，一般播放器的功能
         controller = new BasisVideoController(this);
         //设置控制器

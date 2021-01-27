@@ -16,14 +16,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:text="@string/error_message"
             android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/tv_retry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/bg_retry"
             android:gravity="center"

@@ -19,18 +19,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.yc.video.config.ConstantKeys;
+import com.yc.video.config.VideoPlayerConfig;
 import com.yc.video.controller.GestureVideoController;
 import com.yc.video.tool.BaseToast;
 import com.yc.video.tool.PlayerUtils;
@@ -54,8 +57,15 @@ public class BasisVideoController extends GestureVideoController implements View
     private ImageView mLockButton;
     private ProgressBar mLoadingProgress;
     private ImageView thumb;
-    private CustomBottomView bottomView;
     private CustomTitleView titleView;
+    private CustomBottomView vodControlView;
+    private CustomLiveControlView liveControlView;
+    private CustomOncePlayView customOncePlayView;
+    private TextView tvLiveWaitMessage;
+    /**
+     * 是否是直播，默认不是
+     */
+    public static boolean IS_LIVE = false;
 
     public BasisVideoController(@NonNull Context context) {
         this(context, null);
@@ -101,8 +111,10 @@ public class BasisVideoController extends GestureVideoController implements View
         setEnableInNormal(true);
         //滑动调节亮度，音量，进度，默认开启
         setGestureEnabled(true);
-
-        addDefaultControlComponent("",false);
+        //先移除多有的视图view
+        removeAllControlComponent();
+        //添加视图到界面
+        addDefaultControlComponent("");
     }
 
 
@@ -111,9 +123,8 @@ public class BasisVideoController extends GestureVideoController implements View
      * 快速添加各个组件
      * 需要注意各个层级
      * @param title                             标题
-     * @param isLive                            是否为直播
      */
-    public void addDefaultControlComponent(String title, boolean isLive) {
+    public void addDefaultControlComponent(String title) {
         //添加自动完成播放界面view
         CustomCompleteView completeView = new CustomCompleteView(mContext);
         completeView.setVisibility(GONE);
@@ -136,22 +147,60 @@ public class BasisVideoController extends GestureVideoController implements View
         titleView.setVisibility(VISIBLE);
         this.addControlComponent(titleView);
 
-        if (isLive) {
-            //添加底部播放控制条
-            CustomLiveControlView liveControlView = new CustomLiveControlView(mContext);
-            this.addControlComponent(liveControlView);
-        } else {
-            //添加底部播放控制条
-            bottomView = new CustomBottomView(mContext);
-            //是否显示底部进度条。默认显示
-            bottomView.showBottomProgress(true);
-            this.addControlComponent(bottomView);
-        }
+        //添加直播/回放视频底部控制视图
+        changePlayType();
+
         //添加滑动控制视图
         CustomGestureView gestureControlView = new CustomGestureView(mContext);
         this.addControlComponent(gestureControlView);
-        setCanChangePosition(!isLive);
     }
+
+
+    /**
+     * 切换直播/回放类型
+     */
+    public void changePlayType(){
+        if (IS_LIVE) {
+            //添加底部播放控制条
+            if (liveControlView==null){
+                liveControlView = new CustomLiveControlView(mContext);
+            }
+            this.removeControlComponent(liveControlView);
+            this.addControlComponent(liveControlView);
+
+            //添加直播还未开始视图
+            if (customOncePlayView==null){
+                customOncePlayView = new CustomOncePlayView(mContext);
+                tvLiveWaitMessage = customOncePlayView.getTvMessage();
+            }
+            this.removeControlComponent(customOncePlayView);
+            this.addControlComponent(customOncePlayView);
+
+            //直播视频，移除回放视图
+            if (vodControlView!=null){
+                this.removeControlComponent(vodControlView);
+            }
+        } else {
+            //添加底部播放控制条
+            if (vodControlView==null){
+                vodControlView = new CustomBottomView(mContext);
+                //是否显示底部进度条。默认显示
+                vodControlView.showBottomProgress(true);
+            }
+            this.removeControlComponent(vodControlView);
+            this.addControlComponent(vodControlView);
+
+            //正常视频，移除直播视图
+            if (liveControlView!=null){
+                this.removeControlComponent(liveControlView);
+            }
+            if (customOncePlayView!=null){
+                this.removeControlComponent(customOncePlayView);
+            }
+        }
+        setCanChangePosition(!IS_LIVE);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -297,6 +346,17 @@ public class BasisVideoController extends GestureVideoController implements View
         return super.onBackPressed();
     }
 
+    /**
+     * 刷新进度回调，子类可在此方法监听进度刷新，然后更新ui
+     *
+     * @param duration 视频总时长
+     * @param position 视频当前时长
+     */
+    @Override
+    protected void setProgress(int duration, int position) {
+        super.setProgress(duration, position);
+    }
+
     @Override
     public void destroy() {
 
@@ -313,6 +373,12 @@ public class BasisVideoController extends GestureVideoController implements View
     }
 
     public CustomBottomView getBottomView() {
-        return bottomView;
+        return vodControlView;
     }
+
+
+    public TextView getTvLiveWaitMessage() {
+        return tvLiveWaitMessage;
+    }
+
 }

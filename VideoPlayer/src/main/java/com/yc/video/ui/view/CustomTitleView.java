@@ -123,7 +123,7 @@ public class CustomTitleView extends FrameLayout implements InterControlView, Vi
         if (title!=null && title.length()>0){
             mTvTitle.setText(title);
         } else {
-            mTvTitle.setText("视频");
+            mTvTitle.setText("");
         }
     }
 

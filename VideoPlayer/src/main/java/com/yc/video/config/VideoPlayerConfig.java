@@ -51,15 +51,50 @@ public class VideoPlayerConfig {
          * 默认是关闭日志的
          */
         private boolean mIsEnableLog = false;
+        /**
+         * 在移动环境下调用start()后是否继续播放，默认不继续播放
+         */
         private boolean mPlayOnMobileNetwork;
+        /**
+         * 是否监听设备方向来切换全屏/半屏， 默认不开启
+         */
         private boolean mEnableOrientation;
+        /**
+         * 是否开启AudioFocus监听， 默认开启
+         */
         private boolean mEnableAudioFocus = true;
+        /**
+         * 设置进度管理器，用于保存播放进度
+         */
         private ProgressManager mProgressManager;
+        /**
+         * 自定义播放核心
+         */
         private PlayerFactory mPlayerFactory;
+        /**
+         * 自定义视频全局埋点事件
+         */
         private BuriedPointEvent mBuriedPointEvent;
+        /**
+         * 设置视频比例
+         */
         private int mScreenScaleType;
+        /**
+         * 自定义RenderView
+         */
         private SurfaceFactory mRenderViewFactory;
+        /**
+         * 是否适配刘海屏，默认适配
+         */
         private boolean mAdaptCutout = true;
+        /**
+         * 是否设置倒计时n秒吐司
+         */
+        private boolean mIsShowToast = false;
+        /**
+         * 倒计时n秒时间
+         */
+        private long mShowToastTime = 5;
 
         /**
          * 是否监听设备方向来切换全屏/半屏， 默认不开启
@@ -149,6 +184,22 @@ public class VideoPlayerConfig {
             return this;
         }
 
+        /**
+         * 是否设置倒计时n秒吐司
+         */
+        public Builder setIsShowToast(boolean isShowToast) {
+            mIsShowToast = isShowToast;
+            return this;
+        }
+
+        /**
+         * 倒计时n秒时间
+         */
+        public Builder setShowToastTime(long showToastTime) {
+            mShowToastTime = showToastTime;
+            return this;
+        }
+
         public VideoPlayerConfig build() {
             //创建builder对象
             return new VideoPlayerConfig(this);
@@ -166,6 +217,8 @@ public class VideoPlayerConfig {
     public final int mScreenScaleType;
     public final SurfaceFactory mRenderViewFactory;
     public final boolean mAdaptCutout;
+    public final boolean mIsShowToast ;
+    public final long mShowToastTime;
 
     private VideoPlayerConfig(Builder builder) {
         mIsEnableLog = builder.mIsEnableLog;
@@ -192,6 +245,8 @@ public class VideoPlayerConfig {
         if (mContext!=null){
             BaseToast.init(mContext);
         }
+        mIsShowToast = builder.mIsShowToast;
+        mShowToastTime = builder.mShowToastTime;
     }
 
 

@@ -397,7 +397,9 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
         public void run() {
             int pos = setProgress();
             if (mControlWrapper.isPlaying()) {
-                postDelayed(this, (long) ((1000  - pos % 1000) / mControlWrapper.getSpeed()));
+                float speed = mControlWrapper.getSpeed();
+                //postDelayed(this, 1000);
+                postDelayed(this, (long) ((1000  - pos % 1000) / speed));
             } else {
                 mIsStartProgress = false;
             }

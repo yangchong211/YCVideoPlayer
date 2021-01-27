@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ import androidx.annotation.Nullable;
 
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.bridge.ControlWrapper;
+import com.yc.video.config.VideoPlayerConfig;
 import com.yc.video.tool.PlayerUtils;
 
 import com.yc.video.R;
@@ -181,6 +183,7 @@ public class CustomBottomView extends FrameLayout implements InterControlView,
             case ConstantKeys.CurrentState.STATE_PREPARING:
             case ConstantKeys.CurrentState.STATE_PREPARED:
             case ConstantKeys.CurrentState.STATE_ERROR:
+            case ConstantKeys.CurrentState.STATE_ONCE_LIVE:
                 setVisibility(GONE);
                 break;
             case ConstantKeys.CurrentState.STATE_PLAYING:
@@ -238,6 +241,12 @@ public class CustomBottomView extends FrameLayout implements InterControlView,
         }
     }
 
+    /**
+     * 刷新进度回调，子类可在此方法监听进度刷新，然后更新ui
+     *
+     * @param duration 视频总时长
+     * @param position 视频当前时长
+     */
     @Override
     public void setProgress(int duration, int position) {
         if (mIsDragging) {
@@ -269,6 +278,25 @@ public class CustomBottomView extends FrameLayout implements InterControlView,
         }
         if (mTvCurrTime != null){
             mTvCurrTime.setText(PlayerUtils.formatTime(position));
+        }
+
+
+        if (VideoPlayerConfig.newBuilder().build().mIsShowToast){
+            long time = VideoPlayerConfig.newBuilder().build().mShowToastTime;
+            if (time<=0){
+                time = 5;
+            }
+            long currentPosition = mControlWrapper.getCurrentPosition();
+            Log.d("progress---","duration---"+duration+"--currentPosition--"+currentPosition);
+            if (duration - currentPosition <  2 * time * 1000){
+                //当前视频播放到最后3s时，弹出toast提示：即将自动为您播放下一个视频。
+                if ((duration-currentPosition) / 1000 % 60 == time){
+                    Log.d("progress---","即将自动为您播放下一个视频");
+                    if (listener!= null){
+                        listener.showToastOrDialog();
+                    }
+                }
+            }
         }
     }
 
@@ -314,4 +342,15 @@ public class CustomBottomView extends FrameLayout implements InterControlView,
             mTvCurrTime.setText(PlayerUtils.formatTime(newPosition));
         }
     }
+
+    private OnToastListener listener;
+
+    public void setListener(OnToastListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnToastListener{
+        void showToastOrDialog();
+    }
+
 }
