@@ -1,5 +1,7 @@
 package com.yc.ycvideoplayer;
 
+import android.location.LocationManager;
+
 import com.yc.kernel.utils.VideoLogUtils;
 
 import com.yc.video.config.BuriedPointEvent;
@@ -69,6 +71,17 @@ public class BuriedPointEventImpl implements BuriedPointEvent {
     @Override
     public void playerOutProgress(String url, float progress) {
         VideoLogUtils.i("BuriedPointEvent---退出视频播放时候的播放进度百度比--"+url+"-----"+progress);
+    }
+
+    /**
+     * 退出视频播放时候的播放进度
+     * @param url                       视频url
+     * @param duration                  总时长
+     * @param currentPosition           当前进度时长
+     */
+    @Override
+    public void playerOutProgress(String url, long duration, long currentPosition) {
+        VideoLogUtils.i("BuriedPointEvent---退出视频播放时候的播放进度百度比--"+url+"-----"+duration+"----"+currentPosition);
     }
 
     /**

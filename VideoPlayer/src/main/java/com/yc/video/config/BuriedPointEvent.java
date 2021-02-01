@@ -72,6 +72,14 @@ public interface BuriedPointEvent {
     void playerOutProgress(String url , float progress);
 
     /**
+     * 退出视频播放时候的播放进度
+     * @param url                       视频url
+     * @param duration                  总时长
+     * @param currentPosition           当前进度时长
+     */
+    void playerOutProgress(String url, long duration , long currentPosition);
+
+    /**
      * 视频切换音频
      * @param url                       视频url
      */

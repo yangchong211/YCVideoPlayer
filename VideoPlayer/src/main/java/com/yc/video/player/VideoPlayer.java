@@ -460,6 +460,7 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
                 long currentPosition = getCurrentPosition();
                 float progress = (currentPosition*1.0f) / (duration*1.0f) ;
                 config.mBuriedPointEvent.playerOutProgress(mUrl,progress);
+                config.mBuriedPointEvent.playerOutProgress(mUrl,duration,mCurrentPosition);
             }
             //释放播放器
             if (mMediaPlayer != null) {
