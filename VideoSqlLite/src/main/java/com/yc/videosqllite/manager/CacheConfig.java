@@ -1,7 +1,6 @@
 package com.yc.videosqllite.manager;
 
-import com.yc.videosqllite.cache.InterCache;
-import com.yc.videosqllite.model.VideoLocation;
+import android.content.Context;
 
 /**
  * <pre>
@@ -33,6 +32,14 @@ public class CacheConfig {
      * 2，表示内存缓存+磁盘缓存
      */
     private int type = 0;
+    /**
+     * 上下文
+     */
+    private Context context;
+    /**
+     * 是否开启日志
+     */
+    private boolean isLog = false;
 
 
     public boolean isEffective() {
@@ -68,5 +75,21 @@ public class CacheConfig {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public boolean isLog() {
+        return isLog;
+    }
+
+    public void setLog(boolean log) {
+        isLog = log;
     }
 }

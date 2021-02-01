@@ -1,7 +1,14 @@
 package com.yc.videosqllite.model;
 
 
+import android.os.Build;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * <pre>
@@ -30,6 +37,10 @@ public class VideoLocation implements Serializable {
      * 视频总时间
      */
     private long totalTime;
+
+    public VideoLocation(){
+
+    }
 
     public VideoLocation(String url, long position, long totalTime) {
         this.url = url;
@@ -76,6 +87,37 @@ public class VideoLocation implements Serializable {
         this.totalTime = totalTime;
     }
 
+
+
+    public String toJson() {
+        JSONObject jsonObject= new JSONObject();
+        try {
+            jsonObject.put("url", getUrl());
+            jsonObject.put("urlMd5", getUrlMd5());
+            jsonObject.put("position", getPosition());
+            jsonObject.put("totalTime", getTotalTime());
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static VideoLocation toObject(String jsonStr) {
+        VideoLocation m =  new VideoLocation();
+        try {
+            JSONObject jsonObject = new JSONObject(jsonStr);
+            m.setUrl(jsonObject.has("url") ? jsonObject.getString("url"):null);
+            m.setUrlMd5(jsonObject.has("urlMd5") ? jsonObject.getString("urlMd5"):null);
+            m.setPosition(jsonObject.has("position") ? jsonObject.getLong("position"):0);
+            m.setTotalTime(jsonObject.has("totalTime") ? jsonObject.getLong("totalTime"):0);
+            return m;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return m;
+    }
+
     @Override
     public String toString() {
         return "VideoLocation{" +
@@ -86,5 +128,52 @@ public class VideoLocation implements Serializable {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o){
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        VideoLocation location = (VideoLocation) o;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return position == location.position &&
+                    totalTime == location.totalTime &&
+                    Objects.equals(url, location.url) &&
+                    Objects.equals(urlMd5, location.urlMd5);
+        } else {
+            return position == location.position &&
+                    totalTime == location.totalTime &&
+                    equals(url,location.url) &&
+                    equals(urlMd5,location.urlMd5);
+        }
+    }
 
+    @Override
+    public int hashCode() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return Objects.hash(url, urlMd5, position, totalTime);
+        }
+        return hash(url,urlMd5,position,totalTime);
+    }
+
+    /**
+     * 比较两个对象
+     * @param a                         a对象
+     * @param b                         b对象
+     * @return
+     */
+    private boolean equals(Object a, Object b) {
+        return (a == b) || (a != null && a.equals(b));
+    }
+
+    /**
+     * hash算法
+     * @param values                    参数
+     * @return
+     */
+    private int hash(Object... values) {
+        return Arrays.hashCode(values);
+    }
 }

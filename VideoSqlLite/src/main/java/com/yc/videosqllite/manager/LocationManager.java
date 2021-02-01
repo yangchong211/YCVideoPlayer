@@ -1,8 +1,15 @@
 package com.yc.videosqllite.manager;
 
+import android.content.Context;
+import android.os.Debug;
+
 import com.yc.videosqllite.cache.VideoMapCache;
-import com.yc.videosqllite.dao.SqlLiteCache;
+import com.yc.videosqllite.disk.DiskFileUtils;
+import com.yc.videosqllite.disk.SqlLiteCache;
 import com.yc.videosqllite.model.VideoLocation;
+import com.yc.videosqllite.utils.CacheLogUtils;
+
+import java.io.IOException;
 
 /**
  * <pre>
@@ -29,7 +36,6 @@ public class LocationManager {
      * 10.将sql执行sql语句给简化，避免手写sql语句，因为特别容易出问题。而且存取bean如果比较复杂那很难搞
      */
 
-    private CacheConfig cacheConfig;
     /**
      * 内存缓存
      */
@@ -38,6 +44,8 @@ public class LocationManager {
      * 磁盘缓存
      */
     private SqlLiteCache sqlLiteCache;
+    private CacheConfig cacheConfig;
+
 
     private static class ManagerHolder {
         private static final LocationManager INSTANCE = new LocationManager();
@@ -51,6 +59,7 @@ public class LocationManager {
         this.cacheConfig = cacheConfig;
         videoMapCache = new VideoMapCache(cacheConfig);
         sqlLiteCache = new SqlLiteCache(cacheConfig);
+        CacheLogUtils.setIsLog(cacheConfig.isLog());
     }
 
     /**
@@ -59,7 +68,27 @@ public class LocationManager {
      * @param location                      视频数据
      */
     public synchronized void put(String url , VideoLocation location){
-        videoMapCache.put(url,location);
+        /*
+         * type
+         * 0，表示内存缓存
+         * 1，表示磁盘缓存
+         * 2，表示内存缓存+磁盘缓存
+         */
+        if (cacheConfig.getType() ==1){
+            //存储到磁盘中
+            sqlLiteCache.put(url,location);
+        } else if (cacheConfig.getType() ==2){
+            //存储到内存中
+            videoMapCache.put(url,location);
+            //存储到磁盘中
+            sqlLiteCache.put(url,location);
+        } else if (cacheConfig.getType()==0){
+            //存储到内存中
+            videoMapCache.put(url,location);
+        } else {
+            //存储到内存中
+            videoMapCache.put(url,location);
+        }
     }
 
     /**
@@ -68,7 +97,30 @@ public class LocationManager {
      * @return
      */
     public synchronized long get(String url){
-        long position = videoMapCache.get(url);
+        /*
+         * type
+         * 0，表示内存缓存
+         * 1，表示磁盘缓存
+         * 2，表示内存缓存+磁盘缓存
+         */
+        long position;
+        if (cacheConfig.getType() ==1){
+            //从磁盘中查找
+            position = sqlLiteCache.get(url);
+        } else if (cacheConfig.getType() ==2){
+            //先从内存中找
+            position = videoMapCache.get(url);
+            if (position<0){
+                //内存找不到，则从磁盘中查找
+                position = sqlLiteCache.get(url);
+            }
+        } else if (cacheConfig.getType()==0){
+            //先从内存中找
+            position = videoMapCache.get(url);
+        } else {
+            //先从内存中找
+            position = videoMapCache.get(url);
+        }
         return position;
     }
 
@@ -78,8 +130,23 @@ public class LocationManager {
      * @return
      */
     public synchronized boolean remove(String url){
-        boolean remove = videoMapCache.remove(url);
-        return remove;
+        /*
+         * type
+         * 0，表示内存缓存
+         * 1，表示磁盘缓存
+         * 2，表示内存缓存+磁盘缓存
+         */
+        if (cacheConfig.getType() ==1){
+            return sqlLiteCache.remove(url);
+        } else if (cacheConfig.getType() ==2){
+            boolean remove = videoMapCache.remove(url);
+            boolean removeSql = sqlLiteCache.remove(url);
+            return remove || removeSql;
+        } else if (cacheConfig.getType()==0){
+            return videoMapCache.remove(url);
+        } else {
+            return videoMapCache.remove(url);
+        }
     }
 
     /**
@@ -88,7 +155,26 @@ public class LocationManager {
      * @return
      */
     public synchronized boolean containsKey(String url){
-        boolean containsKey = videoMapCache.containsKey(url);
+        /*
+         * type
+         * 0，表示内存缓存
+         * 1，表示磁盘缓存
+         * 2，表示内存缓存+磁盘缓存
+         */
+        boolean containsKey;
+        if (cacheConfig.getType() ==1){
+            containsKey = sqlLiteCache.containsKey(url);
+        } else if (cacheConfig.getType() ==2){
+            containsKey = videoMapCache.containsKey(url);
+            if (!containsKey){
+                containsKey = sqlLiteCache.containsKey(url);
+                return containsKey;
+            }
+        } else if (cacheConfig.getType()==0){
+            containsKey = videoMapCache.containsKey(url);
+        } else {
+            containsKey = videoMapCache.containsKey(url);
+        }
         return containsKey;
     }
 
@@ -97,8 +183,62 @@ public class LocationManager {
      * @return                              是否清楚完毕
      */
     public synchronized boolean clearAll(){
-        boolean clearAll = videoMapCache.clearAll();
-        return clearAll;
+        /*
+         * type
+         * 0，表示内存缓存
+         * 1，表示磁盘缓存
+         * 2，表示内存缓存+磁盘缓存
+         */
+        if (cacheConfig.getType() ==1){
+            return sqlLiteCache.clearAll();
+        } else if (cacheConfig.getType() ==2){
+            boolean clearAll = videoMapCache.clearAll();
+            boolean all = sqlLiteCache.clearAll();
+            return clearAll && all;
+        } else if (cacheConfig.getType()==0){
+            return videoMapCache.clearAll();
+        } else {
+            return videoMapCache.clearAll();
+        }
+    }
+
+    /**
+     * 获取当前应用使用的内存
+     * @return
+     */
+    public long getUseMemory(){
+        long totalMemory = Runtime.getRuntime().totalMemory();
+        long freeMemory = Runtime.getRuntime().freeMemory();
+        //long maxMemory = Runtime.getRuntime().maxMemory();
+        long useMemory = totalMemory - freeMemory;
+        return useMemory;
+    }
+
+    /**
+     * 设定内存的阈值
+     * @param proportion                    比例
+     * @return
+     */
+    public long setMemoryThreshold(int proportion){
+        if (proportion<0 || proportion>10){
+            proportion = 2;
+        }
+        long totalMemory = Runtime.getRuntime().totalMemory();
+        long threshold = totalMemory / proportion;
+        return threshold;
+    }
+
+    /**
+     * 获取Java内存快照文件
+     * @param context
+     */
+    public void dumpHprofData(Context context){
+        String dump = DiskFileUtils.getPath(context, "dump");
+        try {
+            Debug.dumpHprofData(dump);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
