@@ -15,15 +15,19 @@ limitations under the License.
 */
 package com.yc.video.ui.view;
 
+import android.app.Activity;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import android.content.pm.ActivityInfo;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +35,7 @@ import com.yc.video.config.ConstantKeys;
 import com.yc.video.bridge.ControlWrapper;
 
 import com.yc.video.R;
+import com.yc.video.tool.PlayerUtils;
 
 
 /**
@@ -42,13 +47,14 @@ import com.yc.video.R;
  *     revise:
  * </pre>
  */
-public class CustomErrorView extends LinearLayout implements InterControlView {
+public class CustomErrorView extends LinearLayout implements InterControlView, View.OnClickListener {
 
     private Context mContext;
     private float mDownX;
     private float mDownY;
     private TextView mTvMessage;
     private TextView mTvRetry;
+    private ImageView mIvStopFullscreen;
 
     private ControlWrapper mControlWrapper;
 
@@ -81,16 +87,30 @@ public class CustomErrorView extends LinearLayout implements InterControlView {
     private void initFindViewById(View view) {
         mTvMessage = view.findViewById(R.id.tv_message);
         mTvRetry = view.findViewById(R.id.tv_retry);
+        mIvStopFullscreen = view.findViewById(R.id.iv_stop_fullscreen);
     }
 
     private void initListener() {
-        mTvRetry.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setVisibility(GONE);
-                mControlWrapper.replay(false);
+        mTvRetry.setOnClickListener(this);
+        mIvStopFullscreen.setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        if (v == mTvRetry){
+            setVisibility(GONE);
+            mControlWrapper.replay(false);
+        } else if (v == mIvStopFullscreen){
+            //点击返回键
+            if (mControlWrapper.isFullScreen()) {
+                Activity activity = PlayerUtils.scanForActivity(mContext);
+                if (activity != null && !activity.isFinishing()) {
+                    activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    mControlWrapper.stopFullScreen();
+                }
             }
-        });
+        }
     }
 
     @Override
@@ -113,14 +133,17 @@ public class CustomErrorView extends LinearLayout implements InterControlView {
         if (playState == ConstantKeys.CurrentState.STATE_ERROR) {
             bringToFront();
             setVisibility(VISIBLE);
+            mIvStopFullscreen.setVisibility(mControlWrapper.isFullScreen() ? VISIBLE : GONE);
             mTvMessage.setText("视频播放异常");
         } if (playState == ConstantKeys.CurrentState.STATE_NETWORK_ERROR) {
             bringToFront();
             setVisibility(VISIBLE);
+            mIvStopFullscreen.setVisibility(mControlWrapper.isFullScreen() ? VISIBLE : GONE);
             mTvMessage.setText("无网络，请检查网络设置");
         } if (playState == ConstantKeys.CurrentState.STATE_PARSE_ERROR) {
             bringToFront();
             setVisibility(VISIBLE);
+            mIvStopFullscreen.setVisibility(mControlWrapper.isFullScreen() ? VISIBLE : GONE);
             //mTvMessage.setText("视频解析异常");
             mTvMessage.setText("视频加载错误");
         } else if (playState == ConstantKeys.CurrentState.STATE_IDLE) {
@@ -165,4 +188,5 @@ public class CustomErrorView extends LinearLayout implements InterControlView {
         }
         return super.dispatchTouchEvent(ev);
     }
+
 }

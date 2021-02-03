@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import com.yc.kernel.inter.AbstractVideoPlayer;
+import com.yc.kernel.inter.VideoPlayerListener;
 import com.yc.kernel.utils.PlayerConstant;
 import com.yc.kernel.utils.VideoLogUtils;
 
@@ -481,5 +482,9 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
         }
     };
 
+    @Override
+    public void setPlayerEventListener(VideoPlayerListener playerEventListener) {
+        super.setPlayerEventListener(playerEventListener);
+    }
 
 }

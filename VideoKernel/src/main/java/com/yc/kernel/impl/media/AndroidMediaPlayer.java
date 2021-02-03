@@ -25,6 +25,7 @@ import android.os.Build;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import com.yc.kernel.inter.AbstractVideoPlayer;
+import com.yc.kernel.inter.VideoPlayerListener;
 import com.yc.kernel.utils.PlayerConstant;
 
 import java.util.Map;
@@ -393,4 +394,9 @@ public class AndroidMediaPlayer extends AbstractVideoPlayer {
             }
         }
     };
+
+    @Override
+    public void setPlayerEventListener(VideoPlayerListener playerEventListener) {
+        super.setPlayerEventListener(playerEventListener);
+    }
 }

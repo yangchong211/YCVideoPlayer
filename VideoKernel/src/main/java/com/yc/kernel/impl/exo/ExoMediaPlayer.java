@@ -27,6 +27,7 @@ import com.google.android.exoplayer2.util.EventLogger;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoListener;
 import com.yc.kernel.inter.AbstractVideoPlayer;
+import com.yc.kernel.inter.VideoPlayerListener;
 import com.yc.kernel.utils.PlayerConstant;
 import com.yc.kernel.utils.VideoLogUtils;
 
@@ -451,4 +452,10 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
             mIsPreparing = false;
         }
     }
+
+    @Override
+    public void setPlayerEventListener(VideoPlayerListener playerEventListener) {
+        super.setPlayerEventListener(playerEventListener);
+    }
+
 }

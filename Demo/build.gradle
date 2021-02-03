@@ -69,7 +69,7 @@ dependencies {
     implementation 'cn.yc:MusicPlayer:1.0.2'
     implementation 'cn.yc:VideoPlayer:3.1.0'
     implementation 'cn.yc:VideoCache:3.0.5'
-    implementation 'cn.yc:VideoKernel:3.0.5'
+    implementation 'cn.yc:VideoKernel:3.0.6'
     implementation 'cn.yc:VideoView:3.0.5'
 
     //自己封装的库，都有对应的案例项目【欢迎star】：https://github.com/yangchong211
