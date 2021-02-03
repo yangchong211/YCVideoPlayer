@@ -16,7 +16,7 @@ public class CacheConfig {
     /**
      * 是否生效
      */
-    private boolean mIsEffective = false;
+    private boolean mIsEffective = true;
     /**
      * 内存缓存最大值
      */

@@ -51,10 +51,10 @@ public class LocationManager {
     private CacheConfig cacheConfig;
 
     private static class ManagerHolder {
-        private static final com.yc.videosqllite.manager.LocationManager INSTANCE = new com.yc.videosqllite.manager.LocationManager();
+        private static final LocationManager INSTANCE = new LocationManager();
     }
 
-    public static com.yc.videosqllite.manager.LocationManager getInstance() {
+    public static LocationManager getInstance() {
         return ManagerHolder.INSTANCE;
     }
 
@@ -81,6 +81,9 @@ public class LocationManager {
      * @param location                      视频数据
      */
     public synchronized void put(String url , VideoLocation location){
+        if (!cacheConfig.isEffective()){
+            return;
+        }
         /*
          * type
          * 0，表示内存缓存
@@ -113,6 +116,9 @@ public class LocationManager {
      * @return
      */
     public synchronized long get(String url){
+        if (!cacheConfig.isEffective()){
+            return 0;
+        }
         /*
          * type
          * 0，表示内存缓存
@@ -150,6 +156,9 @@ public class LocationManager {
      * @return
      */
     public synchronized boolean remove(String url){
+        if (!cacheConfig.isEffective()){
+            return false;
+        }
         /*
          * type
          * 0，表示内存缓存
@@ -175,6 +184,9 @@ public class LocationManager {
      * @return
      */
     public synchronized boolean containsKey(String url){
+        if (!cacheConfig.isEffective()){
+            return false;
+        }
         /*
          * type
          * 0，表示内存缓存
@@ -203,6 +215,9 @@ public class LocationManager {
      * @return                              是否清楚完毕
      */
     public synchronized void clearAll(){
+        if (!cacheConfig.isEffective()){
+            return;
+        }
         /*
          * type
          * 0，表示内存缓存
