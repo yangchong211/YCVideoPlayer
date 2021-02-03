@@ -36,7 +36,7 @@ public final class CacheLogUtils {
      * @param isLog                 是否开启日志
      */
     public static void setIsLog(boolean isLog) {
-        CacheLogUtils.isLog = isLog;
+        com.yc.videosqllite.utils.CacheLogUtils.isLog = isLog;
     }
 
     public static boolean isIsLog() {

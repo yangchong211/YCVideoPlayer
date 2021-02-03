@@ -1,12 +1,12 @@
 package com.yc.videosqllite.disk;
 
 import com.yc.videosqllite.manager.CacheConfig;
+import com.yc.videosqllite.manager.LocationManager;
+import com.yc.videosqllite.model.SafeKeyGenerator;
 import com.yc.videosqllite.model.VideoLocation;
 import com.yc.videosqllite.utils.CacheLogUtils;
-import com.yc.videosqllite.utils.VideoMd5Utils;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * <pre>
@@ -19,19 +19,16 @@ import java.io.IOException;
  */
 public class SqlLiteCache {
 
-    private CacheConfig cacheConfig;
-    private DiskLruCache diskLruCache;
+    private InterDiskCache interDiskCache;
+    public final SafeKeyGenerator safeKeyGenerator;
 
-    public SqlLiteCache(CacheConfig cacheConfig) {
-        this.cacheConfig = cacheConfig;
+    public SqlLiteCache() {
+        CacheConfig cacheConfig = LocationManager.getInstance().getCacheConfig();
         File path = DiskFileUtils.getFilePath(cacheConfig.getContext());
         String pathString = path.getPath();
-        CacheLogUtils.d("SqlLiteCache-----pathString-"+pathString);
-        try {
-            diskLruCache = DiskLruCache.open(path,1,1,cacheConfig.getCacheMax());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        CacheLogUtils.d("SqlLiteCache-----pathString路径输出地址-"+pathString);
+        this.safeKeyGenerator = new SafeKeyGenerator();
+        interDiskCache = DiskLruCacheWrapper.get(path,safeKeyGenerator);
     }
 
     /**
@@ -40,34 +37,14 @@ public class SqlLiteCache {
      * @param location                      视频数据
      */
     public synchronized void put(String url , VideoLocation location){
-        if (url==null || url.length()==0){
-            return;
-        }
         if (location==null){
             return;
         }
-
-        if (diskLruCache!=null){
-            try {
-                String key = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
-                CacheLogUtils.d("SqlLiteCache-----put--key--"+key);
-                DiskLruCache.Editor editor = diskLruCache.edit(key);
-                if (editor!=null){
-                    String json = location.toJson();
-                    editor.set(0,json);
-                    CacheLogUtils.d("SqlLiteCache-----put--json--"+json);
-                    editor.commit();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    diskLruCache.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        String safeKey = safeKeyGenerator.getSafeKey(url);
+        location.setUrlMd5(safeKey);
+        String json = location.toJson();
+        CacheLogUtils.d("SqlLiteCache-----put--json--"+json);
+        interDiskCache.put(url,json);
     }
 
     /**
@@ -76,34 +53,13 @@ public class SqlLiteCache {
      * @return
      */
     public synchronized long get(String url){
-        if (url==null || url.length()==0){
+        String data = interDiskCache.get(url);
+        if (data==null || data.length()==0){
             return -1;
         }
-        if (diskLruCache!=null){
-            String key = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
-            CacheLogUtils.d("SqlLiteCache-----get--key-"+key);
-            try {
-                DiskLruCache.Value value = diskLruCache.get(key);
-                if (value != null) {
-                    File file = value.getFile(0);
-                    long length = value.getLength(0);
-                    String string = value.getString(0);
-                    VideoLocation location = VideoLocation.toObject(string);
-                    long position = location.getPosition();
-                    CacheLogUtils.d("SqlLiteCache-----get---"+file+"-------"+length+"-------"+string+"-----"+position);
-                    return position;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    diskLruCache.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return -1;
+        CacheLogUtils.d("SqlLiteCache-----get---"+data);
+        VideoLocation location = VideoLocation.toObject(data);
+        return location.getPosition();
     }
 
     /**
@@ -112,22 +68,7 @@ public class SqlLiteCache {
      * @return
      */
     public synchronized boolean remove(String url){
-        if (diskLruCache!=null){
-            String key = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
-            try {
-                boolean remove = diskLruCache.remove(key);
-                return remove;
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    diskLruCache.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return false;
+        return interDiskCache.remove(url);
     }
 
     /**
@@ -136,44 +77,15 @@ public class SqlLiteCache {
      * @return
      */
     public synchronized boolean containsKey(String url){
-        if (diskLruCache!=null){
-            String key = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
-            try {
-                DiskLruCache.Value value = diskLruCache.get(key);
-                return value != null;
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    diskLruCache.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return false;
+        return interDiskCache.containsKey(url);
     }
-
 
     /**
      * 清楚所有数据
      * @return                              是否清楚完毕
      */
-    public synchronized boolean clearAll(){
-        if (diskLruCache!=null){
-            try {
-                diskLruCache.delete();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    diskLruCache.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return false;
+    public synchronized void clearAll(){
+        interDiskCache.clear();
     }
 
 

@@ -25,7 +25,7 @@ import java.util.List;
  *     revise:
  * </pre>
  */
-public class DiskFileUtils {
+public final class DiskFileUtils {
 
     /**
      * 目录地址
@@ -37,11 +37,24 @@ public class DiskFileUtils {
         return path;
     }
 
+    /**
+     * 目录地址
+     * SDCard/Android/data/<application package>/cache
+     * data/data/<application package>/cache
+     * @param context                               上下文
+     * @param pathName                              路径名称
+     * @return
+     */
     public static String getPath(Context context , String pathName) {
         String path = getCachePath(context) + File.separator + pathName;
         return path;
     }
 
+    /**
+     * 获取路径file
+     * @param context                               上下文
+     * @return
+     */
     public static File getFilePath(Context context){
         String path = getPath(context);
         File file = new File(path);
@@ -50,10 +63,13 @@ public class DiskFileUtils {
 
     /**
      * 获取app缓存路径
+     * 如果sd卡可以使用，sd卡路径
      * SDCard/Android/data/<application package>/cache
+     *
+     * 如果没有sd卡，则获取内部存储卡路径
      * data/data/<application package>/cache
      *
-     * @param context
+     * @param context                               上下文
      * @return
      */
     public static String getCachePath(Context context) {
@@ -79,7 +95,7 @@ public class DiskFileUtils {
      * @return
      */
     public static List<File> getFileList(Context context) {
-        File file = new File(DiskFileUtils.getPath(context));
+        File file = new File(com.yc.videosqllite.disk.DiskFileUtils.getPath(context));
         List<File> mFileList = new ArrayList<>();
         File[] fileArray = file.listFiles();
         if (fileArray == null || fileArray.length <= 0) {

@@ -1,4 +1,4 @@
-package com.yc.videosqllite.disk.wrapper;
+package com.yc.videosqllite.disk;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

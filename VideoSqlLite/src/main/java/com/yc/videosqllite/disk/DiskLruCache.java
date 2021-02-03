@@ -34,6 +34,34 @@ import java.util.concurrent.TimeUnit;
  */
 public final class DiskLruCache implements Closeable {
 
+
+    /**
+     * libcore.io.DiskLruCache
+     * 1
+     * 1
+     * 1
+     *
+     * DIRTY 27c7e00adbacc71dc793e5e7bf02f861
+     * CLEAN 27c7e00adbacc71dc793e5e7bf02f861 1208
+     * READ 27c7e00adbacc71dc793e5e7bf02f861
+     * DIRTY b80f9eec4b616dc6682c7fa8bas2061f
+     * CLEAN b80f9eec4b616dc6682c7fa8bas2061f 1208
+     * READ b80f9eec4b616dc6682c7fa8bas2061f
+     * DIRTY be3fgac81c12a08e89088555d85dfd2b
+     * CLEAN be3fgac81c12a08e89088555d85dfd2b 99
+     * READ be3fgac81c12a08e89088555d85dfd2b
+     * DIRTY 536990f4dbddfghcfbb8f350a941wsxd
+     * REMOVE 536990f4dbddfghcfbb8f350a941wsxd
+     *
+     * 第1行：libcore.io.DiskLruCache 是固定字符串，表明使用的是 DiskLruCache 技术；
+     * 第2行：DiskLruCache 的版本号，源码中为常量 1；
+     * 第3行：APP 的版本号，即我们在 open() 方法里传入的版本号；
+     * 第4行：valueCount，这个值也是在 open() 方法中传入的，指每个 key 对应几个文件，通常情况下都为 1；
+     * 第5行：空行
+     *
+     *
+     */
+
     static final String JOURNAL_FILE = "journal";
     static final String JOURNAL_FILE_TEMP = "journal.tmp";
     static final String JOURNAL_FILE_BACKUP = "journal.bkp";
@@ -73,7 +101,7 @@ public final class DiskLruCache implements Closeable {
                     new DiskLruCacheThreadFactory());
     private final Callable<Void> cleanupCallable = new Callable<Void>() {
         public Void call() throws Exception {
-            synchronized (DiskLruCache.this) {
+            synchronized (com.yc.videosqllite.disk.DiskLruCache.this) {
                 if (journalWriter == null) {
                     return null; // Closed.
                 }
@@ -110,7 +138,7 @@ public final class DiskLruCache implements Closeable {
      * @param maxSize    the maximum number of bytes this cache should use to store
      * @throws IOException if reading or writing the cache directory fails
      */
-    public static DiskLruCache open(File directory, int appVersion, int valueCount, long maxSize)
+    public static com.yc.videosqllite.disk.DiskLruCache open(File directory, int appVersion, int valueCount, long maxSize)
             throws IOException {
         if (maxSize <= 0) {
             throw new IllegalArgumentException("maxSize <= 0");
@@ -132,7 +160,7 @@ public final class DiskLruCache implements Closeable {
         }
 
         // Prefer to pick up where we left off.
-        DiskLruCache cache = new DiskLruCache(directory, appVersion, valueCount, maxSize);
+        com.yc.videosqllite.disk.DiskLruCache cache = new com.yc.videosqllite.disk.DiskLruCache(directory, appVersion, valueCount, maxSize);
         if (cache.journalFile.exists()) {
             try {
                 cache.readJournal();
@@ -151,7 +179,7 @@ public final class DiskLruCache implements Closeable {
 
         // Create a new empty cache.
         directory.mkdirs();
-        cache = new DiskLruCache(directory, appVersion, valueCount, maxSize);
+        cache = new com.yc.videosqllite.disk.DiskLruCache(directory, appVersion, valueCount, maxSize);
         cache.rebuildJournal();
         return cache;
     }
@@ -610,7 +638,7 @@ public final class DiskLruCache implements Closeable {
          * is in progress.
          */
         public Editor edit() throws IOException {
-            return DiskLruCache.this.edit(key, sequenceNumber);
+            return com.yc.videosqllite.disk.DiskLruCache.this.edit(key, sequenceNumber);
         }
 
         public File getFile(int index) {
@@ -651,7 +679,7 @@ public final class DiskLruCache implements Closeable {
          * or null if no value has been committed.
          */
         private InputStream newInputStream(int index) throws IOException {
-            synchronized (DiskLruCache.this) {
+            synchronized (com.yc.videosqllite.disk.DiskLruCache.this) {
                 if (entry.currentEditor != this) {
                     throw new IllegalStateException();
                 }
@@ -676,7 +704,7 @@ public final class DiskLruCache implements Closeable {
         }
 
         public File getFile(int index) throws IOException {
-            synchronized (DiskLruCache.this) {
+            synchronized (com.yc.videosqllite.disk.DiskLruCache.this) {
                 if (entry.currentEditor != this) {
                     throw new IllegalStateException();
                 }

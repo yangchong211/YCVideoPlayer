@@ -1,5 +1,8 @@
 package com.yc.videosqllite.disk;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +20,8 @@ import java.nio.charset.Charset;
  *     revise:
  * </pre>
  */
-final class DiskUtils {
+public final class DiskUtils {
+
     static final Charset US_ASCII = Charset.forName("US-ASCII");
     static final Charset UTF_8 = Charset.forName("UTF-8");
 
@@ -66,5 +70,18 @@ final class DiskUtils {
             } catch (Exception ignored) {
             }
         }
+    }
+
+    @NonNull
+    public static <T> T checkNotNull(@Nullable T arg) {
+        return checkNotNull(arg, "Argument must not be null");
+    }
+
+    @NonNull
+    public static <T> T checkNotNull(@Nullable T arg, @NonNull String message) {
+        if (arg == null) {
+            throw new NullPointerException(message);
+        }
+        return arg;
     }
 }

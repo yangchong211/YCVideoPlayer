@@ -51,6 +51,9 @@ public class CacheConfig {
     }
 
     public int getCacheMax() {
+        if (mCacheMax<=0){
+            mCacheMax = 1000;
+        }
         return mCacheMax;
     }
 

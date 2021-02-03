@@ -1,8 +1,7 @@
 package com.yc.videosqllite.cache;
 
-import com.yc.videosqllite.manager.CacheConfig;
+import com.yc.videosqllite.model.SafeKeyGenerator;
 import com.yc.videosqllite.model.VideoLocation;
-import com.yc.videosqllite.utils.VideoMd5Utils;
 
 /**
  * <pre>
@@ -15,16 +14,16 @@ import com.yc.videosqllite.utils.VideoMd5Utils;
  */
 public class VideoMapCache {
 
-    private CacheConfig cacheConfig;
     /**
      * 缓存
      */
     private InterCache<String, VideoLocation> mCache;
+    private final SafeKeyGenerator safeKeyGenerator;
 
-    public VideoMapCache(CacheConfig cacheConfig){
-        this.cacheConfig = cacheConfig;
+    public VideoMapCache(){
         //默认设置存储最大值为1000条
         mCache =  new VideoLruCache<>(1000);
+        this.safeKeyGenerator = new SafeKeyGenerator();
     }
 
     /**
@@ -39,9 +38,10 @@ public class VideoMapCache {
         if (location==null){
             return;
         }
-        String key = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
-        location.setUrlMd5(key);
-        mCache.put(key,location);
+        //String key = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
+        String safeKey = safeKeyGenerator.getSafeKey(url);
+        location.setUrlMd5(safeKey);
+        mCache.put(safeKey,location);
     }
 
     /**
@@ -51,21 +51,22 @@ public class VideoMapCache {
      */
     public synchronized long get(String url){
         if (url==null || url.length()==0){
-            return 0;
+            return -1;
         }
-        String key = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
+        //String key = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
+        String key = safeKeyGenerator.getSafeKey(url);
         VideoLocation videoLocation = mCache.get(key);
         if (videoLocation==null){
             //没找到
-            return 0;
+            return -1;
         }
         if (videoLocation.getTotalTime()<=videoLocation.getPosition()){
             //这一步主要是避免外部开发员瞎存播放进度
-            return 0;
+            return -1;
         }
         long position = videoLocation.getPosition();
         if (position<0){
-            position = 0;
+            position = -1;
         }
         return position;
     }
@@ -79,7 +80,8 @@ public class VideoMapCache {
         if (url==null || url.length()==0){
             return false;
         }
-        String key = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
+        //String key = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
+        String key = safeKeyGenerator.getSafeKey(url);
         VideoLocation location = mCache.remove(key);
         if (location==null){
             return false;
@@ -98,9 +100,9 @@ public class VideoMapCache {
         if (url==null || url.length()==0){
             return false;
         }
-        String key = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
-        boolean containsKey = mCache.containsKey(key);
-        return containsKey;
+        //String key = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
+        String key = safeKeyGenerator.getSafeKey(url);
+        return mCache.containsKey(key);
     }
 
 

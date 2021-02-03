@@ -103,8 +103,8 @@ public class VideoLocation implements Serializable {
         return null;
     }
 
-    public static VideoLocation toObject(String jsonStr) {
-        VideoLocation m =  new VideoLocation();
+    public static com.yc.videosqllite.model.VideoLocation toObject(String jsonStr) {
+        com.yc.videosqllite.model.VideoLocation m =  new com.yc.videosqllite.model.VideoLocation();
         try {
             JSONObject jsonObject = new JSONObject(jsonStr);
             m.setUrl(jsonObject.has("url") ? jsonObject.getString("url"):null);
@@ -136,7 +136,7 @@ public class VideoLocation implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        VideoLocation location = (VideoLocation) o;
+        com.yc.videosqllite.model.VideoLocation location = (com.yc.videosqllite.model.VideoLocation) o;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             return position == location.position &&
                     totalTime == location.totalTime &&

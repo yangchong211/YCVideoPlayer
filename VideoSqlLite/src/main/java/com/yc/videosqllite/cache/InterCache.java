@@ -3,14 +3,13 @@ package com.yc.videosqllite.cache;
 import java.util.Set;
 
 
-
 /**
  * <pre>
  *     @author yangchong
  *     email  : yangchong211@163.com
  *     time  : 2020/8/6
  *     desc  : 缓存接口
- *     revise:
+ *     revise: 内存缓存，主要使用到了淘汰算法
  * </pre>
  */
 public interface InterCache<K, V> {
