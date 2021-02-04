@@ -84,6 +84,9 @@ public class LocationManager {
         if (!cacheConfig.isEffective()){
             return;
         }
+        if (url==null || url.length()==0 || location==null){
+            return ;
+        }
         /*
          * type
          * 0，表示内存缓存
@@ -117,6 +120,9 @@ public class LocationManager {
      */
     public synchronized long get(String url){
         if (!cacheConfig.isEffective()){
+            return 0;
+        }
+        if (url==null || url.length()==0){
             return 0;
         }
         /*
@@ -159,6 +165,9 @@ public class LocationManager {
         if (!cacheConfig.isEffective()){
             return false;
         }
+        if (url==null || url.length()==0){
+            return false;
+        }
         /*
          * type
          * 0，表示内存缓存
@@ -185,6 +194,9 @@ public class LocationManager {
      */
     public synchronized boolean containsKey(String url){
         if (!cacheConfig.isEffective()){
+            return false;
+        }
+        if (url==null || url.length()==0){
             return false;
         }
         /*
