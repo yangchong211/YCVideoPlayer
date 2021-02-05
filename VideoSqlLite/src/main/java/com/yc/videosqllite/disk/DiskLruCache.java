@@ -84,17 +84,20 @@ public final class DiskLruCache implements Closeable {
     private Writer journalWriter;
     private final LinkedHashMap<String, Entry> lruEntries =
             new LinkedHashMap<String, Entry>(0, 0.75f, true);
+    /**
+     * 记录用户操作的次数，每执行一次写入、读取或移除缓存的操作，这个变量值都会加 1
+     * 当变量值达到 2000 时就会触发重构 journal 的事件，这时会自动把 journal 中多余的、不必要的记录全部清除掉，
+     * 保证 journal 文件的大小始终保持在一个合理的范围内。
+     */
     private int redundantOpCount;
 
     /**
-     * To differentiate between old and current snapshots, each entry is given
-     * a sequence number each time an edit is committed. A snapshot is stale if
-     * its sequence number is not equal to its entry's sequence number.
+     * 为了区分旧快照和当前快照，每次提交编辑时都给每个条目一个序号。如果快照的序列号不等于其条目的序列号，则快照失效。
      */
     private long nextSequenceNumber = 0;
 
     /**
-     * This cache uses a single background thread to evict entries.
+     * 该缓存使用单个后台线程来清除条目
      */
     final ThreadPoolExecutor executorService =
             new ThreadPoolExecutor(0, 1, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(),
@@ -197,6 +200,7 @@ public final class DiskLruCache implements Closeable {
     private void readJournal() throws IOException {
         StrictLineReader reader = new StrictLineReader(new FileInputStream(journalFile), DiskUtils.US_ASCII);
         try {
+            //读取journal文件的前五行
             String magic = reader.readLine();
             String version = reader.readLine();
             String appVersionString = reader.readLine();
