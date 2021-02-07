@@ -68,9 +68,22 @@ public final class DiskLruCache implements Closeable {
     static final String MAGIC = "libcore.io.DiskLruCache";
     static final String VERSION_1 = "1";
     static final long ANY_SEQUENCE_NUMBER = -1;
+    /**
+     * 该状态表示一个缓存Entry已经被成功发布了并且可以读取，该行后面会有每个Value的大小。
+     */
     private static final String CLEAN = "CLEAN";
+    /**
+     * 该状态表示一个Entry正在被创建或正在被更新，任意一个成功的DIRTY操作后面都会有一个CLEAN或REMOVE操作。
+     * 如果一个DIRTY操作后面没有CLEAN或者REMOVE操作，那就表示这是一个临时文件，应该将其删除。
+     */
     private static final String DIRTY = "DIRTY";
+    /**
+     * 表示被删除的缓存Entry。
+     */
     private static final String REMOVE = "REMOVE";
+    /**
+     * 在LRU缓存中被读取了。
+     */
     private static final String READ = "READ";
 
     private final File directory;
@@ -261,35 +274,43 @@ public final class DiskLruCache implements Closeable {
         }
 
         int keyBegin = firstSpace + 1;
+        //journal 日志每一行中的各个部分都是用 ' ' 空格来分割的，所以先用 空格来截取一下
         int secondSpace = line.indexOf(' ', keyBegin);
         final String key;
         if (secondSpace == -1) {
+            //拿到 key
             key = line.substring(keyBegin);
             // 如果是REMOVE，则将该key代表的缓存从lruEntries中移除
             if (firstSpace == REMOVE.length() && line.startsWith(REMOVE)) {
+                //然后判断 firstSpace 是 REMOVE 就会调用 lruEntries.remove(key)
                 lruEntries.remove(key);
                 return;
             }
         } else {
+            //拿到 key
             key = line.substring(keyBegin, secondSpace);
         }
 
         //取出当前key对应的缓存Entry
         Entry entry = lruEntries.get(key);
         if (entry == null) {
+            //若不是 REMOVE ，如果该 key 没有加入到 lruEntries ，则创建并且加入
             entry = new Entry(key);
             lruEntries.put(key, entry);
         }
         // 如果是CLEAN、DIRTY或READ
         if (secondSpace != -1 && firstSpace == CLEAN.length() && line.startsWith(CLEAN)) {
+            //继续判断 firstSpace ，若是 CLEAN ，则初始化 entry ，设置 readable=true , currentEditor 为 null ，初始化长度等。
             String[] parts = line.substring(secondSpace + 1).split(" ");
             entry.readable = true;
             entry.currentEditor = null;
             entry.setLengths(parts);
         } else if (secondSpace == -1 && firstSpace == DIRTY.length() && line.startsWith(DIRTY)) {
+            //若是 DIRTY ，则设置 currentEditor 对象。
             entry.currentEditor = new Editor(entry);
         } else if (secondSpace == -1 && firstSpace == READ.length() && line.startsWith(READ)) {
             // This work was already done by calling lruEntries.get().
+            //若是 READ，无操作。
         } else {
             throw new IOException("unexpected journal line: " + line);
         }
@@ -326,21 +347,32 @@ public final class DiskLruCache implements Closeable {
             journalWriter.close();
         }
 
-        Writer writer = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(journalFileTmp), DiskUtils.US_ASCII));
+        FileOutputStream fileOutputStream = new FileOutputStream(journalFileTmp);
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, DiskUtils.US_ASCII);
+        //高效字符流
+        Writer writer = new BufferedWriter(outputStreamWriter);
         try {
+            //这一块是写入头部的5行
+            //libcore.io.DiskLruCache 是固定字符串，表明使用的是 DiskLruCache 技术；
             writer.write(MAGIC);
             writer.write("\n");
+            //DiskLruCache 的版本号，源码中为常量 1；
             writer.write(VERSION_1);
             writer.write("\n");
+            //APP 的版本号，即我们在 open() 方法里传入的版本号；
             writer.write(Integer.toString(appVersion));
             writer.write("\n");
+            //valueCount，这个值也是在 open() 方法中传入的，指每个 key 对应几个文件，通常情况下都为 1；
             writer.write(Integer.toString(valueCount));
             writer.write("\n");
+            //空行
             writer.write("\n");
 
             for (Entry entry : lruEntries.values()) {
                 if (entry.currentEditor != null) {
+                    //看到DIRTY这个字样都不代表着什么好事情，意味着这是一条脏数据。
+                    //没错，每当我们调用一次DiskLruCache的edit()方法时，都会向journal文件中写入一条DIRTY记录，
+                    //表示我们正准备写入一条缓存数据，但不知结果如何。
                     writer.write(DIRTY + ' ' + entry.key + '\n');
                 } else {
                     writer.write(CLEAN + ' ' + entry.key + entry.getLengths() + '\n');
@@ -570,6 +602,7 @@ public final class DiskLruCache implements Closeable {
 
     /**
      * 只有当日志大小减半并消除至少2000个ops时，我们才重新生成日志。
+     * 在写入数据，获取数据或者移除数据时都会做校验
      */
     private boolean journalRebuildRequired() {
         final int redundantOpCompactThreshold = 2000;
@@ -834,7 +867,7 @@ public final class DiskLruCache implements Closeable {
         private final String key;
 
         /**
-         * Lengths of this entry's files.
+         * 条目的文件长度
          */
         private final long[] lengths;
 
@@ -845,17 +878,17 @@ public final class DiskLruCache implements Closeable {
         File[] dirtyFiles;
 
         /**
-         * True if this entry has ever been published.
+         * 如果这个条目曾经被发表过，则为真。
          */
         private boolean readable;
 
         /**
-         * The ongoing edit or null if this entry is not being edited.
+         * 正在进行的编辑，如果该条目没有被编辑，则为空。
          */
         private Editor currentEditor;
 
         /**
-         * The sequence number of the most recently committed edit to this entry.
+         * 最近提交到该条目的编辑的序列号
          */
         private long sequenceNumber;
 
