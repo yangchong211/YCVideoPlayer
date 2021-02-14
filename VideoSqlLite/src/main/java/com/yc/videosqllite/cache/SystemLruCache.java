@@ -2,6 +2,7 @@ package com.yc.videosqllite.cache;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -37,6 +38,7 @@ public class SystemLruCache<K, V> {
             throw new IllegalArgumentException("maxSize <= 0");
         }
         this.maxSize = maxSize;
+        //创建map集合
         this.map = new LinkedHashMap<K, V>(0, 0.75f, true);
     }
 
@@ -145,10 +147,12 @@ public class SystemLruCache<K, V> {
      *     to evict even 0-sized elements.
      */
     private void trimToSize(int maxSize) {
+        //循环遍历
         while (true) {
             K key;
             V value;
             synchronized (this) {
+                //如果为空，则抛出异常
                 if (size < 0 || (map.isEmpty() && size != 0)) {
                     throw new IllegalStateException(getClass().getName()
                             + ".sizeOf() is reporting inconsistent results!");
@@ -163,7 +167,8 @@ public class SystemLruCache<K, V> {
                 // This is not efficient, the goal here is to minimize the changes
                 // compared to the platform version.
                 Map.Entry<K, V> toEvict = null;
-                for (Map.Entry<K, V> entry : map.entrySet()) {
+                Set<Map.Entry<K, V>> entries = map.entrySet();
+                for (Map.Entry<K, V> entry : entries) {
                     toEvict = entry;
                 }
                 // END LAYOUTLIB CHANGE
@@ -174,7 +179,9 @@ public class SystemLruCache<K, V> {
 
                 key = toEvict.getKey();
                 value = toEvict.getValue();
+                //移除
                 map.remove(key);
+                //逐次减去1
                 size -= safeSizeOf(key, value);
                 evictionCount++;
             }
