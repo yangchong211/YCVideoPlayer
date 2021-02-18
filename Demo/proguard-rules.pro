@@ -25,3 +25,19 @@
 -keep class tv.danmaku.ijk.media.player.** {*;}
 -keep class tv.danmaku.ijk.media.player.IjkMediaPlayer{*;}
 -keep class tv.danmaku.ijk.media.player.ffmpeg.FFmpegApi{*;}
+
+
+# 视频播放器
+# 视频内核
+-keep class com.yc.kernel.**{*;}
+# 视频播放器
+-keep class com.yc.video.**{*;}
+# 视频缓存
+-keep class com.yc.videocache.**{*;}
+# 视频悬浮view
+-keep class com.yc.videoview.**{*;}
+# 视频位置记录
+-keep class com.yc.videosqllite.**{*;}
+# 视频m3u8分片下载和合成
+-keep class com.yc.m3u8.**{*;}
+

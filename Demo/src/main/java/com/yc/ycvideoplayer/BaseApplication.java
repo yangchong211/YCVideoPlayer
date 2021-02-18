@@ -14,6 +14,8 @@ import com.yc.music.utils.MusicSpUtils;
 import com.yc.video.config.VideoPlayerConfig;
 import com.yc.video.player.VideoViewManager;
 import com.yc.video.surface.SurfaceViewFactory;
+import com.yc.videosqllite.manager.CacheConfig;
+import com.yc.videosqllite.manager.LocationManager;
 
 /**
  * ================================================
@@ -72,6 +74,18 @@ public class BaseApplication extends Application {
                 //.setRenderViewFactory(SurfaceViewFactory.create())
                 .build());
         MusicSpUtils.init(this);
+
+        initVideoCache();
+    }
+
+    private void initVideoCache() {
+        CacheConfig cacheConfig = new CacheConfig();
+        cacheConfig.setIsEffective(true);
+        cacheConfig.setType(2);
+        cacheConfig.setContext(this);
+        cacheConfig.setCacheMax(1000);
+        cacheConfig.setLog(false);
+        LocationManager.getInstance().init(cacheConfig);
     }
 
     /**

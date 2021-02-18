@@ -165,7 +165,9 @@ public class VideoLocation implements Serializable {
      * @return
      */
     private boolean equals(Object a, Object b) {
-        return (a == b) || (a != null && a.equals(b));
+        boolean ab = (a == b);
+        boolean equal = (a != null && a.equals(b));
+        return ab || equal;
     }
 
     /**
