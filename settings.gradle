@@ -1,3 +1,4 @@
+include ':VideoScreen'
 include ':VideoSqlLite'
 include ':VideoM3u8'
 include ':MusicPlayer'
