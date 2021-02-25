@@ -168,6 +168,7 @@ public abstract class GestureVideoController extends BaseVideoController impleme
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
         if (isInPlaybackState()) {
+            //切换显示/隐藏状态
             mControlWrapper.toggleShowState();
         }
         return true;
@@ -178,7 +179,11 @@ public abstract class GestureVideoController extends BaseVideoController impleme
      */
     @Override
     public boolean onDoubleTap(MotionEvent e) {
-        if (!isLocked() && isInPlaybackState()) togglePlay();
+        //如果没有锁屏，
+        if (!isLocked() && isInPlaybackState()){
+            //播放和暂停
+            togglePlay();
+        }
         return true;
     }
 

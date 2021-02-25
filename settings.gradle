@@ -1,8 +1,22 @@
+
+//视频弹幕
+include ':VideoBarrage'
+//视频录频
+include ':VideoRecorder'
+//视频投屏
 include ':VideoScreen'
+//视频播放位置记录二级缓存
 include ':VideoSqlLite'
+//m3u8下载和合成
 include ':VideoM3u8'
+//音频
 include ':MusicPlayer'
+//视频悬浮
 include ':VideoView'
+//视频内核
 include ':VideoKernel'
+//视频边播边缓存
 include ':VideoCache'
-include ':Demo', ':VideoPlayer'
+//视频播放器
+include ':VideoPlayer'
+include ':Demo'

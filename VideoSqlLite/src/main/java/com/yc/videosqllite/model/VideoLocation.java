@@ -19,7 +19,7 @@ import java.util.Objects;
  *     revise: 必须
  * </pre>
  */
-public class VideoLocation implements Serializable {
+public class VideoLocation implements Serializable , Cloneable{
 
     /**
      * 视频链接
@@ -159,6 +159,32 @@ public class VideoLocation implements Serializable {
     }
 
     /**
+     * 重写clone()方法
+     * 浅拷贝
+     * @return
+     */
+    public Object clone() {
+        //浅拷贝
+        try {
+            // 直接调用父类的clone()方法
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
+    }
+
+    /**
+     * 重写clone()方法
+     * 深拷贝
+     * @return
+     */
+    public Object deepClone() {
+        // 深拷贝，创建拷贝类的一个新对象，这样就和原始对象相互独立
+        VideoLocation location = new VideoLocation(url,position,totalTime);
+        return location;
+    }
+
+    /**
      * 比较两个对象
      * @param a                         a对象
      * @param b                         b对象
@@ -176,6 +202,17 @@ public class VideoLocation implements Serializable {
      * @return
      */
     private int hash(Object... values) {
-        return Arrays.hashCode(values);
+        return hashCode(values);
+    }
+
+    public static int hashCode(Object a[]) {
+        if (a == null){
+            return 0;
+        }
+        int result = 1;
+        for (Object element : a){
+            result = 31 * result + (element == null ? 0 : element.hashCode());
+        }
+        return result;
     }
 }
