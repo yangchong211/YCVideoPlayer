@@ -263,7 +263,7 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     }
 
     /**
-     * {@link VideoPlayer}调用此方法向控制器设置播放器状态
+     * {@link VideoPlayer}调用此方法向控制器设置播放器模式
      * 播放模式
      * 普通模式，小窗口模式，正常模式三种其中一种
      * MODE_NORMAL              普通模式

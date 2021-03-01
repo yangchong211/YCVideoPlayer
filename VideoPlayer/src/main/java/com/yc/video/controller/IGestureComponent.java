@@ -17,7 +17,17 @@ package com.yc.video.controller;
 
 import com.yc.video.ui.view.InterControlView;
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2018/11/9
+ *     desc  : 包含手势操作的VideoController的接口
+ *     revise:
+ * </pre>
+ */
 public interface IGestureComponent extends InterControlView {
+
     /**
      * 开始滑动
      */
@@ -25,6 +35,7 @@ public interface IGestureComponent extends InterControlView {
 
     /**
      * 结束滑动
+     * 这个是指，手指抬起或者意外结束事件的时候，调用这个方法
      */
     void onStopSlide();
 
@@ -47,4 +58,5 @@ public interface IGestureComponent extends InterControlView {
      * @param percent 音量百分比
      */
     void onVolumeChange(int percent);
+
 }

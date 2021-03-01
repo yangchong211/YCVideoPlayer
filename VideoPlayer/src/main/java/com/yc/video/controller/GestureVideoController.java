@@ -28,6 +28,7 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.yc.kernel.utils.VideoLogUtils;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.tool.PlayerUtils;
 import com.yc.video.ui.view.InterControlView;
@@ -53,19 +54,42 @@ public abstract class GestureVideoController extends BaseVideoController impleme
     private int mStreamVolume;
     private float mBrightness;
     private int mSeekPosition;
+    /**
+     * 是否是第一次触摸
+     */
     private boolean mFirstTouch;
+    /**
+     * 是否改变位置
+     */
     private boolean mChangePosition;
+    /**
+     * 是否改变亮度
+     */
     private boolean mChangeBrightness;
+    /**
+     * 是否改变音量
+     */
     private boolean mChangeVolume;
-
+    /**
+     * 是否可以改变位置
+     */
     private boolean mCanChangePosition = true;
-
+    /**
+     * 是否在竖屏模式下开始手势控制
+     */
     private boolean mEnableInNormal;
-
+    /**
+     * 是否关闭了滑动手势
+     */
     private boolean mCanSlide;
-
+    /**
+     * 播放状态
+     */
     private int mCurPlayState;
-
+    /**
+     * 屏幕一半的距离
+     */
+    private int mHalfScreen;
 
     public GestureVideoController(@NonNull Context context) {
         super(context);
@@ -82,6 +106,7 @@ public abstract class GestureVideoController extends BaseVideoController impleme
     @Override
     protected void initView(Context context) {
         super.initView(context);
+        mHalfScreen = PlayerUtils.getScreenWidth(getContext(), true) / 2;
         mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mGestureDetector = new GestureDetector(getContext(), this);
         setOnTouchListener(this);
@@ -108,6 +133,10 @@ public abstract class GestureVideoController extends BaseVideoController impleme
         mIsGestureEnabled = gestureEnabled;
     }
 
+    /**
+     * 调用此方法向控制器设置播放器模式
+     * @param playerState                       播放模式
+     */
     @Override
     public void setPlayerState(int playerState) {
         super.setPlayerState(playerState);
@@ -118,6 +147,10 @@ public abstract class GestureVideoController extends BaseVideoController impleme
         }
     }
 
+    /**
+     * 调用此方法向控制器设置播放状态
+     * @param playState                         播放状态
+     */
     @Override
     public void setPlayState(int playState) {
         super.setPlayState(playState);
@@ -204,8 +237,10 @@ public abstract class GestureVideoController extends BaseVideoController impleme
             mChangePosition = Math.abs(distanceX) >= Math.abs(distanceY);
             if (!mChangePosition) {
                 //半屏宽度
-                int halfScreen = PlayerUtils.getScreenWidth(getContext(), true) / 2;
-                if (e2.getX() > halfScreen) {
+                if (mHalfScreen==0){
+                    mHalfScreen = PlayerUtils.getScreenWidth(getContext(), true) / 2;
+                }
+                if (e2.getX() > mHalfScreen) {
                     mChangeVolume = true;
                 } else {
                     mChangeBrightness = true;
@@ -256,7 +291,9 @@ public abstract class GestureVideoController extends BaseVideoController impleme
 
     protected void slideToChangeBrightness(float deltaY) {
         Activity activity = PlayerUtils.scanForActivity(getContext());
-        if (activity == null) return;
+        if (!PlayerUtils.isActivityLiving(activity)) {
+            return;
+        }
         Window window = activity.getWindow();
         WindowManager.LayoutParams attributes = window.getAttributes();
         int height = getMeasuredHeight();
@@ -294,13 +331,67 @@ public abstract class GestureVideoController extends BaseVideoController impleme
         }
     }
 
+    // 点击事件产生后，会直接调用dispatchTouchEvent分发方法
+    /*public boolean dispatchTouchEvent(MotionEvent ev) {
+        //代表是否消耗事件
+        boolean consume = false;
+        if (onInterceptTouchEvent(ev)) {
+            //如果onInterceptTouchEvent()返回true则代表当前View拦截了点击事件
+            //则该点击事件则会交给当前View进行处理
+            //即调用onTouchEvent (）方法去处理点击事件
+            consume = onTouchEvent (ev) ;
+        } else {
+            //如果onInterceptTouchEvent()返回false则代表当前View不拦截点击事件
+            //则该点击事件则会继续传递给它的子元素
+            //子元素的dispatchTouchEvent（）就会被调用，重复上述过程
+            //直到点击事件被最终处理为止
+            consume = child.dispatchTouchEvent (ev) ;
+        }
+        return consume;
+    }*/
+
+    /**
+     * 拦截事件：只有ViewGroup才有这个
+     * @param ev                            event
+     * @return                              返回值
+     * true： 当前ViewGroup（因为View中没有该方法，而没有child的VIew也不需要有拦截机制）
+     *        希望该事件不再传递给其child，而是希望自己处理。
+     * false：当前ViewGroup不准备拦截该事件，事件正常向下分发给其child。
+     */
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        VideoLogUtils.e("事件----------事件拦截----------");
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    /**
+     * 分发事件：使用对象	Activity、ViewGroup、View
+     * @param ev                            event
+     * @return                              返回值
+     * true： 消费事件；事件不会往下传递；后续事件（Move、Up）会继续分发到该View
+     * false：不消费事件；事件不会往下传递；将事件回传给父控件的onTouchEvent()处理；Activity例外：返回false=消费事件
+     *        后续事件（Move、Up）会继续分发到该View(与onTouchEvent()区别）
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        VideoLogUtils.e("事件----------事件分发----------");
+        return super.dispatchTouchEvent(ev);
+    }
+
+    /**
+     * 触摸事件
+     * @param event                         event事件，主要处理up，down，cancel
+     * @return                              返回值
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        VideoLogUtils.e("事件----------事件触摸----------");
         //滑动结束时事件处理
         if (!mGestureDetector.onTouchEvent(event)) {
             int action = event.getAction();
             switch (action) {
                 case MotionEvent.ACTION_UP:
+                    //抬起View（与DOWN对应）
                     stopSlide();
                     if (mSeekPosition > 0) {
                         mControlWrapper.seekTo(mSeekPosition);
@@ -308,8 +399,15 @@ public abstract class GestureVideoController extends BaseVideoController impleme
                     }
                     break;
                 case MotionEvent.ACTION_CANCEL:
+                    //非人为原因结束本次事件
                     stopSlide();
                     mSeekPosition = 0;
+                    break;
+                case MotionEvent.ACTION_HOVER_MOVE:
+                    //滑动View
+                    break;
+                case MotionEvent.ACTION_DOWN:
+                    //按下View（所有事件的开始）
                     break;
             }
         }
@@ -320,6 +418,7 @@ public abstract class GestureVideoController extends BaseVideoController impleme
         for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
             InterControlView component = next.getKey();
             if (component instanceof IGestureComponent) {
+                //结束滑动
                 ((IGestureComponent) component).onStopSlide();
             }
         }

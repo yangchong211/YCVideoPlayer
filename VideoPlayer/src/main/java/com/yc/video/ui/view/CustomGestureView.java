@@ -123,6 +123,10 @@ public class CustomGestureView extends FrameLayout implements IGestureComponent 
         mLlCenterContainer.setAlpha(1f);
     }
 
+    /**
+     * 结束滑动
+     * 这个是指，手指抬起或者意外结束事件的时候，调用这个方法
+     */
     @Override
     public void onStopSlide() {
         mLlCenterContainer.animate()
