@@ -13,7 +13,6 @@ import android.view.WindowManager;
 public class FloatPhone extends FloatView {
 
     private final Context mContext;
-
     private final WindowManager mWindowManager;
     private final WindowManager.LayoutParams mLayoutParams;
     private View mView;
@@ -79,7 +78,9 @@ public class FloatPhone extends FloatView {
 
     @Override
     public void dismiss() {
-        mWindowManager.removeView(mView);
+        if (mView!=null){
+            mWindowManager.removeView(mView);
+        }
     }
 
     @Override

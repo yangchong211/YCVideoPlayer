@@ -3,7 +3,7 @@ package com.yc.videoview;
 import android.view.View;
 
 
-abstract class FloatView {
+public abstract class FloatView {
 
     abstract void setSize(int width, int height);
 

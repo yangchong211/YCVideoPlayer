@@ -69,20 +69,23 @@ public class FloatToast extends FloatView {
             Field tnField = toast.getClass().getDeclaredField("mTN");
             tnField.setAccessible(true);
             mTN = tnField.get(toast);
-            show = mTN.getClass().getMethod("show");
-            hide = mTN.getClass().getMethod("hide");
-
-            Field tnParamsField = mTN.getClass().getDeclaredField("mParams");
-            tnParamsField.setAccessible(true);
-            WindowManager.LayoutParams params = (WindowManager.LayoutParams) tnParamsField.get(mTN);
-            params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                    | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-            params.width = mWidth;
-            params.height = mHeight;
-            params.windowAnimations = 0;
-            Field tnNextViewField = mTN.getClass().getDeclaredField("mNextView");
-            tnNextViewField.setAccessible(true);
-            tnNextViewField.set(mTN, toast.getView());
+            if (mTN != null) {
+                show = mTN.getClass().getMethod("show");
+                hide = mTN.getClass().getMethod("hide");
+                Field tnParamsField = mTN.getClass().getDeclaredField("mParams");
+                tnParamsField.setAccessible(true);
+                WindowManager.LayoutParams params = (WindowManager.LayoutParams) tnParamsField.get(mTN);
+                if (params != null) {
+                    params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                            | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+                    params.width = mWidth;
+                    params.height = mHeight;
+                    params.windowAnimations = 0;
+                }
+                Field tnNextViewField = mTN.getClass().getDeclaredField("mNextView");
+                tnNextViewField.setAccessible(true);
+                tnNextViewField.set(mTN, toast.getView());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

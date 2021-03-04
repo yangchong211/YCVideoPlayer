@@ -179,8 +179,10 @@ public abstract class GestureVideoController extends BaseVideoController impleme
     public boolean onDown(MotionEvent e) {
         if (!isInPlaybackState() //不处于播放状态
                 || !mIsGestureEnabled //关闭了手势
-                || PlayerUtils.isEdge(getContext(), e)) //处于屏幕边沿
+                || PlayerUtils.isEdge(getContext(), e)) {
+            //处于屏幕边沿
             return true;
+        }
         mStreamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         Activity activity = PlayerUtils.scanForActivity(getContext());
         if (activity == null) {
@@ -222,6 +224,8 @@ public abstract class GestureVideoController extends BaseVideoController impleme
 
     /**
      * 在屏幕上滑动
+     * 左右滑动，则是改变播放进度
+     * 上下滑动，滑动左边改变音量；滑动右边改变亮度
      */
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
@@ -229,13 +233,18 @@ public abstract class GestureVideoController extends BaseVideoController impleme
                 || !mIsGestureEnabled //关闭了手势
                 || !mCanSlide //关闭了滑动手势
                 || isLocked() //锁住了屏幕
-                || PlayerUtils.isEdge(getContext(), e1)) //处于屏幕边沿
+                //处于屏幕边沿
+                || PlayerUtils.isEdge(getContext(), e1)){
             return true;
+        }
         float deltaX = e1.getX() - e2.getX();
         float deltaY = e1.getY() - e2.getY();
+        //如果是第一次触摸
         if (mFirstTouch) {
+            //判断是左右滑动，还是上下滑动
             mChangePosition = Math.abs(distanceX) >= Math.abs(distanceY);
             if (!mChangePosition) {
+                //上下滑动，滑动左边改变音量；滑动右边改变亮度
                 //半屏宽度
                 if (mHalfScreen==0){
                     mHalfScreen = PlayerUtils.getScreenWidth(getContext(), true) / 2;
@@ -247,6 +256,7 @@ public abstract class GestureVideoController extends BaseVideoController impleme
                 }
             }
 
+            //左右滑动，则是改变播放进度
             if (mChangePosition) {
                 //根据用户设置是否可以滑动调节进度来决定最终是否可以滑动调节进度
                 mChangePosition = mCanChangePosition;

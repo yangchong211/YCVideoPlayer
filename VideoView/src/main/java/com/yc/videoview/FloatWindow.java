@@ -21,6 +21,11 @@ import java.util.Map;
  */
 public class FloatWindow {
 
+    /**
+     * 如果想要 Window 位于所有 Window 的最顶层，那么采用较大的层级即可，很显然系统 Window 的层级是最大的。
+     * 当我们采用系统层级时，一般选用TYPE_SYSTEM_ERROR或者TYPE_SYSTEM_OVERLAY，还需要声明权限。
+     * <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+     */
     private FloatWindow() {
 
     }
@@ -38,8 +43,8 @@ public class FloatWindow {
 
 
     @MainThread
-    public static B with(@NonNull Context applicationContext) {
-        return new B(applicationContext);
+    public static Builder with(@NonNull Context applicationContext) {
+        return new Builder(applicationContext);
     }
 
     public static void destroy() {
@@ -57,7 +62,7 @@ public class FloatWindow {
         mFloatWindowMap.remove(tag);
     }
 
-    public static class B {
+    public static class Builder {
         Context mApplicationContext;
         View mView;
         private int mLayoutId;
@@ -73,35 +78,35 @@ public class FloatWindow {
         TimeInterpolator mInterpolator;
         private String mTag = mDefaultTag;
 
-        private B() {
+        private Builder() {
 
         }
 
-        B(Context applicationContext) {
+        Builder(Context applicationContext) {
             mApplicationContext = applicationContext;
         }
 
-        public B setView(@NonNull View view) {
+        public Builder setView(@NonNull View view) {
             mView = view;
             return this;
         }
 
-        public B setView(@LayoutRes int layoutId) {
+        public Builder setView(@LayoutRes int layoutId) {
             mLayoutId = layoutId;
             return this;
         }
 
-        public B setWidth(int width) {
+        public Builder setWidth(int width) {
             mWidth = width;
             return this;
         }
 
-        public B setHeight(int height) {
+        public Builder setHeight(int height) {
             mHeight = height;
             return this;
         }
 
-        public B setWidth(@WindowScreen.screenType int screenType, float ratio) {
+        public Builder setWidth(@WindowScreen.screenType int screenType, float ratio) {
             mWidth = (int) ((screenType == WindowScreen.WIDTH ?
                     WindowUtil.getScreenWidth(mApplicationContext) :
                     WindowUtil.getScreenHeight(mApplicationContext)) * ratio);
@@ -109,7 +114,7 @@ public class FloatWindow {
         }
 
 
-        public B setHeight(@WindowScreen.screenType int screenType, float ratio) {
+        public Builder setHeight(@WindowScreen.screenType int screenType, float ratio) {
             mHeight = (int) ((screenType == WindowScreen.WIDTH ?
                     WindowUtil.getScreenWidth(mApplicationContext) :
                     WindowUtil.getScreenHeight(mApplicationContext)) * ratio);
@@ -117,24 +122,24 @@ public class FloatWindow {
         }
 
 
-        public B setX(int x) {
+        public Builder setX(int x) {
             xOffset = x;
             return this;
         }
 
-        public B setY(int y) {
+        public Builder setY(int y) {
             yOffset = y;
             return this;
         }
 
-        public B setX(@WindowScreen.screenType int screenType, float ratio) {
+        public Builder setX(@WindowScreen.screenType int screenType, float ratio) {
             xOffset = (int) ((screenType == WindowScreen.WIDTH ?
                     WindowUtil.getScreenWidth(mApplicationContext) :
                     WindowUtil.getScreenHeight(mApplicationContext)) * ratio);
             return this;
         }
 
-        public B setY(@WindowScreen.screenType int screenType, float ratio) {
+        public Builder setY(@WindowScreen.screenType int screenType, float ratio) {
             yOffset = (int) ((screenType == WindowScreen.WIDTH ?
                     WindowUtil.getScreenWidth(mApplicationContext) :
                     WindowUtil.getScreenHeight(mApplicationContext)) * ratio);
@@ -148,25 +153,24 @@ public class FloatWindow {
          * @param show       　过滤类型,子类类型也会生效
          * @param activities 　过滤界面
          */
-        public B setFilter(boolean show, @NonNull Class... activities) {
+        public Builder setFilter(boolean show, @NonNull Class... activities) {
             mShow = show;
             mActivities = activities;
             return this;
         }
 
-
-        public B setMoveType(@MoveType.MOVE_TYPE int moveType) {
+        public Builder setMoveType(@MoveType.MOVE_TYPE int moveType) {
             mMoveType = moveType;
             return this;
         }
 
-        public B setMoveStyle(long duration, @Nullable TimeInterpolator interpolator) {
+        public Builder setMoveStyle(long duration, @Nullable TimeInterpolator interpolator) {
             mDuration = duration;
             mInterpolator = interpolator;
             return this;
         }
 
-        public B setTag(@NonNull String tag) {
+        public Builder setTag(@NonNull String tag) {
             mTag = tag;
             return this;
         }

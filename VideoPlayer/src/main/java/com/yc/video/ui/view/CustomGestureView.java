@@ -116,6 +116,9 @@ public class CustomGestureView extends FrameLayout implements IGestureComponent 
 
     }
 
+    /**
+     * 开始滑动
+     */
     @Override
     public void onStartSlide() {
         mControlWrapper.hide();
@@ -142,6 +145,12 @@ public class CustomGestureView extends FrameLayout implements IGestureComponent 
                 .start();
     }
 
+    /**
+     * 滑动调整进度
+     * @param slidePosition 滑动进度
+     * @param currentPosition 当前播放进度
+     * @param duration 视频总长度
+     */
     @Override
     public void onPositionChange(int slidePosition, int currentPosition, int duration) {
         mProPercent.setVisibility(GONE);
@@ -153,6 +162,10 @@ public class CustomGestureView extends FrameLayout implements IGestureComponent 
         mTvPercent.setText(String.format("%s/%s", PlayerUtils.formatTime(slidePosition), PlayerUtils.formatTime(duration)));
     }
 
+    /**
+     * 滑动调整亮度
+     * @param percent 亮度百分比
+     */
     @Override
     public void onBrightnessChange(int percent) {
         mProPercent.setVisibility(VISIBLE);
@@ -161,6 +174,10 @@ public class CustomGestureView extends FrameLayout implements IGestureComponent 
         mProPercent.setProgress(percent);
     }
 
+    /**
+     * 滑动调整音量
+     * @param percent 音量百分比
+     */
     @Override
     public void onVolumeChange(int percent) {
         mProPercent.setVisibility(VISIBLE);

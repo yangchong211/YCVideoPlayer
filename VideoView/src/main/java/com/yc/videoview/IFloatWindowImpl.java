@@ -15,7 +15,7 @@ import android.view.animation.DecelerateInterpolator;
 public class IFloatWindowImpl extends IFloatWindow {
 
 
-    private FloatWindow.B mB;
+    private FloatWindow.Builder mB;
     private FloatView mFloatView;
     private FloatLifecycle mFloatLifecycle;
     private boolean isShow;
@@ -27,8 +27,9 @@ public class IFloatWindowImpl extends IFloatWindow {
 
     }
 
-    IFloatWindowImpl(FloatWindow.B b) {
+    IFloatWindowImpl(FloatWindow.Builder b) {
         mB = b;
+        //这一步相当于创建系统级的window，通过windowManager添加view并且展示
         if (mB.mMoveType == MoveType.fixed) {
             if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.N_MR1) {
                 mFloatView = new FloatPhone(b.mApplicationContext);
@@ -67,7 +68,9 @@ public class IFloatWindowImpl extends IFloatWindow {
             once = false;
             isShow = true;
         } else {
-            if (isShow) return;
+            if (isShow) {
+                return;
+            }
             getView().setVisibility(View.VISIBLE);
             isShow = true;
         }
@@ -137,7 +140,9 @@ public class IFloatWindowImpl extends IFloatWindow {
     }
 
     void postHide() {
-        if (once || !isShow) return;
+        if (once || !isShow) {
+            return;
+        }
         getView().post(new Runnable() {
             @Override
             public void run() {
@@ -158,73 +163,77 @@ public class IFloatWindowImpl extends IFloatWindow {
             case MoveType.free:
                 break;
             default:
-                getView().setOnTouchListener(new View.OnTouchListener() {
-                    float lastX, lastY, changeX, changeY;
-                    int newX, newY;
-
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-
-                        switch (event.getAction()) {
-                            case MotionEvent.ACTION_DOWN:
-                                lastX = event.getRawX();
-                                lastY = event.getRawY();
-                                cancelAnimator();
-                                break;
-                            case MotionEvent.ACTION_MOVE:
-                                changeX = event.getRawX() - lastX;
-                                changeY = event.getRawY() - lastY;
-                                newX = (int) (mFloatView.getX() + changeX);
-                                newY = (int) (mFloatView.getY() + changeY);
-                                mFloatView.updateXY(newX, newY);
-                                lastX = event.getRawX();
-                                lastY = event.getRawY();
-                                break;
-                            case MotionEvent.ACTION_UP:
-                                switch (mB.mMoveType) {
-                                    case MoveType.slide:
-                                        int startX = mFloatView.getX();
-                                        int endX = (startX * 2 + v.getWidth() >
-                                                WindowUtil.getScreenWidth(mB.mApplicationContext)) ?
-                                                WindowUtil.getScreenWidth(mB.mApplicationContext) - v.getWidth() : 0;
-                                        mAnimator = ObjectAnimator.ofInt(startX, endX);
-                                        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                                            @Override
-                                            public void onAnimationUpdate(ValueAnimator animation) {
-                                                int x = (int) animation.getAnimatedValue();
-                                                mFloatView.updateX(x);
-                                            }
-                                        });
-                                        startAnimator();
-                                        break;
-                                    case MoveType.back:
-                                        PropertyValuesHolder pvhX = PropertyValuesHolder.ofInt("x", mFloatView.getX(), mB.xOffset);
-                                        PropertyValuesHolder pvhY = PropertyValuesHolder.ofInt("y", mFloatView.getY(), mB.yOffset);
-                                        mAnimator = ObjectAnimator.ofPropertyValuesHolder(pvhX, pvhY);
-                                        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                                            @Override
-                                            public void onAnimationUpdate(ValueAnimator animation) {
-                                                int x = (int) animation.getAnimatedValue("x");
-                                                int y = (int) animation.getAnimatedValue("y");
-                                                mFloatView.updateXY(x, y);
-                                            }
-                                        });
-                                        startAnimator();
-                                        break;
-                                        default:
-                                            break;
-                                }
-                                break;
-                                default:
-                                    break;
-
-                        }
-                        return false;
-                    }
-                });
+                getView().setOnTouchListener(onTouchListener);
+                break;
         }
     }
 
+    private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+        float lastX, lastY, changeX, changeY;
+        int newX, newY;
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    lastX = event.getRawX();
+                    lastY = event.getRawY();
+                    cancelAnimator();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    changeX = event.getRawX() - lastX;
+                    changeY = event.getRawY() - lastY;
+                    newX = (int) (mFloatView.getX() + changeX);
+                    newY = (int) (mFloatView.getY() + changeY);
+                    mFloatView.updateXY(newX, newY);
+                    lastX = event.getRawX();
+                    lastY = event.getRawY();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    switch (mB.mMoveType) {
+                        case MoveType.slide:
+                            int startX = mFloatView.getX();
+                            int endX = (startX * 2 + v.getWidth() >
+                                    WindowUtil.getScreenWidth(mB.mApplicationContext)) ?
+                                    WindowUtil.getScreenWidth(mB.mApplicationContext) - v.getWidth() : 0;
+                            mAnimator = ObjectAnimator.ofInt(startX, endX);
+                            mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animation) {
+                                    int x = (int) animation.getAnimatedValue();
+                                    mFloatView.updateX(x);
+                                }
+                            });
+                            startAnimator();
+                            break;
+                        case MoveType.back:
+                            PropertyValuesHolder pvhX = PropertyValuesHolder.ofInt("x", mFloatView.getX(), mB.xOffset);
+                            PropertyValuesHolder pvhY = PropertyValuesHolder.ofInt("y", mFloatView.getY(), mB.yOffset);
+                            mAnimator = ObjectAnimator.ofPropertyValuesHolder(pvhX, pvhY);
+                            mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animation) {
+                                    int x = (int) animation.getAnimatedValue("x");
+                                    int y = (int) animation.getAnimatedValue("y");
+                                    mFloatView.updateXY(x, y);
+                                }
+                            });
+                            startAnimator();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+            return false;
+        }
+    };
+
+    /**
+     * 开启动画
+     */
     private void startAnimator() {
         if (mB.mInterpolator == null) {
             if (mDecelerateInterpolator == null) {
@@ -244,6 +253,9 @@ public class IFloatWindowImpl extends IFloatWindow {
         mAnimator.setDuration(mB.mDuration).start();
     }
 
+    /**
+     * 关闭动画
+     */
     private void cancelAnimator() {
         if (mAnimator != null && mAnimator.isRunning()) {
             mAnimator.cancel();

@@ -185,6 +185,18 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         VideoLogUtils.setIsLog(config.mIsEnableLog);
     }
 
+    /**
+     * onAttachedToWindow方法
+     * 是在Activity resume的时候被调用的，也就是activity对应的window被添加的时候，且每个view只会被调用一次，
+     * 父view的调用在前，不论view的visibility状态都会被调用，适合做些view特定的初始化操作；
+     *
+     * 主要做什么：适合初始化操作
+     *
+     * 代码流程：
+     * ActivityThread.handleResumeActivity()--->WindowManager.addView()--->WindowManagerImpl.addView()
+     * -->WindowManagerGlobal.addView()--->root.setView(view, wparams, panelParentView)
+     * --->host.dispatchAttachedToWindow()[具体代码在ViewRootImpl类中]
+     */
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -193,6 +205,18 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         //在构造函数初始化时addView
     }
 
+    /**
+     * onDetachedFromWindow方法
+     * 是在Activity destroy的时候被调用的，也就是activity对应的window被删除的时候，且每个view只会被调用一次，
+     * 父view的调用在后，也不论view的visibility状态都会被调用，适合做最后的清理操作；
+     *
+     * 主要做什么：适合销毁清理操作
+     *
+     * 代码流程：
+     * ActivityThread.handleDestroyActivity() --> WindowManager.removeViewImmediate() -->
+     * WindowManagerGlobal.removeViewLocked()方法 —> ViewRootImpl.die() --> doDie() -->
+     * ViewRootImpl.dispatchDetachedFromWindow()
+     */
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -206,6 +230,10 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         release();
     }
 
+    /**
+     * View所在窗口获取焦点或者失去焦点时调用
+     * @param hasWindowFocus                        是否获取window焦点
+     */
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
@@ -216,6 +244,18 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         }
     }
 
+    /**
+     * View在xml文件里加载完成时调用
+     */
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+    }
+
+    /**
+     * 意外销毁保存数据调用
+     * @return                              返回Parcelable对象
+     */
     @Override
     protected Parcelable onSaveInstanceState() {
         VideoLogUtils.d("onSaveInstanceState: " + mCurrentPosition);
@@ -240,8 +280,7 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         mPlayerContainer = new FrameLayout(getContext());
         //设置背景颜色，目前设置为纯黑色
         mPlayerContainer.setBackgroundColor(mPlayerBackgroundColor);
-        LayoutParams params = new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
         //将布局添加到该视图中
         this.addView(mPlayerContainer, params);
@@ -1113,8 +1152,8 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
     }
 
 
-    /**-----------------------------暴露api方法--------------------------------------**/
-    /**-----------------------------暴露api方法--------------------------------------**/
+    /*-----------------------------暴露api方法--------------------------------------**/
+    /*-----------------------------暴露api方法--------------------------------------**/
 
 
     public void setVideoBuilder(VideoPlayerBuilder videoBuilder){

@@ -21,7 +21,7 @@ import androidx.annotation.RequiresApi;
  */
 
 @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLifecycleCallbacks {
+public class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLifecycleCallbacks {
 
     private static final String SYSTEM_DIALOG_REASON_KEY = "reason";
     private static final String SYSTEM_DIALOG_REASON_HOME_KEY = "homekey";

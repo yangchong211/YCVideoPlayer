@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import androidx.annotation.RequiresApi;
 
 
-public class WindowUtil {
+public final class WindowUtil {
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
