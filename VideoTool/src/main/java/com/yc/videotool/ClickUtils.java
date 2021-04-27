@@ -20,7 +20,13 @@ public final class ClickUtils {
      * 默认最大点击间隔时间
      */
     private static final int MAX_INTERVAL = 500;
+    /**
+     * 最后一次点击的时间戳
+     */
     private static long mLastClickTime;
+    /**
+     * tag标记的集合
+     */
     private static final HashMap<String, Long> tagMaps = new HashMap<>();
 
     /**
@@ -34,7 +40,7 @@ public final class ClickUtils {
     /**
      * 判断一个控件是否xx时间内重复点击
      * @param maxInterval           设置间隔时间
-     * @return
+     * @return                      true表示是重复点击
      */
     public static boolean isFastDoubleClick(int maxInterval) {
         long current = System.currentTimeMillis();
@@ -50,7 +56,7 @@ public final class ClickUtils {
      * 判断一个控件是否xx时间内重复点击
      * @param maxInterval           设置间隔时间
      * @param tag                   标记
-     * @return
+     * @return                      true表示是重复点击
      */
     public static boolean isFastDoubleClickWithTag(int maxInterval, String tag) {
         if (TextUtils.isEmpty(tag)) {
