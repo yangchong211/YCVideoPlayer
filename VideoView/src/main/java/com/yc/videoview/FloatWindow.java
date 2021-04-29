@@ -12,6 +12,8 @@ import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.yc.videoview.inter.IFloatWindow;
+
 import java.util.HashMap;
 import java.util.Map;
 

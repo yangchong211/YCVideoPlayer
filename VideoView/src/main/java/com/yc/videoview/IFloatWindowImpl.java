@@ -11,12 +11,24 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
+import com.yc.videoview.abs.AbsFloatView;
+import com.yc.videoview.inter.IFloatWindow;
+import com.yc.videoview.inter.ILifecycleListener;
 
-public class IFloatWindowImpl extends IFloatWindow {
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2017/10/21
+ *     desc  : 定义悬浮Window接口类的具体实现类
+ *     revise:
+ * </pre>
+ */
+public class IFloatWindowImpl implements IFloatWindow {
 
 
     private FloatWindow.Builder mB;
-    private FloatView mFloatView;
+    private AbsFloatView mFloatView;
     private FloatLifecycle mFloatLifecycle;
     private boolean isShow;
     private boolean once = true;
@@ -43,7 +55,7 @@ public class IFloatWindowImpl extends IFloatWindow {
         mFloatView.setSize(mB.mWidth, mB.mHeight);
         mFloatView.setGravity(mB.gravity, mB.xOffset, mB.yOffset);
         mFloatView.setView(mB.mView);
-        mFloatLifecycle = new FloatLifecycle(mB.mApplicationContext, mB.mShow, mB.mActivities, new LifecycleListener() {
+        mFloatLifecycle = new FloatLifecycle(mB.mApplicationContext, mB.mShow, mB.mActivities, new ILifecycleListener() {
             @Override
             public void onShow() {
                 show();
@@ -84,7 +96,7 @@ public class IFloatWindowImpl extends IFloatWindow {
     }
 
     @Override
-    void dismiss() {
+    public void dismiss() {
         mFloatView.dismiss();
         isShow = false;
     }

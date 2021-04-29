@@ -5,17 +5,24 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.yc.videoview.abs.AbsFloatView;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+
 /**
- * 自定义 toast 方式，无需申请权限
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2017/10/21
+ *     desc  : 自定义 toast 方式，无需申请权限
+ *     revise:
+ * </pre>
  */
+public class FloatToast extends AbsFloatView {
 
-public class FloatToast extends FloatView {
-
-
-    private Toast toast;
+    private final Toast toast;
     private Object mTN;
     private Method show;
     private Method hide;
