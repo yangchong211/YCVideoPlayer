@@ -23,5 +23,5 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project.ext.AppDependencies['appcompat']
-
+    implementation project(path: ':ndkbitmap-armv7a')
 }

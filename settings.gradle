@@ -1,4 +1,4 @@
-
+include ':ndkbitmap-armv7a'
 //视频弹幕
 include ':VideoBarrage'
 //视频录频
