@@ -71,15 +71,21 @@ public class IFloatWindowImpl extends IFloatWindow {
             if (isShow) {
                 return;
             }
-            getView().setVisibility(View.VISIBLE);
-            isShow = true;
+            if (getView()!=null){
+                getView().setVisibility(View.VISIBLE);
+                isShow = true;
+            }
         }
     }
 
     @Override
     public void hide() {
-        if (once || !isShow) return;
-        getView().setVisibility(View.INVISIBLE);
+        if (once || !isShow) {
+            return;
+        }
+        if (getView()!=null){
+            getView().setVisibility(View.INVISIBLE);
+        }
         isShow = false;
     }
 

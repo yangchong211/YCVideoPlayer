@@ -6,13 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.yc.ycvideoplayer.R;
@@ -21,6 +27,10 @@ import com.yc.kernel.utils.VideoLogUtils;
 import com.yc.music.model.AudioBean;
 import com.yc.music.service.PlayService;
 import com.yc.music.tool.BaseAppHelper;
+import com.yc.videoview.FloatWindow;
+import com.yc.videoview.MoveType;
+import com.yc.videoview.WindowScreen;
+import com.yc.videoview.WindowUtil;
 import com.yc.ycvideoplayer.demo.DemoActivity;
 import com.yc.ycvideoplayer.m3u8.M3u8Activity;
 import com.yc.ycvideoplayer.music.MusicPlayerActivity;
@@ -49,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTv3;
     private TextView mTv4;
     private TextView mTv5;
+    private TextView mTv6;
     private PlayServiceConnection mPlayServiceConnection;
 
 
@@ -58,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             unbindService(mPlayServiceConnection);
         }
         super.onDestroy();
+        FloatWindow.destroy();
     }
 
     @Override
@@ -74,12 +86,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTv3 = (TextView) findViewById(R.id.tv_3);
         mTv4 = (TextView) findViewById(R.id.tv_4);
         mTv5 = (TextView) findViewById(R.id.tv_5);
+        mTv6 = (TextView) findViewById(R.id.tv_6);
 
         mTv1.setOnClickListener(this);
         mTv2.setOnClickListener(this);
         mTv3.setOnClickListener(this);
         mTv4.setOnClickListener(this);
         mTv5.setOnClickListener(this);
+        mTv6.setOnClickListener(this);
     }
 
     @Override
@@ -101,6 +115,71 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_5:
                 startActivity(M3u8Activity.class);
                 break;
+            case R.id.tv_6:
+                if (Build.VERSION.SDK_INT >= 23) {
+                    if (!WindowUtil.hasPermission(this)) {
+                        requestAlertWindowPermission();
+                    } else {
+                        windowDialog();
+                    }
+                }
+
+                break;
+        }
+    }
+
+    @RequiresApi(api = 23)
+    private void requestAlertWindowPermission() {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:" + getPackageName()));
+        startActivityForResult(intent, 1);
+    }
+
+    @RequiresApi(api = 23)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (WindowUtil.hasPermission(this)) {
+
+            } else {
+                this.finish();
+            }
+        }
+    }
+
+
+    private void windowDialog() {
+        ImageView imageView = new ImageView(this);
+        imageView.setBackgroundResource(R.drawable.ic_play_btn_loved);
+        FloatWindow
+                .with(getApplicationContext())
+                .setView(imageView)
+                //.setWidth(WindowScreen.WIDTH, 0.4f)
+                //.setHeight(WindowScreen.WIDTH, 0.3f)
+                //这个是设置位置
+                .setX(WindowScreen.WIDTH, 0.8f)
+                .setY(WindowScreen.HEIGHT, 0.3f)
+                .setMoveType(MoveType.slide)
+                .setFilter(false)
+                //.setFilter(true, WindowActivity.class, EmptyActivity.class)
+                .setMoveStyle(500, new BounceInterpolator())
+                .build();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (FloatWindow.get()!=null){
+            FloatWindow.get().hide();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (FloatWindow.get()!=null){
+            FloatWindow.get().show();
         }
     }
 

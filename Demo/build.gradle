@@ -62,7 +62,7 @@ dependencies {
 //    implementation project(path: ':VideoCache')
 //    implementation project(path: ':VideoPlayer')
 //    implementation project(path: ':VideoKernel')
-//    implementation project(path: ':VideoView')
+    implementation project(path: ':VideoView')
 //    implementation project(path: ':MusicPlayer')
 //    implementation project(path: ':VideoM3u8')
 //    implementation project(path: ':VideoSqlLite')
@@ -71,7 +71,7 @@ dependencies {
     implementation 'cn.yc:VideoPlayer:3.1.0'
     implementation 'cn.yc:VideoCache:3.0.5'
     implementation 'cn.yc:VideoKernel:3.0.6'
-    implementation 'cn.yc:VideoView:3.0.5'
+//    implementation 'cn.yc:VideoView:3.0.5'
     implementation 'cn.yc:VideoM3u8:1.0.0'
     implementation 'cn.yc:VideoSqlLite:1.0.2'
 
