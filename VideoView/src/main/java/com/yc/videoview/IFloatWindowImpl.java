@@ -43,7 +43,8 @@ public class IFloatWindowImpl extends IFloatWindow {
         mFloatView.setSize(mB.mWidth, mB.mHeight);
         mFloatView.setGravity(mB.gravity, mB.xOffset, mB.yOffset);
         mFloatView.setView(mB.mView);
-        mFloatLifecycle = new FloatLifecycle(mB.mApplicationContext, mB.mShow, mB.mActivities, new LifecycleListener() {
+        mFloatLifecycle = new FloatLifecycle(mB.mApplicationContext,
+                mB.mShow, mB.mActivities, new LifecycleListener() {
             @Override
             public void onShow() {
                 show();
@@ -174,7 +175,7 @@ public class IFloatWindowImpl extends IFloatWindow {
         }
     }
 
-    private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+    private final View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         float lastX, lastY, changeX, changeY;
         int newX, newY;
         @Override
