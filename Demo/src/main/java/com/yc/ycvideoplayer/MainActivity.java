@@ -1,5 +1,6 @@
 package com.yc.ycvideoplayer;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,8 @@ import com.yc.ycvideoplayer.music.MusicPlayerActivity;
 import com.yc.ycvideoplayer.newPlayer.activity.TypeActivity;
 import com.yc.ycvideoplayer.oldPlayer.OldActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;

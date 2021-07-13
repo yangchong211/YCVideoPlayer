@@ -37,6 +37,8 @@ import com.yc.video.tool.BaseToast;
 import com.yc.video.tool.PlayerUtils;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TypeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -114,6 +116,10 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
         mTv101 = findViewById(R.id.tv_10_1);
         mTv111 = findViewById(R.id.tv_11_1);
         mTv131 = findViewById(R.id.tv_13_1);
+
+
+        String time = getTime(20);
+        mTv11.setText(time);
     }
 
     private void initListener() {
@@ -240,4 +246,31 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
     }
+
+    /**
+     * 获取时间
+     * @param seconds                           分钟
+     * @return
+     */
+    public static String getTime(long seconds){
+        //获取当前时间戳
+        long l = System.currentTimeMillis();
+        long total = l + seconds * 60 * 1000;
+        String time = formatDate(total);
+        return time;
+    }
+
+    /**
+     * 将千毫秒格式化mm:ss格式
+     * @param millis                            毫秒值
+     * @return
+     */
+    public static String formatDate(long millis) {
+        Date date = new Date(millis);
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(date);
+    }
+
+
 }

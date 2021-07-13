@@ -53,7 +53,7 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<VideoRecycler
 
     @Override
     public int getItemCount() {
-        return videos.size();
+        return videos==null ? 0 : videos.size();
     }
 
     public void addData(List<VideoInfoBean> videoList) {
