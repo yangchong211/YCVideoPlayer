@@ -20,4 +20,7 @@ include ':VideoCache'
 //视频播放器
 include ':VideoPlayer'
 include ':Demo'
+//视频工具
 include ':VideoTool'
+//音频播放
+include ':AudioPlayer'
