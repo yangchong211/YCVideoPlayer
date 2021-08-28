@@ -1,6 +1,6 @@
 package com.yc.ycvideoplayer;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 
 import com.yc.video.config.BuriedPointEvent;
 import com.yc.videosqllite.manager.LocationManager;

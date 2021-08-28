@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 import com.yc.ycvideoplayer.ConstantVideo;
 
 import org.yc.ycvideoplayer.R;

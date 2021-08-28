@@ -23,7 +23,7 @@ import android.view.Gravity;
 import android.view.TextureView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 
 /**
  * <pre>

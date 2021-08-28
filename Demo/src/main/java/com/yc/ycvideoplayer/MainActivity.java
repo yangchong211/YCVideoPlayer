@@ -1,6 +1,5 @@
 package com.yc.ycvideoplayer;
 
-import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -23,22 +22,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.yc.ycvideoplayer.R;
 
-import com.yc.kernel.utils.VideoLogUtils;
 import com.yc.music.model.AudioBean;
 import com.yc.music.service.PlayService;
 import com.yc.music.tool.BaseAppHelper;
+import com.yc.videotool.VideoLogUtils;
 import com.yc.videoview.FloatWindow;
 import com.yc.videoview.MoveType;
 import com.yc.videoview.WindowScreen;
 import com.yc.videoview.WindowUtil;
+import com.yc.ycvideoplayer.audio.AudioActivity;
 import com.yc.ycvideoplayer.demo.DemoActivity;
 import com.yc.ycvideoplayer.m3u8.M3u8Activity;
 import com.yc.ycvideoplayer.music.MusicPlayerActivity;
 import com.yc.ycvideoplayer.newPlayer.activity.TypeActivity;
 import com.yc.ycvideoplayer.oldPlayer.OldActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
@@ -60,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTv4;
     private TextView mTv5;
     private TextView mTv6;
+    private TextView mTv7;
     private PlayServiceConnection mPlayServiceConnection;
 
 
@@ -87,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTv4 = (TextView) findViewById(R.id.tv_4);
         mTv5 = (TextView) findViewById(R.id.tv_5);
         mTv6 = (TextView) findViewById(R.id.tv_6);
+        mTv7 = findViewById(R.id.tv_7);
 
         mTv1.setOnClickListener(this);
         mTv2.setOnClickListener(this);
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTv4.setOnClickListener(this);
         mTv5.setOnClickListener(this);
         mTv6.setOnClickListener(this);
+        mTv7.setOnClickListener(this);
     }
 
     @Override
@@ -123,7 +124,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         windowDialog();
                     }
                 }
-
+                break;
+            case R.id.tv_7:
+                startActivity(AudioActivity.class);
                 break;
         }
     }

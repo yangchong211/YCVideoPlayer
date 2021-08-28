@@ -83,6 +83,14 @@
                 android:padding="10dp"
                 android:background="@color/colorAccent"
                 android:text="6.悬浮窗"/>
+            <TextView
+                android:id="@+id/tv_7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:background="@color/colorAccent"
+                android:text="7.语音播报测试"/>
         </LinearLayout>
     </ScrollView>
 

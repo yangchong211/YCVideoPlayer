@@ -17,7 +17,7 @@ package com.yc.video.player;
 
 import android.app.Application;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 import com.yc.video.config.VideoPlayerConfig;
 
 import java.util.LinkedHashMap;

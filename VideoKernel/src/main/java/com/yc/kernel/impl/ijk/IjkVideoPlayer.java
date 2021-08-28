@@ -28,7 +28,7 @@ import android.view.SurfaceHolder;
 import com.yc.kernel.inter.AbstractVideoPlayer;
 import com.yc.kernel.inter.VideoPlayerListener;
 import com.yc.kernel.utils.PlayerConstant;
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 
 import java.util.Map;
 import tv.danmaku.ijk.media.player.IMediaPlayer;

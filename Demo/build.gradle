@@ -58,26 +58,29 @@ dependencies {
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
 
-
-//    implementation project(path: ':VideoCache')
-//    implementation project(path: ':VideoPlayer')
-//    implementation project(path: ':VideoKernel')
+    implementation project(path: ':VideoCache')
+    implementation project(path: ':VideoPlayer')
+    implementation project(path: ':VideoKernel')
     implementation project(path: ':VideoView')
-//    implementation project(path: ':MusicPlayer')
-//    implementation project(path: ':VideoM3u8')
-//    implementation project(path: ':VideoSqlLite')
+    implementation project(path: ':MusicPlayer')
+    implementation project(path: ':VideoM3u8')
+    implementation project(path: ':VideoSqlLite')
+    implementation project(path: ':AudioPlayer')
+    implementation project(path: ':VideoTool')
 
-    implementation 'cn.yc:MusicPlayer:1.0.2'
-    implementation 'cn.yc:VideoPlayer:3.1.0'
-    implementation 'cn.yc:VideoCache:3.0.5'
-    implementation 'cn.yc:VideoKernel:3.0.6'
+//    implementation 'cn.yc:MusicPlayer:1.0.2'
+//    implementation 'cn.yc:VideoPlayer:3.1.0'
+//    implementation 'cn.yc:VideoCache:3.0.5'
+//    implementation 'cn.yc:VideoKernel:3.0.6'
 //    implementation 'cn.yc:VideoView:3.0.5'
-    implementation 'cn.yc:VideoM3u8:1.0.0'
-    implementation 'cn.yc:VideoSqlLite:1.0.2'
+//    implementation 'cn.yc:VideoM3u8:1.0.0'
+//    implementation 'cn.yc:VideoSqlLite:1.0.2'
+
 
     //自己封装的库，都有对应的案例项目【欢迎star】：https://github.com/yangchong211
     implementation 'cn.yc:YCStatusBarLib:1.5.0'
     implementation 'com.yc:PagerLib:1.0.4'
     implementation 'cn.yc:YCStateLib:1.2.2'
+
 
 }

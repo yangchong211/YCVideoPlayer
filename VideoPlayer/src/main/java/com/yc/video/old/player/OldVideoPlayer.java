@@ -28,7 +28,7 @@ import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.old.controller.AbsVideoPlayerController;
 import com.yc.video.tool.BaseToast;

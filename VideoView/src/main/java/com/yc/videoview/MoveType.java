@@ -16,5 +16,8 @@ public class MoveType {
 
     @IntDef({fixed, free, active, slide, back})
     @Retention(RetentionPolicy.SOURCE)
-    @interface MOVE_TYPE {}
+    public @interface MOVE_TYPE {
+
+    }
+
 }

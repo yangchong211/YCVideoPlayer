@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.old.controller.VideoPlayerController;
 import com.yc.video.old.listener.OnPlayerStatesListener;

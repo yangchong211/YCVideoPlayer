@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 import com.yc.m3u8.bean.M3u8;
 import com.yc.m3u8.inter.OnDownloadListener;
 import com.yc.m3u8.inter.OnM3u8InfoListener;

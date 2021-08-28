@@ -41,7 +41,7 @@ import com.yc.video.tool.PlayerUtils;
 import com.yc.video.tool.VideoException;
 import com.yc.kernel.inter.VideoPlayerListener;
 import com.yc.kernel.utils.PlayerConstant;
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

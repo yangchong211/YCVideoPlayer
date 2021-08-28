@@ -35,7 +35,7 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntRange;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 import com.yc.video.tool.BaseToast;
 import com.yc.video.tool.PlayerUtils;
 

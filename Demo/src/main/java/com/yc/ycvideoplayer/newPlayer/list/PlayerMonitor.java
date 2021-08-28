@@ -5,7 +5,7 @@ import android.view.animation.Animation;
 
 import androidx.annotation.NonNull;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 
 import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.ui.view.InterControlView;

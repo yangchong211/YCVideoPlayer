@@ -25,7 +25,7 @@ import com.yc.video.config.ConstantKeys;
 import com.yc.video.old.controller.AbsVideoPlayerController;
 import com.yc.video.old.player.OldVideoPlayer;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 
 /**
  * <pre>

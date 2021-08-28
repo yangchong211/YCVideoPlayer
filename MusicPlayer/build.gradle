@@ -1,12 +1,14 @@
 apply plugin: 'com.android.library'
+apply from: rootProject.projectDir.absolutePath + "/VideoGradle/video.gradle"
+
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion project.ext.androidCompileSdkVersion
+    buildToolsVersion project.ext.androidBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion 17
-        targetSdkVersion 29
+        minSdkVersion project.ext.androidMinSdkVersion
+        targetSdkVersion project.ext.androidTargetSdkVersion
         versionCode 2
         versionName "1.0.2"
     }
@@ -21,8 +23,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.media:media:1.0.1'
+    implementation project.ext.AppDependencies['appcompat']
+    implementation project.ext.AppDependencies['media']
 }
 
 /** 以下开始是将Android Library上传到jcenter的相关配置**/

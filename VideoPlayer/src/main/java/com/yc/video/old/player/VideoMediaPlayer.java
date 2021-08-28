@@ -9,7 +9,7 @@ import android.view.Surface;
 
 import androidx.annotation.RequiresApi;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.old.surface.VideoTextureView;
 import com.yc.video.tool.BaseToast;

@@ -28,7 +28,7 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.tool.PlayerUtils;
 import com.yc.video.ui.view.InterControlView;

@@ -1,4 +1,4 @@
-
+include ':ndkbitmap-armv7a'
 //视频弹幕
 include ':VideoBarrage'
 //视频录频
@@ -20,7 +20,9 @@ include ':VideoCache'
 //视频播放器
 include ':VideoPlayer'
 include ':Demo'
-//视频工具
-include ':VideoTool'
 //音频播放
 include ':AudioPlayer'
+//视频工具库
+include ':VideoTool'
+//视频监控库【在完善中】
+include ':VideoMonitor'

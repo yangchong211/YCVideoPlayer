@@ -41,7 +41,7 @@ import com.yc.video.tool.NetworkUtils;
 import com.yc.video.tool.PlayerUtils;
 import com.yc.video.ui.view.InterControlView;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;

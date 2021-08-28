@@ -6,11 +6,18 @@ import android.os.Build;
 import android.view.View;
 import android.view.WindowManager;
 
-/**
- * 7.1及以上需申请权限
- */
+import com.yc.videoview.abs.AbsFloatView;
 
-public class FloatPhone extends FloatView {
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2017/10/21
+ *     desc  : 抽象view类的实现类
+ *     revise: 7.1及以上需申请权限
+ * </pre>
+ */
+public class FloatPhone extends AbsFloatView {
 
     private final Context mContext;
     private final WindowManager mWindowManager;
@@ -112,25 +119,25 @@ public class FloatPhone extends FloatView {
     }
 
     @Override
-    void updateX(int x) {
+    public void updateX(int x) {
         mLayoutParams.x = mX = x;
         mWindowManager.updateViewLayout(mView, mLayoutParams);
 
     }
 
     @Override
-    void updateY(int y) {
+    public void updateY(int y) {
         mLayoutParams.y = mY = y;
         mWindowManager.updateViewLayout(mView, mLayoutParams);
     }
 
     @Override
-    int getX() {
+    public int getX() {
         return mX;
     }
 
     @Override
-    int getY() {
+    public int getY() {
         return mY;
     }
 }

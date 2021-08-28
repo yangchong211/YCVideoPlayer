@@ -3,6 +3,7 @@ package com.yc.ycvideoplayer.newPlayer.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -270,6 +271,42 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         return sdf.format(date);
+    }
+
+
+
+    /**
+     * 再点一次退出程序时间设置
+     */
+    private static final long WAIT_TIME = 2000L;
+    private long touchTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //双击返回桌面
+            if (System.currentTimeMillis() - touchTime < WAIT_TIME) {
+                //finish();
+                //可将activity 退到后台，注意不是finish()退出。
+                //判断Activity是否是task根
+                //使用moveTaskToBack是为了让app退出时，不闪屏，退出柔和一些
+                if (this.isTaskRoot()){
+                    //参数为false——代表只有当前activity是task根，指应用启动的第一个activity时，才有效;
+                    moveTaskToBack(false);
+                } else {
+                    //参数为true——则忽略这个限制，任何activity都可以有效。
+                    //使用此方法，便不会执行Activity的onDestroy()方法
+                    moveTaskToBack(true);
+                }
+                //注意这里是finish所有activity，然后杀死进程
+                //ActivityManageUtils.getInstance().appExit(this);
+            } else {
+                touchTime = System.currentTimeMillis();
+                //参考易车，抖音自定义吐司
+                BaseToast.showRoundRectToast("再按一次退出");
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 

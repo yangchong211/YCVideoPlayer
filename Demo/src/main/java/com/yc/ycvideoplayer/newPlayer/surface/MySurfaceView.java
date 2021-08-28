@@ -12,7 +12,7 @@ import android.view.SurfaceView;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 
 import org.yc.ycvideoplayer.R;
 

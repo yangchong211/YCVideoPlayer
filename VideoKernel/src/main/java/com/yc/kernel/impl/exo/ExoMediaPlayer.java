@@ -29,7 +29,7 @@ import com.google.android.exoplayer2.video.VideoListener;
 import com.yc.kernel.inter.AbstractVideoPlayer;
 import com.yc.kernel.inter.VideoPlayerListener;
 import com.yc.kernel.utils.PlayerConstant;
-import com.yc.kernel.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 
 import java.util.Map;
 

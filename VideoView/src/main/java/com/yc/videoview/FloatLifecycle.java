@@ -12,6 +12,8 @@ import android.os.Handler;
 
 import androidx.annotation.RequiresApi;
 
+import com.yc.videoview.inter.ILifecycleListener;
+
 /**
  * 用于控制悬浮窗显示周期
  * 使用了三种方法针对返回桌面时隐藏悬浮按钮
@@ -26,22 +28,24 @@ public class FloatLifecycle extends BroadcastReceiver implements Application.Act
     private static final String SYSTEM_DIALOG_REASON_KEY = "reason";
     private static final String SYSTEM_DIALOG_REASON_HOME_KEY = "homekey";
     private static final long delay = 300;
-    private Handler mHandler;
-    private Class[] activities;
-    private boolean showFlag;
+    private final Handler mHandler;
+    private final Class[] activities;
+    private final boolean showFlag;
     private int startCount;
     private int resumeCount;
     private boolean appBackground;
-    private LifecycleListener mLifecycleListener;
+    private final ILifecycleListener mLifecycleListener;
 
 
-    FloatLifecycle(Context applicationContext, boolean showFlag, Class[] activities, LifecycleListener lifecycleListener) {
+    FloatLifecycle(Context applicationContext, boolean showFlag, Class[] activities,
+                   ILifecycleListener lifecycleListener) {
         this.showFlag = showFlag;
         this.activities = activities;
         mLifecycleListener = lifecycleListener;
         mHandler = new Handler();
         ((Application) applicationContext).registerActivityLifecycleCallbacks(this);
-        applicationContext.registerReceiver(this, new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+        applicationContext.registerReceiver(this, intentFilter);
     }
 
 

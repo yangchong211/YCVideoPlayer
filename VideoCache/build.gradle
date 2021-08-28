@@ -1,17 +1,14 @@
 apply plugin: 'com.android.library'
+apply from: rootProject.projectDir.absolutePath + "/VideoGradle/video.gradle"
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
-
+    compileSdkVersion project.ext.androidCompileSdkVersion
+    buildToolsVersion project.ext.androidBuildToolsVersion
     defaultConfig {
-        minSdkVersion 17
-        targetSdkVersion 29
+        minSdkVersion project.ext.androidMinSdkVersion
+        targetSdkVersion project.ext.androidTargetSdkVersion
         versionCode 31
         versionName "3.0.1"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
