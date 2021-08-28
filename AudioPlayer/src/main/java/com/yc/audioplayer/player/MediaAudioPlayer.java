@@ -82,8 +82,9 @@ public class MediaAudioPlayer extends AbstractAudioWrapper {
                 });
                 mMediaPlayer.prepare();
             } catch (Throwable e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 VideoLogUtils.d("MediaPlay: play fail");
+                onError("MediaPlayer has play fail : " + e.getMessage());
                 onCompleted();
             }
         }

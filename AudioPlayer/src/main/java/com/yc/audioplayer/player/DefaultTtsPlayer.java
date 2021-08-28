@@ -145,6 +145,8 @@ public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpee
         @Override
         public void onError(final String utteranceId) {
             VideoLogUtils.i("TTSPlayer OnCompleteListener onError");
+            stop();
+            onError("TTSPlayer has play fail : " + utteranceId);
             onCompleted();
         }
 
