@@ -7,6 +7,15 @@ import com.yc.audioplayer.bean.AudioPlayData;
 import com.yc.audioplayer.inter.InterAudio;
 import com.yc.audioplayer.inter.InterPlayListener;
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     email  : yangchong211@163.com
+ *     time  : 2018/8/6
+ *     desc  : 代理类
+ *     revise:
+ * </pre>
+ */
 public final class AudioServiceDelegate implements InterAudio {
 
     private final InterAudio mDelegate ;

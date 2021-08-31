@@ -70,6 +70,7 @@ public class AudioServiceImpl implements AudioServiceProvider {
             VideoLogUtils.d("audio not init!");
             return;
         }
+        //将播放内容任务添加到分发器中
         mAudioTaskDispatcher.addTask(data);
     }
 
