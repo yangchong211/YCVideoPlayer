@@ -23,6 +23,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project.ext.AppDependencies['annotation']
+    implementation project(path: ':VideoTool')
 }
 
 

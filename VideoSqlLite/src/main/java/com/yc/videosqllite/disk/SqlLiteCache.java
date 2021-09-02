@@ -4,7 +4,7 @@ import com.yc.videosqllite.manager.CacheConfig;
 import com.yc.videosqllite.manager.LocationManager;
 import com.yc.videosqllite.model.SafeKeyGenerator;
 import com.yc.videosqllite.model.VideoLocation;
-import com.yc.videosqllite.utils.CacheLogUtils;
+import com.yc.videosqllite.utils.VideoLogUtils;
 
 import java.io.File;
 
@@ -26,7 +26,7 @@ public class SqlLiteCache {
         CacheConfig cacheConfig = LocationManager.getInstance().getCacheConfig();
         File path = DiskFileUtils.getFilePath(cacheConfig.getContext());
         String pathString = path.getPath();
-        CacheLogUtils.d("SqlLiteCache-----pathString路径输出地址-"+pathString);
+        VideoLogUtils.d("SqlLiteCache-----pathString路径输出地址-"+pathString);
         this.safeKeyGenerator = new SafeKeyGenerator();
         interDiskCache = DiskLruCacheWrapper.get(path,safeKeyGenerator);
     }
@@ -43,7 +43,7 @@ public class SqlLiteCache {
         String safeKey = safeKeyGenerator.getSafeKey(url);
         location.setUrlMd5(safeKey);
         String json = location.toJson();
-        CacheLogUtils.d("SqlLiteCache-----put--json--"+json);
+        VideoLogUtils.d("SqlLiteCache-----put--json--"+json);
         interDiskCache.put(url,json);
     }
 
@@ -57,7 +57,7 @@ public class SqlLiteCache {
         if (data==null || data.length()==0){
             return -1;
         }
-        CacheLogUtils.d("SqlLiteCache-----get---"+data);
+        VideoLogUtils.d("SqlLiteCache-----get---"+data);
         VideoLocation location = VideoLocation.toObject(data);
         return location.getPosition();
     }

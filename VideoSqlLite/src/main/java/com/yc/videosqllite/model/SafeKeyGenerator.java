@@ -3,8 +3,8 @@ package com.yc.videosqllite.model;
 import com.yc.videosqllite.cache.VideoLruCache;
 import com.yc.videosqllite.manager.CacheConfig;
 import com.yc.videosqllite.manager.LocationManager;
-import com.yc.videosqllite.utils.CacheLogUtils;
-import com.yc.videosqllite.utils.VideoMd5Utils;
+import com.yc.videosqllite.utils.VideoLogUtils;
+import com.yc.videotool.VideoMd5Utils;
 
 /**
  * <pre>
@@ -32,16 +32,16 @@ public class SafeKeyGenerator {
         int hashCode = url.hashCode();
         synchronized (loadIdToSafeHash) {
             safeKey = loadIdToSafeHash.get(hashCode);
-            CacheLogUtils.d("SafeKeyGenerator-----获取缓存key-"+safeKey);
+            VideoLogUtils.d("SafeKeyGenerator-----获取缓存key-"+safeKey);
         }
         if (safeKey == null || safeKey.length()==0) {
             CacheConfig cacheConfig = LocationManager.getInstance().getCacheConfig();
             safeKey = VideoMd5Utils.encryptMD5ToString(url, cacheConfig.getSalt());
-            CacheLogUtils.d("SafeKeyGenerator-----md5转化key-"+safeKey);
+            VideoLogUtils.d("SafeKeyGenerator-----md5转化key-"+safeKey);
         }
         synchronized (loadIdToSafeHash) {
             loadIdToSafeHash.put(hashCode, safeKey);
-            CacheLogUtils.d("SafeKeyGenerator-----存储key-"+safeKey);
+            VideoLogUtils.d("SafeKeyGenerator-----存储key-"+safeKey);
         }
         return safeKey;
     }

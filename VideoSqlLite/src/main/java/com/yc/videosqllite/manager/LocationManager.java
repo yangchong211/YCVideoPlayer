@@ -7,7 +7,7 @@ import com.yc.videosqllite.cache.VideoMapCache;
 import com.yc.videosqllite.disk.DiskFileUtils;
 import com.yc.videosqllite.disk.SqlLiteCache;
 import com.yc.videosqllite.model.VideoLocation;
-import com.yc.videosqllite.utils.CacheLogUtils;
+import com.yc.videosqllite.utils.VideoLogUtils;
 
 import java.io.IOException;
 
@@ -59,10 +59,10 @@ public class LocationManager {
 
     public void init(CacheConfig cacheConfig){
         this.cacheConfig = cacheConfig;
-        CacheLogUtils.setIsLog(cacheConfig.isLog());
+        VideoLogUtils.setIsLog(cacheConfig.isLog());
         videoMapCache = new VideoMapCache();
         sqlLiteCache = new SqlLiteCache();
-        CacheLogUtils.d("LocationManager-----init初始化-");
+        VideoLogUtils.d("LocationManager-----init初始化-");
     }
 
     public CacheConfig getCacheConfig() {
@@ -109,7 +109,7 @@ public class LocationManager {
             videoMapCache.put(url,location);
         }
         long currentTimeMillis2 = System.currentTimeMillis();
-        CacheLogUtils.d("LocationManager-----put--存数据耗时-"+(currentTimeMillis2-currentTimeMillis1));
+        VideoLogUtils.d("LocationManager-----put--存数据耗时-"+(currentTimeMillis2-currentTimeMillis1));
     }
 
     /**
@@ -150,7 +150,7 @@ public class LocationManager {
             position = videoMapCache.get(url);
         }
         long currentTimeMillis2 = System.currentTimeMillis();
-        CacheLogUtils.d("LocationManager-----get--取数据耗时-"+(currentTimeMillis2-currentTimeMillis1)
+        VideoLogUtils.d("LocationManager-----get--取数据耗时-"+(currentTimeMillis2-currentTimeMillis1)
                 + "---进度-"+position);
         return position;
     }
@@ -254,10 +254,10 @@ public class LocationManager {
     public long getUseMemory(){
         long totalMemory = Runtime.getRuntime().totalMemory();
         long freeMemory = Runtime.getRuntime().freeMemory();
-        CacheLogUtils.d("LocationManager-----内存-"+totalMemory+"-----"+freeMemory);
+        VideoLogUtils.d("LocationManager-----内存-"+totalMemory+"-----"+freeMemory);
         //long maxMemory = Runtime.getRuntime().maxMemory();
         long useMemory = totalMemory - freeMemory;
-        CacheLogUtils.d("LocationManager-----获取当前应用使用的内存-"+useMemory);
+        VideoLogUtils.d("LocationManager-----获取当前应用使用的内存-"+useMemory);
         return useMemory;
     }
 
@@ -272,7 +272,7 @@ public class LocationManager {
         }
         long totalMemory = Runtime.getRuntime().totalMemory();
         long threshold = totalMemory / proportion;
-        CacheLogUtils.d("LocationManager-----设定内存的阈值-"+threshold);
+        VideoLogUtils.d("LocationManager-----设定内存的阈值-"+threshold);
         return threshold;
     }
 
@@ -282,7 +282,7 @@ public class LocationManager {
      */
     public void dumpHprofData(Context context){
         String dump = DiskFileUtils.getPath(context, "dump");
-        CacheLogUtils.d("LocationManager-----获取Java内存快照文件-"+dump);
+        VideoLogUtils.d("LocationManager-----获取Java内存快照文件-"+dump);
         try {
             Debug.dumpHprofData(dump);
         } catch (IOException e) {

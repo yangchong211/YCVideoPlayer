@@ -31,6 +31,7 @@ public class AudioTaskDispatcher implements InterPlayListener {
     }
 
     private AudioTaskDispatcher() {
+
     }
 
     public static AudioTaskDispatcher getInstance() {

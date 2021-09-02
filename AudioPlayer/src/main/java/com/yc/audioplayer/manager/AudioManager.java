@@ -20,7 +20,10 @@ public class AudioManager extends AbstractAudioWrapper {
     private PlayStateListener mPlayStateListener;
 
     public AudioManager(Context context) {
-        mTtsEngine = new AudioServiceDelegate(new DefaultTtsPlayer(context));
+        //创建tts播放器
+        DefaultTtsPlayer defaultTtsPlayer = new DefaultTtsPlayer(context);
+        //常见tts代理类对象
+        mTtsEngine = new AudioServiceDelegate(defaultTtsPlayer);
         //创建音频播放器
         mMediaPlayer = new MediaAudioPlayer();
     }
@@ -37,7 +40,12 @@ public class AudioManager extends AbstractAudioWrapper {
             mPlayStateListener.onStartPlay();
         }
         this.mCurrentData = data;
-        this.mCurrentAudio = data.mPlayTts ? mTtsEngine : mMediaPlayer;
+        //判断是否播放tts
+        if (data.mPlayTts){
+            this.mCurrentAudio = mTtsEngine;
+        } else {
+            this.mCurrentAudio = mMediaPlayer;
+        }
         this.mCurrentAudio.play(data);
     }
 

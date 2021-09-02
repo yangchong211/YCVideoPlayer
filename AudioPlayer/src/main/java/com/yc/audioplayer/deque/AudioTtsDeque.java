@@ -75,11 +75,14 @@ public class AudioTtsDeque {
      * @return
      */
     public AudioPlayData getTts() {
+        //先从高开始取
         AudioPlayData tts = mHighDeque.poll();
         if (tts == null) {
+            //如果高没有，则从中开始取
             tts = mMiddleDeque.poll();
         }
         if (tts == null) {
+            //否则则获取优先级最低的normal队列
             tts = mNormalDeque.poll();
         }
         VideoLogUtils.d("TTS queue get data is " + tts);

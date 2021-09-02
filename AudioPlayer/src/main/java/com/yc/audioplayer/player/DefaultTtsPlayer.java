@@ -103,6 +103,7 @@ public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpee
     @Override
     public void play(AudioPlayData data) {
         synchronized (this.mTts) {
+            //如果是在说话中，则先停止
             if (this.mTts.isSpeaking()) {
                 this.mTts.stop();
             }
@@ -136,12 +137,20 @@ public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpee
 
         }
 
+        /**
+         * 播放完成
+         * @param utteranceId                       话语id
+         */
         @Override
         public void onDone(final String utteranceId) {
             VideoLogUtils.i("TTSPlayer OnCompleteListener onDone");
             onCompleted();
         }
 
+        /**
+         * 播放异常
+         * @param utteranceId                       话语id
+         */
         @Override
         public void onError(final String utteranceId) {
             VideoLogUtils.i("TTSPlayer OnCompleteListener onError");
@@ -150,6 +159,10 @@ public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpee
             onCompleted();
         }
 
+        /**
+         * 播放开始
+         * @param utteranceId                       话语id
+         */
         @Override
         public void onStart(final String utteranceId) {
 

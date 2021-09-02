@@ -7,6 +7,11 @@ public class AudioPlayData {
 
     public AudioTtsPriority mPriority = AudioTtsPriority.NORMAL_PRIORITY;
 
+    /**
+     * 是否播放tts，如果是文案则表示true，如果是资源文件则表示false
+     * true，使用TtsPlayer播放
+     * false，使用MediaPlayer播放
+     */
     public boolean mPlayTts = true;
 
     private String mTts;

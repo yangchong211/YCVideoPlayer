@@ -16,15 +16,13 @@ public class MediaAudioPlayer extends AbstractAudioWrapper {
 
     private InterPlayListener mPlayListener;
     private Context mContext;
-
     private MediaPlayer mMediaPlayer;
     private boolean mPause = false;
 
     /**
      * 完成/出错时的监听接口
      */
-    private OnCompletionListener mOnCompletionListener = new OnCompletionListener() {
-
+    private final OnCompletionListener mOnCompletionListener = new OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer player) {
             if (mMediaPlayer != null && player != null && mMediaPlayer == player) {

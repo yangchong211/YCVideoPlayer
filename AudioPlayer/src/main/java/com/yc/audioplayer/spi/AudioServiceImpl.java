@@ -12,14 +12,12 @@ public class AudioServiceImpl implements AudioServiceProvider {
     private AudioManager mAudioManager;
     private final AudioTaskDispatcher mAudioTaskDispatcher = AudioTaskDispatcher.getInstance();
     private boolean mReady = false;
-    private Context mContext;
 
     @Override
     public void init(Context context) {
         mAudioManager = new AudioManager(context);
         mAudioManager.init(mAudioTaskDispatcher, context);
         mAudioTaskDispatcher.initialize(mAudioManager);
-        mContext = context;
         mReady = true;
     }
 

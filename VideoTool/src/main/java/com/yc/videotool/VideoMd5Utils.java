@@ -1,4 +1,4 @@
-package com.yc.videosqllite.utils;
+package com.yc.videotool;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
