@@ -3,7 +3,7 @@ package com.yc.videosqllite.model;
 import com.yc.videosqllite.cache.VideoLruCache;
 import com.yc.videosqllite.manager.CacheConfig;
 import com.yc.videosqllite.manager.LocationManager;
-import com.yc.videosqllite.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 import com.yc.videotool.VideoMd5Utils;
 
 /**

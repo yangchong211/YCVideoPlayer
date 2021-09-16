@@ -13,7 +13,15 @@ import com.yc.videotool.VideoLogUtils;
 import java.util.HashMap;
 import java.util.Locale;
 
-
+/**
+ * <pre>
+ *     @author yangchong
+ *     email  : yangchong211@163.com
+ *     time  : 2018/8/6
+ *     desc  : tts播放player
+ *     revise:
+ * </pre>
+ */
 public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpeech.OnInitListener {
 
     private TextToSpeech mTts;
@@ -24,6 +32,9 @@ public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpee
     private volatile boolean mReady = false;
     private final Context mContext;
     private InterPlayListener mPlayListener;
+    /**
+     * 创建tts监听
+     */
     private final OnCompleteListener mOnCompleteListener = new OnCompleteListener();
 
     public DefaultTtsPlayer(Context context) {
@@ -59,13 +70,17 @@ public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpee
         try {
             if (!mReady  && (TextToSpeech.SUCCESS == status) && this.mTts != null) {
                 VideoLogUtils.i("Initialize TTS success");
-                final Locale locale = mContext.getApplicationContext().getResources().getConfiguration().locale;
+                //获取locale
+                final Locale locale = mContext.getApplicationContext()
+                        .getResources().getConfiguration().locale;
                 if (locale != null) {
                     VideoLogUtils.i("tts isLanguageAvailable " + mTts.isLanguageAvailable(locale) +
-                        "; variant is " + locale.getVariant() + "; locale is " + locale + " ; country  is " + locale
-                        .getCountry());
+                        "; variant is " + locale.getVariant() +
+                            "; locale is " + locale + " ; country  is " + locale.getCountry());
                 }
-                switch (this.mTts.setLanguage(null != locale ? locale : Locale.getDefault())) {
+                //设置朗读语言
+                int setLanguage = this.mTts.setLanguage(null != locale ? locale : Locale.getDefault());
+                switch (setLanguage) {
                     case TextToSpeech.LANG_MISSING_DATA:
                         VideoLogUtils.i("TTS set language: Language missing data");
                         break;
@@ -85,6 +100,8 @@ public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpee
                         VideoLogUtils.i("TTS set language: Unknown error");
                         break;
                 }
+            } else if (TextToSpeech.ERROR == status) {
+                VideoLogUtils.i("Initialize TTS error");
             } else {
                 VideoLogUtils.i("Initialize TTS error");
             }
@@ -92,11 +109,11 @@ public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpee
             e.printStackTrace();
             VideoLogUtils.i(e.getMessage());
         }
-
     }
 
     @Override
     public void pause() {
+        //停止tts播放
         mTts.stop();
     }
 
@@ -108,15 +125,22 @@ public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpee
                 this.mTts.stop();
             }
 
+            String tts = data.getTts();
+            //添加tts监听
             this.mTts.setOnUtteranceProgressListener(mOnCompleteListener);
             HashMap<String, String> map = new HashMap<>();
-            map.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, data.getTts());
-            this.mTts.speak(data.getTts(), TextToSpeech.QUEUE_FLUSH, map);
+            map.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, tts);
+            //tts播报
+            //第一个参数播放的内容
+            //第二个参数表示
+            //第三个参数表示
+            this.mTts.speak(tts, TextToSpeech.QUEUE_FLUSH, map);
         }
     }
 
     @Override
     public void release() {
+        //关闭TTS
         this.mTts.shutdown();
         this.mReady = false;
     }
@@ -128,6 +152,7 @@ public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpee
 
     @Override
     public void stop() {
+        //停止播报
         mTts.stop();
     }
     
@@ -138,7 +163,7 @@ public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpee
         }
 
         /**
-         * 播放完成
+         * 播放完成。这个是播报完毕的时候 每一次播报完毕都会走
          * @param utteranceId                       话语id
          */
         @Override
@@ -160,7 +185,8 @@ public class DefaultTtsPlayer extends AbstractAudioWrapper implements TextToSpee
         }
 
         /**
-         * 播放开始
+         * 播放开始。这个是开始的时候。是先发声之后才会走这里
+         * 调用isSpeaking()方法在这为true
          * @param utteranceId                       话语id
          */
         @Override

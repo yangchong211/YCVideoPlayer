@@ -49,6 +49,14 @@ public final class VideoLogUtils {
         }
     }
 
+    public static void d(Object object){
+        if(isLog){
+            //这个方法 建议 Debug 进入不执行，因为 object 会进行字符串+拼接，产生大量内存对象。
+            //Log.d(TAG, object.toString());
+            Log.d(TAG, " log : " + object);
+        }
+    }
+
     public static void i(String message) {
         if(isLog){
             Log.i(TAG, message);

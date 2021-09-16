@@ -6,7 +6,7 @@ import androidx.annotation.Nullable;
 import com.yc.videosqllite.manager.CacheConfig;
 import com.yc.videosqllite.manager.LocationManager;
 import com.yc.videosqllite.model.SafeKeyGenerator;
-import com.yc.videosqllite.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 
 import java.io.File;
 import java.io.IOException;

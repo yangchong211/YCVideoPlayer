@@ -1,5 +1,6 @@
 package com.yc.ycvideoplayer.audio;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,7 @@ public class AudioActivity extends AppCompatActivity implements View.OnClickList
     private Button btnRelease;
     private Button btnBrazil;
     private Button btnTts;
+    private Button btnTtsDemo;
 
 
     @Override
@@ -45,6 +47,7 @@ public class AudioActivity extends AppCompatActivity implements View.OnClickList
         btnRelease = findViewById(R.id.btn_release);
         btnBrazil = findViewById(R.id.btn_brazil);
         btnTts = findViewById(R.id.btn_tts);
+        btnTtsDemo = findViewById(R.id.btn_tts_demo);
 
         btnInit.setOnClickListener(this);
         btnSpeakTts.setOnClickListener(this);
@@ -57,6 +60,7 @@ public class AudioActivity extends AppCompatActivity implements View.OnClickList
         btnRelease.setOnClickListener(this);
         btnBrazil.setOnClickListener(this);
         btnTts.setOnClickListener(this);
+        btnTtsDemo.setOnClickListener(this);
     }
 
 
@@ -111,6 +115,8 @@ public class AudioActivity extends AppCompatActivity implements View.OnClickList
             AudioService.getInstance().play(playData);
         } else if (v == btnTts){
             AudioService.getInstance().playTts("逗比，这个是tts");
+        } else if (v == btnTtsDemo){
+            startActivity(new Intent(this,TTSAudioActivity.class));
         }
     }
 }

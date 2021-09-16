@@ -11,7 +11,15 @@ import com.yc.audioplayer.bean.AudioPlayData;
 import com.yc.audioplayer.inter.InterPlayListener;
 import com.yc.videotool.VideoLogUtils;
 
-
+/**
+ * <pre>
+ *     @author yangchong
+ *     email  : yangchong211@163.com
+ *     time  : 2018/8/6
+ *     desc  : 音频播放player
+ *     revise:
+ * </pre>
+ */
 public class MediaAudioPlayer extends AbstractAudioWrapper {
 
     private InterPlayListener mPlayListener;

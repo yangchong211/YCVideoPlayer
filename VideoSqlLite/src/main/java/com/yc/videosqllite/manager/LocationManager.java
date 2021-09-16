@@ -7,7 +7,7 @@ import com.yc.videosqllite.cache.VideoMapCache;
 import com.yc.videosqllite.disk.DiskFileUtils;
 import com.yc.videosqllite.disk.SqlLiteCache;
 import com.yc.videosqllite.model.VideoLocation;
-import com.yc.videosqllite.utils.VideoLogUtils;
+import com.yc.videotool.VideoLogUtils;
 
 import java.io.IOException;
 

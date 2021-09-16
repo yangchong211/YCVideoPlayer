@@ -17,37 +17,37 @@
             android:id="@+id/btn_init"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="init" />
+            android:text="初始化tts" />
 
         <Button
-            android:id="@+id/btn_speak_tts"
+            android:id="@+id/btn_speak_tts1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="speak tts" />
+            android:text="简单播放tts" />
 
         <Button
-            android:id="@+id/btn_speak_media"
+            android:id="@+id/btn_speak_tts2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="speak mp3 " />
+            android:text="循环简单播放tts，有问题的" />
 
         <Button
-            android:id="@+id/btn_mix_play"
+            android:id="@+id/btn_speak_tts3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="mix play" />
+            android:text="循环简单播放tts，增加判断" />
 
         <Button
-            android:id="@+id/btn_pause"
+            android:id="@+id/btn_speak_tts4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="pause" />
+            android:text="正确循环播放tts" />
 
         <Button
-            android:id="@+id/btn_resume"
+            android:id="@+id/btn_speak_tts5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="resume" />
+            android:text="正确循环播放tts" />
 
         <Button
             android:id="@+id/btn_stop"
@@ -76,12 +76,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="play_tts"/>
-
-        <Button
-            android:id="@+id/btn_tts_demo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="play_tts_demo"/>
     </LinearLayout>
 
 </RelativeLayout>
