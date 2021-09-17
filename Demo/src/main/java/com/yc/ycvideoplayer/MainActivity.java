@@ -23,7 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.yc.ycvideoplayer.R;
 
 import com.yc.music.model.AudioBean;
-import com.yc.music.service.PlayService;
+import com.yc.music.service.PlayAudioService;
 import com.yc.music.tool.BaseAppHelper;
 import com.yc.videotool.VideoLogUtils;
 import com.yc.videoview.FloatWindow;
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 开启服务
      */
     private void startService() {
-        Intent intent = new Intent(this, PlayService.class);
+        Intent intent = new Intent(this, PlayAudioService.class);
         startService(intent);
     }
 
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void bindService() {
         Intent intent = new Intent();
-        intent.setClass(this, PlayService.class);
+        intent.setClass(this, PlayAudioService.class);
         mPlayServiceConnection = new PlayServiceConnection();
         bindService(intent, mPlayServiceConnection, Context.BIND_AUTO_CREATE);
     }
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             VideoLogUtils.e("onServiceConnected"+name);
-            final PlayService playService = ((PlayService.PlayBinder) service).getService();
+            final PlayAudioService playService = ((PlayAudioService.PlayBinder) service).getService();
             BaseAppHelper.get().setPlayService(playService);
             List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
             AudioBean audioBean1 = new AudioBean();

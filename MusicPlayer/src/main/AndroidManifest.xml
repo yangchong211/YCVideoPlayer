@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application>
-        <service android:name=".service.PlayService" />
+        <service android:name=".service.PlayAudioService" />
         <receiver android:name=".receiver.NotificationStatusBarReceiver">
             <intent-filter>
                 <action android:name="YC_ACTION_STATUS_BAR" />

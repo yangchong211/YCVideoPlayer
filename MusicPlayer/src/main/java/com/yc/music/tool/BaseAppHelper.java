@@ -3,7 +3,7 @@ package com.yc.music.tool;
 import android.annotation.SuppressLint;
 
 import com.yc.music.model.AudioBean;
-import com.yc.music.service.PlayService;
+import com.yc.music.service.PlayAudioService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class BaseAppHelper {
     /**
      * 播放音乐service
      */
-    private PlayService mPlayService;
+    private PlayAudioService mPlayService;
     /**
      * 本地歌曲列表
      */
@@ -45,14 +45,14 @@ public class BaseAppHelper {
      * 获取PlayService对象
      * @return              返回PlayService对象
      */
-    public PlayService getPlayService() {
+    public PlayAudioService getPlayService() {
         return mPlayService;
     }
 
     /**
      * 设置PlayService服务
      */
-    public void setPlayService(PlayService service) {
+    public void setPlayService(PlayAudioService service) {
         mPlayService = service;
     }
 
@@ -78,8 +78,8 @@ public class BaseAppHelper {
      * 获取到播放音乐的服务
      * @return              PlayService对象
      */
-    public PlayService getMusicService () {
-        PlayService playService = BaseAppHelper.get().getPlayService();
+    public PlayAudioService getMusicService () {
+        PlayAudioService playService = BaseAppHelper.get().getPlayService();
         if (playService == null) {
             //待解决：当长期处于后台，如何保活？避免service被杀死……
             throw new NullPointerException("play service is null");

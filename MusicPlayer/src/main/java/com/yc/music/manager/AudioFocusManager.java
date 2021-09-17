@@ -4,7 +4,7 @@ import android.media.AudioManager;
 
 import androidx.annotation.NonNull;
 
-import com.yc.music.service.PlayService;
+import com.yc.music.service.PlayAudioService;
 
 import static android.content.Context.AUDIO_SERVICE;
 
@@ -12,7 +12,7 @@ import static android.content.Context.AUDIO_SERVICE;
 public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListener {
 
 
-    private PlayService mPlayService;
+    private PlayAudioService mPlayService;
     private AudioManager mAudioManager;
     /**
      * 是否因聚焦丢失瞬变而暂停
@@ -25,7 +25,7 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
      * 初始化操作
      * @param content           playService对象
      */
-    public AudioFocusManager(@NonNull PlayService content) {
+    public AudioFocusManager(@NonNull PlayAudioService content) {
         mPlayService = content;
         mAudioManager = (AudioManager) content.getSystemService(AUDIO_SERVICE);
     }

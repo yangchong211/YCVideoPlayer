@@ -11,13 +11,13 @@ import android.widget.RemoteViews;
 import com.yc.music.R;
 import com.yc.music.model.AudioBean;
 import com.yc.music.receiver.NotificationStatusBarReceiver;
-import com.yc.music.service.PlayService;
+import com.yc.music.service.PlayAudioService;
 
 
 public class NotificationHelper {
 
 
-    private PlayService playService;
+    private PlayAudioService playService;
     private NotificationManager notificationManager;
     private static final int NOTIFICATION_ID = 0x111;
 
@@ -26,7 +26,7 @@ public class NotificationHelper {
     }
 
     private static class SingletonHolder {
-        private static NotificationHelper instance = new NotificationHelper();
+        private static final NotificationHelper instance = new NotificationHelper();
     }
 
     private NotificationHelper() {
@@ -37,9 +37,10 @@ public class NotificationHelper {
      * 1.创建一个NotificationManager的引用
      * @param playService           PlayService对象
      */
-    public void init(PlayService playService) {
+    public void init(PlayAudioService playService) {
         this.playService = playService;
-        notificationManager = (NotificationManager) playService.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager = (NotificationManager)
+                playService.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
     /**
@@ -50,7 +51,8 @@ public class NotificationHelper {
         if (music == null) {
             return;
         }
-        playService.startForeground(NOTIFICATION_ID, buildNotification(playService, music, true));
+        playService.startForeground(NOTIFICATION_ID,
+                buildNotification(playService, music, true));
         //这个方法是启动Notification到前台
     }
 
@@ -65,15 +67,29 @@ public class NotificationHelper {
             return;
         }
         playService.stopForeground(false);
-        notificationManager.notify(NOTIFICATION_ID, buildNotification(playService, music, false));
+        notificationManager.notify(NOTIFICATION_ID,
+                buildNotification(playService, music, false));
     }
 
+    /**
+     * 销毁的时候调用
+     * @param isRemoveNotification                  是否移除通知栏
+     */
+    public void onDestroy(boolean isRemoveNotification){
+        //如果设置成ture，则会移除通知栏
+        playService.stopForeground(isRemoveNotification);
+        cancelAll();
+
+    }
 
     /**
      * 结束所有的
      */
     public void cancelAll() {
-        notificationManager.cancelAll();
+        if (notificationManager!=null){
+            notificationManager.cancelAll();
+            notificationManager = null;
+        }
     }
 
     private Notification buildNotification(Context context, AudioBean music, boolean isPlaying) {

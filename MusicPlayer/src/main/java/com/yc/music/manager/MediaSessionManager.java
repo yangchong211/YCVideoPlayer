@@ -6,7 +6,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
 import com.yc.music.model.AudioBean;
-import com.yc.music.service.PlayService;
+import com.yc.music.service.PlayAudioService;
 import com.yc.music.tool.BaseAppHelper;
 
 
@@ -21,10 +21,10 @@ public class MediaSessionManager {
             | PlaybackStateCompat.ACTION_STOP
             | PlaybackStateCompat.ACTION_SEEK_TO;
 
-    private PlayService mPlayService;
+    private PlayAudioService mPlayService;
     private MediaSessionCompat mMediaSession;
 
-    public MediaSessionManager(PlayService playService) {
+    public MediaSessionManager(PlayAudioService playService) {
         mPlayService = playService;
         setupMediaSession();
     }

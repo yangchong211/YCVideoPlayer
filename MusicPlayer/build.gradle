@@ -25,6 +25,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project.ext.AppDependencies['appcompat']
     implementation project.ext.AppDependencies['media']
+    implementation project(path: ':VideoTool')
 }
 
 /** 以下开始是将Android Library上传到jcenter的相关配置**/

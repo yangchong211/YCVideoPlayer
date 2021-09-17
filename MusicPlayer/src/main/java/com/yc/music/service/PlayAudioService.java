@@ -25,10 +25,10 @@ import com.yc.music.model.AudioBean;
 import com.yc.music.receiver.AudioBroadcastReceiver;
 import com.yc.music.receiver.AudioEarPhoneReceiver;
 import com.yc.music.tool.BaseAppHelper;
-import com.yc.music.utils.MusicLogUtils;
 import com.yc.music.utils.NotificationHelper;
 import com.yc.music.tool.QuitTimerHelper;
 import com.yc.music.utils.MusicSpUtils;
+import com.yc.videotool.VideoLogUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,9 +36,15 @@ import java.util.Random;
 
 
 /**
- * Service就是用来在后台完成一些不需要和用户交互的动作
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://www.jianshu.com/p/514eb6193a06
+ *     time  : 2016/2/10
+ *     desc  : Service就是用来在后台完成一些不需要和用户交互的动作
+ *     revise: 在清科公司写的音频播放器，后期暂停维护
+ * </pre>
  */
-public class PlayService extends Service {
+public class PlayAudioService extends Service {
 
     /**
      * 正在播放的歌曲的序号
@@ -133,15 +139,15 @@ public class PlayService extends Service {
      * @param type          类型
      */
     public static void startCommand(Context context, String type) {
-        Intent intent = new Intent(context, PlayService.class);
+        Intent intent = new Intent(context, PlayAudioService.class);
         intent.setAction(type);
         context.startService(intent);
     }
 
 
     public class PlayBinder extends Binder {
-        public PlayService getService() {
-            return PlayService.this;
+        public PlayAudioService getService() {
+            return PlayAudioService.this;
         }
     }
 
@@ -183,7 +189,7 @@ public class PlayService extends Service {
         //注销广播接收者
         unregisterReceiver(mAudioReceiver);
         //结束notification通知
-        NotificationHelper.get().cancelAll();
+        NotificationHelper.get().onDestroy(true);
         //设置service为null
         BaseAppHelper.get().setPlayService(null);
     }
@@ -219,15 +225,16 @@ public class PlayService extends Service {
                     break;
                 //添加锁屏界面
                 case MusicConstant.LOCK_SCREEN_ACTION:
-                    MusicLogUtils.e("PlayService"+"---LOCK_SCREEN"+mIsLocked);
+                    VideoLogUtils.e("PlayService"+"---LOCK_SCREEN"+mIsLocked);
                     break;
                 //当屏幕灭了，添加锁屏页面
                 case Intent.ACTION_SCREEN_OFF:
                     startLockAudioActivity();
-                    MusicLogUtils.e("PlayService"+"---当屏幕灭了");
+                    VideoLogUtils.e("PlayService"+"---当屏幕灭了");
                     break;
+                //当屏幕亮了
                 case Intent.ACTION_SCREEN_ON:
-                    MusicLogUtils.e("PlayService"+"---当屏幕亮了");
+                    VideoLogUtils.e("PlayService"+"---当屏幕亮了");
                     break;
                 default:
                     break;
@@ -402,7 +409,7 @@ public class PlayService extends Service {
                     // 如果是最后一首，则切换回第一首
                     mPlayingPosition = 0;
                 }
-                MusicLogUtils.e("PlayService"+"----mPlayingPosition----"+ mPlayingPosition);
+                VideoLogUtils.e("PlayService"+"----mPlayingPosition----"+ mPlayingPosition);
                 play(mPlayingPosition);
                 break;
         }
@@ -508,7 +515,7 @@ public class PlayService extends Service {
         mPlayingPosition = position;
         AudioBean music = audioMusics.get(mPlayingPosition);
         String id = music.getId();
-        MusicLogUtils.e("PlayService"+"----id----"+ id);
+        VideoLogUtils.e("PlayService"+"----id----"+ id);
         //保存当前播放的musicId，下次进来可以记录状态
         long musicId = Long.parseLong(id);
         MusicSpUtils.getInstance(MusicConstant.SP_NAME).put(MusicConstant.MUSIC_ID,musicId);
@@ -577,7 +584,7 @@ public class PlayService extends Service {
             int currentPosition =  mPlayer.getCurrentPosition();
             mListener.onUpdateProgress(currentPosition);
         }
-        MusicLogUtils.e("updatePlayProgressShow");
+        VideoLogUtils.e("updatePlayProgressShow");
         // 每30毫秒更新一下显示的内容，注意这里时间不要太短，因为这个是一个循环
         // 经过测试，60毫秒更新一次有点卡，30毫秒最为顺畅
         handler.sendEmptyMessageDelayed(UPDATE_PLAY_PROGRESS_SHOW, 300);
@@ -810,7 +817,7 @@ public class PlayService extends Service {
         }
         for (int i = 0; i < audioMusics.size(); i++) {
             String musicId = audioMusics.get(i).getId();
-            MusicLogUtils.e("PlayService"+"----musicId----"+ musicId);
+            VideoLogUtils.e("PlayService"+"----musicId----"+ musicId);
             if (Long.parseLong(musicId) == id) {
                 position = i;
                 break;

@@ -7,7 +7,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.view.KeyEvent;
 
 import com.yc.music.config.MusicPlayAction;
-import com.yc.music.service.PlayService;
+import com.yc.music.service.PlayAudioService;
 
 
 /**
@@ -26,13 +26,13 @@ public class EarphoneControlReceiver extends BroadcastReceiver {
             case KeyEvent.KEYCODE_MEDIA_PAUSE:
             case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
             case KeyEvent.KEYCODE_HEADSETHOOK:
-                PlayService.startCommand(context, MusicPlayAction.TYPE_START_PAUSE);
+                PlayAudioService.startCommand(context, MusicPlayAction.TYPE_START_PAUSE);
                 break;
             case KeyEvent.KEYCODE_MEDIA_NEXT:
-                PlayService.startCommand(context, MusicPlayAction.TYPE_NEXT);
+                PlayAudioService.startCommand(context, MusicPlayAction.TYPE_NEXT);
                 break;
             case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-                PlayService.startCommand(context, MusicPlayAction.TYPE_PRE);
+                PlayAudioService.startCommand(context, MusicPlayAction.TYPE_PRE);
                 break;
             default:
                 break;

@@ -6,7 +6,7 @@ import android.os.Build;
 
 import androidx.annotation.NonNull;
 
-import com.yc.music.service.PlayService;
+import com.yc.music.service.PlayAudioService;
 
 import static android.content.Context.AUDIO_SERVICE;
 
@@ -20,7 +20,7 @@ public class AudioSoundManager  {
      * 初始化操作
      * @param content           playService对象
      */
-    public AudioSoundManager(@NonNull PlayService content) {
+    public AudioSoundManager(@NonNull PlayAudioService content) {
         mAudioManager = (AudioManager) content.getSystemService(AUDIO_SERVICE);
     }
 

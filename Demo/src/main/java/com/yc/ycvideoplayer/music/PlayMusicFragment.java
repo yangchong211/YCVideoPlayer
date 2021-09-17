@@ -26,9 +26,9 @@ import com.yc.music.config.PlayModeEnum;
 import com.yc.music.inter.OnPlayerEventListener;
 import com.yc.music.model.AudioBean;
 import com.yc.music.tool.BaseAppHelper;
-import com.yc.music.utils.MusicLogUtils;
 import com.yc.music.utils.MusicSpUtils;
 import com.yc.video.tool.PlayerUtils;
+import com.yc.videotool.VideoLogUtils;
 
 import org.yc.ycvideoplayer.R;
 
@@ -81,7 +81,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        MusicLogUtils.e(TAG+"setUserVisibleHint"+isVisibleToUser);
+        VideoLogUtils.e(TAG+"setUserVisibleHint"+isVisibleToUser);
     }
 
     /**
@@ -93,7 +93,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        MusicLogUtils.e(TAG+"onHiddenChanged"+hidden);
+        VideoLogUtils.e(TAG+"onHiddenChanged"+hidden);
         if (!hidden){
             initData();
         }
@@ -393,7 +393,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
         sbProgress.setProgress((int) BaseAppHelper.get().getMusicService().getCurrentPosition());
         sbProgress.setSecondaryProgress(0);
         sbProgress.setMax((int) playingMusic.getDuration());
-        MusicLogUtils.e("-----------------------"+(int) playingMusic.getDuration());
+        VideoLogUtils.e("-----------------------"+(int) playingMusic.getDuration());
         mLastProgress = 0;
         tvCurrentTime.setText("00:00");
         tvTotalTime.setText(PlayerUtils.formatTime(playingMusic.getDuration()));
@@ -445,7 +445,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onBufferingUpdate(int percent) {
         if(sbProgress.getMax()>0 && percent>0){
-            MusicLogUtils.e("setOnPlayEventListener---percent---"+ sbProgress.getMax() + "-----" +percent);
+            VideoLogUtils.e("setOnPlayEventListener---percent---"+ sbProgress.getMax() + "-----" +percent);
             sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
         }
     }

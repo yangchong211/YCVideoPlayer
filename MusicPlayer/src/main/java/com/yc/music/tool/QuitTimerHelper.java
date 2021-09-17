@@ -6,7 +6,7 @@ import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 
 import com.yc.music.inter.EventCallback;
-import com.yc.music.service.PlayService;
+import com.yc.music.service.PlayAudioService;
 
 
 /**
@@ -14,7 +14,7 @@ import com.yc.music.service.PlayService;
  */
 public class QuitTimerHelper {
 
-    private PlayService mPlayService;
+    private PlayAudioService mPlayService;
     private EventCallback<Long> mTimerCallback;
     private Handler mHandler;
     private long mTimerRemain;
@@ -35,7 +35,7 @@ public class QuitTimerHelper {
      * @param handler                   handler
      * @param timerCallback             timerCallback
      */
-    public void init(@NonNull PlayService playService, @NonNull Handler handler,
+    public void init(@NonNull PlayAudioService playService, @NonNull Handler handler,
                      @NonNull EventCallback<Long> timerCallback) {
         mPlayService = playService;
         mHandler = handler;

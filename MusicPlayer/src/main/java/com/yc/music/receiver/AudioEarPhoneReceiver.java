@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 
 import com.yc.music.config.MusicPlayAction;
-import com.yc.music.service.PlayService;
+import com.yc.music.service.PlayAudioService;
 
 
 /**
@@ -23,7 +23,7 @@ public class AudioEarPhoneReceiver extends BroadcastReceiver {
             switch (action){
                 //来电/耳机拔出时暂停播放
                 case AudioManager.ACTION_AUDIO_BECOMING_NOISY:
-                    PlayService.startCommand(context, MusicPlayAction.TYPE_START_PAUSE);
+                    PlayAudioService.startCommand(context, MusicPlayAction.TYPE_START_PAUSE);
                     break;
                 default:
                     break;
