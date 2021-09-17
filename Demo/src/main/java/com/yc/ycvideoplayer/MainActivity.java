@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             VideoLogUtils.e("onServiceConnected"+name);
-            final PlayAudioService playService = ((PlayAudioService.PlayBinder) service).getService();
+            final PlayAudioService playService = (PlayAudioService) ((PlayAudioService.PlayBinder) service).getService();
             BaseAppHelper.get().setPlayService(playService);
             List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
             AudioBean audioBean1 = new AudioBean();

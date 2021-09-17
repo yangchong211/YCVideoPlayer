@@ -73,7 +73,7 @@ public class MediaSessionManager {
         mMediaSession.release();
     }
 
-    private MediaSessionCompat.Callback callback = new MediaSessionCompat.Callback() {
+    private final MediaSessionCompat.Callback callback = new MediaSessionCompat.Callback() {
         @Override
         public void onPlay() {
             mPlayService.playPause();

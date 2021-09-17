@@ -42,6 +42,10 @@ public class QuitTimerHelper {
         mTimerCallback = timerCallback;
     }
 
+    public Handler getHandler(){
+        return mHandler;
+    }
+
     public void start(long milli) {
         if(mHandler==null){
             //ToastUtils.showShort("请先进行初始化");
@@ -58,10 +62,12 @@ public class QuitTimerHelper {
     }
 
     public void stop() {
-        mHandler.removeCallbacks(mQuitRunnable);
+        if (mHandler!=null){
+            mHandler.removeCallbacks(mQuitRunnable);
+        }
     }
 
-    private Runnable mQuitRunnable = new Runnable() {
+    private final Runnable mQuitRunnable = new Runnable() {
         @Override
         public void run() {
             mTimerRemain -= DateUtils.SECOND_IN_MILLIS;

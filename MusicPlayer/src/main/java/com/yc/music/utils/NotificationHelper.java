@@ -11,13 +11,14 @@ import android.widget.RemoteViews;
 import com.yc.music.R;
 import com.yc.music.model.AudioBean;
 import com.yc.music.receiver.NotificationStatusBarReceiver;
+import com.yc.music.service.AbsAudioService;
 import com.yc.music.service.PlayAudioService;
 
 
 public class NotificationHelper {
 
 
-    private PlayAudioService playService;
+    private AbsAudioService playService;
     private NotificationManager notificationManager;
     private static final int NOTIFICATION_ID = 0x111;
 
@@ -37,7 +38,7 @@ public class NotificationHelper {
      * 1.创建一个NotificationManager的引用
      * @param playService           PlayService对象
      */
-    public void init(PlayAudioService playService) {
+    public void init(AbsAudioService playService) {
         this.playService = playService;
         notificationManager = (NotificationManager)
                 playService.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -45,15 +46,16 @@ public class NotificationHelper {
 
     /**
      * 开始播放
+     * 把该service创建为前台service
      * @param music             music
      */
     public void showPlay(AudioBean music) {
         if (music == null) {
             return;
         }
+        //这个方法是启动Notification到前台
         playService.startForeground(NOTIFICATION_ID,
                 buildNotification(playService, music, true));
-        //这个方法是启动Notification到前台
     }
 
 
