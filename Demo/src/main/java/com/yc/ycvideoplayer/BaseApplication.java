@@ -13,7 +13,6 @@ import com.yc.kernel.utils.PlayerFactoryUtils;
 import com.yc.music.utils.MusicSpUtils;
 import com.yc.video.config.VideoPlayerConfig;
 import com.yc.video.player.VideoViewManager;
-import com.yc.video.surface.SurfaceViewFactory;
 import com.yc.videosqllite.manager.CacheConfig;
 import com.yc.videosqllite.manager.LocationManager;
 
@@ -56,9 +55,6 @@ public class BaseApplication extends Application {
         Log.d("Application", "onCreate");
         super.onCreate();
         instance = this;
-        ScreenDensityUtils.setup(this);
-        ScreenDensityUtils.register(this,375.0f,
-                ScreenDensityUtils.MATCH_BASE_WIDTH,ScreenDensityUtils.MATCH_UNIT_DP);
         //播放器配置，注意：此为全局配置，按需开启
         PlayerFactory player = PlayerFactoryUtils.getPlayer(PlayerConstant.PlayerType.TYPE_IJK);
         VideoViewManager.setConfig(VideoPlayerConfig.newBuilder()

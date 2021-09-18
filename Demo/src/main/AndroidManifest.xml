@@ -27,16 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name="com.yc.ycvideoplayer.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.yc.ycvideoplayer.newPlayer.activity.TypeActivity"/>-->
+        <activity android:name="com.yc.ycvideoplayer.newPlayer.activity.TypeActivity"/>
         <activity android:name="com.yc.ycvideoplayer.oldPlayer.TestTinyActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
