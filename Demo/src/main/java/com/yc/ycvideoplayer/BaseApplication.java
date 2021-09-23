@@ -6,15 +6,18 @@ import android.content.res.Configuration;
 import android.util.Log;
 
 
+import androidx.annotation.NonNull;
+
 import com.yc.kernel.factory.PlayerFactory;
 import com.yc.kernel.utils.PlayerConstant;
 import com.yc.kernel.utils.PlayerFactoryUtils;
 
-import com.yc.music.utils.MusicSpUtils;
 import com.yc.video.config.VideoPlayerConfig;
 import com.yc.video.player.VideoViewManager;
 import com.yc.videosqllite.manager.CacheConfig;
 import com.yc.videosqllite.manager.LocationManager;
+import com.yc.videotool.VideoSpUtils;
+import com.yc.videotool.ScheduleTask;
 
 /**
  * ================================================
@@ -69,9 +72,16 @@ public class BaseApplication extends Application {
                 //创建SurfaceView
                 //.setRenderViewFactory(SurfaceViewFactory.create())
                 .build());
-        MusicSpUtils.init(this);
+        VideoSpUtils.init(this);
 
         initVideoCache();
+
+        ScheduleTask.getInstance().schedule(new Runnable() {
+            @Override
+            public void run() {
+                //初始化一些耗时的操作
+            }
+        });
     }
 
     private void initVideoCache() {
@@ -119,7 +129,7 @@ public class BaseApplication extends Application {
      * onConfigurationChanged
      */
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         Log.d("Application", "onConfigurationChanged");
         super.onConfigurationChanged(newConfig);
     }

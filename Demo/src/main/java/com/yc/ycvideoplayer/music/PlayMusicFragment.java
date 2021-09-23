@@ -26,16 +26,13 @@ import com.yc.music.config.PlayModeEnum;
 import com.yc.music.inter.OnPlayerEventListener;
 import com.yc.music.model.AudioBean;
 import com.yc.music.tool.BaseAppHelper;
-import com.yc.music.utils.MusicSpUtils;
 import com.yc.video.tool.PlayerUtils;
+import com.yc.videotool.VideoSpUtils;
 import com.yc.videotool.VideoLogUtils;
 
 import org.yc.ycvideoplayer.R;
 
-import java.io.File;
-import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 
 public class PlayMusicFragment extends Fragment implements View.OnClickListener, OnPlayerEventListener {
@@ -328,7 +325,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     }
 
     private void switchPlayMode() {
-        int playMode = MusicSpUtils.getInstance(MusicConstant.SP_NAME).getInt(MusicConstant.PLAY_MODE, 0);
+        int playMode = VideoSpUtils.getInstance(MusicConstant.SP_NAME).getInt(MusicConstant.PLAY_MODE, 0);
         PlayModeEnum mode = PlayModeEnum.valueOf(playMode);
         switch (mode) {
             case LOOP:
@@ -343,13 +340,13 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
             default:
                 break;
         }
-        MusicSpUtils.getInstance(MusicConstant.SP_NAME).put(MusicConstant.PLAY_MODE, mode.value());
+        VideoSpUtils.getInstance(MusicConstant.SP_NAME).put(MusicConstant.PLAY_MODE, mode.value());
         initPlayMode();
     }
 
 
     private void initPlayMode() {
-        int playMode = MusicSpUtils.getInstance(MusicConstant.SP_NAME).getInt(MusicConstant.PLAY_MODE, 0);
+        int playMode = VideoSpUtils.getInstance(MusicConstant.SP_NAME).getInt(MusicConstant.PLAY_MODE, 0);
         ivMode.setImageLevel(playMode);
     }
 

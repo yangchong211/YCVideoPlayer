@@ -112,9 +112,14 @@ public final class DiskLruCache implements Closeable {
     /**
      * 该缓存使用单个后台线程来清除条目
      */
-    final ThreadPoolExecutor executorService =
-            new ThreadPoolExecutor(0, 1, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(),
+    final ThreadPoolExecutor executorService = new ThreadPoolExecutor(
+            0, 1, 60L,
+                    TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(),
                     new DiskLruCacheThreadFactory());
+
+    /**
+     * 创建清除callable
+     */
     private final Callable<Void> cleanupCallable = new Callable<Void>() {
         public Void call() throws Exception {
             synchronized (DiskLruCache.this) {

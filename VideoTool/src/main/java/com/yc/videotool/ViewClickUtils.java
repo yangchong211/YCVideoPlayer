@@ -14,7 +14,7 @@ import java.util.HashMap;
  *     revise:
  * </pre>
  */
-public final class ClickUtils {
+public final class ViewClickUtils {
 
     /**
      * 默认最大点击间隔时间

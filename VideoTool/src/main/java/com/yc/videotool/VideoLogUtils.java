@@ -43,20 +43,42 @@ public final class VideoLogUtils {
         return isLog;
     }
 
+    /**
+     * Log.v 的输出颜色为黑色的，输出大于或等于VERBOSE日志级别的信息，也就是可见级别，一般是最低的信息提示
+     * @param message                       message
+     */
+    public static void v(String message) {
+        if(isLog){
+            Log.v(TAG, message);
+        }
+    }
+
+    /**
+     * Log.d的输出颜色是蓝色的，也就是调式级别，一般不会中止程序，一般是程序员为了调试而打印的log
+     * @param message                       message
+     */
     public static void d(String message) {
         if(isLog){
             Log.d(TAG, message);
         }
     }
 
-    public static void d(Object object){
+    /**
+     * Log.d的输出颜色是蓝色的，也就是调式级别，一般不会中止程序，一般是程序员为了调试而打印的log
+     * @param message                       message
+     */
+    public static void d(Object message){
         if(isLog){
             //这个方法 建议 Debug 进入不执行，因为 object 会进行字符串+拼接，产生大量内存对象。
             //Log.d(TAG, object.toString());
-            Log.d(TAG, " log : " + object);
+            Log.d(TAG, " log : " + message);
         }
     }
 
+    /**
+     * Log.i的输出为绿色，输出大于或等于INFO日志级别的信息，也就是信息界级别，不会中止程序，一般是系统中执行操作的信息提示
+     * @param message                       message
+     */
     public static void i(String message) {
         if(isLog){
             Log.i(TAG, message);
@@ -64,9 +86,13 @@ public final class VideoLogUtils {
 
     }
 
-    public static void e(String msg) {
+    /**
+     * Log.e的输出为红色，仅输出ERROR日志级别的信息，也就是错误级别，一般会中止程序运行，是最严重的Log级别。
+     * @param message                       message
+     */
+    public static void e(String message) {
         if (isLog) {
-            Log.e(TAG, msg);
+            Log.e(TAG, message);
         }
     }
 

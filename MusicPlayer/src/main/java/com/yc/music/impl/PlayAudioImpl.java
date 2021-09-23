@@ -18,7 +18,6 @@ import com.yc.music.receiver.AudioEarPhoneReceiver;
 import com.yc.music.service.PlayAudioService;
 import com.yc.music.tool.BaseAppHelper;
 import com.yc.music.tool.QuitTimerHelper;
-import com.yc.music.utils.MusicSpUtils;
 import com.yc.music.utils.NotificationHelper;
 import com.yc.videotool.VideoLogUtils;
 

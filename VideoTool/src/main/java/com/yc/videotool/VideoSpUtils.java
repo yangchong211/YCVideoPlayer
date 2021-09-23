@@ -1,4 +1,4 @@
-package com.yc.music.utils;
+package com.yc.videotool;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
@@ -14,11 +14,11 @@ import java.util.Set;
 
 
 @SuppressLint("ApplySharedPref")
-public final class MusicSpUtils {
+public final class VideoSpUtils {
 
-    private static SimpleArrayMap<String, MusicSpUtils> SP_UTILS_MAP = new SimpleArrayMap<>();
-    private SharedPreferences sp;
-    private static Context context;
+    private static final SimpleArrayMap<String, VideoSpUtils> SP_UTILS_MAP = new SimpleArrayMap<>();
+    private final SharedPreferences sp;
+    private static Application context;
 
     public static void init(Application application){
         context = application;
@@ -27,9 +27,9 @@ public final class MusicSpUtils {
     /**
      * 获取 SP 实例
      *
-     * @return {@link MusicSpUtils}
+     * @return {@link VideoSpUtils}
      */
-    public static MusicSpUtils getInstance() {
+    public static VideoSpUtils getInstance() {
         return getInstance("");
     }
 
@@ -37,19 +37,19 @@ public final class MusicSpUtils {
      * 获取 SP 实例
      *
      * @param spName sp 名
-     * @return {@link MusicSpUtils}
+     * @return {@link VideoSpUtils}
      */
-    public static MusicSpUtils getInstance(String spName) {
+    public static VideoSpUtils getInstance(String spName) {
         if (isSpace(spName)) spName = "spUtils";
-        MusicSpUtils spUtils = SP_UTILS_MAP.get(spName);
+        VideoSpUtils spUtils = SP_UTILS_MAP.get(spName);
         if (spUtils == null) {
-            spUtils = new MusicSpUtils(spName);
+            spUtils = new VideoSpUtils(spName);
             SP_UTILS_MAP.put(spName, spUtils);
         }
         return spUtils;
     }
 
-    private MusicSpUtils(final String spName) {
+    private VideoSpUtils(final String spName) {
         sp = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
     }
 

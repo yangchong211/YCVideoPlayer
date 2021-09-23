@@ -35,10 +35,11 @@ import com.yc.video.player.InterVideoPlayer;
  */
 public class ControlWrapper implements InterVideoPlayer, InterVideoController {
     
-    private InterVideoPlayer mVideoPlayer;
-    private InterVideoController mController;
+    private final InterVideoPlayer mVideoPlayer;
+    private final InterVideoController mController;
     
-    public ControlWrapper(@NonNull InterVideoPlayer videoPlayer, @NonNull InterVideoController controller) {
+    public ControlWrapper(@NonNull InterVideoPlayer videoPlayer,
+                          @NonNull InterVideoController controller) {
         mVideoPlayer = videoPlayer;
         mController = controller;
     }
