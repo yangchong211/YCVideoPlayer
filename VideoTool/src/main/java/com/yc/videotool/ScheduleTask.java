@@ -22,7 +22,10 @@ public class ScheduleTask {
     private ScheduleTask() {
         this.mExecutors = Executors.newSingleThreadExecutor(new ThreadFactory() {
             public Thread newThread(@NonNull Runnable r) {
-                return new Thread(r, "ScheduleTask");
+                //创建线程
+                Thread scheduleTask = new Thread(r);
+                scheduleTask.setName("ScheduleTask");
+                return scheduleTask;
             }
         });
     }
@@ -32,13 +35,17 @@ public class ScheduleTask {
     }
 
     public void schedule(Runnable runnable) {
-        this.mExecutors.execute(runnable);
+        if (mExecutors != null){
+            this.mExecutors.execute(runnable);
+        }
     }
 
     private static class Holder {
+        // 单例模式
         private static final ScheduleTask INSTANCE = new ScheduleTask();
 
         private Holder() {
+
         }
     }
 

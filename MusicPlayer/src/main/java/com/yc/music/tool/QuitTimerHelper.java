@@ -2,10 +2,7 @@ package com.yc.music.tool;
 
 import android.os.Handler;
 import android.text.format.DateUtils;
-
 import androidx.annotation.NonNull;
-
-import com.yc.music.inter.EventCallback;
 import com.yc.music.service.PlayAudioService;
 
 
@@ -20,6 +17,7 @@ public class QuitTimerHelper {
     private long mTimerRemain;
 
     public static QuitTimerHelper getInstance() {
+        //使用单例模式
         return SingletonHolder.QUIT_TIMER_INSTANCE;
     }
 
@@ -68,15 +66,21 @@ public class QuitTimerHelper {
     }
 
     private final Runnable mQuitRunnable = new Runnable() {
+        //开启runnable
         @Override
         public void run() {
             mTimerRemain -= DateUtils.SECOND_IN_MILLIS;
             if (mTimerRemain > 0) {
                 mTimerCallback.onEvent(mTimerRemain);
+                //一秒种发送一次消息
                 mHandler.postDelayed(this, DateUtils.SECOND_IN_MILLIS);
             } else {
                 mPlayService.quit();
             }
         }
     };
+
+    public interface EventCallback<T> {
+        void onEvent(T t);
+    }
 }

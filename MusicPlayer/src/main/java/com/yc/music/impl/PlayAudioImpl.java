@@ -20,6 +20,7 @@ import com.yc.music.tool.BaseAppHelper;
 import com.yc.music.tool.QuitTimerHelper;
 import com.yc.music.utils.NotificationHelper;
 import com.yc.videotool.VideoLogUtils;
+import com.yc.videotool.VideoSpUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -111,7 +112,7 @@ public class PlayAudioImpl implements InterPlayAudio {
         VideoLogUtils.e("PlayService"+"----id----"+ id);
         //保存当前播放的musicId，下次进来可以记录状态
         long musicId = Long.parseLong(id);
-        MusicSpUtils.getInstance(MusicConstant.SP_NAME).put(MusicConstant.MUSIC_ID,musicId);
+        VideoSpUtils.getInstance(MusicConstant.SP_NAME).put(MusicConstant.MUSIC_ID,musicId);
         play(music);
     }
 
@@ -261,7 +262,7 @@ public class PlayAudioImpl implements InterPlayAudio {
         if (audioMusics.isEmpty()) {
             return;
         }
-        int playMode = MusicSpUtils.getInstance(MusicConstant.SP_NAME).getInt(MusicConstant.PLAY_MODE, 0);
+        int playMode = VideoSpUtils.getInstance(MusicConstant.SP_NAME).getInt(MusicConstant.PLAY_MODE, 0);
         int size = audioMusics.size();
         PlayModeEnum mode = PlayModeEnum.valueOf(playMode);
         switch (mode) {
@@ -296,7 +297,7 @@ public class PlayAudioImpl implements InterPlayAudio {
         if (audioMusics.isEmpty()) {
             return;
         }
-        int playMode = MusicSpUtils.getInstance(MusicConstant.SP_NAME).getInt(MusicConstant.PLAY_MODE, 0);
+        int playMode = VideoSpUtils.getInstance(MusicConstant.SP_NAME).getInt(MusicConstant.PLAY_MODE, 0);
         int size = audioMusics.size();
         PlayModeEnum mode = PlayModeEnum.valueOf(playMode);
         switch (mode) {
@@ -572,7 +573,7 @@ public class PlayAudioImpl implements InterPlayAudio {
      */
     public void updatePlayingPosition() {
         int position = 0;
-        long id = MusicSpUtils.getInstance(MusicConstant.SP_NAME).getLong(MusicConstant.MUSIC_ID,-1);
+        long id = VideoSpUtils.getInstance(MusicConstant.SP_NAME).getLong(MusicConstant.MUSIC_ID,-1);
         if(audioMusics.isEmpty()){
             return;
         }
@@ -586,7 +587,7 @@ public class PlayAudioImpl implements InterPlayAudio {
         }
         mPlayingPosition = position;
         long musicId = Long.parseLong(audioMusics.get(mPlayingPosition).getId());
-        MusicSpUtils.getInstance(MusicConstant.SP_NAME).put(MusicConstant.MUSIC_ID,musicId);
+        VideoSpUtils.getInstance(MusicConstant.SP_NAME).put(MusicConstant.MUSIC_ID,musicId);
     }
 
 

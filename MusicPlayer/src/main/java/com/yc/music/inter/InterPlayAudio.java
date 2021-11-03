@@ -4,6 +4,15 @@ package com.yc.music.inter;
 import com.yc.music.model.AudioBean;
 import com.yc.music.service.PlayAudioService;
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     email  : yangchong211@163.com
+ *     time  : 2017/5/6
+ *     desc  : 音频播放的接口
+ *     revise:
+ * </pre>
+ */
 public interface InterPlayAudio {
 
     void init(PlayAudioService service);

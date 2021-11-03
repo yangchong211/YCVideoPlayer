@@ -12,7 +12,6 @@ import com.yc.music.config.MusicConstant;
 import com.yc.music.config.MusicPlayAction;
 import com.yc.music.delegate.PlayAudioDelegate;
 import com.yc.music.impl.PlayAudioImpl;
-import com.yc.music.inter.EventCallback;
 import com.yc.music.inter.InterPlayAudio;
 import com.yc.music.inter.OnPlayerEventListener;
 import com.yc.music.model.AudioBean;
@@ -45,6 +44,7 @@ public class PlayAudioService extends AbsAudioService {
      * 更新播放进度的显示，时间的显示
      */
     public static final int UPDATE_PLAY_PROGRESS_SHOW = 520;
+    public static final int UPDATE_PLAY_PROGRESS = 521;
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
@@ -54,6 +54,8 @@ public class PlayAudioService extends AbsAudioService {
             switch (msg.what){
                 case UPDATE_PLAY_PROGRESS_SHOW:
                     mDelegate.updatePlayProgress();
+                    break;
+                case UPDATE_PLAY_PROGRESS:
                     break;
                 default:
                     break;
@@ -154,7 +156,8 @@ public class PlayAudioService extends AbsAudioService {
      * 初始化计时器
      */
     private void initQuitTimer() {
-        QuitTimerHelper.getInstance().init(this, handler, new EventCallback<Long>() {
+        QuitTimerHelper.getInstance().init(this, handler,
+                new QuitTimerHelper.EventCallback<Long>() {
             @Override
             public void onEvent(Long aLong) {
                 if (mListener != null) {

@@ -37,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yc.video.R;
+import com.yc.videotool.VideoToolUtils;
 
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Field;
@@ -100,7 +101,7 @@ public final class BaseToast {
     private static Toast toast;
     @SuppressLint("ShowToast")
     public static void showToast(String content) {
-        checkMainThread();
+        VideoToolUtils.checkMainThread();
         checkContext();
         if (!checkNull(mToast)) {
             mToast.get().cancel();
@@ -121,7 +122,7 @@ public final class BaseToast {
      * @param notice                        内容
      */
     public static void showRoundRectToast(CharSequence notice) {
-        checkMainThread();
+        VideoToolUtils.checkMainThread();
         checkContext();
         if (TextUtils.isEmpty(notice)){
             return;
@@ -142,7 +143,7 @@ public final class BaseToast {
 
 
     public static void showRoundRectToast(CharSequence notice,CharSequence desc) {
-        checkMainThread();
+        VideoToolUtils.checkMainThread();
         checkContext();
         if (TextUtils.isEmpty(notice)){
             return;
@@ -165,7 +166,7 @@ public final class BaseToast {
 
 
     public static void showRoundRectToast(@LayoutRes int layout) {
-        checkMainThread();
+        VideoToolUtils.checkMainThread();
         checkContext();
         if (layout==0){
             return;
@@ -305,19 +306,6 @@ public final class BaseToast {
         return false;
     }
 
-
-    public static void checkMainThread(){
-        if (!isMainThread()){
-            throw new IllegalStateException("请不要在子线程中做弹窗操作");
-        }
-    }
-
-    private static boolean isMainThread(){
-        //判断是否是主线程
-        return Looper.getMainLooper() == Looper.myLooper();
-    }
-
-
     public static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
@@ -327,7 +315,7 @@ public final class BaseToast {
      * <pre>
      *     @author yangchong
      *     email  : yangchong211@163.com
-     *     time  : 20120/5/6
+     *     time  : 2020/5/6
      *     desc  : 利用hook解决toast崩溃问题
      *     revise:
      * </pre>
@@ -361,7 +349,7 @@ public final class BaseToast {
 
         public static class SafelyHandler extends Handler {
 
-            private Handler impl;
+            private final Handler impl;
 
             public SafelyHandler(Handler impl) {
                 this.impl = impl;

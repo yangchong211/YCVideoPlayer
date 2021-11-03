@@ -21,7 +21,7 @@ public class MediaSessionManager {
             | PlaybackStateCompat.ACTION_STOP
             | PlaybackStateCompat.ACTION_SEEK_TO;
 
-    private PlayAudioService mPlayService;
+    private final PlayAudioService mPlayService;
     private MediaSessionCompat mMediaSession;
 
     public MediaSessionManager(PlayAudioService playService) {

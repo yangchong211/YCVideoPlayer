@@ -9,6 +9,15 @@ import androidx.annotation.Nullable;
 
 import com.yc.music.utils.NotificationHelper;
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     email  : yangchong211@163.com
+ *     time  : 2017/5/6
+ *     desc  : 服务，开启前台服务
+ *     revise:
+ * </pre>
+ */
 public class AbsAudioService extends Service {
 
     /**

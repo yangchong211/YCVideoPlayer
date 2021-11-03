@@ -49,7 +49,10 @@ public final class VideoLogUtils {
      */
     public static void v(String message) {
         if(isLog){
-            Log.v(TAG, message);
+            StackTraceElement[] stackTrace = (new Throwable()).getStackTrace();
+            StackTraceElement ste = stackTrace[2];
+            String log = build(message, ste);
+            Log.v(TAG, log);
         }
     }
 
@@ -59,7 +62,10 @@ public final class VideoLogUtils {
      */
     public static void d(String message) {
         if(isLog){
-            Log.d(TAG, message);
+            StackTraceElement[] stackTrace = (new Throwable()).getStackTrace();
+            StackTraceElement ste = stackTrace[2];
+            String log = build(message, ste);
+            Log.d(TAG, log);
         }
     }
 
@@ -67,6 +73,7 @@ public final class VideoLogUtils {
      * Log.d的输出颜色是蓝色的，也就是调式级别，一般不会中止程序，一般是程序员为了调试而打印的log
      * @param message                       message
      */
+    @Deprecated
     public static void d(Object message){
         if(isLog){
             //这个方法 建议 Debug 进入不执行，因为 object 会进行字符串+拼接，产生大量内存对象。
@@ -81,9 +88,11 @@ public final class VideoLogUtils {
      */
     public static void i(String message) {
         if(isLog){
-            Log.i(TAG, message);
+            StackTraceElement[] stackTrace = (new Throwable()).getStackTrace();
+            StackTraceElement ste = stackTrace[2];
+            String log = build(message, ste);
+            Log.i(TAG, log);
         }
-
     }
 
     /**
@@ -92,14 +101,60 @@ public final class VideoLogUtils {
      */
     public static void e(String message) {
         if (isLog) {
-            Log.e(TAG, message);
+            StackTraceElement[] stackTrace = (new Throwable()).getStackTrace();
+            StackTraceElement ste = stackTrace[1];
+            String log = build(message, ste);
+            Log.e(TAG, log);
         }
     }
 
     public static void e(String message, Throwable throwable) {
         if(isLog){
-            Log.e(TAG, message, throwable);
+            StackTraceElement[] stackTrace = (new Throwable()).getStackTrace();
+            StackTraceElement ste = stackTrace[1];
+            String log = build(message, ste);
+            Log.e(TAG, log, throwable);
         }
     }
+
+    /**
+     * Log.w的输出为橙色, 输出大于或等于WARN日志级别的信息，也就是警告级别，一般不会中止程序，但是可能会影响程序执行结果
+     * @param message                       message
+     */
+    public static void w(String message) {
+        if (isLog) {
+            StackTraceElement[] stackTrace = (new Throwable()).getStackTrace();
+            StackTraceElement ste = stackTrace[1];
+            String log = build(message, ste);
+            Log.w(TAG, log);
+        }
+    }
+
+    private static String build(CharSequence log, StackTraceElement ste) {
+        StringBuilder buf = new StringBuilder();
+        buf.append("[").append(Thread.currentThread().getId()).append("]");
+        if (ste.isNativeMethod()) {
+            buf.append("(Native Method)");
+        } else {
+            CharSequence fileName = ste.getFileName();
+            if (fileName == null) {
+                buf.append("(Unknown Source)");
+            } else {
+                //获取代码的所在行数
+                int lineNum = ste.getLineNumber();
+                buf.append('(');
+                buf.append(fileName);
+                if (lineNum >= 0) {
+                    buf.append(':');
+                    //行数
+                    buf.append(lineNum);
+                }
+                buf.append("):");
+            }
+        }
+        buf.append(log);
+        return buf.toString();
+    }
+
 
 }
