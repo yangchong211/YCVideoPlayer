@@ -22,8 +22,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //这两个是必须要加的，其它的可供选择
-    api 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
-    api 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
+    compileOnly('tv.danmaku.ijk.media:ijkplayer-java:0.8.8')
+    compileOnly('tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4')
     //其他库文件
     //implementation 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.8'
     //implementation 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'
@@ -32,16 +32,16 @@ dependencies {
 
 
     //谷歌播放器
-    api  "com.google.android.exoplayer:exoplayer:2.11.3"
+    compileOnly("com.google.android.exoplayer:exoplayer:2.11.3")
     //exoplayer-core：核心功能 (必要)
-    api "com.google.android.exoplayer:exoplayer-core:2.11.3"
+    compileOnly("com.google.android.exoplayer:exoplayer-core:2.11.3")
     //exoplayer-dash：支持DASH内容
-    api "com.google.android.exoplayer:exoplayer-dash:2.11.3"
+    compileOnly("com.google.android.exoplayer:exoplayer-dash:2.11.3")
     //exoplayer-hls：支持HLS内容
-    api "com.google.android.exoplayer:exoplayer-hls:2.11.3"
+    compileOnly("com.google.android.exoplayer:exoplayer-hls:2.11.3")
     //exoplayer-smoothstreaming：支持SmoothStreaming内容
-    api "com.google.android.exoplayer:exoplayer-smoothstreaming:2.11.3"
-    api "com.google.android.exoplayer:extension-rtmp:2.11.3"
+    compileOnly("com.google.android.exoplayer:exoplayer-smoothstreaming:2.11.3")
+    compileOnly("com.google.android.exoplayer:extension-rtmp:2.11.3")
 
     implementation project(':VideoTool')
 }

@@ -54,6 +54,15 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.3'
     implementation 'com.google.android.exoplayer:exoplayer-core:2.11.3'
 
+    //这两个是必须要加的，其它的可供选择
+    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
+    //其他库文件
+    //implementation 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.8'
+    //implementation 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'
+    //implementation 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.8'
+    //implementation 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.8.8'
+
     //弹幕
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'

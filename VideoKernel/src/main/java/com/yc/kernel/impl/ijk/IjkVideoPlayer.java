@@ -48,7 +48,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
 
     protected IjkMediaPlayer mMediaPlayer;
     private int mBufferedPercent;
-    private Context mAppContext;
+    private final Context mAppContext;
 
     public IjkVideoPlayer(Context context) {
         if (context instanceof Application){
@@ -391,7 +391,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
      * int MEDIA_ERROR_IJK_PLAYER = -10000,//一般是视频源有问题或者数据格式不支持，比如音频不是AAC之类的
      * int MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK = 200;//数据错误没有有效的回收
      */
-    private IMediaPlayer.OnErrorListener onErrorListener = new IMediaPlayer.OnErrorListener() {
+    private final IMediaPlayer.OnErrorListener onErrorListener = new IMediaPlayer.OnErrorListener() {
         @Override
         public boolean onError(IMediaPlayer iMediaPlayer, int framework_err, int impl_err) {
             mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_UNEXPECTED,"监听异常"+ framework_err + ", extra: " + impl_err);
@@ -403,7 +403,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
     /**
      * 设置视频播放完成监听事件
      */
-    private IMediaPlayer.OnCompletionListener onCompletionListener = new IMediaPlayer.OnCompletionListener() {
+    private final IMediaPlayer.OnCompletionListener onCompletionListener = new IMediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(IMediaPlayer iMediaPlayer) {
             mPlayerEventListener.onCompletion();
@@ -415,7 +415,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
     /**
      * 设置视频信息监听器
      */
-    private IMediaPlayer.OnInfoListener onInfoListener = new IMediaPlayer.OnInfoListener() {
+    private final IMediaPlayer.OnInfoListener onInfoListener = new IMediaPlayer.OnInfoListener() {
         @Override
         public boolean onInfo(IMediaPlayer iMediaPlayer, int what, int extra) {
             mPlayerEventListener.onInfo(what, extra);
@@ -427,7 +427,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
     /**
      * 设置视频缓冲更新监听事件
      */
-    private IMediaPlayer.OnBufferingUpdateListener onBufferingUpdateListener = new IMediaPlayer.OnBufferingUpdateListener() {
+    private final IMediaPlayer.OnBufferingUpdateListener onBufferingUpdateListener = new IMediaPlayer.OnBufferingUpdateListener() {
         @Override
         public void onBufferingUpdate(IMediaPlayer iMediaPlayer, int percent) {
             mBufferedPercent = percent;
@@ -438,7 +438,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
     /**
      * 设置准备视频播放监听事件
      */
-    private IMediaPlayer.OnPreparedListener onPreparedListener = new IMediaPlayer.OnPreparedListener() {
+    private final IMediaPlayer.OnPreparedListener onPreparedListener = new IMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(IMediaPlayer iMediaPlayer) {
             mPlayerEventListener.onPrepared();
@@ -449,7 +449,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
     /**
      * 设置视频大小更改监听器
      */
-    private IMediaPlayer.OnVideoSizeChangedListener onVideoSizeChangedListener = new IMediaPlayer.OnVideoSizeChangedListener() {
+    private final IMediaPlayer.OnVideoSizeChangedListener onVideoSizeChangedListener = new IMediaPlayer.OnVideoSizeChangedListener() {
         @Override
         public void onVideoSizeChanged(IMediaPlayer iMediaPlayer, int width, int height,
                                        int sar_num, int sar_den) {
@@ -465,7 +465,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
     /**
      * 设置时间文本监听器
      */
-    private IMediaPlayer.OnTimedTextListener onTimedTextListener = new IMediaPlayer.OnTimedTextListener() {
+    private final IMediaPlayer.OnTimedTextListener onTimedTextListener = new IMediaPlayer.OnTimedTextListener() {
         @Override
         public void onTimedText(IMediaPlayer iMediaPlayer, IjkTimedText ijkTimedText) {
 
@@ -475,7 +475,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
     /**
      * 设置视频seek完成监听事件
      */
-    private IMediaPlayer.OnSeekCompleteListener onSeekCompleteListener = new IMediaPlayer.OnSeekCompleteListener() {
+    private final IMediaPlayer.OnSeekCompleteListener onSeekCompleteListener = new IMediaPlayer.OnSeekCompleteListener() {
         @Override
         public void onSeekComplete(IMediaPlayer iMediaPlayer) {
 

@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -188,7 +190,7 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
         mInternalPlayer.stop();
     }
 
-    private MediaSourceEventListener mMediaSourceEventListener = new MediaSourceEventListener() {
+    private final MediaSourceEventListener mMediaSourceEventListener = new MediaSourceEventListener() {
         @Override
         public void onReadingStarted(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId) {
             if (mPlayerEventListener != null && mIsPreparing) {
@@ -420,7 +422,7 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
     }
 
     @Override
-    public void onPlayerError(ExoPlaybackException error) {
+    public void onPlayerError(@NonNull ExoPlaybackException error) {
         if (mPlayerEventListener != null) {
             int type = error.type;
             if (type == TYPE_SOURCE){
