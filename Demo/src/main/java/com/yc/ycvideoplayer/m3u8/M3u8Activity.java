@@ -18,7 +18,7 @@ import com.yc.m3u8.manager.M3u8LiveManger;
 import com.yc.m3u8.task.M3u8DownloadTask;
 import com.yc.m3u8.utils.M3u8FileUtils;
 import com.yc.m3u8.utils.NetSpeedUtils;
-import com.yc.ycvideoplayer.newPlayer.activity.NormalActivity;
+import com.yc.ycvideoplayer.video.activity.NormalActivity;
 
 import org.yc.ycvideoplayer.R;
 

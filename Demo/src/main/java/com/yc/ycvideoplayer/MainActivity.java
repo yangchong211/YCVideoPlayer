@@ -34,9 +34,7 @@ import com.yc.ycvideoplayer.audio.AudioActivity;
 import com.yc.ycvideoplayer.demo.DemoActivity;
 import com.yc.ycvideoplayer.m3u8.M3u8Activity;
 import com.yc.ycvideoplayer.music.MusicPlayerActivity;
-import com.yc.ycvideoplayer.newPlayer.activity.TypeActivity;
-import com.yc.ycvideoplayer.oldPlayer.OldActivity;
-
+import com.yc.ycvideoplayer.video.activity.TypeActivity;
 import java.util.List;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
@@ -107,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(TypeActivity.class);
                 break;
             case R.id.tv_3:
-                startActivity(OldActivity.class);
                 break;
             case R.id.tv_4:
                 startCheckService();
