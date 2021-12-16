@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.yc.audioplayer.manager.AudioManager;
-import com.yc.audioplayer.spi.AudioService;
+import com.yc.audioplayer.service.AudioService;
 import com.yc.audioplayer.bean.AudioPlayData;
 import com.yc.audioplayer.bean.AudioTtsPriority;
 
@@ -81,7 +81,7 @@ public class AudioActivity extends AppCompatActivity implements View.OnClickList
             });
         } else if (v == btnSpeakTts){
             AudioPlayData playData = new AudioPlayData.Builder()
-                    .tts("当前只有做国际版业务时，才需要调用此函数。别的业务线或其他情况下禁止调用此函数。2.若需要调用，请在初始化阶段")
+                    .tts("开始播放语音，这个是一段文字，逗比。Your goals are hindered by financial strictures.")
                     .build();
             AudioService.getInstance().play(playData);
         } else if (v == btnSpeakMedia){
@@ -103,14 +103,15 @@ public class AudioActivity extends AppCompatActivity implements View.OnClickList
             AudioService.getInstance().stop();
         } else if (v == btnHighPriority){
             AudioPlayData playData =new AudioPlayData.Builder(AudioTtsPriority.HIGH_PRIORITY)
-                    .tts("Fire in the home! Fire in the home ")
+                    .tts("It sets targets for reduction of greenhouse-gas emissions. ")
                     .build();
             AudioService.getInstance().play(playData);
         } else if (v == btnRelease){
             AudioService.getInstance().release();
         } else if (v == btnBrazil){
+            //法鱼
             AudioPlayData playData = new AudioPlayData.Builder()
-                    .tts("vire à esquerda na parada de ônibus")
+                    .tts("Dans tout ce que nous faisons, nous devons être persévérants")
                     .build();
             AudioService.getInstance().play(playData);
         } else if (v == btnTts){

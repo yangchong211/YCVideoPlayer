@@ -1,4 +1,4 @@
-package com.yc.audioplayer.spi;
+package com.yc.audioplayer.service;
 
 import android.content.Context;
 

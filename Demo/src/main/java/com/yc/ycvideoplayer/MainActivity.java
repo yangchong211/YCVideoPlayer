@@ -10,21 +10,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import org.yc.ycvideoplayer.R;
-
 import com.yc.music.model.AudioBean;
 import com.yc.music.service.PlayAudioService;
 import com.yc.music.tool.BaseAppHelper;
+import com.yc.video.tool.BaseToast;
 import com.yc.videotool.VideoLogUtils;
 import com.yc.videoview.FloatWindow;
 import com.yc.videoview.MoveType;
@@ -78,12 +76,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
-        mTv1 = (TextView) findViewById(R.id.tv_1);
-        mTv2 = (TextView) findViewById(R.id.tv_2);
-        mTv3 = (TextView) findViewById(R.id.tv_3);
-        mTv4 = (TextView) findViewById(R.id.tv_4);
-        mTv5 = (TextView) findViewById(R.id.tv_5);
-        mTv6 = (TextView) findViewById(R.id.tv_6);
+        mTv1 = findViewById(R.id.tv_1);
+        mTv2 = findViewById(R.id.tv_2);
+        mTv3 = findViewById(R.id.tv_3);
+        mTv4 = findViewById(R.id.tv_4);
+        mTv5 = findViewById(R.id.tv_5);
+        mTv6 = findViewById(R.id.tv_6);
         mTv7 = findViewById(R.id.tv_7);
 
         mTv1.setOnClickListener(this);
@@ -183,10 +181,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    /**
+     * 再点一次退出程序时间设置
+     */
+    private static final long WAIT_TIME = 2000L;
+    private long touchTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //双击返回桌面
+            if (System.currentTimeMillis() - touchTime < WAIT_TIME) {
+                //finish();
+                //可将activity 退到后台，注意不是finish()退出。
+                //判断Activity是否是task根
+                //使用moveTaskToBack是为了让app退出时，不闪屏，退出柔和一些
+                if (this.isTaskRoot()){
+                    //参数为false——代表只有当前activity是task根，指应用启动的第一个activity时，才有效;
+                    moveTaskToBack(false);
+                } else {
+                    //参数为true——则忽略这个限制，任何activity都可以有效。
+                    //使用此方法，便不会执行Activity的onDestroy()方法
+                    moveTaskToBack(true);
+                }
+                //注意这里是finish所有activity，然后杀死进程
+                //ActivityManageUtils.getInstance().appExit(this);
+            } else {
+                touchTime = System.currentTimeMillis();
+                //参考易车，抖音自定义吐司
+                BaseToast.showRoundRectToast("再按一次退出");
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
     private void startActivity(Class c){
         startActivity(new Intent(this,c));
     }
-
 
 
     /**
