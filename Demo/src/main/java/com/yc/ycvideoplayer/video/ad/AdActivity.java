@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.yc.videocache.HttpProxyCacheServer;
 
 import com.yc.ycvideoplayer.ConstantVideo;
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 import com.yc.videocache.cache.ProxyVideoCacheManager;
 
 import com.yc.video.config.ConstantKeys;

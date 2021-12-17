@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.yc.ycvideoplayer.ConstantVideo;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 import com.yc.video.player.VideoPlayer;
 import com.yc.video.player.VideoViewManager;
 import com.yc.video.ui.pip.FloatVideoManager;

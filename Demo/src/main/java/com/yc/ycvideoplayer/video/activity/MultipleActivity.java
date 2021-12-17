@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.yc.ycvideoplayer.ConstantVideo;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 import com.yc.video.player.VideoPlayer;
 import com.yc.video.player.VideoPlayerBuilder;
 import com.yc.video.ui.view.BasisVideoController;

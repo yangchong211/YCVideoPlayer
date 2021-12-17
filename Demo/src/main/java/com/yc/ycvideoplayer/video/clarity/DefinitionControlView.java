@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.tool.PlayerUtils;
 import com.yc.video.ui.view.CustomBottomView;

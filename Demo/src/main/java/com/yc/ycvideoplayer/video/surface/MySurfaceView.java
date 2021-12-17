@@ -14,7 +14,7 @@ import android.view.MotionEvent;
 
 import com.yc.videotool.VideoLogUtils;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 
 public class MySurfaceView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
 

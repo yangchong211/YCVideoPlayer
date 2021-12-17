@@ -11,11 +11,11 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 
-import org.yc.ycvideoplayer.R;
 import com.yc.video.player.VideoViewManager;
 import com.yc.video.player.VideoPlayer;
 import com.yc.video.tool.PlayerUtils;
 import com.yc.video.ui.view.BasisVideoController;
+import com.yc.ycvideoplayer.R;
 
 public class DetailActivity extends AppCompatActivity {
 

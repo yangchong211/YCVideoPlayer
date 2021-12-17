@@ -13,7 +13,7 @@ import com.yc.audioplayer.service.AudioService;
 import com.yc.audioplayer.bean.AudioPlayData;
 import com.yc.audioplayer.bean.AudioTtsPriority;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 
 public class AudioActivity extends AppCompatActivity implements View.OnClickListener {
 

@@ -20,7 +20,7 @@ import com.yc.m3u8.utils.M3u8FileUtils;
 import com.yc.m3u8.utils.NetSpeedUtils;
 import com.yc.ycvideoplayer.video.activity.NormalActivity;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 
 import java.io.File;
 import java.io.IOException;

@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import com.yc.ycvideoplayer.BaseActivity;
 import com.yc.ycvideoplayer.ConstantVideo;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.player.SimpleStateListener;
 import com.yc.video.player.VideoPlayer;

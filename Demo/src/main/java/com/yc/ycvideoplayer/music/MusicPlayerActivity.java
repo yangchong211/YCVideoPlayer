@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.yc.music.inter.OnPlayerEventListener;
 import com.yc.music.model.AudioBean;
 import com.yc.music.tool.BaseAppHelper;
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 
 public class MusicPlayerActivity extends AppCompatActivity implements View.OnClickListener {
 

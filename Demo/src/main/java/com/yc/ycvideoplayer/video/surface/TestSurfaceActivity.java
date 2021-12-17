@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 
 public class TestSurfaceActivity extends AppCompatActivity {
 

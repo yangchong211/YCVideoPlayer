@@ -10,7 +10,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 import com.yc.ycvideoplayer.video.activity.DetailActivity;
 import com.yc.ycvideoplayer.video.activity.IntentKeys;
 import com.yc.video.config.ConstantKeys;

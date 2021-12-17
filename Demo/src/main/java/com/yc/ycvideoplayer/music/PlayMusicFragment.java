@@ -30,7 +30,7 @@ import com.yc.video.tool.PlayerUtils;
 import com.yc.videotool.VideoSpUtils;
 import com.yc.videotool.VideoLogUtils;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 
 import java.util.Objects;
 

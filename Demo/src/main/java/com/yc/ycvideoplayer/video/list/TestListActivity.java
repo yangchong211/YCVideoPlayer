@@ -2,7 +2,7 @@ package com.yc.ycvideoplayer.video.list;
 
 import com.yc.ycvideoplayer.BaseActivity;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 import com.yc.ycvideoplayer.video.tiktok.TikTok1ListFragment;
 import com.yc.ycvideoplayer.video.tiktok.TikTokListFragment;
 

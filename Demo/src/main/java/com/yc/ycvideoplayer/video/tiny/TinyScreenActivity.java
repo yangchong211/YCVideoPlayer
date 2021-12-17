@@ -14,7 +14,7 @@ import com.yc.ycvideoplayer.ConstantVideo;
 import com.yc.ycvideoplayer.video.list.OnItemChildClickListener;
 import com.yc.ycvideoplayer.video.list.VideoRecyclerViewAdapter;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.config.VideoInfoBean;
 import com.yc.video.player.SimpleStateListener;

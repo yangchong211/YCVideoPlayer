@@ -12,7 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.yc.videotool.VideoLogUtils;
 
 import com.yc.ycvideoplayer.ConstantVideo;
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 
 import com.yc.pagerlib.pager.VerticalViewPager;
 import com.yc.videocache.cache.PreloadManager;

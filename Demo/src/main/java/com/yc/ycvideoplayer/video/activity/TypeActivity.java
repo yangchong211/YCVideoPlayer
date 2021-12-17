@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 import com.yc.ycvideoplayer.video.ad.AdActivity;
 import com.yc.ycvideoplayer.video.clarity.ClarityActivity;
 import com.yc.ycvideoplayer.video.danmu.DanmuActivity;

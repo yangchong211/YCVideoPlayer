@@ -18,7 +18,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import org.yc.ycvideoplayer.R;
 import com.yc.music.model.AudioBean;
 import com.yc.music.service.PlayAudioService;
 import com.yc.music.tool.BaseAppHelper;
@@ -29,7 +28,6 @@ import com.yc.videoview.MoveType;
 import com.yc.videoview.WindowScreen;
 import com.yc.videoview.WindowUtil;
 import com.yc.ycvideoplayer.audio.AudioActivity;
-import com.yc.ycvideoplayer.demo.DemoActivity;
 import com.yc.ycvideoplayer.m3u8.M3u8Activity;
 import com.yc.ycvideoplayer.music.MusicPlayerActivity;
 import com.yc.ycvideoplayer.video.activity.TypeActivity;
@@ -97,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_1:
-                startActivity(DemoActivity.class);
                 break;
             case R.id.tv_2:
                 startActivity(TypeActivity.class);

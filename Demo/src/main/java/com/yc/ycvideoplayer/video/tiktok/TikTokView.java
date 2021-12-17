@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.yc.videotool.VideoLogUtils;
 
-import org.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.R;
 
 import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.config.ConstantKeys;
