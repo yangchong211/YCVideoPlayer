@@ -125,15 +125,28 @@
 #### 4.1 关于gradle引用说明
 - 如下所示
     ```
-    //视频UI层，必须要有
-    implementation 'cn.yc:VideoPlayer:3.1.0'
-    //视频缓存，如果不需要则可以不依赖
-    implementation 'cn.yc:VideoCache:3.0.5'
+    //视频UI层，必须有
+    implementation 'com.github.yangchong211.YCVideoPlayer:VideoPlayer:1.1.0'
     //视频内核层，必须有
-    implementation 'cn.yc:VideoKernel:3.0.6'
-    //视频播放器播放位置记录，选择性添加
-    implementation 'cn.yc:VideoSqlLite:1.0.2'
+    implementation 'com.github.yangchong211.YCVideoPlayer:VideoKernel:1.1.0'
     ```
+- 视频播放库系列库
+    |**视频封装库类依赖** | 功能说明 |
+    |--------   |-----        |
+    |**com.github.yangchong211.YCVideoPlayer:VideoPlayer:1.1.0** | 视频播放器库(UI) |
+    |**com.github.yangchong211.YCVideoPlayer:VideoKernel:1.1.0** | 视频播放器内核(ijk，exo，media，其他) |
+    |**com.github.yangchong211.YCVideoPlayer:VideoView:1.1.0** | 视频播放悬浮窗，全局悬浮，单个activity悬浮 |
+    |**com.github.yangchong211.YCVideoPlayer:MusicPlayer:1.1.0** | 音频播放器库 |
+    |**com.github.yangchong211.YCVideoPlayer:VideoM3u8:1.1.0** | m3u8库 |
+    |**com.github.yangchong211.YCVideoPlayer:VideoSqlLite:1.1.0** | 视频播放位置记录，二级缓存库 |
+    |**com.github.yangchong211.YCVideoPlayer:AudioPlayer:1.1.0** | 语音文字类播放器 |
+    |**com.github.yangchong211.YCVideoPlayer:VideoCache:1.1.0** | 边播边缓存库 |
+- 开发中或抽取中，待上传库
+    |**com.github.yangchong211.YCVideoPlayer:VideoScreen:1.1.0** | 视频截图和GIF截图 |
+    |**com.github.yangchong211.YCVideoPlayer:VideoRecorder:1.1.0** | 视频录频 |
+    |**com.github.yangchong211.YCVideoPlayer:VideoMonitor:1.1.0** | 视频监控库 |
+
+
 
 #### 4.2 在xml中添加布局
 - 注意，在实际开发中，由于Android手机碎片化比较严重，分辨率太多了，建议灵活设置布局的宽高比为4：3或者16：9或者你认为合适的，可以用代码设置。
@@ -221,8 +234,11 @@
 
 
 #### 6.4 视频内核lib库介绍
-![image](https://img-blog.csdnimg.cn/2020101309293329.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
-![image](https://img-blog.csdnimg.cn/2020101321464162.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
+- 视频播放器内核架构图
+    - ![image](https://img-blog.csdnimg.cn/2020101309293329.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
+    - ![image](https://img-blog.csdnimg.cn/2020101321464162.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3NzAwMjc1,size_16,color_FFFFFF,t_70#pic_center)
+- 视频播放器内核UML类图
+    - ![image](https://img-blog.csdnimg.cn/057b630ff4f4437b92ad71c52c70b575.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5p2o5YWF,size_20,color_FFFFFF,t_70,g_se,x_16)
 
 
 
