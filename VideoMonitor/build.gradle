@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 apply from: rootProject.projectDir.absolutePath + "/VideoGradle/video.gradle"
+//迁移到jitpack
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion project.ext.androidCompileSdkVersion

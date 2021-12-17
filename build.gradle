@@ -13,13 +13,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
-
         //jitpack
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-
-        //添加下面两句，进行配置，jcenter
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
     }
 }
 
