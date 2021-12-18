@@ -37,14 +37,6 @@ public class PlayAudioImpl implements InterPlayAudio {
      */
     private int mPlayingPosition = -1;
     /**
-     * 正在播放的歌曲[本地|网络]
-     */
-    private AudioBean mPlayingMusic;
-    /**
-     * 音频list集合
-     */
-    private List<AudioBean> audioMusics;
-    /**
      * 播放器
      */
     private MediaPlayer mPlayer;
@@ -90,20 +82,19 @@ public class PlayAudioImpl implements InterPlayAudio {
 
     @Override
     public void play(int position) {
-        audioMusics = BaseAppHelper.get().getMusicList();
-        if (audioMusics.isEmpty()) {
+        if (getAudioMusics().isEmpty()) {
             return;
         }
 
         if (position < 0) {
-            position = audioMusics.size() - 1;
-        } else if (position >= audioMusics.size()) {
+            position = getAudioMusics().size() - 1;
+        } else if (position >= getAudioMusics().size()) {
             //如果是最后一首音乐，则播放时直接播放第一首音乐
             position = 0;
         }
 
         mPlayingPosition = position;
-        AudioBean music = audioMusics.get(mPlayingPosition);
+        AudioBean music = getPlayingMusic();
         String id = music.getId();
         VideoLogUtils.e("PlayService"+"----id----"+ id);
         //保存当前播放的musicId，下次进来可以记录状态
@@ -117,7 +108,7 @@ public class PlayAudioImpl implements InterPlayAudio {
         if (!isPreparing() && !isPausing()) {
             return;
         }
-        if(mPlayingMusic==null){
+        if(getAudioMusics()==null){
             return;
         }
         if(mAudioFocusManager.requestAudioFocus()){
@@ -131,7 +122,7 @@ public class PlayAudioImpl implements InterPlayAudio {
                     onPlayerEventListeners.get(i).onPlayerStart();
                 }
                 //当点击播放按钮时(播放详情页面或者底部控制栏)，同步通知栏中播放按钮状态
-                NotificationHelper.get().showPlay(mPlayingMusic);
+                NotificationHelper.get().showPlay(getPlayingMusic());
                 //注册监听来电/耳机拔出时暂停播放广播
                 if(!mReceiverTag){
                     mReceiverTag = true;
@@ -144,12 +135,11 @@ public class PlayAudioImpl implements InterPlayAudio {
 
     @Override
     public void play(AudioBean music) {
-        mPlayingMusic = music;
         createMediaPlayer();
         try {
             mPlayer.reset();
             //把音频路径传给播放器
-            mPlayer.setDataSource(mPlayingMusic.getPath());
+            mPlayer.setDataSource(music.getPath());
             //准备
             mPlayer.prepareAsync();
             //设置状态为准备中
@@ -164,13 +154,13 @@ public class PlayAudioImpl implements InterPlayAudio {
             //当播放的时候，需要刷新界面信息
             List<OnPlayerEventListener> onPlayerEventListeners = BaseAppHelper.get().getOnPlayerEventListeners();
             for (int i=0 ; i<onPlayerEventListeners.size() ; i++){
-                onPlayerEventListeners.get(i).onChange(mPlayingMusic);
+                onPlayerEventListeners.get(i).onChange(music);
             }
             //更新通知栏
-            NotificationHelper.get().showPlay(mPlayingMusic);
+            NotificationHelper.get().showPlay(music);
 
             //更新
-            mMediaSessionManager.updateMetaData(mPlayingMusic);
+            mMediaSessionManager.updateMetaData(music);
             mMediaSessionManager.updatePlaybackState();
         } catch (IOException e) {
             e.printStackTrace();
@@ -230,7 +220,7 @@ public class PlayAudioImpl implements InterPlayAudio {
                 onPlayerEventListeners.get(i).onPlayerPause();
             }
             //当点击暂停按钮时(播放详情页面或者底部控制栏)，同步通知栏中暂停按钮状态
-            NotificationHelper.get().showPause(mPlayingMusic);
+            NotificationHelper.get().showPause(getPlayingMusic());
             //注销监听来电/耳机拔出时暂停播放广播
             //判断广播是否注册
             if (mReceiverTag) {
@@ -259,11 +249,11 @@ public class PlayAudioImpl implements InterPlayAudio {
     @Override
     public void next() {
         //建议都添加这个判断
-        if (audioMusics.isEmpty()) {
+        if (getAudioMusics().isEmpty()) {
             return;
         }
         int playMode = VideoSpUtils.getInstance(MusicConstants.SP_NAME).getInt(MusicConstants.PLAY_MODE, 0);
-        int size = audioMusics.size();
+        int size = getAudioMusics().size();
         PlayModeEnum mode = PlayModeEnum.valueOf(playMode);
         switch (mode) {
             //随机
@@ -278,7 +268,7 @@ public class PlayAudioImpl implements InterPlayAudio {
             //顺序播放并且循环
             case LOOP:
             default:
-                if (mPlayingPosition != size - 1) {
+                if (isHaveNext()){
                     // 如果不是最后一首，则还有下一首
                     mPlayingPosition++;
                 } else {
@@ -294,11 +284,11 @@ public class PlayAudioImpl implements InterPlayAudio {
     @Override
     public void prev() {
         //建议都添加这个判断
-        if (audioMusics.isEmpty()) {
+        if (getAudioMusics().isEmpty()) {
             return;
         }
         int playMode = VideoSpUtils.getInstance(MusicConstants.SP_NAME).getInt(MusicConstants.PLAY_MODE, 0);
-        int size = audioMusics.size();
+        int size = getAudioMusics().size();
         PlayModeEnum mode = PlayModeEnum.valueOf(playMode);
         switch (mode) {
             //随机
@@ -313,7 +303,7 @@ public class PlayAudioImpl implements InterPlayAudio {
             //顺序播放并且循环
             case LOOP:
             default:
-                if(mPlayingPosition != 0){
+                if (isHavePre()){
                     // 如果不是第一首，则还有上一首
                     mPlayingPosition--;
                 } else {
@@ -327,6 +317,7 @@ public class PlayAudioImpl implements InterPlayAudio {
 
     @Override
     public void updatePlayProgress() {
+        //更新
         updatePlayProgressShow();
     }
 
@@ -470,7 +461,7 @@ public class PlayAudioImpl implements InterPlayAudio {
      * 获取正在播放的歌曲[本地|网络]
      */
     public AudioBean getPlayingMusic() {
-        return mPlayingMusic;
+        return getAudioMusics().get(mPlayingPosition);
     }
 
 
@@ -491,7 +482,7 @@ public class PlayAudioImpl implements InterPlayAudio {
      * @return          true表示有
      */
     public boolean isHavePre() {
-        if(audioMusics !=null && audioMusics.size()>0){
+        if(getAudioMusics() !=null && getAudioMusics().size()>0){
             if(mPlayingPosition != 0){
                 // 如果不是第一首，则还有上一首
                 return true;
@@ -508,8 +499,8 @@ public class PlayAudioImpl implements InterPlayAudio {
      * @return          true表示有
      */
     public boolean isHaveNext() {
-        if(audioMusics !=null && audioMusics.size()>0){
-            if (mPlayingPosition != audioMusics.size() - 1) {
+        if(getAudioMusics() !=null && getAudioMusics().size()>0){
+            if (mPlayingPosition != getAudioMusics().size() - 1) {
                 // 如果不是最后一首，则还有下一首
                 return true;
             } else {
@@ -521,7 +512,9 @@ public class PlayAudioImpl implements InterPlayAudio {
         }
     }
 
-
+    private List<AudioBean> getAudioMusics(){
+        return BaseAppHelper.get().getMusicList();
+    }
 
     /**------------------------------------------------------------------------------------------*/
 
@@ -572,11 +565,11 @@ public class PlayAudioImpl implements InterPlayAudio {
     public void updatePlayingPosition() {
         int position = 0;
         long id = VideoSpUtils.getInstance(MusicConstants.SP_NAME).getLong(MusicConstants.MUSIC_ID,-1);
-        if(audioMusics.isEmpty()){
+        if(getAudioMusics().isEmpty()){
             return;
         }
-        for (int i = 0; i < audioMusics.size(); i++) {
-            String musicId = audioMusics.get(i).getId();
+        for (int i = 0; i < getAudioMusics().size(); i++) {
+            String musicId = getAudioMusics().get(i).getId();
             VideoLogUtils.e("PlayService"+"----musicId----"+ musicId);
             if (Long.parseLong(musicId) == id) {
                 position = i;
@@ -584,7 +577,7 @@ public class PlayAudioImpl implements InterPlayAudio {
             }
         }
         mPlayingPosition = position;
-        long musicId = Long.parseLong(audioMusics.get(mPlayingPosition).getId());
+        long musicId = Long.parseLong(getAudioMusics().get(mPlayingPosition).getId());
         VideoSpUtils.getInstance(MusicConstants.SP_NAME).put(MusicConstants.MUSIC_ID,musicId);
     }
 
