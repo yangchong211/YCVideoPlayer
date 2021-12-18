@@ -138,13 +138,6 @@ public class PlayAudioDelegate implements InterPlayAudio {
     }
 
     @Override
-    public void setOnPlayEventListener(OnPlayerEventListener listener) {
-        if (null != this.mDelegate) {
-            this.mDelegate.setOnPlayEventListener(listener);
-        }
-    }
-
-    @Override
     public AudioBean getPlayingMusic() {
         if (null != this.mDelegate) {
             this.mDelegate.getPlayingMusic();

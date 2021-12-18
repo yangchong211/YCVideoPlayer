@@ -33,10 +33,6 @@ public class PlayAudioImpl implements InterPlayAudio {
     private Context context;
     private PlayAudioService service;
     /**
-     * 播放进度监听器
-     */
-    private OnPlayerEventListener mListener;
-    /**
      * 正在播放的歌曲的序号
      */
     private int mPlayingPosition = -1;
@@ -130,8 +126,9 @@ public class PlayAudioImpl implements InterPlayAudio {
                 mPlayState = MusicPlayAction.STATE_PLAYING;
                 //开始发送消息，执行进度条进度更新
                 QuitTimerHelper.getInstance().getHandler().sendEmptyMessage(UPDATE_PLAY_PROGRESS_SHOW);
-                if (mListener != null) {
-                    mListener.onPlayerStart();
+                List<OnPlayerEventListener> onPlayerEventListeners = BaseAppHelper.get().getOnPlayerEventListeners();
+                for (int i=0 ; i<onPlayerEventListeners.size() ; i++){
+                    onPlayerEventListeners.get(i).onPlayerStart();
                 }
                 //当点击播放按钮时(播放详情页面或者底部控制栏)，同步通知栏中播放按钮状态
                 NotificationHelper.get().showPlay(mPlayingMusic);
@@ -165,8 +162,9 @@ public class PlayAudioImpl implements InterPlayAudio {
             mPlayer.setOnErrorListener(mOnErrorListener);
             mPlayer.setOnInfoListener(mOnInfoListener);
             //当播放的时候，需要刷新界面信息
-            if (mListener != null) {
-                mListener.onChange(mPlayingMusic);
+            List<OnPlayerEventListener> onPlayerEventListeners = BaseAppHelper.get().getOnPlayerEventListeners();
+            for (int i=0 ; i<onPlayerEventListeners.size() ; i++){
+                onPlayerEventListeners.get(i).onChange(mPlayingMusic);
             }
             //更新通知栏
             NotificationHelper.get().showPlay(mPlayingMusic);
@@ -227,8 +225,9 @@ public class PlayAudioImpl implements InterPlayAudio {
             //移除，注意一定要移除，否则一直走更新方法
             QuitTimerHelper.getInstance().getHandler().removeMessages(UPDATE_PLAY_PROGRESS_SHOW);
             //监听
-            if (mListener != null) {
-                mListener.onPlayerPause();
+            List<OnPlayerEventListener> onPlayerEventListeners = BaseAppHelper.get().getOnPlayerEventListeners();
+            for (int i=0 ; i<onPlayerEventListeners.size() ; i++){
+                onPlayerEventListeners.get(i).onPlayerPause();
             }
             //当点击暂停按钮时(播放详情页面或者底部控制栏)，同步通知栏中暂停按钮状态
             NotificationHelper.get().showPause(mPlayingMusic);
@@ -249,8 +248,9 @@ public class PlayAudioImpl implements InterPlayAudio {
         //只有当播放或者暂停的时候才允许拖动bar
         if (isPlaying() || isPausing()) {
             mPlayer.seekTo(progress);
-            if(mListener!=null){
-                mListener.onUpdateProgress(progress);
+            List<OnPlayerEventListener> onPlayerEventListeners = BaseAppHelper.get().getOnPlayerEventListeners();
+            for (int i=0 ; i<onPlayerEventListeners.size() ; i++){
+                onPlayerEventListeners.get(i).onUpdateProgress(progress);
             }
             mMediaSessionManager.updatePlaybackState();
         }
@@ -330,12 +330,6 @@ public class PlayAudioImpl implements InterPlayAudio {
         updatePlayProgressShow();
     }
 
-    @Override
-    public void setOnPlayEventListener(OnPlayerEventListener listener) {
-        mListener = listener;
-    }
-
-
     /**
      * 创建MediaPlayer对象
      */
@@ -374,9 +368,10 @@ public class PlayAudioImpl implements InterPlayAudio {
     private MediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener = new MediaPlayer.OnBufferingUpdateListener() {
         @Override
         public void onBufferingUpdate(MediaPlayer mp, int percent) {
-            if (mListener != null) {
-                // 缓冲百分比
-                mListener.onBufferingUpdate(percent);
+            // 缓冲百分比
+            List<OnPlayerEventListener> onPlayerEventListeners = BaseAppHelper.get().getOnPlayerEventListeners();
+            for (int i=0 ; i<onPlayerEventListeners.size() ; i++){
+                onPlayerEventListeners.get(i).onBufferingUpdate(percent);
             }
         }
     };
@@ -449,9 +444,12 @@ public class PlayAudioImpl implements InterPlayAudio {
      * 更新播放进度的显示，时间的显示
      */
     private void updatePlayProgressShow() {
-        if (isPlaying() && mListener != null) {
+        if (isPlaying()) {
             int currentPosition =  mPlayer.getCurrentPosition();
-            mListener.onUpdateProgress(currentPosition);
+            List<OnPlayerEventListener> onPlayerEventListeners = BaseAppHelper.get().getOnPlayerEventListeners();
+            for (int i=0 ; i<onPlayerEventListeners.size() ; i++){
+                onPlayerEventListeners.get(i).onUpdateProgress(currentPosition);
+            }
         }
         VideoLogUtils.e("updatePlayProgressShow");
         // 每30毫秒更新一下显示的内容，注意这里时间不要太短，因为这个是一个循环

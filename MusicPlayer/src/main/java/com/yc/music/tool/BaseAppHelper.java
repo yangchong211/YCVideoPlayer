@@ -3,6 +3,7 @@ package com.yc.music.tool;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.yc.music.inter.OnPlayerEventListener;
 import com.yc.music.model.AudioBean;
 import com.yc.music.service.PlayAudioService;
 
@@ -32,6 +33,10 @@ public class BaseAppHelper {
      * 全局上下文
      */
     private Context mContext;
+    /**
+     * 播放进度监听器
+     */
+    private final List<OnPlayerEventListener> mOnPlayerEventListeners = new ArrayList<>();
 
     private BaseAppHelper() {
         //这里可以做一些初始化的逻辑
@@ -102,5 +107,25 @@ public class BaseAppHelper {
 
     public Context getContext() {
         return mContext;
+    }
+
+    /**
+     * 设置播放进度监听器
+     * @param listener          listener
+     */
+    public void setOnPlayEventListener(OnPlayerEventListener listener) {
+        mOnPlayerEventListeners.add(listener);
+    }
+
+    /**
+     * 设置播放进度监听器
+     * @param listener          listener
+     */
+    public void removeOnPlayEventListener(OnPlayerEventListener listener) {
+        mOnPlayerEventListeners.remove(listener);
+    }
+
+    public List<OnPlayerEventListener> getOnPlayerEventListeners() {
+        return mOnPlayerEventListeners;
     }
 }

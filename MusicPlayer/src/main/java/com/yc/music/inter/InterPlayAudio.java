@@ -67,8 +67,6 @@ public interface InterPlayAudio {
 
     boolean isPausing();
 
-    void setOnPlayEventListener(OnPlayerEventListener listener);
-
     AudioBean getPlayingMusic();
 
     int getPlayingPosition();

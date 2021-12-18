@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void run() {
                     bindService();
                 }
-            },500);
+            },1000);
         }
     }
 

@@ -27,6 +27,7 @@ import com.yc.video.tool.BaseToast;
 import com.yc.video.player.ProgressManager;
 import com.yc.video.surface.SurfaceFactory;
 import com.yc.video.surface.TextureViewFactory;
+import com.yc.videotool.VideoLogUtils;
 
 
 /**
@@ -247,6 +248,7 @@ public class VideoPlayerConfig {
         }
         mIsShowToast = builder.mIsShowToast;
         mShowToastTime = builder.mShowToastTime;
+        VideoLogUtils.setIsLog(mIsEnableLog);
     }
 
 

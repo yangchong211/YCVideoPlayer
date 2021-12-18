@@ -20,6 +20,8 @@ import com.yc.music.tool.BaseAppHelper;
 import com.yc.music.tool.QuitTimerHelper;
 import com.yc.videotool.VideoLogUtils;
 
+import java.util.List;
+
 
 /**
  * <pre>
@@ -33,10 +35,7 @@ import com.yc.videotool.VideoLogUtils;
 public class PlayAudioService extends AbsAudioService {
 
     private InterPlayAudio mDelegate;
-    /**
-     * 播放进度监听器
-     */
-    private OnPlayerEventListener mListener;
+
     private OnScreenChangeListener mOnScreenChangeListener;
     /**
      * 更新播放进度的显示，时间的显示
@@ -163,8 +162,9 @@ public class PlayAudioService extends AbsAudioService {
                 new QuitTimerHelper.EventCallback<Long>() {
             @Override
             public void onEvent(Long aLong) {
-                if (mListener != null) {
-                    mListener.onTimer(aLong);
+                List<OnPlayerEventListener> onPlayerEventListeners = BaseAppHelper.get().getOnPlayerEventListeners();
+                for (int i=0 ; i<onPlayerEventListeners.size() ; i++){
+                    onPlayerEventListeners.get(i).onTimer(aLong);
                 }
             }
         });
@@ -292,22 +292,6 @@ public class PlayAudioService extends AbsAudioService {
         stopSelf();
     }
 
-    /**
-     * 获取播放进度监听器对象
-     * @return                  OnPlayerEventListener对象
-     */
-    public OnPlayerEventListener getOnPlayEventListener() {
-        return mListener;
-    }
-
-    /**
-     * 设置播放进度监听器
-     * @param listener          listener
-     */
-    public void setOnPlayEventListener(OnPlayerEventListener listener) {
-        mListener = listener;
-        mDelegate.setOnPlayEventListener(mListener);
-    }
 
     public void setOnScreenChangeListener(OnScreenChangeListener onScreenChangeListener) {
         this.mOnScreenChangeListener = onScreenChangeListener;

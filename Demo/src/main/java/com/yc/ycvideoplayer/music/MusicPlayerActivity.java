@@ -193,10 +193,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements View.OnCli
      * 同时还要同步播放详情页面mPlayFragment的视图
      */
     public void initPlayServiceListener() {
-        if (BaseAppHelper.get().getMusicService() == null) {
-            return;
-        }
-        BaseAppHelper.get().getMusicService().setOnPlayEventListener(new OnPlayerEventListener() {
+        BaseAppHelper.get().setOnPlayEventListener(new OnPlayerEventListener() {
             /**
              * 切换歌曲
              * 主要是切换歌曲的时候需要及时刷新界面信息
