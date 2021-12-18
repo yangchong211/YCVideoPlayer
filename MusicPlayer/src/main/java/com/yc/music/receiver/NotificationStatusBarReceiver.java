@@ -27,8 +27,8 @@ public class NotificationStatusBarReceiver extends BroadcastReceiver {
             PlayAudioService.startCommand(context, MusicPlayAction.TYPE_NEXT);
             VideoLogUtils.e("NotifiyStatusBarReceiver"+"下一首");
         } else if (TextUtils.equals(extra, MusicPlayAction.TYPE_START_PAUSE)) {
-            if(BaseAppHelper.get().getPlayService()!=null){
-                boolean playing = BaseAppHelper.get().getPlayService().isPlaying();
+            if(BaseAppHelper.get().getMusicService()!=null){
+                boolean playing = BaseAppHelper.get().getMusicService().isPlaying();
                 if(playing){
                     VideoLogUtils.e("NotifiyStatusBarReceiver"+"暂停");
                 }else {

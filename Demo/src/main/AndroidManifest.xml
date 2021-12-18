@@ -8,6 +8,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+<!--    音频-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
+
+
     <application
         android:name="com.yc.ycvideoplayer.BaseApplication"
         android:allowBackup="true"
@@ -18,7 +24,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.yc.ycvideoplayer.MainActivity"
+        <activity android:name="com.yc.ycvideoplayer.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -27,6 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
         <activity android:name="com.yc.ycvideoplayer.video.activity.TypeActivity"/>
         <activity android:name="com.yc.ycvideoplayer.video.list.TestListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

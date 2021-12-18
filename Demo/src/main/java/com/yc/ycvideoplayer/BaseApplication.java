@@ -12,6 +12,7 @@ import com.yc.kernel.factory.PlayerFactory;
 import com.yc.kernel.utils.PlayerConstant;
 import com.yc.kernel.utils.PlayerFactoryUtils;
 
+import com.yc.music.tool.BaseAppHelper;
 import com.yc.video.config.VideoPlayerConfig;
 import com.yc.video.player.VideoViewManager;
 import com.yc.videosqllite.manager.CacheConfig;
@@ -82,6 +83,8 @@ public class BaseApplication extends Application {
                 //初始化一些耗时的操作
             }
         });
+
+        BaseAppHelper.get().setContext(this);
     }
 
     private void initVideoCache() {

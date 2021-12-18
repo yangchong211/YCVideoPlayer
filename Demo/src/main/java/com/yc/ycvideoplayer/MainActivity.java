@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 检测服务
      */
     private void startCheckService() {
-        if (BaseAppHelper.get().getPlayService() == null) {
+        if (BaseAppHelper.get().getMusicService() == null) {
             startService();
             mTv1.postDelayed(new Runnable() {
                 @Override
@@ -255,28 +255,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private class PlayServiceConnection implements ServiceConnection {
+    private static class PlayServiceConnection implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             VideoLogUtils.e("onServiceConnected"+name);
             final PlayAudioService playService = (PlayAudioService) ((PlayAudioService.PlayBinder) service).getService();
             BaseAppHelper.get().setPlayService(playService);
-            List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
-            AudioBean audioBean1 = new AudioBean();
-            audioBean1.setPath("http://img.zhugexuetang.com/lleXB2SNF5UFp1LfNpPI0hsyQjNs");
-            audioBean1.setId("1");
-            audioBean1.setTitle("音频1");
-            musicList.add(audioBean1);
-            AudioBean audioBean2 = new AudioBean();
-            audioBean2.setPath("http://img.zhugexuetang.com/ljUa-X-oDbLHu7n9AhkuMLu2Yz3k");
-            audioBean2.setId("2");
-            audioBean2.setTitle("音频2");
-            musicList.add(audioBean2);
-            AudioBean audioBean3 = new AudioBean();
-            audioBean3.setPath("http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4");
-            audioBean3.setId("3");
-            audioBean3.setTitle("音频3");
-            musicList.add(audioBean3);
         }
 
         @Override

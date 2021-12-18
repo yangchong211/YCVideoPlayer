@@ -193,6 +193,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     }
 
     private void initFindById(View view) {
+        ivPlayPageBg = view.findViewById(R.id.iv_play_page_bg);
         llContent = view.findViewById(R.id.ll_content);
         ivBack = view.findViewById(R.id.iv_back);
         tvTitle = view.findViewById(R.id.tv_title);
@@ -398,16 +399,13 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
         setCoverAndBg(playingMusic);
         if (BaseAppHelper.get().getMusicService().isPlaying() || BaseAppHelper.get().getMusicService().isPreparing()) {
             ivPlay.setSelected(true);
-            //mAlbumCoverView.start();
         } else {
             ivPlay.setSelected(false);
-            //mAlbumCoverView.pause();
         }
     }
 
     private void setCoverAndBg(AudioBean music) {
-        //mAlbumCoverView.setCoverBitmap(CoverLoader.getInstance().loadRound(music));
-        //ivPlayPageBg.setImageBitmap(CoverLoader.getInstance().loadBlur(music));
+        ivPlayPageBg.setImageBitmap(CoverLoader.getInstance().loadBlur(music));
     }
 
 

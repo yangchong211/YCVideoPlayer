@@ -1,5 +1,7 @@
 package com.yc.ycvideoplayer.music;
 
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -11,22 +13,26 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.yc.music.inter.OnPlayerEventListener;
 import com.yc.music.model.AudioBean;
+import com.yc.music.service.PlayAudioService;
 import com.yc.music.tool.BaseAppHelper;
+import com.yc.videotool.VideoLogUtils;
 import com.yc.ycvideoplayer.R;
+import com.yc.ycvideoplayer.video.list.OnItemChildClickListener;
+import com.yc.ycvideoplayer.video.list.OnItemClickListener;
+import com.yc.ycvideoplayer.video.list.VideoRecyclerViewAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MusicPlayerActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
-    private TextView mTv1;
-    private TextView mTv2;
-    private TextView mTv3;
-    private TextView mTvStart;
-    private TextView mTvStop;
-    private TextView mTvNext;
-    private TextView mTvPre;
+    private RecyclerView recyclerView;
     private FrameLayout mFlPlayBar;
     private ImageView mIvPlayBarCover;
     private TextView mTvPlayBarTitle;
@@ -37,6 +43,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements View.OnCli
     private ProgressBar mPbPlayBar;
     private boolean isPlayFragmentShow = false;
     private PlayMusicFragment mPlayFragment;
+    private MusicAdapter musicAdapter;
 
     @Override
     public void onBackPressed() {
@@ -53,24 +60,15 @@ public class MusicPlayerActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_player);
         initFindViewById();
+        initRecyclerView();
         initListener();
-        mTv1.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                initPlayServiceListener();
-            }
-        },1000);
+        initData();
+        initPlayServiceListener();
     }
 
     private void initFindViewById() {
+        recyclerView = findViewById(R.id.recyclerView);
         mToolbar = findViewById(R.id.toolbar);
-        mTv1 = findViewById(R.id.tv_1);
-        mTv2 = findViewById(R.id.tv_2);
-        mTv3 = findViewById(R.id.tv_3);
-        mTvStart = findViewById(R.id.tv_start);
-        mTvStop = findViewById(R.id.tv_stop);
-        mTvNext = findViewById(R.id.tv_next);
-        mTvPre = findViewById(R.id.tv_pre);
         mFlPlayBar = findViewById(R.id.fl_play_bar);
         mIvPlayBarCover = findViewById(R.id.iv_play_bar_cover);
         mTvPlayBarTitle = findViewById(R.id.tv_play_bar_title);
@@ -79,47 +77,97 @@ public class MusicPlayerActivity extends AppCompatActivity implements View.OnCli
         mIvPlayBarPlay = findViewById(R.id.iv_play_bar_play);
         mIvPlayBarNext = findViewById(R.id.iv_play_bar_next);
         mPbPlayBar = findViewById(R.id.pb_play_bar);
+    }
 
+    private void initRecyclerView() {
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLinearLayoutManager);
+        List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
+        musicAdapter = new MusicAdapter(musicList);
+        musicAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
+                if(musicList!=null && musicList.size()>0 && musicList.size()>position && position>=0){
+                    BaseAppHelper.get().getMusicService().play(position);
+                    musicAdapter.updatePlayingPosition(position);
+                    musicAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+        recyclerView.setAdapter(musicAdapter);
     }
 
     private void initListener() {
-        mTv1.setOnClickListener(this);
-        mTv2.setOnClickListener(this);
-        mTv3.setOnClickListener(this);
-        mTvStart.setOnClickListener(this);
-        mTvStop.setOnClickListener(this);
-        mTvNext.setOnClickListener(this);
-        mTvPre.setOnClickListener(this);
         mIvPlayBarPlay.setOnClickListener(this);
         mFlPlayBar.setOnClickListener(this);
+        mIvPlayBarNext.setOnClickListener(this);
+    }
+
+    private void initData() {
+        if (BaseAppHelper.get().getMusicList()==null || BaseAppHelper.get().getMusicList().size()==0){
+            new AsyncTask<Void, Void, List<AudioBean>>() {
+                @Override
+                protected List<AudioBean> doInBackground(Void... params) {
+                    return FileMusicScanManager.getInstance().scanMusic(MusicPlayerActivity.this);
+                }
+
+                @Override
+                protected void onPostExecute(List<AudioBean> musicList) {
+                    //然后添加所有扫描到的音乐
+                    VideoLogUtils.d("onPostExecute" + musicList.size());
+                    BaseAppHelper.get().setMusicList(musicList);
+                    List<AudioBean> netMusic = new ArrayList<>();
+                    AudioBean audioBean1 = new AudioBean();
+                    audioBean1.setPath("http://img.zhugexuetang.com/lleXB2SNF5UFp1LfNpPI0hsyQjNs");
+                    audioBean1.setId("1");
+                    audioBean1.setTitle("音频1");
+                    musicList.add(audioBean1);
+                    AudioBean audioBean2 = new AudioBean();
+                    audioBean2.setPath("http://img.zhugexuetang.com/ljUa-X-oDbLHu7n9AhkuMLu2Yz3k");
+                    audioBean2.setId("2");
+                    audioBean2.setTitle("音频2");
+                    musicList.add(audioBean2);
+                    AudioBean audioBean3 = new AudioBean();
+                    audioBean3.setPath("http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4");
+                    audioBean3.setId("3");
+                    audioBean3.setTitle("音频3");
+                    netMusic.add(audioBean1);
+                    netMusic.add(audioBean2);
+                    netMusic.add(audioBean3);
+                    BaseAppHelper.get().addMusicList(netMusic);
+                    musicAdapter.notifyDataSetChanged();
+                }
+            }.execute();
+        } else {
+            //当在播放音频详细页面切换歌曲的时候，需要刷新底部控制器，和音频详细页面的数据
+            List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
+            PlayAudioService musicService = BaseAppHelper.get().getMusicService();
+            if(musicList.size()>0){
+                int mPlayPosition;
+                if (musicService.getPlayingMusic() != null ) {
+                    mPlayPosition = musicService.getPlayingPosition();
+                } else {
+                    mPlayPosition = 0;
+                }
+                onChangeImpl(musicList.get(mPlayPosition));
+            }else {
+                onChangeImpl(musicService.getPlayingMusic());
+            }
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_1:
-                BaseAppHelper.get().getMusicService().play(0);
-                break;
-            case R.id.tv_2:
-
-                break;
-            case R.id.tv_3:
-
-                break;
             case R.id.tv_start:
                 BaseAppHelper.get().getMusicService().start();
                 break;
-            case R.id.tv_stop:
-                BaseAppHelper.get().getMusicService().stop();
-                break;
-            case R.id.tv_next:
-                BaseAppHelper.get().getMusicService().next();
-                break;
-            case R.id.tv_pre:
-                BaseAppHelper.get().getMusicService().prev();
-                break;
             case R.id.fl_play_bar:
                 showPlayingFragment();
+                break;
+            case R.id.iv_play_bar_next:
+                BaseAppHelper.get().getMusicService().next();
                 break;
             case R.id.iv_play_bar_play:
                 if (BaseAppHelper.get().getMusicService().isDefault()) {
@@ -156,7 +204,11 @@ public class MusicPlayerActivity extends AppCompatActivity implements View.OnCli
              */
             @Override
             public void onChange(AudioBean music) {
+                VideoLogUtils.d("OnPlayerEventListener   onChange ");
                 onChangeImpl(music);
+                if (mPlayFragment!=null){
+                    mPlayFragment.onChange(music);
+                }
             }
 
             /**
@@ -165,7 +217,11 @@ public class MusicPlayerActivity extends AppCompatActivity implements View.OnCli
              */
             @Override
             public void onPlayerStart() {
+                VideoLogUtils.d("OnPlayerEventListener   onPlayerStart ");
                 mIvPlayBarPlay.setSelected(true);
+                if (mPlayFragment!=null){
+                    mPlayFragment.onPlayerStart();
+                }
             }
 
             /**
@@ -174,7 +230,11 @@ public class MusicPlayerActivity extends AppCompatActivity implements View.OnCli
              */
             @Override
             public void onPlayerPause() {
+                VideoLogUtils.d("OnPlayerEventListener   onPlayerPause ");
                 mIvPlayBarPlay.setSelected(false);
+                if (mPlayFragment!=null){
+                    mPlayFragment.onPlayerPause();
+                }
             }
 
             /**
@@ -184,11 +244,16 @@ public class MusicPlayerActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onUpdateProgress(int progress) {
                 mPbPlayBar.setProgress(progress);
+                if (mPlayFragment!=null){
+                    mPlayFragment.onUpdateProgress(progress);
+                }
             }
 
             @Override
             public void onBufferingUpdate(int percent) {
-
+                if (mPlayFragment != null && mPlayFragment.isAdded()) {
+                    mPlayFragment.onBufferingUpdate(percent);
+                }
             }
 
             /**
@@ -213,11 +278,19 @@ public class MusicPlayerActivity extends AppCompatActivity implements View.OnCli
         if (music == null) {
             return;
         }
+        PlayAudioService musicService = BaseAppHelper.get().getMusicService();
+        Bitmap cover = CoverLoader.getInstance().loadThumbnail(music);
+        mIvPlayBarCover.setImageBitmap(cover);
         mTvPlayBarTitle.setText(music.getTitle());
-        mIvPlayBarPlay.setSelected(BaseAppHelper.get().getMusicService().isPlaying() || BaseAppHelper.get().getMusicService().isPreparing());
+        mIvPlayBarPlay.setSelected(musicService.isPlaying() || musicService.isPreparing());
         //更新进度条
         mPbPlayBar.setMax((int) music.getDuration());
-        mPbPlayBar.setProgress((int) BaseAppHelper.get().getMusicService().getCurrentPosition());
+        mPbPlayBar.setProgress((int) musicService.getCurrentPosition());
+
+
+        recyclerView.scrollToPosition(musicService.getPlayingPosition());
+        musicAdapter.updatePlayingPosition(musicService.getPlayingPosition());
+        musicAdapter.notifyDataSetChanged();
     }
 
 

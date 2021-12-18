@@ -1,6 +1,7 @@
 package com.yc.music.tool;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 
 import com.yc.music.model.AudioBean;
 import com.yc.music.service.PlayAudioService;
@@ -27,6 +28,10 @@ public class BaseAppHelper {
      * 本地歌曲列表
      */
     private final List<AudioBean> mMusicList = new ArrayList<>();
+    /**
+     * 全局上下文
+     */
+    private Context mContext;
 
     private BaseAppHelper() {
         //这里可以做一些初始化的逻辑
@@ -45,7 +50,7 @@ public class BaseAppHelper {
      * 获取PlayService对象
      * @return              返回PlayService对象
      */
-    public PlayAudioService getPlayService() {
+    private PlayAudioService getPlayService() {
         return mPlayService;
     }
 
@@ -74,17 +79,28 @@ public class BaseAppHelper {
         mMusicList.addAll(list);
     }
 
+
+    /**
+     * 设置音频结合
+     * @param list              音频集合
+     */
+    public void addMusicList(List<AudioBean> list){
+        mMusicList.addAll(list);
+    }
+
     /**
      * 获取到播放音乐的服务
      * @return              PlayService对象
      */
     public PlayAudioService getMusicService () {
-        PlayAudioService playService = BaseAppHelper.get().getPlayService();
-        if (playService == null) {
-            //待解决：当长期处于后台，如何保活？避免service被杀死……
-            throw new NullPointerException("play service is null");
-        }
-        return playService;
+        return getPlayService();
     }
 
+    public void setContext(Context context){
+        this.mContext = context;
+    }
+
+    public Context getContext() {
+        return mContext;
+    }
 }

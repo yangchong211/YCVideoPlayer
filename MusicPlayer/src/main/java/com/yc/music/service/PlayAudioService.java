@@ -78,9 +78,9 @@ public class PlayAudioService extends AbsAudioService {
      */
     @Override
     public void onCreate() {
-        super.onCreate();
         mDelegate = new PlayAudioDelegate(new PlayAudioImpl());
         mDelegate.init(this);
+        super.onCreate();
         initQuitTimer();
     }
 

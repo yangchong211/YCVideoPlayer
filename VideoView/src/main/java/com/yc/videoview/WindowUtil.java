@@ -20,7 +20,7 @@ public final class WindowUtil {
 
     private static Point sPoint;
 
-    static int getScreenWidth(Context context) {
+    public static int getScreenWidth(Context context) {
         if (sPoint == null) {
             sPoint = new Point();
             WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -31,7 +31,7 @@ public final class WindowUtil {
         return sPoint.x;
     }
 
-    static int getScreenHeight(Context context) {
+    public static int getScreenHeight(Context context) {
         if (sPoint == null) {
             sPoint = new Point();
             WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
