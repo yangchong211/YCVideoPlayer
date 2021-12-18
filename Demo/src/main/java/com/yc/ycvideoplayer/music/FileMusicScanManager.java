@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 
 import com.yc.music.model.AudioBean;
+import com.yc.music.tool.CoverLoader;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -87,7 +88,8 @@ public class FileMusicScanManager {
         int i = 0;
         while (cursor.moveToNext()) {
             // 是否为音乐，魅族手机上始终为0
-            int isMusic = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.IS_MUSIC));
+            int isMusic = cursor.getInt(cursor.getColumnIndex(
+                    MediaStore.Audio.AudioColumns.IS_MUSIC));
             if (!isFly() && isMusic == 0) {
                 continue;
             }

@@ -20,11 +20,10 @@ import com.yc.music.inter.OnPlayerEventListener;
 import com.yc.music.model.AudioBean;
 import com.yc.music.service.PlayAudioService;
 import com.yc.music.tool.BaseAppHelper;
+import com.yc.music.tool.CoverLoader;
 import com.yc.videotool.VideoLogUtils;
 import com.yc.ycvideoplayer.R;
-import com.yc.ycvideoplayer.video.list.OnItemChildClickListener;
 import com.yc.ycvideoplayer.video.list.OnItemClickListener;
-import com.yc.ycvideoplayer.video.list.VideoRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

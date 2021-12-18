@@ -26,6 +26,7 @@ import com.yc.music.config.PlayModeEnum;
 import com.yc.music.inter.OnPlayerEventListener;
 import com.yc.music.model.AudioBean;
 import com.yc.music.tool.BaseAppHelper;
+import com.yc.music.tool.CoverLoader;
 import com.yc.video.tool.PlayerUtils;
 import com.yc.videotool.VideoSpUtils;
 import com.yc.videotool.VideoLogUtils;

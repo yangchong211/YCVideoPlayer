@@ -1,4 +1,4 @@
-package com.yc.ycvideoplayer.music;
+package com.yc.music.tool;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -12,17 +12,23 @@ import android.text.TextUtils;
 import android.util.LruCache;
 import android.view.WindowManager;
 
+import com.yc.music.R;
 import com.yc.music.model.AudioBean;
-import com.yc.music.tool.BaseAppHelper;
 import com.yc.music.utils.ImageUtils;
-import com.yc.ycvideoplayer.R;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+
 /**
- * 专辑封面图片加载器
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2017/03/22
+ *     desc  : 专辑封面图片加载器
+ *     revise:
+ * </pre>
  */
-public class CoverLoader {
+public final class CoverLoader {
 
     private static final String KEY_NULL = "null";
 
