@@ -13,8 +13,6 @@ import java.io.Serializable;
  */
 public class AudioBean implements Serializable {
 
-    // 歌曲类型:本地/网络
-    private Type type;
     // [本地歌曲]歌曲id
     private String id;
     // 音乐标题
@@ -31,23 +29,7 @@ public class AudioBean implements Serializable {
     private long duration;
     // 音乐路径
     private String path;
-    // 文件名
-    private String fileName;
-    // 文件大小
-    private long fileSize;
 
-    public enum Type {
-        LOCAL,
-        ONLINE
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
 
     public String getId() {
         return id;
@@ -113,21 +95,6 @@ public class AudioBean implements Serializable {
         this.path = path;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public long getFileSize() {
-        return fileSize;
-    }
-
-    public void setFileSize(long fileSize) {
-        this.fileSize = fileSize;
-    }
 
     /**
      * 思考为什么要重写这两个方法

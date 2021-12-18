@@ -68,29 +68,29 @@ dependencies {
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
 
-    implementation 'com.github.yangchong211.YCVideoPlayer:VideoPlayer:1.1.0'
-    implementation 'com.github.yangchong211.YCVideoPlayer:VideoKernel:1.1.0'
-    implementation 'com.github.yangchong211.YCVideoPlayer:VideoView:1.1.0'
-    implementation 'com.github.yangchong211.YCVideoPlayer:MusicPlayer:1.1.0'
-    implementation 'com.github.yangchong211.YCVideoPlayer:VideoM3u8:1.1.0'
-    implementation 'com.github.yangchong211.YCVideoPlayer:VideoSqlLite:1.1.0'
-    implementation 'com.github.yangchong211.YCVideoPlayer:AudioPlayer:1.1.0'
-    implementation 'com.github.yangchong211.YCVideoPlayer:VideoTool:1.1.0'
-    implementation 'com.github.yangchong211.YCVideoPlayer:VideoCache:1.1.0'
+//    implementation 'com.github.yangchong211.YCVideoPlayer:VideoPlayer:1.1.0'
+//    implementation 'com.github.yangchong211.YCVideoPlayer:VideoKernel:1.1.0'
+//    implementation 'com.github.yangchong211.YCVideoPlayer:VideoView:1.1.0'
+//    implementation 'com.github.yangchong211.YCVideoPlayer:MusicPlayer:1.1.0'
+//    implementation 'com.github.yangchong211.YCVideoPlayer:VideoM3u8:1.1.0'
+//    implementation 'com.github.yangchong211.YCVideoPlayer:VideoSqlLite:1.1.0'
+//    implementation 'com.github.yangchong211.YCVideoPlayer:AudioPlayer:1.1.0'
+//    implementation 'com.github.yangchong211.YCVideoPlayer:VideoTool:1.1.0'
+//    implementation 'com.github.yangchong211.YCVideoPlayer:VideoCache:1.1.0'
 
-//    implementation project(path: ':VideoCache')
-//    implementation project(path: ':VideoPlayer')
-//    implementation project(path: ':VideoKernel')
-//    implementation project(path: ':VideoView')
-//    implementation project(path: ':MusicPlayer')
-//    implementation project(path: ':VideoM3u8')
-//    implementation project(path: ':VideoSqlLite')
-//    implementation project(path: ':AudioPlayer')
-//    implementation project(path: ':VideoTool')
+    implementation project(path: ':VideoCache')
+    implementation project(path: ':VideoPlayer')
+    implementation project(path: ':VideoKernel')
+    implementation project(path: ':VideoView')
+    implementation project(path: ':MusicPlayer')
+    implementation project(path: ':VideoM3u8')
+    implementation project(path: ':VideoSqlLite')
+    implementation project(path: ':AudioPlayer')
+    implementation project(path: ':VideoTool')
 
     //自己封装的库，都有对应的案例项目【欢迎star】：https://github.com/yangchong211
     implementation 'cn.yc:YCStatusBarLib:1.5.0'
-    implementation 'com.yc:PagerLib:1.0.4'
+    implementation 'com.github.yangchong211:YCScrollPager:1.0.5'
     implementation 'cn.yc:YCStateLib:1.2.2'
 
 }

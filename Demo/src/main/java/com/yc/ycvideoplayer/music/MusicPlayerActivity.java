@@ -125,9 +125,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements View.OnCli
                 if (BaseAppHelper.get().getMusicService().isDefault()) {
                     if (BaseAppHelper.get().getMusicList().size() > 0) {
                         int mPlayPosition;
-                        if (BaseAppHelper.get().getMusicService().getPlayingMusic() != null &&
-                                BaseAppHelper.get().getMusicService().getPlayingMusic().getType()
-                                        == AudioBean.Type.LOCAL) {
+                        if (BaseAppHelper.get().getMusicService().getPlayingMusic() != null ) {
                             mPlayPosition = BaseAppHelper.get().getMusicService().getPlayingPosition();
                         } else {
                             mPlayPosition = 0;

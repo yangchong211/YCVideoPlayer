@@ -137,14 +137,16 @@
     |**com.github.yangchong211.YCVideoPlayer:VideoKernel:1.1.0** | 视频播放器内核(ijk，exo，media，其他) |
     |**com.github.yangchong211.YCVideoPlayer:VideoView:1.1.0** | 视频播放悬浮窗，全局悬浮，单个activity悬浮 |
     |**com.github.yangchong211.YCVideoPlayer:MusicPlayer:1.1.0** | 音频播放器库 |
-    |**com.github.yangchong211.YCVideoPlayer:VideoM3u8:1.1.0** | m3u8库 |
+    |**com.github.yangchong211.YCVideoPlayer:VideoM3u8:1.1.0** | m3u8库(参考其他案例) |
     |**com.github.yangchong211.YCVideoPlayer:VideoSqlLite:1.1.0** | 视频播放位置记录，二级缓存库 |
     |**com.github.yangchong211.YCVideoPlayer:AudioPlayer:1.1.0** | 语音文字类播放器 |
     |**com.github.yangchong211.YCVideoPlayer:VideoCache:1.1.0** | 边播边缓存库 |
+    - 备注：其中 MusicPlayer 音频播放器，是将之前的项目功能摘出来，具体demo可以参考我另一个项目，[音频播放器](https://github.com/yangchong211/YCAudioPlayer)。
 - 开发中或抽取中，待上传库
     |**com.github.yangchong211.YCVideoPlayer:VideoScreen:1.1.0** | 视频截图和GIF截图 |
     |**com.github.yangchong211.YCVideoPlayer:VideoRecorder:1.1.0** | 视频录频 |
     |**com.github.yangchong211.YCVideoPlayer:VideoMonitor:1.1.0** | 视频监控库 |
+- 关于案例中仿抖音滑动视频
 
 
 

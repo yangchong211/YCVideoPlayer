@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import com.yc.music.config.MusicConstant;
+import com.yc.music.config.MusicConstants;
 import com.yc.music.config.MusicPlayAction;
 import com.yc.music.config.PlayModeEnum;
 import com.yc.music.inter.InterPlayAudio;
@@ -112,7 +112,7 @@ public class PlayAudioImpl implements InterPlayAudio {
         VideoLogUtils.e("PlayService"+"----id----"+ id);
         //保存当前播放的musicId，下次进来可以记录状态
         long musicId = Long.parseLong(id);
-        VideoSpUtils.getInstance(MusicConstant.SP_NAME).put(MusicConstant.MUSIC_ID,musicId);
+        VideoSpUtils.getInstance(MusicConstants.SP_NAME).put(MusicConstants.MUSIC_ID,musicId);
         play(music);
     }
 
@@ -262,7 +262,7 @@ public class PlayAudioImpl implements InterPlayAudio {
         if (audioMusics.isEmpty()) {
             return;
         }
-        int playMode = VideoSpUtils.getInstance(MusicConstant.SP_NAME).getInt(MusicConstant.PLAY_MODE, 0);
+        int playMode = VideoSpUtils.getInstance(MusicConstants.SP_NAME).getInt(MusicConstants.PLAY_MODE, 0);
         int size = audioMusics.size();
         PlayModeEnum mode = PlayModeEnum.valueOf(playMode);
         switch (mode) {
@@ -297,7 +297,7 @@ public class PlayAudioImpl implements InterPlayAudio {
         if (audioMusics.isEmpty()) {
             return;
         }
-        int playMode = VideoSpUtils.getInstance(MusicConstant.SP_NAME).getInt(MusicConstant.PLAY_MODE, 0);
+        int playMode = VideoSpUtils.getInstance(MusicConstants.SP_NAME).getInt(MusicConstants.PLAY_MODE, 0);
         int size = audioMusics.size();
         PlayModeEnum mode = PlayModeEnum.valueOf(playMode);
         switch (mode) {
@@ -559,7 +559,7 @@ public class PlayAudioImpl implements InterPlayAudio {
         //来电/耳机
         filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
         //锁屏
-        filter.addAction(MusicConstant.LOCK_SCREEN_ACTION);
+        filter.addAction(MusicConstants.LOCK_SCREEN_ACTION);
         //当屏幕灭了
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         //当屏幕亮了
@@ -573,7 +573,7 @@ public class PlayAudioImpl implements InterPlayAudio {
      */
     public void updatePlayingPosition() {
         int position = 0;
-        long id = VideoSpUtils.getInstance(MusicConstant.SP_NAME).getLong(MusicConstant.MUSIC_ID,-1);
+        long id = VideoSpUtils.getInstance(MusicConstants.SP_NAME).getLong(MusicConstants.MUSIC_ID,-1);
         if(audioMusics.isEmpty()){
             return;
         }
@@ -587,7 +587,7 @@ public class PlayAudioImpl implements InterPlayAudio {
         }
         mPlayingPosition = position;
         long musicId = Long.parseLong(audioMusics.get(mPlayingPosition).getId());
-        VideoSpUtils.getInstance(MusicConstant.SP_NAME).put(MusicConstant.MUSIC_ID,musicId);
+        VideoSpUtils.getInstance(MusicConstants.SP_NAME).put(MusicConstants.MUSIC_ID,musicId);
     }
 
 

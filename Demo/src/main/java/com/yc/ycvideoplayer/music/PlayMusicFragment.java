@@ -21,7 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.yc.music.config.MusicConstant;
+import com.yc.music.config.MusicConstants;
 import com.yc.music.config.PlayModeEnum;
 import com.yc.music.inter.OnPlayerEventListener;
 import com.yc.music.model.AudioBean;
@@ -303,6 +303,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
         } else if (i == R.id.iv_other) {
 
         } else {
+
         }
     }
 
@@ -325,7 +326,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     }
 
     private void switchPlayMode() {
-        int playMode = VideoSpUtils.getInstance(MusicConstant.SP_NAME).getInt(MusicConstant.PLAY_MODE, 0);
+        int playMode = VideoSpUtils.getInstance(MusicConstants.SP_NAME).getInt(MusicConstants.PLAY_MODE, 0);
         PlayModeEnum mode = PlayModeEnum.valueOf(playMode);
         switch (mode) {
             case LOOP:
@@ -340,13 +341,13 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
             default:
                 break;
         }
-        VideoSpUtils.getInstance(MusicConstant.SP_NAME).put(MusicConstant.PLAY_MODE, mode.value());
+        VideoSpUtils.getInstance(MusicConstants.SP_NAME).put(MusicConstants.PLAY_MODE, mode.value());
         initPlayMode();
     }
 
 
     private void initPlayMode() {
-        int playMode = VideoSpUtils.getInstance(MusicConstant.SP_NAME).getInt(MusicConstant.PLAY_MODE, 0);
+        int playMode = VideoSpUtils.getInstance(MusicConstants.SP_NAME).getInt(MusicConstants.PLAY_MODE, 0);
         ivMode.setImageLevel(playMode);
     }
 

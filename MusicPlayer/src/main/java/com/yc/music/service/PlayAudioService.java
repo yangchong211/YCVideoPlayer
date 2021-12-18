@@ -8,12 +8,13 @@ import android.os.Message;
 
 import androidx.annotation.NonNull;
 
-import com.yc.music.config.MusicConstant;
+import com.yc.music.config.MusicConstants;
 import com.yc.music.config.MusicPlayAction;
 import com.yc.music.delegate.PlayAudioDelegate;
 import com.yc.music.impl.PlayAudioImpl;
 import com.yc.music.inter.InterPlayAudio;
 import com.yc.music.inter.OnPlayerEventListener;
+import com.yc.music.inter.OnScreenChangeListener;
 import com.yc.music.model.AudioBean;
 import com.yc.music.tool.BaseAppHelper;
 import com.yc.music.tool.QuitTimerHelper;
@@ -31,15 +32,12 @@ import com.yc.videotool.VideoLogUtils;
  */
 public class PlayAudioService extends AbsAudioService {
 
-    /**
-     * 是否锁屏了，默认是false
-     */
-    private boolean mIsLocked = false;
     private InterPlayAudio mDelegate;
     /**
      * 播放进度监听器
      */
     private OnPlayerEventListener mListener;
+    private OnScreenChangeListener mOnScreenChangeListener;
     /**
      * 更新播放进度的显示，时间的显示
      */
@@ -132,17 +130,22 @@ public class PlayAudioService extends AbsAudioService {
                     playPause();
                     break;
                 //添加锁屏界面
-                case MusicConstant.LOCK_SCREEN_ACTION:
-                    VideoLogUtils.e("PlayService"+"---LOCK_SCREEN"+mIsLocked);
+                case MusicConstants.LOCK_SCREEN_ACTION:
+                    VideoLogUtils.e("PlayService"+"---LOCK_SCREEN");
                     break;
                 //当屏幕灭了，添加锁屏页面
                 case Intent.ACTION_SCREEN_OFF:
-                    startLockAudioActivity();
                     VideoLogUtils.e("PlayService"+"---当屏幕灭了");
+                    if (mOnScreenChangeListener!=null){
+                        mOnScreenChangeListener.screenChange(true);
+                    }
                     break;
                 //当屏幕亮了
                 case Intent.ACTION_SCREEN_ON:
                     VideoLogUtils.e("PlayService"+"---当屏幕亮了");
+                    if (mOnScreenChangeListener!=null){
+                        mOnScreenChangeListener.screenChange(false);
+                    }
                     break;
                 default:
                     break;
@@ -289,44 +292,6 @@ public class PlayAudioService extends AbsAudioService {
         stopSelf();
     }
 
-//
-//    /**
-//     * 扫描音乐
-//     */
-//    @SuppressLint("StaticFieldLeak")
-//    public void updateMusicList(final EventCallback<Void> callback) {
-//        new AsyncTask<Void, Void, List<AudioBean>>() {
-//            @Override
-//            protected List<AudioBean> doInBackground(Void... params) {
-//                return FileMusicScanManager.getInstance().scanMusic(PlayService.this);
-//            }
-//
-//            @Override
-//            protected void onPostExecute(List<AudioBean> musicList) {
-//                //首先先清空
-//                //然后添加所有扫描到的音乐
-//                BaseAppHelper.get().setMusicList(musicList);
-//
-//                //如果获取音乐数据集合不为空
-//                if (!BaseAppHelper.get().getMusicList().isEmpty()) {
-//                    //音频的集合
-//                    audioMusics = BaseAppHelper.get().getMusicList();
-//                    //刷新正在播放的本地歌曲的序号
-//                    updatePlayingPosition();
-//                    //获取正在播放的音乐
-//                    if(mPlayingPosition>=0){
-//                        mPlayingMusic = BaseAppHelper.get().getMusicList().get(mPlayingPosition);
-//                    }
-//                }
-//                if (callback != null) {
-//                    callback.onEvent(null);
-//                }
-//            }
-//        }.execute();
-//    }
-
-
-
     /**
      * 获取播放进度监听器对象
      * @return                  OnPlayerEventListener对象
@@ -344,22 +309,7 @@ public class PlayAudioService extends AbsAudioService {
         mDelegate.setOnPlayEventListener(mListener);
     }
 
-
-    /**-------------------------------------添加锁屏界面----------------------------------------*/
-
-
-    /**
-     * 打开锁屏页面，这块伤透了脑筋
-     * 不管是播放状态是哪一个，只要屏幕灭了到亮了，就展现这个锁屏页面
-     * 有些APP限制了状态，比如只有播放时才走这个逻辑
-     */
-    private void startLockAudioActivity() {
-//        if(!mIsLocked && isPlaying()){
-//            Intent lockScreen = new Intent(this, LockAudioActivity.class);
-//            lockScreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            startActivity(lockScreen);
-//            BaseConfig.INSTANCE.setLocked(true);
-//        }
+    public void setOnScreenChangeListener(OnScreenChangeListener onScreenChangeListener) {
+        this.mOnScreenChangeListener = onScreenChangeListener;
     }
-
 }

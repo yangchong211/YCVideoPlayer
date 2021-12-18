@@ -1,6 +1,6 @@
 package com.yc.music.config;
 
-public class MusicConstant {
+public class MusicConstants {
 
     public static final String SP_NAME = "yc";
     public static final String EXTRA_NOTIFICATION = "extra_notification";

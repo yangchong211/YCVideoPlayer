@@ -37,9 +37,9 @@ public class FloatVideoManager {
     //画中画
     public static final String PIP = "pip";
     private static FloatVideoManager instance;
-    private VideoPlayer mVideoPlayer;
-    private FloatVideoView mFloatView;
-    private CustomFloatController mFloatController;
+    private final VideoPlayer mVideoPlayer;
+    private final FloatVideoView mFloatView;
+    private final CustomFloatController mFloatController;
     private boolean mIsShowing;
     private int mPlayingPosition = -1;
     private Class mActClass;
