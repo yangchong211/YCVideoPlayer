@@ -39,7 +39,7 @@ import com.yc.video.player.VideoPlayer;
 import com.yc.video.tool.StatesCutoutUtils;
 import com.yc.video.tool.NetworkUtils;
 import com.yc.video.tool.PlayerUtils;
-import com.yc.video.ui.view.InterControlView;
+import com.yc.video.ui.inter.InterControlView;
 
 import com.yc.videotool.VideoLogUtils;
 

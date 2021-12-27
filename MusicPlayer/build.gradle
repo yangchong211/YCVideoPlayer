@@ -25,6 +25,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project.ext.AppDependencies['appcompat']
     implementation project.ext.AppDependencies['media']
+    implementation 'com.github.yangchong211.YCNotification:NotificationLib:1.0.4'
     implementation project(path: ':VideoTool')
 }
 

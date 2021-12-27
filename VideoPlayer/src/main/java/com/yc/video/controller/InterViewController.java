@@ -15,7 +15,7 @@ limitations under the License.
 */
 package com.yc.video.controller;
 
-import com.yc.video.ui.view.InterControlView;
+import com.yc.video.ui.inter.InterControlView;
 
 /**
  * <pre>

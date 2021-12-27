@@ -55,13 +55,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/replay"
                 android:layout_marginTop="12dp"
+                android:textSize="14sp"
                 android:textColor="@android:color/white" />
         </LinearLayout>
 
 
         <LinearLayout
             android:id="@+id/ll_share"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"

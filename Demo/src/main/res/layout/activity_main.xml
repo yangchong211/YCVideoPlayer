@@ -37,6 +37,7 @@
             android:padding="10dp">
             <TextView
                 android:id="@+id/tv_1"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -53,6 +54,7 @@
                 android:text="2.新改版视频播放器"/>
             <TextView
                 android:id="@+id/tv_3"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -77,6 +79,7 @@
                 android:text="5.m3u8视频下载"/>
             <TextView
                 android:id="@+id/tv_6"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

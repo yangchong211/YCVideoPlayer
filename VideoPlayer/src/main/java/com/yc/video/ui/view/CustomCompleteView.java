@@ -35,6 +35,7 @@ import com.yc.video.tool.BaseToast;
 import com.yc.video.tool.PlayerUtils;
 
 import com.yc.video.R;
+import com.yc.video.ui.inter.InterControlView;
 
 
 /**

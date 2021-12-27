@@ -33,6 +33,7 @@ import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.player.VideoViewManager;
 
 import com.yc.video.R;
+import com.yc.video.ui.inter.InterControlView;
 
 
 /**

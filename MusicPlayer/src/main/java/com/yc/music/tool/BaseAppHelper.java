@@ -1,6 +1,7 @@
 package com.yc.music.tool;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 
 import com.yc.music.inter.OnPlayerEventListener;
@@ -37,6 +38,10 @@ public class BaseAppHelper {
      * 播放进度监听器
      */
     private final List<OnPlayerEventListener> mOnPlayerEventListeners = new ArrayList<>();
+    /**
+     * 点击通知栏跳转的页面
+     */
+    private Class<? extends Activity> mMusicActivity;
 
     private BaseAppHelper() {
         //这里可以做一些初始化的逻辑
@@ -127,5 +132,13 @@ public class BaseAppHelper {
 
     public List<OnPlayerEventListener> getOnPlayerEventListeners() {
         return mOnPlayerEventListeners;
+    }
+
+    public Class<? extends Activity> getMusicActivity() {
+        return mMusicActivity;
+    }
+
+    public void setMusicActivity(Class<? extends Activity> mMusicActivity) {
+        this.mMusicActivity = mMusicActivity;
     }
 }

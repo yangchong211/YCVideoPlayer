@@ -33,6 +33,7 @@ import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.tool.BaseToast;
 import com.yc.video.tool.PlayerUtils;
+import com.yc.video.ui.inter.InterControlView;
 
 
 /**

@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import com.yc.videotool.VideoLogUtils;
 
 import com.yc.video.bridge.ControlWrapper;
-import com.yc.video.ui.view.InterControlView;
+import com.yc.video.ui.inter.InterControlView;
 import com.yc.video.tool.PlayerUtils;
 
 

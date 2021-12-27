@@ -1,5 +1,6 @@
 package com.yc.music.utils;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,6 +14,10 @@ import com.yc.music.model.AudioBean;
 import com.yc.music.receiver.NotificationStatusBarReceiver;
 import com.yc.music.service.AbsAudioService;
 import com.yc.music.service.PlayAudioService;
+import com.yc.music.tool.BaseAppHelper;
+import com.yc.music.tool.CoverLoader;
+import com.ycbjie.notificationlib.NotificationParams;
+import com.ycbjie.notificationlib.NotificationUtils;
 
 
 public class NotificationHelper {
@@ -95,24 +100,30 @@ public class NotificationHelper {
     }
 
     private Notification buildNotification(Context context, AudioBean music, boolean isPlaying) {
-//        Intent intent = new Intent(context, MusicActivity.class);
-//        intent.putExtra(Constant.EXTRA_NOTIFICATION, true);
-//        intent.setAction(Intent.ACTION_VIEW);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-        NotificationUtils.isVibration = false;
+        Class<? extends Activity> musicActivity = BaseAppHelper.get().getMusicActivity();
         NotificationUtils notificationUtils = new NotificationUtils(context);
-        notificationUtils
-//                .setContentIntent(pendingIntent)
+        NotificationParams notificationParams = new NotificationParams();
+        if (musicActivity!=null){
+            Intent intent = new Intent(context, musicActivity);
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context,
+                    0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            notificationParams.setContentIntent(pendingIntent);
+        }
+        notificationParams
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setTicker("叮咚音乐")
                 .setContent(getCustomViews(context, music, isPlaying))
                 .setOngoing(true);
-        Notification notification = notificationUtils.getNotification(music.getTitle(), music.getArtist(), R.drawable.default_cover);
+
+        notificationUtils.setNotificationParams(notificationParams);
+        Notification notification = notificationUtils.getNotification(
+                music.getTitle(),
+                music.getArtist(),
+                R.drawable.default_cover);
         return notification;
     }
 
