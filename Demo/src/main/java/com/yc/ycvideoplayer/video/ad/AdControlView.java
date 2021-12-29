@@ -17,11 +17,11 @@ import com.yc.ycvideoplayer.R;
 
 import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.config.ConstantKeys;
-import com.yc.video.ui.inter.InterControlView;
+import com.yc.video.ui.inter.IControlView;
 import com.yc.video.tool.PlayerUtils;
 
 
-public class AdControlView extends FrameLayout implements InterControlView, View.OnClickListener {
+public class AdControlView extends FrameLayout implements IControlView, View.OnClickListener {
 
     private Context mContext;
     protected TextView mAdTime, mAdDetail;

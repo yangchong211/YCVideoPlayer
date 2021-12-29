@@ -43,7 +43,7 @@ import com.yc.video.config.VideoPlayerConfig;
 import com.yc.video.tool.PlayerUtils;
 
 import com.yc.video.R;
-import com.yc.video.ui.inter.InterControlView;
+import com.yc.video.ui.inter.IControlView;
 
 /**
  * <pre>
@@ -54,7 +54,7 @@ import com.yc.video.ui.inter.InterControlView;
  *     revise: 用于普通播放器
  * </pre>
  */
-public class CustomBottomView extends FrameLayout implements InterControlView,
+public class CustomBottomView extends FrameLayout implements IControlView,
         View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     private Context mContext;

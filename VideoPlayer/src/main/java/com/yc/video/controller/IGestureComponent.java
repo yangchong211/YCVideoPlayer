@@ -15,7 +15,7 @@ limitations under the License.
 */
 package com.yc.video.controller;
 
-import com.yc.video.ui.inter.InterControlView;
+import com.yc.video.ui.inter.IControlView;
 
 /**
  * <pre>
@@ -26,7 +26,7 @@ import com.yc.video.ui.inter.InterControlView;
  *     revise:
  * </pre>
  */
-public interface IGestureComponent extends InterControlView {
+public interface IGestureComponent extends IControlView {
 
     /**
      * 开始滑动

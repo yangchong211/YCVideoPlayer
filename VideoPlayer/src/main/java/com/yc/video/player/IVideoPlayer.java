@@ -43,7 +43,7 @@ import com.yc.video.config.ConstantKeys;
  *     revise: 播放器基础属性获取和设置属性接口
  * </pre>
  */
-public interface InterVideoPlayer {
+public interface IVideoPlayer {
 
     /**
      * 设置链接

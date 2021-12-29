@@ -38,7 +38,7 @@ import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.tool.PlayerUtils;
 
 import com.yc.video.R;
-import com.yc.video.ui.inter.InterControlView;
+import com.yc.video.ui.inter.IControlView;
 
 
 /**
@@ -50,7 +50,7 @@ import com.yc.video.ui.inter.InterControlView;
  *     revise:
  * </pre>
  */
-public class CustomTitleView extends FrameLayout implements InterControlView, View.OnClickListener {
+public class CustomTitleView extends FrameLayout implements IControlView, View.OnClickListener {
 
     private Context mContext;
     private ControlWrapper mControlWrapper;

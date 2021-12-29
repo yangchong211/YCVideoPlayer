@@ -8,11 +8,11 @@ import androidx.annotation.NonNull;
 import com.yc.videotool.VideoLogUtils;
 
 import com.yc.video.bridge.ControlWrapper;
-import com.yc.video.ui.inter.InterControlView;
+import com.yc.video.ui.inter.IControlView;
 import com.yc.video.tool.PlayerUtils;
 
 
-public class PlayerMonitor implements InterControlView {
+public class PlayerMonitor implements IControlView {
 
     private ControlWrapper mControlWrapper;
     private static final String TAG = "PlayerMonitor";

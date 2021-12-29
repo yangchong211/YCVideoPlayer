@@ -36,7 +36,7 @@ import com.yc.video.bridge.ControlWrapper;
 
 import com.yc.video.R;
 import com.yc.video.tool.PlayerUtils;
-import com.yc.video.ui.inter.InterControlView;
+import com.yc.video.ui.inter.IControlView;
 
 
 /**
@@ -48,7 +48,7 @@ import com.yc.video.ui.inter.InterControlView;
  *     revise:
  * </pre>
  */
-public class CustomErrorView extends LinearLayout implements InterControlView, View.OnClickListener {
+public class CustomErrorView extends LinearLayout implements IControlView, View.OnClickListener {
 
     private Context mContext;
     private float mDownX;

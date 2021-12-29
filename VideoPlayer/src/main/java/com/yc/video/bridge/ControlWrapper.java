@@ -19,8 +19,8 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
-import com.yc.video.controller.InterVideoController;
-import com.yc.video.player.InterVideoPlayer;
+import com.yc.video.controller.IVideoController;
+import com.yc.video.player.IVideoPlayer;
 
 
 /**
@@ -33,13 +33,13 @@ import com.yc.video.player.InterVideoPlayer;
  *     revise:
  * </pre>
  */
-public class ControlWrapper implements InterVideoPlayer, InterVideoController {
+public class ControlWrapper implements IVideoPlayer, IVideoController {
     
-    private final InterVideoPlayer mVideoPlayer;
-    private final InterVideoController mController;
+    private final IVideoPlayer mVideoPlayer;
+    private final IVideoController mController;
     
-    public ControlWrapper(@NonNull InterVideoPlayer videoPlayer,
-                          @NonNull InterVideoController controller) {
+    public ControlWrapper(@NonNull IVideoPlayer videoPlayer,
+                          @NonNull IVideoController controller) {
         mVideoPlayer = videoPlayer;
         mController = controller;
     }

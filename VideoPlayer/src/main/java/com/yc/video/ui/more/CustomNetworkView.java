@@ -25,7 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.yc.video.bridge.ControlWrapper;
-import com.yc.video.ui.inter.InterControlView;
+import com.yc.video.ui.inter.IControlView;
 
 /**
  * <pre>
@@ -36,7 +36,7 @@ import com.yc.video.ui.inter.InterControlView;
  *     revise:
  * </pre>
  */
-public class CustomNetworkView extends FrameLayout implements InterControlView, View.OnClickListener {
+public class CustomNetworkView extends FrameLayout implements IControlView, View.OnClickListener {
 
     public CustomNetworkView(@NonNull Context context) {
         super(context);

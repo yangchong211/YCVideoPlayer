@@ -33,7 +33,7 @@ import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.player.VideoViewManager;
 
 import com.yc.video.R;
-import com.yc.video.ui.inter.InterControlView;
+import com.yc.video.ui.inter.IControlView;
 
 
 /**
@@ -45,7 +45,7 @@ import com.yc.video.ui.inter.InterControlView;
  *     revise:
  * </pre>
  */
-public class CustomPrepareView extends FrameLayout implements InterControlView {
+public class CustomPrepareView extends FrameLayout implements IControlView {
 
     private Context mContext;
     private ControlWrapper mControlWrapper;

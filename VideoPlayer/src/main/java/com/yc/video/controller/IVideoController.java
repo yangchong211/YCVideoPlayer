@@ -24,7 +24,7 @@ package com.yc.video.controller;
  *     revise: 定义一些设置视图属性接口
  * </pre>
  */
-public interface InterVideoController {
+public interface IVideoController {
 
     /**
      * 开始控制视图自动隐藏倒计时

@@ -35,7 +35,7 @@ import com.yc.video.tool.BaseToast;
 import com.yc.video.tool.PlayerUtils;
 
 import com.yc.video.R;
-import com.yc.video.ui.inter.InterControlView;
+import com.yc.video.ui.inter.IControlView;
 
 
 /**
@@ -47,7 +47,7 @@ import com.yc.video.ui.inter.InterControlView;
  *     revise:
  * </pre>
  */
-public class CustomCompleteView extends FrameLayout implements InterControlView, View.OnClickListener {
+public class CustomCompleteView extends FrameLayout implements IControlView, View.OnClickListener {
 
     private Context mContext;
     private ControlWrapper mControlWrapper;

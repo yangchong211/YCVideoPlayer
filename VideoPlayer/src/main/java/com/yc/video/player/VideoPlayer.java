@@ -58,9 +58,9 @@ import java.util.Map;
  * </pre>
  */
 public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
-        implements InterVideoPlayer, VideoPlayerListener {
+        implements IVideoPlayer, VideoPlayerListener {
 
-    private Context mContext;
+    private final Context mContext;
     /**
      * 播放器
      */

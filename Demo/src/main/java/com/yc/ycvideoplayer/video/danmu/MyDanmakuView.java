@@ -21,7 +21,7 @@ import com.yc.ycvideoplayer.R;
 
 import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.config.ConstantKeys;
-import com.yc.video.ui.inter.InterControlView;
+import com.yc.video.ui.inter.IControlView;
 import com.yc.video.tool.PlayerUtils;
 
 import master.flame.danmaku.controller.DrawHandler;
@@ -35,7 +35,7 @@ import master.flame.danmaku.danmaku.model.android.SpannedCacheStuffer;
 import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
 import master.flame.danmaku.ui.widget.DanmakuView;
 
-public class MyDanmakuView extends DanmakuView implements InterControlView {
+public class MyDanmakuView extends DanmakuView implements IControlView {
 
     private DanmakuContext mContext;
     private BaseDanmakuParser mParser;

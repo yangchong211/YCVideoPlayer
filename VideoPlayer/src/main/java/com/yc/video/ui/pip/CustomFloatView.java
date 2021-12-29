@@ -34,7 +34,7 @@ import com.yc.video.bridge.ControlWrapper;
 
 import com.yc.video.R;
 
-import com.yc.video.ui.inter.InterControlView;
+import com.yc.video.ui.inter.IControlView;
 
 /**
  * <pre>
@@ -45,7 +45,7 @@ import com.yc.video.ui.inter.InterControlView;
  *     revise:
  * </pre>
  */
-public class CustomFloatView extends FrameLayout implements InterControlView, View.OnClickListener {
+public class CustomFloatView extends FrameLayout implements IControlView, View.OnClickListener {
 
     private ControlWrapper mControlWrapper;
     private Context mContext;

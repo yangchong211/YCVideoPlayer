@@ -33,13 +33,13 @@ import androidx.annotation.Nullable;
 
 import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.config.ConstantKeys;
-import com.yc.video.player.InterVideoPlayer;
+import com.yc.video.player.IVideoPlayer;
 import com.yc.video.player.VideoViewManager;
 import com.yc.video.player.VideoPlayer;
 import com.yc.video.tool.StatesCutoutUtils;
 import com.yc.video.tool.NetworkUtils;
 import com.yc.video.tool.PlayerUtils;
-import com.yc.video.ui.inter.InterControlView;
+import com.yc.video.ui.inter.IControlView;
 
 import com.yc.videotool.VideoLogUtils;
 
@@ -64,8 +64,8 @@ import java.util.Map;
  *
  * </pre>
  */
-public abstract class BaseVideoController extends FrameLayout implements InterVideoController,
-        InterViewController,OrientationHelper.OnOrientationChangeListener {
+public abstract class BaseVideoController extends FrameLayout implements IVideoController,
+        IViewController,OrientationHelper.OnOrientationChangeListener {
 
     //播放器包装类，集合了MediaPlayerControl的api和IVideoController的api
     protected ControlWrapper mControlWrapper;
@@ -92,7 +92,7 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
 
     //保存了所有的控制组件
     //使用LinkedHashMap有序
-    protected LinkedHashMap<InterControlView, Boolean> mControlComponents = new LinkedHashMap<>();
+    protected LinkedHashMap<IControlView, Boolean> mControlComponents = new LinkedHashMap<>();
 
     private Animation mShowAnim;
     private Animation mHideAnim;
@@ -167,11 +167,11 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
      * 重要：此方法用于将{@link VideoPlayer} 和控制器绑定
      */
     @CallSuper
-    public void setMediaPlayer(InterVideoPlayer mediaPlayer) {
+    public void setMediaPlayer(IVideoPlayer mediaPlayer) {
         mControlWrapper = new ControlWrapper(mediaPlayer, this);
         //绑定ControlComponent和Controller
-        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
-            InterControlView component = next.getKey();
+        for (Map.Entry<IControlView, Boolean> next : mControlComponents.entrySet()) {
+            IControlView component = next.getKey();
             component.attach(mControlWrapper);
         }
         //开始监听设备方向
@@ -183,8 +183,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
      * @param controlViews                         view
      */
     @Override
-    public void addControlComponent(InterControlView... controlViews) {
-        for (InterControlView item : controlViews) {
+    public void addControlComponent(IControlView... controlViews) {
+        for (IControlView item : controlViews) {
             addControlComponent(item, false);
         }
     }
@@ -195,7 +195,7 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
      * @param isPrivate                             是否为独有的组件，如果是就不添加到控制器中
      */
     @Override
-    public void addControlComponent(InterControlView controlView, boolean isPrivate) {
+    public void addControlComponent(IControlView controlView, boolean isPrivate) {
         mControlComponents.put(controlView, isPrivate);
         if (mControlWrapper != null) {
             controlView.attach(mControlWrapper);
@@ -211,7 +211,7 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
      * @param controlView                           view
      */
     @Override
-    public void removeControlComponent(InterControlView controlView) {
+    public void removeControlComponent(IControlView controlView) {
         removeView(controlView.getView());
         mControlComponents.remove(controlView);
     }
@@ -221,7 +221,7 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
      */
     @Override
     public void removeAllControlComponent() {
-        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
+        for (Map.Entry<IControlView, Boolean> next : mControlComponents.entrySet()) {
             removeView(next.getKey().getView());
         }
         mControlComponents.clear();
@@ -232,9 +232,9 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
      */
     @Override
     public void removeAllPrivateComponents() {
-        Iterator<Map.Entry<InterControlView, Boolean>> it = mControlComponents.entrySet().iterator();
+        Iterator<Map.Entry<IControlView, Boolean>> it = mControlComponents.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<InterControlView, Boolean> next = it.next();
+            Map.Entry<IControlView, Boolean> next = it.next();
             if (next.getValue()) {
                 it.remove();
             }
@@ -613,8 +613,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     private void handleVisibilityChanged(boolean isVisible, Animation anim) {
         if (!mIsLocked) {
             //没锁住时才向ControlComponent下发此事件
-            for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
-                InterControlView component = next.getKey();
+            for (Map.Entry<IControlView, Boolean> next : mControlComponents.entrySet()) {
+                IControlView component = next.getKey();
                 component.onVisibilityChanged(isVisible, anim);
             }
         }
@@ -632,8 +632,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     }
 
     private void handlePlayStateChanged(int playState) {
-        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
-            InterControlView component = next.getKey();
+        for (Map.Entry<IControlView, Boolean> next : mControlComponents.entrySet()) {
+            IControlView component = next.getKey();
             component.onPlayStateChanged(playState);
         }
         onPlayStateChanged(playState);
@@ -667,8 +667,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
      * @param playerState                       播放器状态
      */
     private void handlePlayerStateChanged(int playerState) {
-        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
-            InterControlView component = next.getKey();
+        for (Map.Entry<IControlView, Boolean> next : mControlComponents.entrySet()) {
+            IControlView component = next.getKey();
             component.onPlayerStateChanged(playerState);
         }
         onPlayerStateChanged(playerState);
@@ -712,8 +712,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     }
 
     private void handleSetProgress(int duration, int position) {
-        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
-            InterControlView component = next.getKey();
+        for (Map.Entry<IControlView, Boolean> next : mControlComponents.entrySet()) {
+            IControlView component = next.getKey();
             component.setProgress(duration, position);
         }
         setProgress(duration, position);
@@ -730,8 +730,8 @@ public abstract class BaseVideoController extends FrameLayout implements InterVi
     }
 
     private void handleLockStateChanged(boolean isLocked) {
-        for (Map.Entry<InterControlView, Boolean> next : mControlComponents.entrySet()) {
-            InterControlView component = next.getKey();
+        for (Map.Entry<IControlView, Boolean> next : mControlComponents.entrySet()) {
+            IControlView component = next.getKey();
             component.onLockStateChanged(isLocked);
         }
         onLockStateChanged(isLocked);

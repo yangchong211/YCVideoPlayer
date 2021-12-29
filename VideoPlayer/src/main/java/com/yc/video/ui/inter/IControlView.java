@@ -34,7 +34,7 @@ import com.yc.video.bridge.ControlWrapper;
  *             举一个例子：比如广告视图，
  * </pre>
  */
-public interface InterControlView {
+public interface IControlView {
 
     /**
      * 这个是绑定视图操作

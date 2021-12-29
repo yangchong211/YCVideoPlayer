@@ -39,7 +39,7 @@ import com.yc.videotool.VideoLogUtils;
  *     revise:
  * </pre>
  */
-public class VideoPlayerConfig {
+public final class VideoPlayerConfig {
 
     public static Builder newBuilder() {
         return new Builder();
