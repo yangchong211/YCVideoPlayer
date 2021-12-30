@@ -1,4 +1,4 @@
-package com.yc.videoview;
+package com.yc.videoview.impl;
 
 import android.content.Context;
 import android.view.View;
@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
  *     revise:
  * </pre>
  */
-public class FloatToast extends AbsFloatView {
+public class FloatToastImpl extends AbsFloatView {
 
     private final Toast toast;
     private Object mTN;
@@ -30,7 +30,7 @@ public class FloatToast extends AbsFloatView {
     private int mHeight;
 
 
-    FloatToast(Context applicationContext) {
+    public FloatToastImpl(Context applicationContext) {
         toast = new Toast(applicationContext);
     }
 

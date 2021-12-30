@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.yc.videoview.tool.FloatWindowUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class PermissionActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (Build.VERSION.SDK_INT >= 23){
             //用23以上编译即可出现canDrawOverlays
-            if (WindowUtil.hasPermission(this)) {
+            if (FloatWindowUtils.hasPermission(this)) {
                 mPermissionListener.onSuccess();
             } else {
                 mPermissionListener.onFail();
@@ -57,7 +59,7 @@ public class PermissionActivity extends AppCompatActivity {
         finish();
     }
 
-    static synchronized void request(Context context, PermissionListener permissionListener) {
+    public static synchronized void request(Context context, PermissionListener permissionListener) {
         if (mPermissionListenerList == null) {
             mPermissionListenerList = new ArrayList<>();
             mPermissionListener = new PermissionListener() {

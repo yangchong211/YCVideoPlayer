@@ -1,4 +1,4 @@
-package com.yc.videoview;
+package com.yc.videoview.tool;
 
 
 import androidx.annotation.IntDef;
@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 
-public class WindowScreen {
+public final class FloatScreenType {
     public static final int WIDTH = 0;
     public static final int HEIGHT = 1;
 

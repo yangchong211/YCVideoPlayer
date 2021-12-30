@@ -2,7 +2,7 @@ package com.yc.videoview.inter;
 
 import android.view.View;
 
-import com.yc.videoview.WindowScreen;
+import com.yc.videoview.tool.FloatScreenType;
 
 /**
  * <pre>
@@ -25,11 +25,11 @@ public interface IFloatWindow {
 
     void updateX(int x);
 
-    void updateX(@WindowScreen.screenType int screenType, float ratio);
+    void updateX(@FloatScreenType.screenType int screenType, float ratio);
 
     void updateY(int y);
 
-    void updateY(@WindowScreen.screenType int screenType, float ratio);
+    void updateY(@FloatScreenType.screenType int screenType, float ratio);
 
     View getView();
 

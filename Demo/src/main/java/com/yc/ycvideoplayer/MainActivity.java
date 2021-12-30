@@ -18,20 +18,19 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import com.yc.music.model.AudioBean;
+
 import com.yc.music.service.PlayAudioService;
 import com.yc.music.tool.BaseAppHelper;
 import com.yc.video.tool.BaseToast;
 import com.yc.videotool.VideoLogUtils;
 import com.yc.videoview.FloatWindow;
-import com.yc.videoview.MoveType;
-import com.yc.videoview.WindowScreen;
-import com.yc.videoview.WindowUtil;
+import com.yc.videoview.tool.FloatMoveType;
+import com.yc.videoview.tool.FloatScreenType;
+import com.yc.videoview.tool.FloatWindowUtils;
 import com.yc.ycvideoplayer.audio.AudioActivity;
 import com.yc.ycvideoplayer.m3u8.M3u8Activity;
 import com.yc.ycvideoplayer.music.MusicPlayerActivity;
 import com.yc.ycvideoplayer.video.activity.TypeActivity;
-import java.util.List;
 
 import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
@@ -110,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_6:
                 if (Build.VERSION.SDK_INT >= 23) {
-                    if (!WindowUtil.hasPermission(this)) {
+                    if (!FloatWindowUtils.hasPermission(this)) {
                         requestAlertWindowPermission();
                     } else {
                         windowDialog();
@@ -135,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (Build.VERSION.SDK_INT >= 23) {
-            if (WindowUtil.hasPermission(this)) {
+            if (FloatWindowUtils.hasPermission(this)) {
 
             } else {
                 this.finish();
@@ -153,9 +152,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //.setWidth(WindowScreen.WIDTH, 0.4f)
                 //.setHeight(WindowScreen.WIDTH, 0.3f)
                 //这个是设置位置
-                .setX(WindowScreen.WIDTH, 0.8f)
-                .setY(WindowScreen.HEIGHT, 0.3f)
-                .setMoveType(MoveType.slide)
+                .setX(FloatScreenType.WIDTH, 0.8f)
+                .setY(FloatScreenType.HEIGHT, 0.3f)
+                .setMoveType(FloatMoveType.SLIDE)
                 .setFilter(false)
                 //.setFilter(true, WindowActivity.class, EmptyActivity.class)
                 .setMoveStyle(500, new BounceInterpolator())

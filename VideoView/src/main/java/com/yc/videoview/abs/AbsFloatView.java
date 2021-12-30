@@ -1,6 +1,6 @@
 package com.yc.videoview.abs;
 
-import android.view.View;
+import com.yc.videoview.inter.IFloatView;
 
 /**
  * <pre>
@@ -11,22 +11,25 @@ import android.view.View;
  *     revise: 定义抽象方法和普通方法
  * </pre>
  */
-public abstract class AbsFloatView {
+public abstract class AbsFloatView implements IFloatView {
 
-    public abstract void setSize(int width, int height);
-
-    public abstract void setView(View view);
-
-    public abstract void setGravity(int gravity, int xOffset, int yOffset);
-
-    public abstract void init();
-
-    public abstract void dismiss();
-
+    /**
+     * 更新x和y
+     * @param x                     x
+     * @param y                     y
+     */
     public void updateXY(int x, int y) {}
 
+    /**
+     * 更新x
+     * @param x                     x
+     */
     public void updateX(int x) {}
 
+    /**
+     * 更新y
+     * @param y                     y
+     */
     public void updateY(int y) {}
 
     public int getX() {

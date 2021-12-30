@@ -37,7 +37,7 @@ public class FloatLifecycle extends BroadcastReceiver implements Application.Act
     private final ILifecycleListener mLifecycleListener;
 
 
-    FloatLifecycle(Context applicationContext, boolean showFlag, Class[] activities,
+    public FloatLifecycle(Context applicationContext, boolean showFlag, Class[] activities,
                    ILifecycleListener lifecycleListener) {
         this.showFlag = showFlag;
         this.activities = activities;

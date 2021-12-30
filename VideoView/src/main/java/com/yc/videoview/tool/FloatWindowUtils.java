@@ -1,4 +1,4 @@
-package com.yc.videoview;
+package com.yc.videoview.tool;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import androidx.annotation.RequiresApi;
 
 
-public final class WindowUtil {
+public final class FloatWindowUtils {
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)

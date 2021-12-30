@@ -1,4 +1,4 @@
-package com.yc.videoview;
+package com.yc.videoview.impl;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
@@ -6,6 +6,8 @@ import android.os.Build;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.yc.videoview.PermissionActivity;
+import com.yc.videoview.tool.FloatWindowUtils;
 import com.yc.videoview.abs.AbsFloatView;
 
 /**
@@ -17,7 +19,7 @@ import com.yc.videoview.abs.AbsFloatView;
  *     revise: 7.1及以上需申请权限
  * </pre>
  */
-public class FloatPhone extends AbsFloatView {
+public class FloatPhoneImpl extends AbsFloatView {
 
     private final Context mContext;
     private final WindowManager mWindowManager;
@@ -25,7 +27,7 @@ public class FloatPhone extends AbsFloatView {
     private View mView;
     private int mX, mY;
 
-    FloatPhone(Context applicationContext) {
+    public FloatPhoneImpl(Context applicationContext) {
         mContext = applicationContext;
         //创建WindowManager
         mWindowManager = (WindowManager)
@@ -82,7 +84,7 @@ public class FloatPhone extends AbsFloatView {
     @Override
     public void init() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (WindowUtil.hasPermission(mContext)) {
+            if (FloatWindowUtils.hasPermission(mContext)) {
                 //设置bitmap的格式
                 mLayoutParams.format = PixelFormat.RGBA_8888;
                 //将悬浮窗控件添加到WindowManager

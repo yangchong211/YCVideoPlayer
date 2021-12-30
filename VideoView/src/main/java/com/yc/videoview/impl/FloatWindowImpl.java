@@ -1,4 +1,4 @@
-package com.yc.videoview;
+package com.yc.videoview.impl;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -11,6 +11,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
+import com.yc.videoview.FloatLifecycle;
+import com.yc.videoview.FloatWindow;
+import com.yc.videoview.tool.FloatMoveType;
+import com.yc.videoview.tool.FloatScreenType;
+import com.yc.videoview.tool.FloatWindowUtils;
 import com.yc.videoview.abs.AbsFloatView;
 import com.yc.videoview.inter.IFloatWindow;
 import com.yc.videoview.inter.ILifecycleListener;
@@ -24,10 +29,10 @@ import com.yc.videoview.inter.ILifecycleListener;
  *     revise:
  * </pre>
  */
-public class IFloatWindowImpl implements IFloatWindow {
+public class FloatWindowImpl implements IFloatWindow {
 
 
-    private FloatWindow.Builder mB;
+    private FloatWindow.Builder mBuilder;
     private AbsFloatView mFloatView;
     private FloatLifecycle mFloatLifecycle;
     private boolean isShow;
@@ -35,28 +40,28 @@ public class IFloatWindowImpl implements IFloatWindow {
     private ValueAnimator mAnimator;
     private TimeInterpolator mDecelerateInterpolator;
 
-    private IFloatWindowImpl() {
+    private FloatWindowImpl() {
 
     }
 
-    IFloatWindowImpl(FloatWindow.Builder b) {
-        mB = b;
+    public FloatWindowImpl(FloatWindow.Builder b) {
+        mBuilder = b;
         //这一步相当于创建系统级的window，通过windowManager添加view并且展示
-        if (mB.mMoveType == MoveType.fixed) {
+        if (mBuilder.mMoveType == FloatMoveType.FIXED) {
             if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.N_MR1) {
-                mFloatView = new FloatPhone(b.mApplicationContext);
+                mFloatView = new FloatPhoneImpl(b.mApplicationContext);
             } else {
-                mFloatView = new FloatToast(b.mApplicationContext);
+                mFloatView = new FloatToastImpl(b.mApplicationContext);
             }
         } else {
-            mFloatView = new FloatPhone(b.mApplicationContext);
+            mFloatView = new FloatPhoneImpl(b.mApplicationContext);
             initTouchEvent();
         }
-        mFloatView.setSize(mB.mWidth, mB.mHeight);
-        mFloatView.setGravity(mB.gravity, mB.xOffset, mB.yOffset);
-        mFloatView.setView(mB.mView);
-        mFloatLifecycle = new FloatLifecycle(mB.mApplicationContext,
-                mB.mShow, mB.mActivities, new ILifecycleListener() {
+        mFloatView.setSize(mBuilder.mWidth, mBuilder.mHeight);
+        mFloatView.setGravity(mBuilder.gravity, mBuilder.xOffset, mBuilder.yOffset);
+        mFloatView.setView(mBuilder.mView);
+        mFloatLifecycle = new FloatLifecycle(mBuilder.mApplicationContext,
+                mBuilder.mShow, mBuilder.mActivities, new ILifecycleListener() {
             @Override
             public void onShow() {
                 show();
@@ -111,34 +116,34 @@ public class IFloatWindowImpl implements IFloatWindow {
     @Override
     public void updateX(int x) {
         checkMoveType();
-        mB.xOffset = x;
+        mBuilder.xOffset = x;
         mFloatView.updateX(x);
     }
 
     @Override
     public void updateY(int y) {
         checkMoveType();
-        mB.yOffset = y;
+        mBuilder.yOffset = y;
         mFloatView.updateY(y);
     }
 
     @Override
     public void updateX(int screenType, float ratio) {
         checkMoveType();
-        mB.xOffset = (int) ((screenType == WindowScreen.WIDTH ?
-                WindowUtil.getScreenWidth(mB.mApplicationContext) :
-                WindowUtil.getScreenHeight(mB.mApplicationContext)) * ratio);
-        mFloatView.updateX(mB.xOffset);
+        mBuilder.xOffset = (int) ((screenType == FloatScreenType.WIDTH ?
+                FloatWindowUtils.getScreenWidth(mBuilder.mApplicationContext) :
+                FloatWindowUtils.getScreenHeight(mBuilder.mApplicationContext)) * ratio);
+        mFloatView.updateX(mBuilder.xOffset);
 
     }
 
     @Override
     public void updateY(int screenType, float ratio) {
         checkMoveType();
-        mB.yOffset = (int) ((screenType == WindowScreen.WIDTH ?
-                WindowUtil.getScreenWidth(mB.mApplicationContext) :
-                WindowUtil.getScreenHeight(mB.mApplicationContext)) * ratio);
-        mFloatView.updateY(mB.yOffset);
+        mBuilder.yOffset = (int) ((screenType == FloatScreenType.WIDTH ?
+                FloatWindowUtils.getScreenWidth(mBuilder.mApplicationContext) :
+                FloatWindowUtils.getScreenHeight(mBuilder.mApplicationContext)) * ratio);
+        mFloatView.updateY(mBuilder.yOffset);
 
     }
 
@@ -155,7 +160,7 @@ public class IFloatWindowImpl implements IFloatWindow {
 
     @Override
     public View getView() {
-        return mB.mView;
+        return mBuilder.mView;
     }
 
     void postHide() {
@@ -172,14 +177,14 @@ public class IFloatWindowImpl implements IFloatWindow {
     }
 
     private void checkMoveType() {
-        if (mB.mMoveType == MoveType.fixed) {
+        if (mBuilder.mMoveType == FloatMoveType.FIXED) {
             throw new IllegalArgumentException("FloatWindow of this tag is not allowed to move!");
         }
     }
 
     private void initTouchEvent() {
-        switch (mB.mMoveType) {
-            case MoveType.free:
+        switch (mBuilder.mMoveType) {
+            case FloatMoveType.FREE:
                 break;
             default:
                 getView().setOnTouchListener(onTouchListener);
@@ -208,12 +213,12 @@ public class IFloatWindowImpl implements IFloatWindow {
                     lastY = event.getRawY();
                     break;
                 case MotionEvent.ACTION_UP:
-                    switch (mB.mMoveType) {
-                        case MoveType.slide:
+                    switch (mBuilder.mMoveType) {
+                        case FloatMoveType.SLIDE:
                             int startX = mFloatView.getX();
                             int endX = (startX * 2 + v.getWidth() >
-                                    WindowUtil.getScreenWidth(mB.mApplicationContext)) ?
-                                    WindowUtil.getScreenWidth(mB.mApplicationContext) - v.getWidth() : 0;
+                                    FloatWindowUtils.getScreenWidth(mBuilder.mApplicationContext)) ?
+                                    FloatWindowUtils.getScreenWidth(mBuilder.mApplicationContext) - v.getWidth() : 0;
                             mAnimator = ObjectAnimator.ofInt(startX, endX);
                             mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                                 @Override
@@ -224,9 +229,9 @@ public class IFloatWindowImpl implements IFloatWindow {
                             });
                             startAnimator();
                             break;
-                        case MoveType.back:
-                            PropertyValuesHolder pvhX = PropertyValuesHolder.ofInt("x", mFloatView.getX(), mB.xOffset);
-                            PropertyValuesHolder pvhY = PropertyValuesHolder.ofInt("y", mFloatView.getY(), mB.yOffset);
+                        case FloatMoveType.BACK:
+                            PropertyValuesHolder pvhX = PropertyValuesHolder.ofInt("x", mFloatView.getX(), mBuilder.xOffset);
+                            PropertyValuesHolder pvhY = PropertyValuesHolder.ofInt("y", mFloatView.getY(), mBuilder.yOffset);
                             mAnimator = ObjectAnimator.ofPropertyValuesHolder(pvhX, pvhY);
                             mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                                 @Override
@@ -254,13 +259,13 @@ public class IFloatWindowImpl implements IFloatWindow {
      * 开启动画
      */
     private void startAnimator() {
-        if (mB.mInterpolator == null) {
+        if (mBuilder.mInterpolator == null) {
             if (mDecelerateInterpolator == null) {
                 mDecelerateInterpolator = new DecelerateInterpolator();
             }
-            mB.mInterpolator = mDecelerateInterpolator;
+            mBuilder.mInterpolator = mDecelerateInterpolator;
         }
-        mAnimator.setInterpolator(mB.mInterpolator);
+        mAnimator.setInterpolator(mBuilder.mInterpolator);
         mAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -269,7 +274,7 @@ public class IFloatWindowImpl implements IFloatWindow {
                 mAnimator = null;
             }
         });
-        mAnimator.setDuration(mB.mDuration).start();
+        mAnimator.setDuration(mBuilder.mDuration).start();
     }
 
     /**
