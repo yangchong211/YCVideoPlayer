@@ -4,7 +4,7 @@ apply from: rootProject.projectDir.absolutePath + "/VideoGradle/video.gradle"
 
 android {
     compileSdkVersion project.ext.androidCompileSdkVersion
-    buildToolsVersion project.ext.androidBuildToolsVersion
+    //buildToolsVersion project.ext.androidBuildToolsVersion
 
     defaultConfig {
         minSdkVersion project.ext.androidMinSdkVersion

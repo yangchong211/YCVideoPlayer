@@ -11,7 +11,7 @@ import android.content.Context;
  *     revise:
  * </pre>
  */
-public class CacheConfig {
+public final class CacheConfig {
 
     /**
      * 是否生效
