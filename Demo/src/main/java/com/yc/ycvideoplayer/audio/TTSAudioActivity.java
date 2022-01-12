@@ -20,12 +20,7 @@ public class TTSAudioActivity extends AppCompatActivity implements View.OnClickL
     private Button btnSpeakTts2;
     private Button btnSpeakTts3;
     private Button btnSpeakTts4;
-    private Button btnResume;
     private Button btnStop;
-    private Button btnHighPriority;
-    private Button btnRelease;
-    private Button btnBrazil;
-    private Button btnTts;
 
 
     @Override
@@ -40,10 +35,6 @@ public class TTSAudioActivity extends AppCompatActivity implements View.OnClickL
         btnSpeakTts4 = findViewById(R.id.btn_speak_tts4);
         btnResume = findViewById(R.id.btn_resume);
         btnStop = findViewById(R.id.btn_stop);
-        btnHighPriority = findViewById(R.id.btn_high_priority);
-        btnRelease = findViewById(R.id.btn_release);
-        btnBrazil = findViewById(R.id.btn_brazil);
-        btnTts = findViewById(R.id.btn_tts);
 
         btnInit.setOnClickListener(this);
         btnSpeakTts1.setOnClickListener(this);
@@ -87,16 +78,10 @@ public class TTSAudioActivity extends AppCompatActivity implements View.OnClickL
                     textToSpeech.speak("简单播放，"+i, TextToSpeech.QUEUE_ADD, null);
                 }
             }
-        } else if (v == btnResume){
         } else if (v == btnStop){
             if (textToSpeech!=null){
                 textToSpeech.stop();
             }
-        } else if (v == btnHighPriority){
-
-        } else if (v == btnRelease){
-        } else if (v == btnBrazil){
-        } else if (v == btnTts){
         }
     }
 

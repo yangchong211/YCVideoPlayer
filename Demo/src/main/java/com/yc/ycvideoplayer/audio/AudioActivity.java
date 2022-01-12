@@ -61,13 +61,14 @@ public class AudioActivity extends AppCompatActivity implements View.OnClickList
         btnBrazil.setOnClickListener(this);
         btnTts.setOnClickListener(this);
         btnTtsDemo.setOnClickListener(this);
+
+        AudioService.getInstance().init(this);
     }
 
 
     @Override
     public void onClick(View v) {
         if (v == btnInit){
-            AudioService.getInstance().init(this);
             AudioService.getInstance().setPlayStateListener(new AudioManager.PlayStateListener() {
                 @Override
                 public void onStartPlay() {

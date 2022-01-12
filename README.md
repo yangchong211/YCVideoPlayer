@@ -147,7 +147,7 @@
     |**com.github.yangchong211.YCVideoPlayer:VideoRecorder:1.1.0** | 视频录频 |
     |**com.github.yangchong211.YCVideoPlayer:VideoMonitor:1.1.0** | 视频监控库 |
 - 关于案例中仿抖音滑动视频
-
+    - 具体可以看：[仿抖音滑动分页视频](https://github.com/yangchong211/YCScrollPager)
 
 
 #### 4.2 在xml中添加布局

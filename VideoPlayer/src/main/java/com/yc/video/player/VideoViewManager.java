@@ -50,7 +50,8 @@ public class VideoViewManager {
     private static VideoPlayerConfig sConfig;
 
     private VideoViewManager() {
-        mPlayOnMobileNetwork = getConfig().mPlayOnMobileNetwork;
+        VideoPlayerConfig config = getConfig();
+        mPlayOnMobileNetwork = config.mPlayOnMobileNetwork;
     }
 
     /**
