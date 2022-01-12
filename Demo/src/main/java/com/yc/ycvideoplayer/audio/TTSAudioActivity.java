@@ -33,7 +33,6 @@ public class TTSAudioActivity extends AppCompatActivity implements View.OnClickL
         btnSpeakTts2 = findViewById(R.id.btn_speak_tts2);
         btnSpeakTts3 = findViewById(R.id.btn_speak_tts3);
         btnSpeakTts4 = findViewById(R.id.btn_speak_tts4);
-        btnResume = findViewById(R.id.btn_resume);
         btnStop = findViewById(R.id.btn_stop);
 
         btnInit.setOnClickListener(this);
@@ -41,12 +40,7 @@ public class TTSAudioActivity extends AppCompatActivity implements View.OnClickL
         btnSpeakTts2.setOnClickListener(this);
         btnSpeakTts3.setOnClickListener(this);
         btnSpeakTts4.setOnClickListener(this);
-        btnResume.setOnClickListener(this);
         btnStop.setOnClickListener(this);
-        btnHighPriority.setOnClickListener(this);
-        btnRelease.setOnClickListener(this);
-        btnBrazil.setOnClickListener(this);
-        btnTts.setOnClickListener(this);
     }
 
 
