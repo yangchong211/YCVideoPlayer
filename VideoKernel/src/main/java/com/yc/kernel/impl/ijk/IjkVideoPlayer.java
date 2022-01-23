@@ -162,9 +162,15 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
         try {
             //解析path
             Uri uri = Uri.parse(path);
-            if (ContentResolver.SCHEME_ANDROID_RESOURCE.equals(uri.getScheme())) {
+            String scheme = uri.getScheme();
+            if (ContentResolver.SCHEME_ANDROID_RESOURCE.equals(scheme)) {
+                //处理本地资源
                 RawDataSourceProvider rawDataSourceProvider = RawDataSourceProvider.create(mAppContext, uri);
-                mMediaPlayer.setDataSource(rawDataSourceProvider);
+                if (rawDataSourceProvider != null){
+                    mMediaPlayer.setDataSource(rawDataSourceProvider);
+                } else {
+                    mPlayerEventListener.onError(PlayerConstant.ErrorType.TYPE_UNEXPECTED,"path no find");
+                }
             } else {
                 //处理UA问题
                 if (headers != null) {
@@ -301,6 +307,7 @@ public class IjkVideoPlayer extends AbstractVideoPlayer {
             @Override
             public void run() {
                 try {
+                    //异步释放，防止卡顿
                     mMediaPlayer.release();
                 } catch (Exception e) {
                     e.printStackTrace();

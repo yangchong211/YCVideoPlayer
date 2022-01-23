@@ -29,7 +29,7 @@ import com.yc.kernel.factory.PlayerFactory;
  *     revise: 抽象工厂具体实现类
  * </pre>
  */
-public class MediaPlayerFactory extends PlayerFactory<AndroidMediaPlayer> {
+public class MediaPlayerFactory implements PlayerFactory<AndroidMediaPlayer> {
 
     public static MediaPlayerFactory create() {
         return new MediaPlayerFactory();

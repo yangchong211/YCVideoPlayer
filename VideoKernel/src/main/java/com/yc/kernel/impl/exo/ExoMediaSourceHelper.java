@@ -42,7 +42,7 @@ public final class ExoMediaSourceHelper {
 
     private static ExoMediaSourceHelper sInstance;
     private final String mUserAgent;
-    private Context mAppContext;
+    private final Context mAppContext;
     private HttpDataSource.Factory mHttpDataSourceFactory;
     private Cache mCache;
 

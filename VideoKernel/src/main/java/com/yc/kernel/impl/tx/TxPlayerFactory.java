@@ -30,7 +30,7 @@ import com.yc.kernel.impl.media.AndroidMediaPlayer;
  *     revise:
  * </pre>
  */
-public class TxPlayerFactory extends PlayerFactory<TxMediaPlayer> {
+public class TxPlayerFactory implements PlayerFactory<TxMediaPlayer> {
 
     public static TxPlayerFactory create() {
         return new TxPlayerFactory();

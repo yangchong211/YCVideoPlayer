@@ -27,7 +27,7 @@ import com.yc.kernel.factory.PlayerFactory;
  *     revise: 抽象工厂具体实现类
  * </pre>
  */
-public class IjkPlayerFactory extends PlayerFactory<IjkVideoPlayer> {
+public class IjkPlayerFactory implements PlayerFactory<IjkVideoPlayer> {
 
     public static IjkPlayerFactory create() {
         return new IjkPlayerFactory();

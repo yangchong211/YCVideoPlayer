@@ -202,6 +202,7 @@ public class AndroidMediaPlayer extends AbstractVideoPlayer {
             @Override
             public void run() {
                 try {
+                    //异步释放，防止卡顿
                     mMediaPlayer.release();
                 } catch (Exception e) {
                     e.printStackTrace();

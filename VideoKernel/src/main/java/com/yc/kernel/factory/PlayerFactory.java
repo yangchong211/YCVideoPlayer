@@ -15,7 +15,7 @@ import com.yc.kernel.inter.AbstractVideoPlayer;
  *             2.继承此接口并实现{@link #createPlayer(Context)}，返回步骤1中的播放器。
  * </pre>
  */
-public abstract class PlayerFactory<T extends AbstractVideoPlayer> {
+public interface PlayerFactory<T extends AbstractVideoPlayer> {
 
     /**
      * 使用工厂模式
@@ -31,6 +31,6 @@ public abstract class PlayerFactory<T extends AbstractVideoPlayer> {
      * @param context                       上下文
      * @return                              具体的player
      */
-    public abstract T createPlayer(Context context);
+    T createPlayer(Context context);
 
 }

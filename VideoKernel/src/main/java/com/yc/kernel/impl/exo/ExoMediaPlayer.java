@@ -62,6 +62,10 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
     private RenderersFactory mRenderersFactory;
     private TrackSelector mTrackSelector;
 
+    /**
+     * 创建对象操作
+     * @param context                           上下文
+     */
     public ExoMediaPlayer(Context context) {
         if (context instanceof Application){
             mAppContext = context;
@@ -71,6 +75,9 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
         mMediaSourceHelper = ExoMediaSourceHelper.getInstance(context);
     }
 
+    /**
+     * 初始化谷歌播放器
+     */
     @Override
     public void initPlayer() {
         //创建exo播放器
@@ -88,9 +95,6 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
         setOptions();
 
         //播放器日志
-        if (VideoLogUtils.isIsLog() && mTrackSelector instanceof MappingTrackSelector) {
-            mInternalPlayer.addAnalyticsListener(new EventLogger((MappingTrackSelector) mTrackSelector, "ExoPlayer"));
-        }
         initListener();
     }
 
@@ -98,7 +102,16 @@ public class ExoMediaPlayer extends AbstractVideoPlayer implements VideoListener
      * exo视频播放器监听listener
      */
     private void initListener() {
+        if (VideoLogUtils.isIsLog() && mTrackSelector instanceof MappingTrackSelector) {
+            EventLogger exoPlayer = new EventLogger((MappingTrackSelector) mTrackSelector, "ExoPlayer");
+            mInternalPlayer.addAnalyticsListener(exoPlayer);
+        }
+        //设置视频播放器监听
         mInternalPlayer.addListener(this);
+        //设置视频video监听
+        //onVideoSizeChanged        视频size发生了变化
+        //onSurfaceSizeChanged      视频surface变化
+        //onRenderedFirstFrame      视频第一帧
         mInternalPlayer.addVideoListener(this);
     }
 

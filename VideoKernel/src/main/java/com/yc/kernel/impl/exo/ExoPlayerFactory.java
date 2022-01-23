@@ -13,7 +13,7 @@ import com.yc.kernel.factory.PlayerFactory;
  *     revise: 抽象工厂具体实现类
  * </pre>
  */
-public class ExoPlayerFactory extends PlayerFactory<ExoMediaPlayer> {
+public class ExoPlayerFactory implements PlayerFactory<ExoMediaPlayer> {
 
     public static ExoPlayerFactory create() {
         return new ExoPlayerFactory();
