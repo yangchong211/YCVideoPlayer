@@ -16,6 +16,7 @@ limitations under the License.
 package com.yc.video.player;
 
 import com.yc.video.config.ConstantKeys;
+import com.yc.video.inter.OnVideoStateListener;
 
 /**
  * <pre>

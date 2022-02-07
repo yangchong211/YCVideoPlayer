@@ -28,7 +28,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package com.yc.video.player;
+package com.yc.video.inter;
 
 import android.graphics.Bitmap;
 
@@ -43,7 +43,7 @@ import com.yc.video.config.ConstantKeys;
  *     revise: 播放器基础属性获取和设置属性接口
  * </pre>
  */
-public interface IVideoPlayer {
+public interface IVideoPlayer extends IVideoPlayerScreen{
 
     /**
      * 设置链接
@@ -73,7 +73,6 @@ public interface IVideoPlayer {
      */
     long getDuration();
 
-
     /**
      * 获取当前播放的位置
      * @return                              long类型
@@ -98,15 +97,16 @@ public interface IVideoPlayer {
      */
     int getBufferedPercentage();
 
-
-    void startFullScreen();
-
-    void stopFullScreen();
-
-    boolean isFullScreen();
-
+    /**
+     * 设置是否静音
+     * @param isMute                        是否静音
+     */
     void setMute(boolean isMute);
 
+    /**
+     * 是否静音
+     * @return                              布尔值
+     */
     boolean isMute();
 
     void setScreenScaleType(@ConstantKeys.ScreenScaleType int screenScaleType);
@@ -121,16 +121,8 @@ public interface IVideoPlayer {
 
     void setMirrorRotation(boolean enable);
 
-    Bitmap doScreenShot();
-
     int[] getVideoSize();
 
     void setRotation(float rotation);
-
-    void startTinyScreen();
-
-    void stopTinyScreen();
-
-    boolean isTinyScreen();
 
 }

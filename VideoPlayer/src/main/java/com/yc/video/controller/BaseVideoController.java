@@ -33,13 +33,15 @@ import androidx.annotation.Nullable;
 
 import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.config.ConstantKeys;
-import com.yc.video.player.IVideoPlayer;
+import com.yc.video.inter.IVideoController;
+import com.yc.video.inter.IViewController;
+import com.yc.video.inter.IVideoPlayer;
 import com.yc.video.player.VideoViewManager;
 import com.yc.video.player.VideoPlayer;
 import com.yc.video.tool.StatesCutoutUtils;
 import com.yc.video.tool.NetworkUtils;
 import com.yc.video.tool.PlayerUtils;
-import com.yc.video.ui.inter.IControlView;
+import com.yc.video.inter.IControlView;
 
 import com.yc.videotool.VideoLogUtils;
 

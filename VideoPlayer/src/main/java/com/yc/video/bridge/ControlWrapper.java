@@ -19,8 +19,8 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
-import com.yc.video.controller.IVideoController;
-import com.yc.video.player.IVideoPlayer;
+import com.yc.video.inter.IVideoController;
+import com.yc.video.inter.IVideoPlayer;
 
 
 /**

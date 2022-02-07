@@ -34,7 +34,7 @@ import com.yc.video.bridge.ControlWrapper;
 
 import com.yc.video.R;
 
-import com.yc.video.ui.inter.IControlView;
+import com.yc.video.inter.IControlView;
 
 /**
  * <pre>

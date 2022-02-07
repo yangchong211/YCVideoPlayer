@@ -17,6 +17,8 @@ package com.yc.video.surface;
 
 import android.content.Context;
 
+import com.yc.video.inter.ISurfaceView;
+
 /**
  * <pre>
  *     @author yangchong
@@ -28,6 +30,6 @@ import android.content.Context;
  */
 public abstract class SurfaceFactory {
 
-    public abstract InterSurfaceView createRenderView(Context context);
+    public abstract ISurfaceView createRenderView(Context context);
 
 }

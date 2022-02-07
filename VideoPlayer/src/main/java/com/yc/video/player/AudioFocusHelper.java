@@ -36,8 +36,8 @@ import java.lang.ref.WeakReference;
 public final class AudioFocusHelper implements AudioManager.OnAudioFocusChangeListener {
 
     private Handler mHandler = new Handler(Looper.getMainLooper());
-    private WeakReference<VideoPlayer> mWeakVideoView;
-    private AudioManager mAudioManager;
+    private final WeakReference<VideoPlayer> mWeakVideoView;
+    private final AudioManager mAudioManager;
     private boolean mStartRequested = false;
     private boolean mPausedForLoss = false;
     private int mCurrentFocus = 0;

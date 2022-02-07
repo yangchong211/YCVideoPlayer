@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.yc.kernel.inter.AbstractVideoPlayer;
+import com.yc.video.inter.ISurfaceView;
 
 
 /**
@@ -40,7 +41,7 @@ import com.yc.kernel.inter.AbstractVideoPlayer;
  * </pre>
  */
 @SuppressLint("ViewConstructor")
-public class RenderTextureView extends TextureView implements InterSurfaceView {
+public class RenderTextureView extends TextureView implements ISurfaceView {
 
     private MeasureHelper mMeasureHelper;
     private SurfaceTexture mSurfaceTexture;

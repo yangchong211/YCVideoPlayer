@@ -17,6 +17,8 @@ package com.yc.video.surface;
 
 import android.content.Context;
 
+import com.yc.video.inter.ISurfaceView;
+
 /**
  * <pre>
  *     @author yangchong
@@ -33,7 +35,7 @@ public class SurfaceViewFactory extends SurfaceFactory {
     }
 
     @Override
-    public InterSurfaceView createRenderView(Context context) {
+    public ISurfaceView createRenderView(Context context) {
         //创建SurfaceView
         return new RenderSurfaceView(context);
     }

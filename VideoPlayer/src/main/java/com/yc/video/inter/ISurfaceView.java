@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package com.yc.video.surface;
+package com.yc.video.inter;
 
 import android.graphics.Bitmap;
 import android.view.View;
@@ -31,7 +31,7 @@ import com.yc.kernel.inter.AbstractVideoPlayer;
  *     revise:
  * </pre>
  */
-public interface InterSurfaceView {
+public interface ISurfaceView {
 
     /**
      * 关联AbstractPlayer

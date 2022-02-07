@@ -31,7 +31,7 @@ import androidx.annotation.Nullable;
 import com.yc.videotool.VideoLogUtils;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.tool.PlayerUtils;
-import com.yc.video.ui.inter.IControlView;
+import com.yc.video.inter.IControlView;
 
 import java.util.Map;
 

@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.yc.kernel.inter.AbstractVideoPlayer;
+import com.yc.video.inter.ISurfaceView;
 
 /**
  * <pre>
@@ -37,7 +38,7 @@ import com.yc.kernel.inter.AbstractVideoPlayer;
  *     revise:
  * </pre>
  */
-public class RenderSurfaceView extends SurfaceView implements InterSurfaceView {
+public class RenderSurfaceView extends SurfaceView implements ISurfaceView {
 
     /**
      * 优点：可以在一个独立的线程中进行绘制，不会影响主线程；使用双缓冲机制，播放视频时画面更流畅

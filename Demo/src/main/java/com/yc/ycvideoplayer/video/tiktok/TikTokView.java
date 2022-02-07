@@ -20,7 +20,7 @@ import com.yc.ycvideoplayer.R;
 
 import com.yc.video.bridge.ControlWrapper;
 import com.yc.video.config.ConstantKeys;
-import com.yc.video.ui.inter.IControlView;
+import com.yc.video.inter.IControlView;
 
 public class TikTokView extends FrameLayout implements IControlView {
 

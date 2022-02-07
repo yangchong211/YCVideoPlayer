@@ -20,7 +20,7 @@ import com.yc.ycvideoplayer.ConstantVideo;
 import com.yc.ycvideoplayer.R;
 import com.yc.video.config.ConstantKeys;
 import com.yc.video.config.VideoPlayerConfig;
-import com.yc.video.player.OnVideoStateListener;
+import com.yc.video.inter.OnVideoStateListener;
 import com.yc.video.player.VideoPlayer;
 import com.yc.video.player.VideoPlayerBuilder;
 import com.yc.video.player.VideoViewManager;

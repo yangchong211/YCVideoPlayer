@@ -28,7 +28,7 @@ import com.yc.video.config.ConstantKeys;
  *     revise:
  * </pre>
  */
-public class MeasureHelper {
+public final class MeasureHelper {
 
     private int mVideoWidth;
     private int mVideoHeight;
@@ -53,7 +53,7 @@ public class MeasureHelper {
         mVideoHeight = height;
     }
 
-    public void setScreenScale(int screenScale) {
+    public void setScreenScale(@ConstantKeys.ScreenScaleType int screenScale) {
         mCurrentScreenScale = screenScale;
     }
 

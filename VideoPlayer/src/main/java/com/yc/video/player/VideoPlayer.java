@@ -34,7 +34,9 @@ import com.yc.video.config.VideoPlayerConfig;
 import com.yc.video.controller.BaseVideoController;
 import com.yc.kernel.inter.AbstractVideoPlayer;
 import com.yc.kernel.factory.PlayerFactory;
-import com.yc.video.surface.InterSurfaceView;
+import com.yc.video.inter.ISurfaceView;
+import com.yc.video.inter.IVideoPlayer;
+import com.yc.video.inter.OnVideoStateListener;
 import com.yc.video.surface.SurfaceFactory;
 import com.yc.video.tool.BaseToast;
 import com.yc.video.tool.PlayerUtils;
@@ -78,16 +80,26 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      * 真正承载播放器视图的容器
      */
     protected FrameLayout mPlayerContainer;
-
-    protected InterSurfaceView mRenderView;
+    /**
+     * 这个是渲染view对象
+     */
+    protected ISurfaceView mRenderView;
+    /**
+     * 渲染View创建的工厂类对象
+     */
     protected SurfaceFactory mRenderViewFactory;
+    /**
+     * 当前视频设置的比例
+     */
     protected int mCurrentScreenScaleType;
+    /**
+     * 视频的大小
+     */
     protected int[] mVideoSize = {0, 0};
     /**
      * 是否静音
      */
     protected boolean mIsMute;
-
     /**
      * 当前播放视频的地址
      */
@@ -127,25 +139,24 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
      * 监听系统中音频焦点改变
      */
     protected boolean mEnableAudioFocus;
+    /**
+     * 音频焦点改变监听的帮助类
+     */
     @Nullable
     protected AudioFocusHelper mAudioFocusHelper;
-
     /**
      * OnStateChangeListener集合，保存了所有开发者设置的监听器
      */
     protected List<OnVideoStateListener> mOnStateChangeListeners;
-
     /**
      * 进度管理器，设置之后播放器会记录播放进度，以便下次播放恢复进度
      */
     @Nullable
     protected ProgressManager mProgressManager;
-
     /**
      * 循环播放
      */
     protected boolean mIsLooping;
-
     /**
      * {@link #mPlayerContainer}背景色，默认黑色
      */
@@ -171,9 +182,13 @@ public class VideoPlayer<P extends AbstractVideoPlayer> extends FrameLayout
         initConfig();
         //读取xml中的配置，并综合全局配置
         initAttrs(attrs);
+        //初始化view
         initView();
     }
 
+    /**
+     * 读取初始化配置数据
+     */
     private void initConfig() {
         VideoPlayerConfig config = VideoViewManager.getConfig();
         mEnableAudioFocus = config.mEnableAudioFocus;
