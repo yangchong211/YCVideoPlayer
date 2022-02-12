@@ -153,7 +153,7 @@ public class RenderTextureView extends TextureView implements ISurfaceView {
         }
     }
 
-    private SurfaceTextureListener listener = new SurfaceTextureListener() {
+    private final SurfaceTextureListener listener = new SurfaceTextureListener() {
         /**
          * SurfaceTexture准备就绪
          * @param surfaceTexture            surface
