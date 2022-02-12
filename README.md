@@ -154,7 +154,7 @@
 - 注意，在实际开发中，由于Android手机碎片化比较严重，分辨率太多了，建议灵活设置布局的宽高比为4：3或者16：9或者你认为合适的，可以用代码设置。
 - 如果宽高比变形，则会有黑边
     ```
-    <org.yczbj.ycvideoplayerlib.player.VideoPlayer
+    <com.yc.video.player.VideoPlayer
         android:id="@+id/video_player"
         android:layout_width="match_parent"
         android:layout_height="240dp"/>
