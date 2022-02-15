@@ -178,20 +178,10 @@
     - android:configChanges 保证了在全屏的时候横竖屏切换不会执行Activity的相关生命周期，打断视频的播放
     - android:screenOrientation 固定了屏幕的初始方向
     - 这两个变量控制全屏后和退出全屏的屏幕方向
-        ```
+        ``` java
             <activity android:name=".VideoActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:screenOrientation="portrait"/>
-        ```
-- 如何一进入页面就开始播放视频，稍微延时一下即可
-    - 代码如下所示，注意避免直接start()，因为有可能视频还没有初始化完成……
-        ```
-        mVideoPlayer.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mVideoPlayer.start();
-            }
-        },300);
         ```
 
 
@@ -315,7 +305,7 @@
 
 
 ### 15.该库系列wiki文档
-
+- 具体看：readMe文档
 
 
 ### 16.版本更新文档记录
