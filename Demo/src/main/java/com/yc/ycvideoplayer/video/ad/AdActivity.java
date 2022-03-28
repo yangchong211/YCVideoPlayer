@@ -102,8 +102,8 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
         mVideoPlayer.setController(controller);
         HttpProxyCacheServer cacheServer = ProxyVideoCacheManager.getProxy(this);
         String proxyUrl = cacheServer.getProxyUrl(URL_AD);
-        HttpProxyCacheServer server = new HttpProxyCacheServer(this);
-        String proxyVideoUrl = server.getProxyUrl(URL_AD);
+        //HttpProxyCacheServer server = new HttpProxyCacheServer(this);
+        //String proxyVideoUrl = server.getProxyUrl(URL_AD);
 
 
         mVideoPlayer.setUrl(proxyUrl);

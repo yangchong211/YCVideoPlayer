@@ -28,7 +28,7 @@ public class M3u8InfoManger {
     private static final int WHAT_ON_SUCCESS = 1102;
 
     @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {

@@ -25,7 +25,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
  * Pings {@link HttpProxyCacheServer} to make sure it works.
  */
 
-class Pinger {
+public class Pinger {
 
     private static final String PING_REQUEST = "ping";
     private static final String PING_RESPONSE = "ping ok";
@@ -77,11 +77,11 @@ class Pinger {
         }
     }
 
-    boolean isPingRequest(String request) {
+    public static boolean isPingRequest(String request) {
         return PING_REQUEST.equals(request);
     }
 
-    void responseToPing(Socket socket) throws IOException {
+    public static void responseToPing(Socket socket) throws IOException {
         OutputStream out = socket.getOutputStream();
         out.write("HTTP/1.1 200 OK\n\n".getBytes());
         out.write(PING_RESPONSE.getBytes());

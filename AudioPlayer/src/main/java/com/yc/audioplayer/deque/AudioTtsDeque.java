@@ -19,6 +19,9 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class AudioTtsDeque {
 
+    /**
+     * 创建锁对象
+     */
     private final Lock mLock = new ReentrantLock();
     private final Condition mNotEmpty = mLock.newCondition();
     private final LinkedBlockingDeque<AudioPlayData> mHighDeque = new LinkedBlockingDeque<>();

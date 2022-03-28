@@ -22,19 +22,19 @@ public class PreloadManager {
     /**
      * 单线程池，按照添加顺序依次执行{@link PreloadTask}
      */
-    private ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
+    private final ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
 
     /**
      * 保存正在预加载的{@link PreloadTask}
      */
-    private LinkedHashMap<String, PreloadTask> mPreloadTasks = new LinkedHashMap<>();
+    private final LinkedHashMap<String, PreloadTask> mPreloadTasks = new LinkedHashMap<>();
 
     /**
      * 标识是否需要预加载
      */
     private boolean mIsStartPreload = true;
 
-    private HttpProxyCacheServer mHttpProxyCacheServer;
+    private final HttpProxyCacheServer mHttpProxyCacheServer;
 
     /**
      * 预加载的大小，每个视频预加载512KB，这个参数可根据实际情况调整
@@ -73,7 +73,7 @@ public class PreloadManager {
         mPreloadTasks.put(rawUrl, task);
 
         if (mIsStartPreload) {
-            //开始预加载
+            //开始预加载，执行任务
             task.executeOn(mExecutorService);
         }
     }
@@ -96,6 +96,7 @@ public class PreloadManager {
         //再判断是否有临时缓存文件，如果已经存在临时缓存文件，并且临时缓存文件超过了预加载大小，则表示已经预加载完成了
         File tempCacheFile = mHttpProxyCacheServer.getTempCacheFile(rawUrl);
         if (tempCacheFile.exists()) {
+            //每个视频预加载512KB
             return tempCacheFile.length() >= PRELOAD_LENGTH;
         }
 

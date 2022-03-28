@@ -5,21 +5,31 @@ package com.yc.audioplayer.bean;
  */
 public class AudioPlayData {
 
+    /**
+     * 默认是普通级别
+     */
     public AudioTtsPriority mPriority = AudioTtsPriority.NORMAL_PRIORITY;
-
     /**
      * 是否播放tts，如果是文案则表示true，如果是资源文件则表示false
      * true，使用TtsPlayer播放
      * false，使用MediaPlayer播放
      */
     public boolean mPlayTts = true;
-
+    /**
+     * tts文本内容
+     */
     private String mTts;
-
+    /**
+     * 资源id
+     */
     private int mRawId;
-
+    /**
+     * 当前data
+     */
     private AudioPlayData mCurrent;
-
+    /**
+     * 下一个data
+     */
     private AudioPlayData mNext;
 
     private AudioPlayData() {
@@ -103,11 +113,11 @@ public class AudioPlayData {
     @Override
     public String toString() {
         return "AudioPlayData{" +
-            "priority=" + mPriority +
-            ", mTts='" + mTts + '\'' +
-            ", mRawId=" + mRawId +
-            ", mNext=" + mNext +
-            '}';
+                "priority=" + mPriority +
+                ", mTts='" + mTts + '\'' +
+                ", mRawId=" + mRawId +
+                ", mNext=" + mNext +
+                '}';
     }
 
 }

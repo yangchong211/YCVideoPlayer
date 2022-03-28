@@ -1,5 +1,6 @@
 package com.yc.m3u8.task;
 
+import android.annotation.SuppressLint;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -89,7 +90,8 @@ public class M3u8DownloadTask {
      */
     private Timer netSpeedTimer;
     private ExecutorService executor;//线程池
-    private Handler mHandler = new Handler() {
+    @SuppressLint("HandlerLeak")
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {

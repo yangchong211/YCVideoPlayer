@@ -205,7 +205,7 @@ public class VideoLocation implements Serializable , Cloneable{
         return hashCode(values);
     }
 
-    public static int hashCode(Object a[]) {
+    private int hashCode(Object a[]) {
         if (a == null){
             return 0;
         }

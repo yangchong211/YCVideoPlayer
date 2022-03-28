@@ -40,7 +40,7 @@ public class PreloadTask implements Runnable {
     @Override
     public void run() {
         if (!mIsCanceled) {
-            start();
+            startPreload();
         }
         mIsExecuted = false;
         mIsCanceled = false;
@@ -49,12 +49,16 @@ public class PreloadTask implements Runnable {
     /**
      * 开始预加载
      */
-    private void start() {
+    private void startPreload() {
         Logger.info("开始预加载：" + mPosition);
         HttpURLConnection connection = null;
         try {
+            //重点内容
             //获取HttpProxyCacheServer的代理地址
+            //urlPath指的是网络上的视频路径，返回的proxyUrl是一个代理路径
+            //得到这个代理路径后，接下来就只需要将这个路径设置给播放器就完成了。
             String proxyUrl = mCacheServer.getProxyUrl(mRawUrl);
+
             URL url = new URL(proxyUrl);
             connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(5_000);
@@ -71,7 +75,8 @@ public class PreloadTask implements Runnable {
                     break;
                 }
             }
-            if (read == -1) { //这种情况一般是预加载出错了，删掉缓存
+            if (read == -1) {
+                //这种情况一般是预加载出错了，删掉缓存
                 Logger.info("预加载失败：" +  mPosition);
                 File cacheFile = mCacheServer.getCacheFile(mRawUrl);
                 if (cacheFile.exists()) {
@@ -96,6 +101,7 @@ public class PreloadTask implements Runnable {
         }
         mIsExecuted = true;
         executorService.submit(this);
+        //executorService.execute(this);
     }
 
     /**

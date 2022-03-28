@@ -46,6 +46,6 @@ public class ProxyVideoCacheManager {
         File path = sharedProxy.getCacheFile(url);
         return StorageUtils.deleteFile(pathTmp.getAbsolutePath()) &&
                 StorageUtils.deleteFile(path.getAbsolutePath());
-
     }
+
 }

@@ -15,27 +15,43 @@ public abstract class AbsFloatView implements IFloatView {
 
     /**
      * 更新x和y
-     * @param x                     x
-     * @param y                     y
+     *
+     * @param x x
+     * @param y y
      */
-    public void updateXY(int x, int y) {}
+    public void updateXY(int x, int y) {
+    }
 
     /**
      * 更新x
-     * @param x                     x
+     *
+     * @param x x
      */
-    public void updateX(int x) {}
+    public void updateX(int x) {
+    }
 
     /**
      * 更新y
-     * @param y                     y
+     *
+     * @param y y
      */
-    public void updateY(int y) {}
+    public void updateY(int y) {
+    }
 
+    /**
+     * 获取x
+     *
+     * @return 默认是0
+     */
     public int getX() {
         return 0;
     }
 
+    /**
+     * 获取y
+     *
+     * @return 默认是0
+     */
     public int getY() {
         return 0;
     }

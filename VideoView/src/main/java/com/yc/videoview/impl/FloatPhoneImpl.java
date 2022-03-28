@@ -30,8 +30,10 @@ public class FloatPhoneImpl extends AbsFloatView {
     public FloatPhoneImpl(Context applicationContext) {
         mContext = applicationContext;
         //创建WindowManager
+        //WindowManager负责窗口的动态操作，比如窗口的增、删、改。
         mWindowManager = (WindowManager)
                 applicationContext.getSystemService(Context.WINDOW_SERVICE);
+        //负责窗口的静态属性，比如窗口的标题、背景、输入法模式、屏幕方向等等。
         mLayoutParams = new WindowManager.LayoutParams();
     }
 
@@ -69,7 +71,10 @@ public class FloatPhoneImpl extends AbsFloatView {
         mLayoutParams.format = PixelFormat.TRANSPARENT;
         //设置类型
         mLayoutParams.type = layoutType;
+        //动画
         mLayoutParams.windowAnimations = 0;
+        //token，指标识窗口
+        //mLayoutParams.token;
         mView = view;
     }
 
@@ -90,6 +95,7 @@ public class FloatPhoneImpl extends AbsFloatView {
                 //将悬浮窗控件添加到WindowManager
                 mWindowManager.addView(mView, mLayoutParams);
             } else {
+                //先申请权限，然后在addView进来
                 PermissionActivity.request(mContext, new PermissionActivity.PermissionListener() {
                     @Override
                     public void onSuccess() {
@@ -108,7 +114,7 @@ public class FloatPhoneImpl extends AbsFloatView {
 
     @Override
     public void dismiss() {
-        if (mView!=null){
+        if (mView != null) {
             mWindowManager.removeView(mView);
         }
     }

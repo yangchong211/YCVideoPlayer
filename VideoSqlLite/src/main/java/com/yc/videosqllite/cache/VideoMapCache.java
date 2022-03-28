@@ -17,7 +17,7 @@ public class VideoMapCache {
     /**
      * 缓存
      */
-    private InterCache<String, VideoLocation> mCache;
+    private final InterCache<String, VideoLocation> mCache;
     private final SafeKeyGenerator safeKeyGenerator;
 
     public VideoMapCache(){

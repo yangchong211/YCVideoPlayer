@@ -45,7 +45,6 @@ import static com.yc.videocache.Preconditions.checkNotNull;
  * // should return single instance of HttpProxyCacheServer shared for whole app.
  * }
  * </code></pre>
- *
  */
 public class HttpProxyCacheServer {
 
@@ -66,15 +65,21 @@ public class HttpProxyCacheServer {
     private HttpProxyCacheServer(Config config) {
         this.config = checkNotNull(config);
         try {
+            //使用Socket将本地的一个端口作为服务器，这个端口号自动生成
             InetAddress inetAddress = InetAddress.getByName(PROXY_HOST);
             this.serverSocket = new ServerSocket(0, 8, inetAddress);
+            //设置端口号
             this.port = serverSocket.getLocalPort();
+            Logger.debug("server socket port is : " + port);
             IgnoreHostProxySelector.install(PROXY_HOST, port);
             CountDownLatch startSignal = new CountDownLatch(1);
+            //开启一个线程然后调用start执行
             this.waitConnectionThread = new Thread(new WaitRequestsRunnable(startSignal));
             this.waitConnectionThread.start();
-            startSignal.await(); // freeze thread, wait for server starts
+            // freeze thread, wait for server starts
+            startSignal.await();
         } catch (IOException | InterruptedException e) {
+            //如果是执行好异常，则停止线程池
             socketProcessor.shutdown();
             throw new IllegalStateException("Error starting local proxy server", e);
         }
@@ -212,23 +217,44 @@ public class HttpProxyCacheServer {
 
     private void waitForRequest() {
         try {
+            //执行一个循环，这个循环的条件就是当前线程没有被中断
             while (!Thread.currentThread().isInterrupted()) {
+                //accept（）方法，这是一个阻塞方法，对Socket不太了解的可以先去了解下
+                //当有访问这个ServerSocket的端口时，这是就会返回一个Socket对象，通过这个对象就可以与客户端进行通信
+                //这个Socket可以理解为就是视频播放器那边传过来的，我们把视频数据从这个Socket中返回，那视频就可以播放了。
                 Socket socket = serverSocket.accept();
                 Logger.debug("Accept new socket " + socket);
-                socketProcessor.submit(new SocketProcessorRunnable(socket));
+                //常见一个任务
+                SocketProcessorRunnable socketProcessorRunnable = new SocketProcessorRunnable(socket);
+                //提交任务
+                //socketProcess是一个线程池，把这个socket对象放进了线程中
+                socketProcessor.submit(socketProcessorRunnable);
             }
         } catch (IOException e) {
             onError(new ProxyCacheException("Error during waiting connection", e));
         }
     }
 
+    /**
+     * @param socket socket通信
+     */
     private void processSocket(Socket socket) {
         try {
+            //这里就是获取socket流中请求头的信息，然后创建了一个GetRequest对象并返回
             GetRequest request = GetRequest.read(socket.getInputStream());
             Logger.debug("Request to cache proxy:" + request);
+            //request.uri是我们传给播放器的代理url，这里获取的是真正的url
             String url = ProxyCacheUtils.decode(request.uri);
-            HttpProxyCacheServerClients clients = getClients(url);
-            clients.processRequest(request, socket);
+            //这个url是分为两种情况的，一种是ping的时候传的url，另一种就是真正请求资源的url路径了，获取代理路径的时候就会去ping
+            if (Pinger.isPingRequest(url)) {
+                Pinger.responseToPing(socket);
+            } else {
+                //获取远程的视频资源
+                HttpProxyCacheServerClients clients = getClients(url);
+                clients.processRequest(request, socket);
+            }
+            //HttpProxyCacheServerClients clients = getClients(url);
+            //clients.processRequest(request, socket);
         } catch (SocketException e) {
             // There is no way to determine that client closed connection http://stackoverflow.com/a/10241044/999458
             // So just to prevent log flooding don't log stacktrace
@@ -357,6 +383,7 @@ public class HttpProxyCacheServer {
         }
 
         /**
+         * 视频文件的缓存路径
          * Overrides default cache folder to be used for caching files.
          * <p>
          * By default AndroidVideoCache uses
@@ -374,6 +401,7 @@ public class HttpProxyCacheServer {
         }
 
         /**
+         * 生成的缓存视频文件的名字，传进来的对象实现FileNameGenerator这个类就可以了
          * Overrides default cache file name generator {@link Md5FileNameGenerator} .
          *
          * @param fileNameGenerator a new file name generator.
@@ -385,6 +413,7 @@ public class HttpProxyCacheServer {
         }
 
         /**
+         * 设置缓存文件的大小，单位是bytes，默认是512M
          * Sets max cache size in bytes.
          * <p>
          * All files that exceeds limit will be deleted using LRU strategy.
@@ -401,6 +430,7 @@ public class HttpProxyCacheServer {
         }
 
         /**
+         * 设置缓存文件的个数，缓存的策略只能是大小和个数中的一个
          * Sets max cache files count.
          * All files that exceeds limit will be deleted using LRU strategy.
          * Note this method overrides result of calling {@link #maxCacheSize(long)}
@@ -414,6 +444,7 @@ public class HttpProxyCacheServer {
         }
 
         /**
+         * 缓存策略也可以自己定义，实现DiskUsage就可以了，看自己需要
          * Set custom DiskUsage logic for handling when to keep or clean cache.
          *
          * @param diskUsage a disk usage strategy, cant be {@code null}.
